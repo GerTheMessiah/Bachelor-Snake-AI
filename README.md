@@ -22,9 +22,9 @@
 - step counter. If the snake doesn't eat an apple in a descried amount of steps the game ends.
 
 ## [Evaluation / Reward](src/snakeAI/gym_game/snake_env/snake_game_2d.py)
-### +1 if the snake reaches the max length. | win
-### +0.25 if snake eats an apple.
-### -1 if the snake dies. | loss
+### +100 if the snake reaches the max length. | win
+### +2.5 if snake eats an apple.
+### -10 if the snake dies. | loss
 
 
 ## [PPO - Implementation](src/snakeAI/agents/ppo/actor_critic.py)
