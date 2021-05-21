@@ -29,20 +29,20 @@ class GUI:
             for column in range(self.size[1]):
                 # last part of the tail - red
                 if ground[row][column] == -1:
-                    self.draw([column, row], (100, 0, 0))
+                    self.draw([column, row], (0, 200, 75))
                     continue
-                # apple - blue
+                # apple - red
                 if ground[row][column] == -2:
-                    self.draw([column, row], (0, 0, 255))
+                    self.draw([column, row], (255, 0, 0))
                     continue
                 # player 1
                     # body / tail of snake
                 if ground[row][column] == 1:
-                    self.draw([column, row], (255, 100, 0))
+                    self.draw([column, row], (0, 200, 75))
                     continue
                     # head of snake
                 if ground[row][column] == 2:
-                    self.draw([column, row], (255, 190, 100))
+                    self.draw([column, row], (0, 100, 60))
                     continue
         pygame.display.update()
 

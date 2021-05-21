@@ -55,5 +55,5 @@ def file_path(dir: str, new_save: bool, file_name: str = "model"):
         MODEL_ID = max([int(item[6]) for item in listdir(MODEL_DIR_PATH)])
     except Exception:
         print("Loading model failed")
-        return rf"{MODEL_DIR_PATH}\{file_name}_{0}"
+        return rf"{MODEL_DIR_PATH}\{file_name}_0"
     return rf"{MODEL_DIR_PATH}\{file_name}_{MODEL_ID + 1 if new_save else MODEL_ID}"
