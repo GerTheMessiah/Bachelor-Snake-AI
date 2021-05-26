@@ -4,7 +4,7 @@ import pygame
 
 class GUI:
     def __init__(self, size):
-        self.Particle = 40
+        self.Particle = 60
         self.size = size
         pygame.init()
         self.screen = pygame.display.set_mode((self.Particle * self.size[0], self.Particle * self.size[1]))

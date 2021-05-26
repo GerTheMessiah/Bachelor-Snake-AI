@@ -15,7 +15,7 @@ class SnakeEnv(gym.Env):
         around_view, cat_obs = self.game.observe()
         reward = self.game.evaluate()
         done = self.game.is_done()
-        return around_view, cat_obs, reward, done, reward == 1  # has won
+        return around_view, cat_obs, reward, done, self.game.max_snake_length == self.game.p.apple_count + 1  # has won
 
     def reset(self):
         del self.game

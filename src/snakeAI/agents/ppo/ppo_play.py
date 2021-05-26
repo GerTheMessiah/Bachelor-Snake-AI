@@ -28,12 +28,12 @@ def test_play(n_iterations, print_stats=True):
 
             around_view = around_view_new
             cat_obs = cat_obs_new
-            sleep(0.055)
+            sleep(0.255)
         apple_count = game.apple_count
         if print_stats:
             print(f"Score: {round(scores, 2)} || Apple_Counter: {apple_count} || won: {won}")
             print("\n")
-        sleep(0.055)
+        sleep(0.255)
 
 
 if __name__ == '__main__':
