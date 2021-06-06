@@ -30,7 +30,7 @@ class Memory:
         return self.__add__(other)
 
     def __len__(self):
-        return len(self.actions)
+        return len(self.around_view)
 
     def clear_memory(self):
         del self.actions[:]

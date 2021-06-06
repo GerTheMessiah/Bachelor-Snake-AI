@@ -29,7 +29,7 @@ def play_dqn(n_iterations, print_stats=True, has_gui=True):
 
             around_view = around_view_new
             cat_obs = cat_obs_new
-
+            sleep(0.255)
         apple_count = game.apple_count
         if print_stats:
             print(f"Score: {round(scores, 2)} ||"
@@ -38,7 +38,6 @@ def play_dqn(n_iterations, print_stats=True, has_gui=True):
                   f" epsilon: {agent.epsilon}")
             print("\n")
         sleep(0.025)
-        scores = 0
 
 
 if __name__ == '__main__':

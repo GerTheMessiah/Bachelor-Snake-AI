@@ -12,7 +12,10 @@ from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 def test_play(n_iterations, print_stats=True):
     agent = Agent()
-    agent.load_model(T.load(file_path(dir=r'models\ppo_models', new_save=False, file_name="model")))
+    try:
+        agent.load_model(T.load(file_path(dir=r'models\ppo_models', new_save=False, file_name="model")))
+    except FileNotFoundError:
+        pass
     game = SnakeEnv()
     game.post_init(field_size=(8, 8), has_gui=True)
     for i in range(1, n_iterations + 1):

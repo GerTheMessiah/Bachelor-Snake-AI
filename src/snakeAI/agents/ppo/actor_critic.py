@@ -24,13 +24,13 @@ class ActorCritic(nn.Module):
     def act(self, around_view, cat_obs):
         around_view_ = T.from_numpy(around_view).to(self.device)
         cat_obs_ = T.from_numpy(cat_obs).to(self.device)
-        action_probs = self.base_actor(around_view_, cat_obs_)
-        dist = Categorical(action_probs)
+        policy = self.base_actor(around_view_, cat_obs_)
+        dist = Categorical(policy)
         action = dist.sample()
         return around_view_, cat_obs_, action.item(), dist.log_prob(action)
 
     def evaluate(self, around_view, cat_obs, action):
-        policy, value = self.forward(around_view, cat_obs)
+        policy, value = self(around_view, cat_obs)
         dist = Categorical(policy)
         action_logprobs = dist.log_prob(action)
         dist_entropy = dist.entropy()

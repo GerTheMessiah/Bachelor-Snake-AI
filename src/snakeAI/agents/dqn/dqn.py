@@ -8,8 +8,8 @@ from src.snakeAI.agents.common.base import BaseNet
 
 
 class Agent:
-    def __init__(self, lr=1e-3, n_actions=3, gamma=0.99, epsilon=1.0, batch_size=64,
-                 eps_end=0.05, eps_dec=1e-5, max_mem_size=2**13):
+    def __init__(self, lr=1e-3, n_actions=3, gamma=0.99, epsilon=1.0, batch_size=2**6,
+                 eps_end=0.05, eps_dec=1e-5, max_mem_size=2**10):
         self.gamma = gamma
         self.epsilon = epsilon
         self.eps_min = eps_end
@@ -28,8 +28,8 @@ class Agent:
     def act(self, av, cat_obs):
         if np.random.random() > self.epsilon:
             if not T.is_tensor(av) or not T.is_tensor(cat_obs):
-                av = T.tensor(av, dtype=T.double)
-                cat_obs = T.tensor(cat_obs, dtype=T.double)
+                av = T.tensor(av, dtype=T.float64)
+                cat_obs = T.tensor(cat_obs, dtype=T.float64)
             if av.device == self.Q_eval.device:
                 av = av.to(self.Q_eval.device)
                 cat_obs = cat_obs.to(self.Q_eval.device)
