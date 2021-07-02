@@ -15,6 +15,7 @@ class PrintSize(nn.Module):
 class BaseNet(nn.Module):
     def __init__(self, output, head_type, lr, device="cuda:0"):
         super(BaseNet, self).__init__()
+        T.set_default_dtype(T.float64)
         self.base_net = nn.Sequential(
             nn.Conv2d(in_channels=6, out_channels=16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
             nn.ReLU(),
@@ -44,7 +45,6 @@ class BaseNet(nn.Module):
             )
         self.device = device
         self.optimizer = Adam(self.parameters(), lr=lr)
-        self.double()
         self.to(self.device)
 
     def forward(self, around_view, cat_obs):

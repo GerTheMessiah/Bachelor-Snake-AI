@@ -1,0 +1,139 @@
+\chapter{Anforderungen}
+In dem letzen Kapitel \ref{sec:Grundlagen}, wurden die Grundlagen für den weiteren Vergleich, der Deep Reinforcement Learning Algorithmen, gelegt. Jedoch ist ein solcher Vergleich eine sehr umpfangreiche Angelegenheit, welche, ohne Eingrenzung, eine große Menge an Arbeit und Resourcen binden würde. Daher wurde entschieden, dass der Vergleich exemplarisch an zwei RL Agenten unterschiedlicher Gattungen durchgeführt werden soll. Dies erlaubt eine Abstraktion des Vorgehens auch für andere Agenten.\\
+Problematisch an einem solchen Vergleich ist die Objektivität. Wie kann also sicher gestellt werden, dass die Ergebnisse repräsentativ sind?\\
+Die Antwort auf diese Frage sind feste Anforderungen bzw. Rahmenbedingungen, die bei den einzelnen, am Vergleich beteiligten, Teilen gelten müssen.
+Dabei gibt es verschiedene Anforderungen an unterschiedliche Systembereiche. 
+In dieser Ausarbeitung existieren es vier Anforderungsbereiche, welche Anforderungen an die folgenden Bereiche stellen:
+\begin{itemize}
+	\item Spielimplementierung
+	\item Agenten
+	\item statistische Datenerhebung
+	\item Evaluation
+\end{itemize}
+
+\section{Anforderungen an das Environment}
+Die Anforderungen, welche an eine Reinforcement Learning Environment gestellt werden, sind vielseitiger Natur. Sie stammen unter anderem aus der Softwaretechnik, aus dem RL und aus dem gesundem Menschenverstand.
+
+\subsection{Abtrennung}
+Bereits aus softwaretechnischen Gesichtspunkten ist die Abtrennung von unabhängigen System ein wichtiges Prinzip. Das Reinforcement Learning ist davon nicht ausgenommen. Das Environment, welches das Spiel Snake aufspannt, muss strickt von anderen Teilen der Softwarearschitektur getrennt werden. Dies begünstigt die Modularität und erleichtert nicht nur die Wartbarkeit, sondern auch die Anpassbarkeit des Systems auf Veränderungen, wie z.B. eine andere Reward-Funktion oder Observation.
+
+\subsection{Kommunikation}
+Damit keine vollkommende Abtrennung des Environments jegliches Interagieren unmöglich macht, sollen nach dem Vorbild aus \ref{sec:Environment} drei Kommunikationskanäle implementiert werden. Das Env. soll in der Lage sein, Actions zu empfangen und Observations und Rewards zu senden.
+
+\subsection{Funktionalität} \label{sec:funktionalität_Env}
+Die Funktionalität des Environments ist durch das Implementieren der folgenden Methoden herzustellen.
+\begin{itemize}
+	\item step
+	\item reset
+	\item render
+\end{itemize}
+Wobei die step Methode für die Ausführung, der vom Agent ausgewählten Action, zuständig ist, die reset Methode den momentaten Env. Fortschritt zurücksetzt und render Methode für das visuelle darstellen zuständig ist. Näheres dazu in \ref{sec:visualisierung_Env}.
+
+\subsection{Visualisierung} \label{sec:visualisierung_Env}
+Um den Spielfortschritt besser evaluieren zu können und aus Gründen der Ästhetik soll eine graphische Oberfläche implementiert werden. Diese soll das Spielgeschehen graphisch wiedergeben.
+
+\subsection{Effizienz}
+Da die in \ref{sec:funktionalität_Env} angesprochenen Methoden sehr häufig aufgerufen werden ist es intelligent, diese so effizient wie möglich, in bezug auf die durchzuführenden Operationen der Methoden, zu implementieren. Dies sollte zu schnelleren Lernerfolgen führen. Insgesamt solle die Spielumgebung so effizient wie möglich aufgesetzt werden.
+
+\subsection{Test}
+Um zu garantieren, dass das Env. voll funktionsfähig ist sollen dieses mit Tests überprüft werden. Dies dient der Sicherheit, da Fehler im Env. zu Fehlern im Entscheidungsfindungsprozess führen können, wie das Hide and Seek Environment von OpenAI zeigt \cite{DBLP:journals/corr/abs-1909-07528}.
+
+\section{Anforderungen an die Agenten}
+Neben dem Environment gelten für die Agenten ebenfalls spezielle Anforderungen, welche zum einem objektiven Vergleich führen sollen. Auch sollen Anforderungen an die Implementierung gestellt werden, um Standards einfzuühren.
+
+\subsection{Abtrennung}
+Auch beim Agenten spielt die Abtrennung vom restlichen System eine große Rolle. Es erleichtert den umgang mit eventuellen anderen Agenten.
+Ebenfalls wird dadurch die Wartbarkeit verbessert, da Fehler genauer lokalisiert werden können.
+
+\subsection{Funktionalität}
+Reinforcement Learning Agenten können ein großes Repertoire besitzen. Zu den wichtigsten und für die Funktionalität am maßgiblichsten sind die Methoden:
+\begin{itemize}
+	\item act
+	\item lern
+\end{itemize}
+Durch das Aufrufen der act Methode teilweise auch choose\_action Methode genannt, wird der Entscheidungsfinddungsprozess angestoßen. Dieser kann je nach der Art des Agenten durch ein neuronales Netzwerk oder durch andere Methoden, wie z.B. durch das zufällige Wählen von einer actions, erfolgen.\\
+Die lern Methode ist für den Lernprozess des Agenten zuständig.
+
+\subsection{Effizienz}
+Durch die Tatsache das sowohl die act als auch die lern Methode sehr häufig in einem Trainingsverlauf aufgerufen werden, ist es von Vorteil, diese, wie natürlich auch alle anderen Bestandteile des Agenten, sorgfälltig und so effizient wie möglich zu implementieren, um unnötigen Resourcenverbrauch zu verhindern.
+
+\subsection{Einzigartigkeit}
+Um den Vergleich der verschiedenen Systeme mit dem größtmöglichen Maß an objektivität zu vollziehen, ist es wichtig, dass die Einzigartigkeit eines Agenten nicht alleine durch die Art (PPO oder DQN) definiert wird, sondern auch durch die dem Agenten zugehörigen Parameter.
+
+\subsection{Test}
+Zur Prüfung der Funktionalität der einzelnen Agenten, sollen Tests implementiert werden, welche im besonderen das Lernen und die Aktionsbestimmung abdecken sollen. Dies dient zum Ausschluss von Fehlern.
+
+\section{Anforderungen an die Datenerhebung}
+Auch die statistische Datenerhebung soll durch Anforderungen konkretisiert und definiert werden. Um die Objektivität sicherzustellen, werden dafür Anforderungen bezüglich der Durchführung, der Datenspeicherung und den Spezifikationen der Datenerhebung erhoben.
+
+\subsection{Mehrfache Datenerhebung}
+Um die Valität der zu erzeugenden Trainingsdaten zu grarantieren, soll für jeden Agenten die Datenerhebung dreimalig durchgeführt werden. Dies trägt nicht nur zur Objektivität bei, sondern sichert das Ergebnis ebenfalls auch vor Schwankungen ab, welche beim Reinforcement Learning natürlicherweise auftreten, bedingt durch die zufälligen Spielverläufe des Environment.
+
+\subsection{Datenspeicherung}
+Damit ausden erzeugten Daten statistische Schlüsse gezogen werden können ist es wichtig, dass die erzeugten Spieldaten gespeichert werden. Da jedoch die Menge an Daten die schnell riesige Dimensionen annimmt, sollen stellvertretend nur die Daten ganzer Spiele gespeichert werden. Dies ist ein eingehbarer Kompromiss zwischen Vollständigkeit und effizientem Speicherplatzmanagement.\\
+nach reiflichen Überlegungen sollen die folgenden Daten erhoben und abgespeichert werden:
+\begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
+	\caption{Zuerhebende Daten}
+	\label{tab:Datenerhebung} 
+	\endfirsthead
+	\endhead
+	\hline
+	Daten & Erklärung \\
+	\hline
+	time & Die Uhrzeit. Dies dient später dem Geschwindigkeitsvergleich. \\
+	\hline
+	steps & Die in einem Spiel durchgeführten Züge. Diese geben in der Evaluation später Aufschluss über den Lernerfolge und weisen auf Lernfehler der Agenten, wie beispielsweise das Laufen im Kreis, hin. \\
+	\hline
+	apples & Die Anzahl der gefressenen Äpfel in einem Spiel. Maßgiblicher Evaluationsfaktor zur Einschätzung des Lernerfolges. \\
+	\hline
+	scores & Die gesammelten und aufsummierten Rewards, welche der Agent in einem Spiel gesammelt hat. Auch dieser Datenwert gibt Aufschluss über den Lernerfolg. Gleichzeitig lässt sich den scores auch noch die effizienz der Lösung und damit des Lernens entnehmen. \\
+	\hline
+	wins & Hat der Agent das Spiel gewonnen. Dieser Wert stellt die Endkontrolle des Agenten dar. \\
+	\hline
+	epsilon (nur beim Deep Q-Learning Algorithmus) & Gibt die Wahrscheinlichekit für das Ziehen einer zufälligen Aktion wieder.  \\
+	\hline
+	Learning Rate (lr) & einmalig zuspeichernder skalarer Wert, welcher ein Maß für die Anpassung der Gewichte des bzw. der NN wiedergibt. \\
+	\hline
+	board\_size &  einmalige zuspeichernder vektorieller Wert. Dieser gibt die Feldgröße des Environments an. Dieser ist wichtig für die Evaluation der Robustheit der Agenten. \\
+	\hline
+	andere Hyperparamenter der Agenten & Die Agenten werden maßgiblich durch die ihnen zugrundeliegenden Paramenter gesteuert. Um einen Vergleich verschiedenen Agenten durchführen zu können, sind daher die Hyperparamenter von größter Wichtigkeit. \\
+	\hline
+\end{longtable}
+
+\subsection{Variation der Datenerhebungsparameter}
+Um die Möglichkeit auszuschließen, dass die momentan ausgewählten Parameter, wie z.B. Feldgröße, Lernrate, Reward-Funktion usw., für einzelne Agenten vorteilhafte Bedingungen hervorbringen können, sollen die einzelnen Agenten unter verschiedenen Modifikationen getestet werden. Dazu soll die Datenerhebung unter der Anwendung einer Modifikation durchgeführt werden. Zu den Modifikationen zählen:
+
+\subsubsection{Variation der Reward-Funktion}
+Durch das Verändern der Reward-Funktion soll überprüft werden, ob die Agenten unterschiedlich gut auf eine andere Reward-Funktion reagieren. Sollte die Reward-Funktion eins $R_{1}()$ für den Agenten eins $A_{1}$ überdurchschnittlich bessere Resultate liefern, so wird dies erkannt und in der Evaluation berücksichtigt.
+
+\subsubsection{Variation der Netzstruktur}
+Jeder Agent ist abhängig von einer ganzen Reihe an Faktoren, welche über Erfolg und Misserfolg entscheiden. Die Netzstruktur ist dabei einer der besonders wichtigen Faktoren. Je nach Variation der Netzstruktur, kann dies die Qualität eines Agenten entscheidend beeinflussen. Es ist daher angebracht, die einzelnen Agenten unter verschiedenen Netzstrukturen laufen zu lassen, um zum einen die Robustheit des übergeordneten RL Algorithmus zu testen und zum anderen um sicherzustellen, dass die vorherschende Netzstruktur nicht nur für einen Agenten vorteilhaft ist.
+
+\subsubsection{Variation der Observation}
+Eine Überprüfung der Agenten, neben den bereits genannten Variationen, ist auch noch mit der Variation der Observation durchführbar. Diese Veränderung soll Aufschluss über die Qualität der Agenten bei unterschiedlichen Eingabeinformationen liefern. Auch wir so wieder die Wahrscheinlichekit gesenkt, dass gerade diese Observation für einen spezifischen Agenten vorteilhaft ist.
+
+\section{Anforderungen an die Evaluation}
+Bei der Evaluation soll der optimalste Agent bestimmt werden. Dabei stellt sich jedoch die Frage, was optimal im Sachzusammenhang bedeutet. 
+Daher sollen die Agenten unter verschiedenen Gesichtspunkten evaluiert werden, um ein möglichst großes Spektrum an Kriterien abzudecken.
+Die einzelnen Kriterien lauten:
+\begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
+	\caption{Evaluationskriterien}
+	\label{tab:Kriterien} 
+	\endfirsthead
+	\endhead
+	\hline
+	Kriterium & Erläuterung \\
+	\hline
+	Performance & Welcher Agent erreicht, nach einer festen Anzahl an absolvierten Spielen, das beste Ergebnis? Im Sachzusammenhang mit dem Spiel Snake bedeutet dies: Welcher Agent frisst die meisten Äpfel, nach dem er über eine feste Anzahl an Spielen trainiert wurde?  \\
+	\hline
+	Effizienz & Welcher Agent löst das Spiel mit der größten Effizienz. Bezogen auf das Spiel Snake bedeutet dies, welches Agent ist in der Lage die Äpfel mit möglichst wenig Schritten zu erreichen und zu fressen? Hierbei werden beispielsweise Probleme, wie das im Kreis laufen sichtbar. \\
+	\hline
+	Robustheit & Welcher Agent ist in der Lage in einer modifizierten Umgebung das Spielziel am besten zu erreichen? In Bezug auf Snake bedeutet dies: Welcher Agent ist in der Lage auf einem größeren oder kleineren Spielfeld die meisten Äpfel zu fressen?  \\
+	\hline
+	Trainingszeit & Welcher Agent schafft es ein festes Ziel in der geringstmöglichen Zeit zu erreichen oder welcher Agent ist als erstes in der Lage durchschnittlich 10 Äpfel zu fressen. \\
+	\hline
+	Spielezit & Welcher Agent schafft es am längsten ein durchzuhalten bevor ein terminaler Zustand erreicht wird? Auf Snake bezogen: Welcher Agent schafft es am längsten am Leben zu bleiben.  \\
+	\hline
+	Multiprocessing fähig (boolscher Wert) & Welche Agenten sind multiprocessing fähig und können damit schneller und ausgibiger trainiert werden. \\
+	\hline
+\end{longtable}

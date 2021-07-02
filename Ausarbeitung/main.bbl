@@ -1,0 +1,111 @@
+\begin{thebibliography}{10}
+% this bibliography was produced with the style dinat.bst v2.5
+\makeatletter
+\newcommand{\dinatlabel}[1]%
+{\ifNAT@numbers\else\NAT@biblabelnum{#1}\hspace{2\labelsep}\fi}
+\makeatother
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax\def\url#1{\texttt{#1}}\fi
+
+\bibitem[Baker u.\,a.(2019)Baker, Kanitscheider, Markov, Wu, Powell, McGrew und
+  Mordatch]{DBLP:journals/corr/abs-1909-07528}
+\dinatlabel{Baker u.\,a. 2019} \textsc{Baker}, Bowen~; \textsc{Kanitscheider},
+  Ingmar~; \textsc{Markov}, Todor~M.~; \textsc{Wu}, Yi~; \textsc{Powell},
+  Glenn~; \textsc{McGrew}, Bob~; \textsc{Mordatch}, Igor:
+\newblock Emergent Tool Use From Multi-Agent Autocurricula.
+\newblock In: \emph{CoRR}
+\newblock abs/1909.07528 (2019). --
+\newblock URL \url{http://arxiv.org/abs/1909.07528}
+
+\bibitem[Bowei~Ma(2016)]{SnakeRL2016}
+\dinatlabel{Bowei~Ma 2016} \textsc{Bowei~Ma}, Jun~Z.:
+\newblock \emph{Exploration of Reinforcement Learning to SNAKE}.
+\newblock 2016. --
+\newblock URL \url{http://cs229.stanford.edu/proj2016spr/report/060.pdf}
+
+\bibitem[Chunxue u.\,a.(2019)Chunxue, Ju, Wu, Lin, Xiong, Xu, Li und
+  Liang]{UAV}
+\dinatlabel{Chunxue u.\,a. 2019} \textsc{Chunxue}, Wu~; \textsc{Ju}, Bobo~;
+  \textsc{Wu}, Yan~; \textsc{Lin}, Xiao~; \textsc{Xiong}, Naixue~; \textsc{Xu},
+  Guangquan~; \textsc{Li}, Hongyan~; \textsc{Liang}, Xuefeng:
+\newblock {UAV Autonomous Target Search Based on Deep Reinforcement Learning in
+  Complex Disaster Scene}.
+\newblock In: \emph{IEEE Access}
+\newblock PP (2019), 08, S.~1--1. --
+\newblock URL \url{https://ieeexplore.ieee.org/abstract/document/8787847}
+
+\bibitem[Haarnoja u.\,a.(2018)Haarnoja, Zhou, Abbeel und Levine]{SAC}
+\dinatlabel{Haarnoja u.\,a. 2018} \textsc{Haarnoja}, Tuomas~; \textsc{Zhou},
+  Aurick~; \textsc{Abbeel}, Pieter~; \textsc{Levine}, Sergey:
+\newblock {Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement
+  Learning with a Stochastic Actor}.
+\newblock In: \emph{CoRR}
+\newblock abs/1801.01290 (2018). --
+\newblock URL \url{http://arxiv.org/abs/1801.01290}
+
+\bibitem[Lapan(2020)]{DRL}
+\dinatlabel{Lapan 2020} \textsc{Lapan}, Maxim:
+\newblock \emph{{Deep Reinforcement Learning}}.
+\newblock MITP Verlags GmbH, 2020. --
+\newblock URL
+  \url{https://www.ebook.de/de/product/37826629/maxim_lapan_deep_reinforcement_learning.html}.
+  --
+\newblock ISBN 3747500366
+
+\bibitem[Mnih u.\,a.(2016)Mnih, Badia, Mirza, Graves, Lillicrap, Harley, Silver
+  und Kavukcuoglu]{DBLP:journals/corr/MnihBMGLHSK16}
+\dinatlabel{Mnih u.\,a. 2016} \textsc{Mnih}, Volodymyr~; \textsc{Badia},
+  Adri{\`{a}}~P.~; \textsc{Mirza}, Mehdi~; \textsc{Graves}, Alex~;
+  \textsc{Lillicrap}, Timothy~P.~; \textsc{Harley}, Tim~; \textsc{Silver},
+  David~; \textsc{Kavukcuoglu}, Koray:
+\newblock {Asynchronous Methods for Deep Reinforcement Learning}.
+\newblock In: \emph{CoRR}
+\newblock abs/1602.01783 (2016). --
+\newblock URL \url{http://arxiv.org/abs/1602.01783}
+
+\bibitem[Mnih u.\,a.(2015)Mnih, Kavukcuoglu, Silver, Rusu, Veness, Bellemare,
+  Graves, Riedmiller, Fidjeland, Ostrovski, Petersen, Beattie, Sadik,
+  Antonoglou, King, Kumaran, Wierstra, Legg und Hassabis]{DQN}
+\dinatlabel{Mnih u.\,a. 2015} \textsc{Mnih}, Volodymyr~; \textsc{Kavukcuoglu},
+  Koray~; \textsc{Silver}, David~; \textsc{Rusu}, Andrei~A.~; \textsc{Veness},
+  Joel~; \textsc{Bellemare}, Marc~G.~; \textsc{Graves}, Alex~;
+  \textsc{Riedmiller}, Martin~; \textsc{Fidjeland}, Andreas~K.~;
+  \textsc{Ostrovski}, Georg~; \textsc{Petersen}, Stig~; \textsc{Beattie},
+  Charles~; \textsc{Sadik}, Amir~; \textsc{Antonoglou}, Ioannis~;
+  \textsc{King}, Helen~; \textsc{Kumaran}, Dharshan~; \textsc{Wierstra}, Daan~;
+  \textsc{Legg}, Shane~; \textsc{Hassabis}, Demis:
+\newblock Human-level control through deep reinforcement learning.
+\newblock In: \emph{Nature}
+\newblock 518 (2015), Februar, Nr.~7540, S.~529--533. --
+\newblock URL \url{http://dx.doi.org/10.1038/nature14236}. --
+\newblock ISSN 00280836
+
+\bibitem[Schulman u.\,a.(2015)Schulman, Levine, Moritz, Jordan und
+  Abbeel]{TRPO}
+\dinatlabel{Schulman u.\,a. 2015} \textsc{Schulman}, John~; \textsc{Levine},
+  Sergey~; \textsc{Moritz}, Philipp~; \textsc{Jordan}, Michael~I.~;
+  \textsc{Abbeel}, Pieter:
+\newblock {Trust Region Policy Optimization}.
+\newblock In: \emph{CoRR}
+\newblock abs/1502.05477 (2015). --
+\newblock URL \url{http://arxiv.org/abs/1502.05477}
+
+\bibitem[Schulman u.\,a.(2017)Schulman, Wolski, Dhariwal, Radford und
+  Klimov]{PPO}
+\dinatlabel{Schulman u.\,a. 2017} \textsc{Schulman}, John~; \textsc{Wolski},
+  Filip~; \textsc{Dhariwal}, Prafulla~; \textsc{Radford}, Alec~;
+  \textsc{Klimov}, Oleg:
+\newblock Proximal Policy Optimization Algorithms.
+\newblock In: \emph{CoRR}
+\newblock abs/1707.06347 (2017). --
+\newblock URL \url{http://arxiv.org/abs/1707.06347}
+
+\bibitem[Sutton und Barto(2018)]{Sutton1998}
+\dinatlabel{Sutton und Barto 2018} \textsc{Sutton}, Richard~S.~;
+  \textsc{Barto}, Andrew~G.:
+\newblock \emph{{Reinforcement Learning: An Introduction}}.
+\newblock Second.
+\newblock The MIT Press, 2018. --
+\newblock URL \url{http://incompleteideas.net/book/bookdraft2018jan1.pdf}
+
+\end{thebibliography}

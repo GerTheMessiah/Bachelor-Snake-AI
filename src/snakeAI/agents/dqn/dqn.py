@@ -8,22 +8,21 @@ from src.snakeAI.agents.common.base import BaseNet
 
 
 class Agent:
-    def __init__(self, lr=1e-3, n_actions=3, gamma=0.99, epsilon=1.0, batch_size=2**6,
-                 eps_end=0.05, eps_dec=1e-5, max_mem_size=2**10):
+    def __init__(self, lr=1e-4, n_actions=3, gamma=0.99, batch_size=2**5, epsilon_start=1.0, eps_end=0.05, eps_dec=1e-5, max_mem_size=2**20):
+
         self.gamma = gamma
-        self.epsilon = epsilon
+        self.epsilon = epsilon_start
         self.eps_min = eps_end
         self.eps_dec = eps_dec
         self.lr = lr
         self.action_space = [i for i in range(n_actions)]
         self.mem_size = max_mem_size
         self.batch_size = batch_size
-        self.iter_cntr = 0
-        self.replace_target = 100
 
         self.Q_eval = BaseNet(output=n_actions, head_type='critic', lr=lr, device="cuda:0")
         self.loss = MSELoss()
-        self.mem = Memory(max_mem_size=self.mem_size, in_dims_av=(6, 13, 13), in_dims_cat_obs=(41,), batch_size=batch_size)
+        self.mem = Memory(max_mem_size=self.mem_size, in_dims_av=(6, 13, 13), in_dims_cat_obs=(41,),
+                          batch_size=batch_size)
 
     def act(self, av, cat_obs):
         if np.random.random() > self.epsilon:
@@ -42,10 +41,8 @@ class Agent:
     def learn(self):
         if self.mem.mem_cntr < self.batch_size:
             return
-        self.Q_eval.optimizer.zero_grad()
 
         max_mem = min(self.mem.mem_cntr, self.mem_size)
-
         batch = np.random.choice(max_mem, self.batch_size, replace=False)
 
         batch_index = T.arange(self.batch_size, dtype=T.long)
@@ -53,11 +50,13 @@ class Agent:
         cat_obs = self.mem.cat_obs[batch].to(self.Q_eval.device)
         new_avs = self.mem.new_around_views[batch].to(self.Q_eval.device)
         new_cat_obs = self.mem.new_cat_obs[batch].to(self.Q_eval.device)
-        actions = self.mem.actions[batch].long().to(self.Q_eval.device)
+        actions = self.mem.actions[batch].to(self.Q_eval.device)
         terminal_batch = self.mem.terminals[batch].to(self.Q_eval.device)
         rewards_batch = self.mem.rewards[batch].to(self.Q_eval.device)
 
+        self.Q_eval.optimizer.zero_grad()
         q_eval = self.Q_eval(avs, cat_obs)
+        # print(q_eval.requires_grad)
         q_eval_2 = q_eval[batch_index, actions]
         q_next = self.Q_eval(new_avs, new_cat_obs)
         q_next[terminal_batch] = 0.0
@@ -66,13 +65,12 @@ class Agent:
         loss.backward()
         self.Q_eval.optimizer.step()
 
-        self.iter_cntr += 1
         self.epsilon = self.epsilon - self.eps_dec if self.epsilon > self.eps_min else self.eps_min
 
     def save_model(self, new_save):
         T.save(self.Q_eval.state_dict(), file_path(dir=r"models\dqn_models", new_save=new_save, file_name="model"))
 
-    def load_model(self, path):
+    def load_model(self, path=None):
         try:
             self.Q_eval.load_state_dict(T.load(file_path(dir=r"models\dqn_models", new_save=False, file_name="model")))
             if path is not None:

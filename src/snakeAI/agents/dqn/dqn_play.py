@@ -10,7 +10,7 @@ from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 
 def play_dqn(n_iterations, print_stats=True, has_gui=True):
-    agent = Agent(lr=1e-3, n_actions=3, gamma=0.99, epsilon=1.0, batch_size=2 ** 8, eps_end=0.01, eps_dec=2e-5,
+    agent = Agent(lr=1e-3, n_actions=3, gamma=0.99, epsilon_start=1.0, batch_size=2 ** 8, eps_end=0.05, eps_dec=1e-5,
                   max_mem_size=2 ** 13)
     agent.load_model(file_path(dir=r"models\dqn_models", new_save=False, file_name="model"))
     game = SnakeEnv()
@@ -29,7 +29,7 @@ def play_dqn(n_iterations, print_stats=True, has_gui=True):
 
             around_view = around_view_new
             cat_obs = cat_obs_new
-            sleep(0.255)
+            sleep(0.025)
         apple_count = game.apple_count
         if print_stats:
             print(f"Score: {round(scores, 2)} ||"
@@ -41,4 +41,4 @@ def play_dqn(n_iterations, print_stats=True, has_gui=True):
 
 
 if __name__ == '__main__':
-    play_dqn(100, print_stats=True, has_gui=True)
+    play_dqn(10, print_stats=True, has_gui=True)

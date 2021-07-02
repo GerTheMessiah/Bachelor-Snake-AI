@@ -1,29 +1,40 @@
+import re
 import sys
 from os import listdir
 from pathlib import Path
-from statistics import mean
 
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib.lines as mlines
 from scipy.stats import linregress
 
 
-def plot_learning_curve(x, apples, scores, figure_file):
-    plt.title("Learning Results")
-    plt.xlabel("Iterations of ten games")
-    plt.ylabel("Apple_mean / Score_mean")
-    plt.plot(x, apples, color='red')
-    plt.plot(x, scores, color='green')
+def plot_learning_curve(x: list, apples: list, scores: list, figure_file: str):
+    plt.figure()
+    fig, axs = plt.subplots(2, 1, figsize=(16, 11))
+    axs[0].plot(x, apples, color='red')
     m, b, _, _, _ = linregress(x, apples)
+    axs[0].plot(x, [m * y + b for y in x], color='blue')
+    axs[0].grid(True)
+    axs[0].set_xlabel('Number of Games')
+    axs[0].set_ylabel("Sum of Apples per Game")
+
+    axs[1].plot(x, scores, color='green')
     m2, b2, _, _, _ = linregress(x, scores)
-    plt.plot(x, [m * y + b for y in x], color='blue')
-    plt.plot(x, [m2 * y + b2 for y in x], color='purple')
-    red_patch = mpatches.Patch(color='red', label=f'Apple_mean: {round(mean(apples), 3)}')
-    green_patch = mpatches.Patch(color='green', label=f'Score_mean: {round(mean(scores), 3)}')
-    blue_patch = mpatches.Patch(color='blue', label=f'Apple_reg m: {round(m, 3)}, b: {round(b, 3)}')
-    purple_patch = mpatches.Patch(color='purple', label=f'Score_reg m: {round(m2, 3)}, b: {round(b2, 3)}')
-    plt.legend(handles=[red_patch, green_patch, blue_patch, purple_patch], loc=1)
-    plt.savefig(figure_file)
+    axs[1].plot(x, [m2 * y + b2 for y in x], color='orange')
+    axs[1].set_xlabel('Number of Games')
+    axs[1].set_ylabel(r"Sum of Scores per Game")
+    axs[1].grid(True)
+    fig.tight_layout()
+
+    red_patch = mlines.Line2D([], [], color='red', markersize=30, label=f'Apple_max: {max(apples)}')
+    blue_patch = mlines.Line2D([], [], color='blue', markersize=30, label=f'Apple_reg m: {round(m, 4)}, b: {round(b, 4)}')
+    red2_patch = mlines.Line2D([], [], color='green', markersize=30, label=f'Score_max: {round(max(scores), 2)}')
+    blue2_patch = mlines.Line2D([], [], color='orange', markersize=30, label=f'Score_reg m: {round(m2, 4)}, b: {round(b2, 4)}')
+    fig.legend(handles=[red_patch, blue_patch, red2_patch, blue2_patch], loc="lower center", ncol=4)
+    fig.subplots_adjust(bottom=0.1)
+
+    fig.show()
+    fig.savefig(figure_file)
 
 
 def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_length=50):
@@ -52,7 +63,7 @@ def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_lengt
 def file_path(dir: str, new_save: bool, file_name: str = "model"):
     MODEL_DIR_PATH = str(Path(__file__).parent.parent.parent.parent) + fr"\resources\{dir}"
     try:
-        MODEL_ID = max([int(item[6]) for item in listdir(MODEL_DIR_PATH)])
+        MODEL_ID = max([int(re.sub(r'\D', '', item)) for item in listdir(MODEL_DIR_PATH)])
     except Exception:
         print("Loading model failed")
         return rf"{MODEL_DIR_PATH}\{file_name}_0"

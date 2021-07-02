@@ -5,6 +5,7 @@ from time import time
 
 from pandas import DataFrame
 from os import environ
+
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 
 from src.snakeAI.agents.common.utils import print_progress, file_path, plot_learning_curve
@@ -15,7 +16,7 @@ from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 def train_play(N_ITERATIONS: int, BOARD_SIZE: tuple):
     a = 0
-    LR_ACTOR, LR_CRITIC, score, = 1e-3, 1.5e-3, 0
+    LR_ACTOR, LR_CRITIC, = 1e-3, 1.5e-3
     scores, apples, wins, dtime = [], [], [], []
     mem = Memory()
     start_time = time()
@@ -29,7 +30,6 @@ def train_play(N_ITERATIONS: int, BOARD_SIZE: tuple):
     iter_time = time()
     for i in range(1, N_ITERATIONS + 1):
         score = 0
-        won = False
         around_view, cat_obs = game.reset()
         while not game.has_ended:
             around_view, cat_obs, action, log_probs = agent.policy_old.act(around_view, cat_obs)
@@ -41,7 +41,7 @@ def train_play(N_ITERATIONS: int, BOARD_SIZE: tuple):
             score += reward
             around_view = around_view_new
             cat_obs = cat_obs_new
-        if len(mem) > 2**6:
+        if len(mem) > 2 ** 6:
             agent.learn(mem)
             mem.clear_memory()
         scores.append(score)
@@ -72,8 +72,7 @@ def train_play(N_ITERATIONS: int, BOARD_SIZE: tuple):
         except FileNotFoundError:
             T.save(agent.policy.state_dict(), path_model)
 
-    columns = ["datetime", "apples", "scores", "wins", "lr_actor", "lr_critic",
-               "board_size_x", "board_size_y"]
+    columns = ["datetime", "apples", "scores", "wins", "lr_actor", "lr_critic", "board_size_x", "board_size_y"]
     c = {"datetime": dtime, "apples": apples, "scores": scores, "wins": wins,
          "lr_actor": LR_ACTOR, "lr_critic": None, "board_size_x": BOARD_SIZE[0], "board_size_y": BOARD_SIZE[1]}
     df = DataFrame(c, columns=columns)
