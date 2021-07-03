@@ -53,5 +53,6 @@
 \contentsline {subsubsection}{\nonumberline Variation der Observation}{22}{subsubsection*.42}%
 \contentsline {section}{\numberline {3.4}Anforderungen an die Evaluation}{22}{section.3.4}%
 \contentsline {chapter}{\numberline {4}Agenten}{24}{chapter.4}%
-\contentsline {chapter}{Literaturverzeichnis}{26}{section*.43}%
+\contentsline {section}{\numberline {4.1}Agenten}{25}{section.4.1}%
+\contentsline {chapter}{Literaturverzeichnis}{27}{section*.43}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

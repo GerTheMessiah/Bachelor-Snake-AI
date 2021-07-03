@@ -10,7 +10,7 @@ class Agent:
         self.eps_clip = eps_clip
         self.K_epochs = K_epochs
         self.critic_loss_coef = 0.5
-        self.entropy_coef = 0.0001
+        self.entropy_coef = 0.001
         self.device = T.device('cuda:0' if T.cuda.is_available() and gpu else 'cpu')
         self.model_id = 0
         self.mseLoss = nn.MSELoss()
