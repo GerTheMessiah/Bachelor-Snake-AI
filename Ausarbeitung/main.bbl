@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{11}
 % this bibliography was produced with the style dinat.bst v2.5
 \makeatletter
 \newcommand{\dinatlabel}[1]%
@@ -33,6 +33,16 @@
 \newblock In: \emph{IEEE Access}
 \newblock PP (2019), 08, S.~1--1. --
 \newblock URL \url{https://ieeexplore.ieee.org/abstract/document/8787847}
+
+\bibitem[Goodfellow u.\,a.(2018)Goodfellow, Bengio und Courville]{DL}
+\dinatlabel{Goodfellow u.\,a. 2018} \textsc{Goodfellow}, Ian~; \textsc{Bengio},
+  Yoshua~; \textsc{Courville}, Aaron:
+\newblock \emph{Deep Learning. Das umfassende Handbuch}.
+\newblock MITP Verlags GmbH, 2018. --
+\newblock URL
+  \url{https://www.ebook.de/de/product/31366940/ian_goodfellow_yoshua_bengio_aaron_courville_deep_learning_das_umfassende_handbuch.html}.
+  --
+\newblock ISBN 3958457002
 
 \bibitem[Haarnoja u.\,a.(2018)Haarnoja, Zhou, Abbeel und Levine]{SAC}
 \dinatlabel{Haarnoja u.\,a. 2018} \textsc{Haarnoja}, Tuomas~; \textsc{Zhou},
