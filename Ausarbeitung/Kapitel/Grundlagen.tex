@@ -193,7 +193,7 @@ Es ergibt sich damit der bereits oben erwähnte \ref{PPO_Training_Loss} PPO Trai
 	$L^\text{PPO}_{t} (\theta) = L^\text{CLIP + VF + S}_{t} (\theta) = \mathbb{\hat{E}}_{t} [L^{\text{CLIP}}_{t}(\theta) - c_{1}L^{\text{VF}}_{t} + c_{2}S[\pi_{\theta}](s_{t})]$
 \end{center}
 
-\section{Deep Q-Learning}
+\section{Deep Q-Learning} \label{Q-Learning}
 Das Q-Learning ist eine weitere Art des RL, welches eine gesamte Familie an RL-Verfahrewn umfasst. 
 Namensgebend für die Familie des Q-Learnings sind jedoch die sogenannten Q-Values, welche die Aktionswert einer Action $a$ im State $s$ angeben. Deutlich wichtiger im weiteren Verlauf des Deep Q-Learnings sind jedoch die Zustandswerte, welche von der Zustandswertefunktion $V(s)$ ermittelt werden. Bei ihr handelt es sich, bezogen auf das Deep Q-Learning um eine NN, dass im Verlauf triniert wird.\\
 Um das Q-Learning auch hier vollständig zu verstehen und um einen Eindruck des zu erwartenden Implementierungsaufwandes zu erhalten, ist es nötig die dem DQN zugrundeliegenden Formeln zu verstehen.
@@ -216,6 +216,56 @@ Problematisch ist jedoch die Bestimmung der Q-Values, da sich \ref{Q-Value_Forme
 Bei der letzen Formel handelt es sich auch um die durchzuführende Prozedue, um das Value-NN zu trainieren \cite{DRL}.
 Da es sich beim Q-Learning um value-based RL-Verfahren \ref{RL_policy_value} handelt, muss kein weiteres NN aufgesetzt werden, wie es beispielsweise beim PPO der Fall ist. Im Vergleich zum voher vorgestellten PPO ist der DQL Algorithmus ein deutlich simpleres Verfahren. Die Tatsache, dass es sich bei dem DQL auch noch um eine off-policy Verfahren handelt, lässt unter anderem auch das Lernen von älteren Daten zu. Im Vergleich zum PPO ist der DQL-Agent dazu jedoch, in einem deutlich größeren Maß, imstande. Auch sehr weit zurückliegende Daten können vom DQL-Algorithmus zum Lernen verwendet werden. Dies bedingt einige Details, die in der Implmentierung zum Tragen kommen.\\
 
+\section{Backpropagation}
+Nachdem nun alle Agenen-Typen vorgestellt worden sind, folgt nun das Herzstück des Lernens. Das sogenannte Backpropagation ist ein gradientenbasiertes Verfahren zur Rückrechnung des Trainingsfehlers in neuronalen Netzwerken. Vorgestellt wurde dieses Verfhren von P. Werbos, jedoch erfuhr es erst eine größere bekanntheit durch eine Veröffentlichung von Rumelhart, Hinton und Williams.\\
+Zeil des Verfahrens ist es, die gewichte des neuronalen Netzwerkes so anzupassen, dass die Ausgabe die Ausgabe der NN gegen die gewünschte Ausgabe konvergiert. Dadurch gibt das NN die Ergebnisse aus, welche vom Benutzer gewollt sind.
 
+\subsection{Verfahren}
+Das Backpropagation Verfahren besteht im Wesentlichen aus vier Schritten.
+\begin{enumerate}
+	\item Berechnung der Ausgabe des NN
+	\item Bestimmung des Fehlers 
+	\item Berechnen der Änderungen des NN-Gewichte
+	\item Anpassen der NN-Gewichte
+\end{enumerate}
+
+\subsubsection{Berechnung der Ausgabe des NN}
+Zu Beginn des Backpropagation Verfahrens müssen die Ausgabewerte des NN berechnet werden, um diese mit den erwarteten Werten vergleichen zu können. Dazu werden die Inputs durch das NN durch propagiert. Dieses wird im allgemeinen auch forward pass of the neural Network genannt.
+
+\subsubsection{Bestimmung der Fehler}
+Nachdem die Ausgaben des NN nun vorhanden sind, können die Fehler mit Hilfe der erwarteten Werte bestimmt werden. Es existieren viele Möglichkeiten den Fehler zu bestimmen, neben der Negative Log-Likelihood Loss Function und der Cross-Entropy Loss Function ist jedoch die Mean Squared Error Loss Function eine der bekanntesten und beliebtesten. Diese berechnet die Quadrate aller Fehler, und bestimmt danach den Durchschnitt über alle quadrierten Fehler.
+\begin{align}
+	\frac{1}{N}\sum_{i=1}^{N}(x_{i} - \hat{x}_{i})^2
+	\label{MSE}
+\end{align}
+Dabei sind alle $x_{i}$ die Ausgabe des NN und die $\hat{x}_{i}$ die erwarteten Werte.
+
+\subsubsection{Berechnen der Änderungen des NN-Gewichte}
+Zur Bestimmung der Veränderungen der Kantengewichte des NN wird er Fehler mit Hilfe der partiellen Ableitungen zurückgerechnet. Es ist daher zwingend erforderlich, dass alle Aktivierungsfunktionen differenzierbar sind, da ansonsten keine Ableitung gebildet werden kann.\\
+Zum besseren Verständnis soll das Backpropagation Verfahren an einen Beispiel erläutert werden.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[scale=0.435]{Abbildungen/Backprop.png}
+		\label{fig:Backpropagation}
+		\caption[Backpropagation]{Backpropagation - Abbildung einer Backpropagation Prozedur. Die roten zahlen geben dabei die lokalen Gradienten an. Die grünen Zahlen geben die Fehler an.}
+	\end{center}
+\end{figure}
+Diese schematische Darstellung einer Funktion wird im Folgenden dafür verwendet, um den Backpropagation Prozess zu verdeutlichen. Dabei stellen die roten Zahlen die lokalen Graienten dar un die grünen Zahlen die eigentliche Rechung der Funktion. An diesem Beispiel soll nun das Berechnen der Gradienten verdeutlicht werden.\\
+\begin{align}
+	f(W, X) = W_{1}W_{2} + X_{1}X_{2}
+\end{align}
+Um die gradienten zu bestimmen, fängt man am letzen Glied der Funktion an, in diesem Fall am +-Gate der Gradient am Ende ist per Definintion immer 1.00. Dies hängt mit der Identitätsfunktion zusammen, da $\frac{\partial f}{\partial f} = 1$. Das Plus-Gate addiert $-2.00 + 6.00 = 4.00$. Wie bereits erwähnt wurde, müssen die lokalen Gradienten bestimmt werden. Diese stellen Ableitungen nach einer Variable dar. Die jeweils andere Variable, sofern vorhanden, wird als Konstante angesehen. Daher ergibt sich nach den algemeinen Regeln der Differenzialrechnung: 
+\begin{align}
+	f_{c}(x) = c + x \longrightarrow \frac{\partial f}{\partial x} = 1
+	\label{eq:PlusAbl}
+\end{align}
+Die lokale Gradient $\frac{\partial f}{\partial a} \text{und} \frac{\partial f}{\partial b} = a = 1$ da \ref{eq:PlusAbl}.
+Um nun die Gradienten $\frac{\partial f}{\partial W_1}$, $\frac{\partial f}{\partial W_2}$, $\frac{\partial f}{\partial X_1}$ und $\frac{\partial f}{\partial X_2}$ zu berechnen, kommt die Kettenregel (Chain rule) zum Einsatz.
+\begin{align}
+	\frac{\partial f}{\partial W_{1}} = \frac{\partial a}{\partial W_{1}} * \frac{\partial f}{\partial a}
+\end{align}
+Diese besagt, dass sich beispielsweise der lokale Gradient $\frac{\partial f}{\partial W_{1}}$ durch die Multiplikation (Verkettung) des lokalen Gradienten $\frac{\partial a}{\partial W_{1}}$ und durch den vorherigen lokalen Gradienten $\frac{\partial f}{\partial a}$. Dieses Prinzip lässt sich für beliebig viele Gates wiederholen. Dabei können die Gates auch andere Funktionen, wie $f(x) = \frac{1}{x}$ oder $f(x) = e^{x}$, implementieren.
+Der lokale Gradient von $W_1 = -2$, da $f(W_1) = W_2 * W_1 \longrightarrow \frac{\partial f}{\partial W_1} = W_2 * 1 = W_2$ ist. $W_2$ ist dabei eine Konstante.\\
+Dieses Vorgehen lässt sich analog für z.B. Layer durchführe.
 
 
