@@ -8,8 +8,7 @@ from src.snakeAI.agents.common.base import BaseNet
 
 
 class Agent:
-    def __init__(self, lr=1e-4, n_actions=3, gamma=0.99, batch_size=2**5, epsilon_start=1.0, eps_end=0.05, eps_dec=1e-5, max_mem_size=2**20):
-
+    def __init__(self, lr=1e-4, n_actions=3, gamma=0.95, batch_size=2**5, epsilon_start=1.0, eps_end=0.05, eps_dec=1e-5, max_mem_size=2**20):
         self.gamma = gamma
         self.epsilon = epsilon_start
         self.eps_min = eps_end
@@ -21,8 +20,7 @@ class Agent:
 
         self.Q_eval = BaseNet(output=n_actions, head_type='critic', lr=lr, device="cuda:0")
         self.loss = MSELoss()
-        self.mem = Memory(max_mem_size=self.mem_size, in_dims_av=(6, 13, 13), in_dims_cat_obs=(41,),
-                          batch_size=batch_size)
+        self.mem = Memory(max_mem_size=self.mem_size, in_dims_av=(6, 13, 13), in_dims_cat_obs=(41,), batch_size=batch_size)
 
     def act(self, av, cat_obs):
         if np.random.random() > self.epsilon:
@@ -56,7 +54,6 @@ class Agent:
 
         self.Q_eval.optimizer.zero_grad()
         q_eval = self.Q_eval(avs, cat_obs)
-        # print(q_eval.requires_grad)
         q_eval_2 = q_eval[batch_index, actions]
         q_next = self.Q_eval(new_avs, new_cat_obs)
         q_next[terminal_batch] = 0.0

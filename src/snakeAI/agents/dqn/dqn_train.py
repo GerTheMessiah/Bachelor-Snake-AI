@@ -15,11 +15,11 @@ from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 
 def train_dqn(N_ITERATIONS, has_gui=False):
-    LR, BOARD_SIZE = 5.0e-4, (8, 8)
+    LR, BOARD_SIZE = 1.5e-4, (8, 8)
     start_time = time_ns()
     scores, apples, wins, dtime, eps, steps_list, dq = [], [], [], [], [], [], deque(maxlen=100)
-    agent = Agent(lr=LR, n_actions=3, batch_size=2 ** 6, eps_dec=5e-6, max_mem_size=2 ** 12)
-    agent.load_model()
+    agent = Agent(lr=LR, n_actions=3, batch_size=2 ** 6, eps_dec=5.5e-6, max_mem_size=2 ** 11)
+    # agent.load_model()
     game = SnakeEnv()
     game.post_init(field_size=BOARD_SIZE, has_gui=has_gui)
     iter_time = time_ns()
@@ -71,4 +71,4 @@ def train_dqn(N_ITERATIONS, has_gui=False):
 
 
 if __name__ == '__main__':
-    train_dqn(N_ITERATIONS=30000, has_gui=False)
+    train_dqn(N_ITERATIONS=20000, has_gui=False)

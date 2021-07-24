@@ -1,4 +1,4 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{13}
 % this bibliography was produced with the style dinat.bst v2.5
 \makeatletter
 \newcommand{\dinatlabel}[1]%
@@ -17,9 +17,9 @@
 \newblock abs/1909.07528 (2019). --
 \newblock URL \url{http://arxiv.org/abs/1909.07528}
 
-\bibitem[Bowei~Ma(2016)]{SnakeRL2016}
+\bibitem[Bowei~Ma(2016)]{Exploration_of_Reinforcement_Learning_to_SNAKE}
 \dinatlabel{Bowei~Ma 2016} \textsc{Bowei~Ma}, Jun~Z.:
-\newblock \emph{Exploration of Reinforcement Learning to SNAKE}.
+\newblock \emph{{Exploration of Reinforcement Learning to SNAKE}}.
 \newblock 2016. --
 \newblock URL \url{http://cs229.stanford.edu/proj2016spr/report/060.pdf}
 
@@ -53,9 +53,10 @@
 \newblock abs/1801.01290 (2018). --
 \newblock URL \url{http://arxiv.org/abs/1801.01290}
 
-\bibitem[Lapan(2020)]{DRL}
+\bibitem[Lapan(2020)]{DRL_Lapan}
 \dinatlabel{Lapan 2020} \textsc{Lapan}, Maxim:
-\newblock \emph{{Deep Reinforcement Learning}}.
+\newblock \emph{{Deep Reinforcement Learning - Das umfassende
+  Praxis-Handbuch}}.
 \newblock MITP Verlags GmbH, 2020. --
 \newblock URL
   \url{https://www.ebook.de/de/product/37826629/maxim_lapan_deep_reinforcement_learning.html}.
@@ -63,7 +64,7 @@
 \newblock ISBN 3747500366
 
 \bibitem[Mnih u.\,a.(2016)Mnih, Badia, Mirza, Graves, Lillicrap, Harley, Silver
-  und Kavukcuoglu]{DBLP:journals/corr/MnihBMGLHSK16}
+  und Kavukcuoglu]{asynchronous_methods_for_deep_rl}
 \dinatlabel{Mnih u.\,a. 2016} \textsc{Mnih}, Volodymyr~; \textsc{Badia},
   Adri{\`{a}}~P.~; \textsc{Mirza}, Mehdi~; \textsc{Graves}, Alex~;
   \textsc{Lillicrap}, Timothy~P.~; \textsc{Harley}, Tim~; \textsc{Silver},
@@ -89,6 +90,13 @@
 \newblock 518 (2015), Februar, Nr.~7540, S.~529--533. --
 \newblock URL \url{http://dx.doi.org/10.1038/nature14236}. --
 \newblock ISSN 00280836
+
+\bibitem[Schulman(2017)]{Deep_RL_Bootcamp}
+\dinatlabel{Schulman 2017} \textsc{Schulman}, John:
+\newblock \emph{{Deep RL Bootcamp Lecture 5: Natural Policy Gradients}}.
+\newblock Video.
+\newblock August 2017. --
+\newblock URL \url{https://www.youtube.com/watch?v=xvRrgxcpaHY&}
 
 \bibitem[Schulman u.\,a.(2015)Schulman, Levine, Moritz, Jordan und
   Abbeel]{TRPO}
@@ -117,5 +125,13 @@
 \newblock Second.
 \newblock The MIT Press, 2018. --
 \newblock URL \url{http://incompleteideas.net/book/bookdraft2018jan1.pdf}
+
+\bibitem[Wei u.\,a.(2018)Wei, Wang, Ming, Tan, Miao und
+  Zhou]{Autonomous_Agents_in_Snake_Game_via_DRL}
+\dinatlabel{Wei u.\,a. 2018} \textsc{Wei}, Zhepei~; \textsc{Wang}, Di~;
+  \textsc{Ming}, Zhang~; \textsc{Tan}, Ah-Hwee~; \textsc{Miao}, Chunyan~;
+  \textsc{Zhou}, You:
+\newblock {Autonomous Agents in Snake Game via Deep Reinforcement Learning}, 07
+  2018, S.~20--25
 
 \end{thebibliography}

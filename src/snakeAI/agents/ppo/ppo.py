@@ -33,7 +33,7 @@ class Agent:
 
         old_around_view = T.cat(memory.around_view, axis=0).to(self.device).detach()
         old_cat_obs = T.cat(memory.cat_obs, axis=0).to(self.device).detach()
-        old_actions = T.tensor(memory.actions, requires_grad=False, dtype=T.int8).to(self.device).detach()
+        old_actions = T.tensor(memory.actions, dtype=T.int8).to(self.device).detach()
         old_logprobs = T.cat(memory.logprobs).to(self.device).detach()
 
         for _ in range(self.K_epochs):

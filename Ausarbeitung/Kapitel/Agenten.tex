@@ -1,12 +1,10 @@
-\chapter{Agenten}
+\chapter{Agenten} \label{chap:Agenten}
 Ein zentraler Aspekt der eines Vergleiches von verschiedenen RL-Agenten ist die genaue Definition der einzelnen Agenten. Basierende auf den Grundlagen \ref{sec:Agent} soll in diesem Kapitel der Begriff vervollständigt und die zu vergleichenden Agenten sollen vorgestellt werden.\\
-Erste statistische Erhebungen haben gezeigt, dass die ausgewählten Hyperparameter einen immensen Einfluss auf das Verhalten der Agenten haben. Bestätigt wird diese Aussage durch die Quelle \cite{Sutton1998}. Ein Vergleich zwischen DQN und PPO mit wahllos gewählten Hyperparametern ist folglich wenig aussagekräftig. Daher ist auch die Definition des Begriffs Agent, welcher nur zwischen DQN und PPO diffenenziert, unzureichend.\\
-\\Angebracht wäre eine neuer erweiterte Definition des Begriffs Agent für diese Ausarbeitung. Diese soll um den entscheidenen Faktor der Hyperparameter erweitert werden. Ein Agent wird daher nicht mehr alleinig durch seine Art (Q-Learning oder Policy Gradient bzw. DQN oder PPO) definiert, sondern ebenfalls durch die ausgewählten Hyperparameter.Eine Analogie aus dem Tierreich sollte hier Klarheit verschaffen.\\
-\\Im Tierreich gibt es Hunde und Katzen. Diese stellen die RL-Klassen, wie z.B. Q-Learning- oder Policy Gradient Verfahren, dar. Sieht man jedoch genauer hin, so unterscheiden sich die Hunde und Katzen durch ihre jeweiligen Rassen, wie z.B. Pudel und Dalmatiner bei den Hunden und Maine Coons und Norwegische Waldkatzen bei den Katzen. Diese stellen die Algorithmusklassen, wie z.B. DQN oder PPO, dar. Dennoch unterscheiden sich auch Hunde und Katzen der selben Rasse untereinander, nämlich in ihrer DNS. Diese stellt die letzte Differenzierungsebene der Agenten dar. Im Sachzusammenhang stellen die Hyperparameter und Attribute, wie beispielsweise die Netzstruktur, die DNS eines Agenten dar.\\
-Soll nun also ein Vergleich zwischen verschiedenen Agenten vollzogen werden, so gilt es als erstes die einzelnen Agenten zu definieren, daher ihre RL-Klasse, Algorithmusklasse und Hyperparameter zu bestimmen.
+Erste statistische Erhebungen haben gezeigt, dass die ausgewählten Hyperparameter einen immensen Einfluss auf das Verhalten der Agenten haben. Bestätigt wird diese Aussage durch die Quelle \cite{Sutton1998}. Ein Vergleich zwischen DQN und PPO mit wahllos gewählten Hyperparametern ist folglich wenig aussagekräftig. Daher ist auch die Definition des Begriffs Agent, welcher nur zwischen DQN und PPO differenziert, unzureichend.\\
+\\Angebracht wäre eine neuer erweiterte Definition des Begriffs Agent für diese Ausarbeitung. Diese soll um den entscheidenden Faktor der Hyperparameter erweitert werden. Ein Agent wird daher nicht mehr alleinig durch seine RL-Klasse (Q-Learning oder Policy Gradient) und Algorithmus-Klasse(DQN oder PPO) definiert, sondern ebenfalls durch die ausgewählten Hyperparameter.
 
 \section{Agenten}
-Im Folgenden werden die einzelnen Agenten, welche untereinander verglichen werden sollen, tabellarisch vorgestellt. Daher wird Aufschluss über Details, wie z.B. die RL-Klasse, Algorithmusklasse, Hyperparameter und die Netzstruktur gegeben.
+Im Folgenden werden die einzelnen Agenten, welche untereinander verglichen werden sollen, tabellarisch vorgestellt. Daher wird Aufschluss über Details, wie z.B. die RL-Klasse, Algorithmus-Klasse, Hyperparameter und die Netzstruktur gegeben.
 \begin{longtable}[h]{|p{3.5cm}|p{2.5cm}|p{1.5cm}|p{6cm}|}
 	\caption{Agenten}
 	\label{tab:Agenten} 
@@ -17,7 +15,7 @@ Im Folgenden werden die einzelnen Agenten, welche untereinander verglichen werde
 	\hline
 	DQN\_0.99\_64\_5e-6\_2**12\_5e-4 & Q-Learning & DQN & 
 	\begin{itemize}
-		\item gamma ($\gamma$) =  0.99
+		\item gamma ($\gamma$) = 0.99
 		\item batch\_size = 64 = $2^{6}$
 		\item epsilon\_decrement = $5\mathrm{e}{-6}$
 		\item max\_mem\_size = $2^{12}$
@@ -27,7 +25,7 @@ Im Folgenden werden die einzelnen Agenten, welche untereinander verglichen werde
 	\hline
 	DQN\_0.95\_128\_1e-5\_2**13\_1e-4 & Q-Learning & DQN & 
 	\begin{itemize}
-		\item gamma ($\gamma$) =  0.95
+		\item gamma ($\gamma$) = 0.95
 		\item batch\_size = 128 = $2^{7}$
 		\item epsilon\_decrement = $1\mathrm{e}{-5}$
 		\item max\_mem\_size = $2^{13}$
@@ -37,7 +35,7 @@ Im Folgenden werden die einzelnen Agenten, welche untereinander verglichen werde
 	\hline
 	PPO\_0.99\_128\_10\_1e-3\_1.5e-3\_0.5\_1e-3\_128\_2**11 & Policy Gradient & PPO & 
 	\begin{itemize}
-		\item gamma ($\gamma$) =  0.99
+		\item gamma ($\gamma$) = 0.99
 		\item K\_epochs = 10
 		\item epsilion\_clip = 0.2
 		\item lr\_actor = $1\mathrm{e}{-3}$
@@ -51,7 +49,7 @@ Im Folgenden werden die einzelnen Agenten, welche untereinander verglichen werde
 	\hline
 	PPO\_0.95\_128\_8\_0.5e-3\_1e-3\_0.5\_1e-4\_64\_2**9 & Policy Gradient & PPO & 
 	\begin{itemize}
-		\item gamma ($\gamma$) =  0.99
+		\item gamma ($\gamma$) = 0.99
 		\item K\_epochs = 10
 		\item epsilion\_clip = 0.2
 		\item lr\_actor = $1\mathrm{e}{-3}$
