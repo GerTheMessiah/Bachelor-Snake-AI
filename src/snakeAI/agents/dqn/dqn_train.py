@@ -28,7 +28,7 @@ def train_dqn(N_ITERATIONS, has_gui=False):
         steps = 0
         around_view, cat_obs = game.reset()
         while not game.has_ended:
-            around_view, cat_obs, action = agent.act(around_view, cat_obs)
+            action = agent.act(around_view, cat_obs)
 
             around_view_new, cat_obs_new, reward, done, won = game.step(action)
             score += reward

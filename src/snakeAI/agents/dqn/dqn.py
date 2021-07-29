@@ -34,13 +34,13 @@ class Agent:
             action = T.argmax(actions).item()
         else:
             action = np.random.choice(self.action_space)
-        return av, cat_obs, action
+        return action
 
     def learn(self):
-        if self.mem.mem_cntr < self.batch_size:
+        if self.mem.mem_counter < self.batch_size:
             return
 
-        max_mem = min(self.mem.mem_cntr, self.mem_size)
+        max_mem = min(self.mem.mem_counter, self.mem_size)
         batch = np.random.choice(max_mem, self.batch_size, replace=False)
 
         batch_index = T.arange(self.batch_size, dtype=T.long)
@@ -53,12 +53,11 @@ class Agent:
         rewards_batch = self.mem.rewards[batch].to(self.Q_eval.device)
 
         self.Q_eval.optimizer.zero_grad()
-        q_eval = self.Q_eval(avs, cat_obs)
-        q_eval_2 = q_eval[batch_index, actions]
+        q_eval = self.Q_eval(avs, cat_obs)[batch_index, actions]
         q_next = self.Q_eval(new_avs, new_cat_obs)
         q_next[terminal_batch] = 0.0
         q_target = rewards_batch + self.gamma * T.max(q_next, dim=1)[0]
-        loss = self.loss(q_target, q_eval_2).to(self.Q_eval.device)
+        loss = self.loss(q_target, q_eval).to(self.Q_eval.device)
         loss.backward()
         self.Q_eval.optimizer.step()
 
@@ -72,7 +71,6 @@ class Agent:
             self.Q_eval.load_state_dict(T.load(file_path(dir=r"models\dqn_models", new_save=False, file_name="model")))
             if path is not None:
                 self.Q_eval.load_state_dict(T.load(path))
-        except Exception:
+        except IOError:
             print("Error while loading model.")
             return
-

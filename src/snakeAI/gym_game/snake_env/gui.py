@@ -17,6 +17,7 @@ class GUI:
         pygame.draw.rect(self.screen, color, (Cords[0], Cords[1], self.Particle, self.Particle), 0)
 
     def update_GUI(self, ground):
+        self.reset_GUI()
         if self.size != ground.shape:
             self.size = ground.shape
             del self.screen
@@ -29,7 +30,7 @@ class GUI:
             for column in range(self.size[1]):
                 # last part of the tail - red
                 if ground[row][column] == -1:
-                    self.draw([column, row], (0, 200, 75))
+                    self.draw([column, row], (0, 225, 120))
                     continue
                 # apple - red
                 if ground[row][column] == -2:
@@ -48,7 +49,3 @@ class GUI:
 
     def reset_GUI(self):
         self.screen.fill((0, 0, 0))
-
-    def show(self, ground):
-        self.reset_GUI()
-        self.update_GUI(ground)

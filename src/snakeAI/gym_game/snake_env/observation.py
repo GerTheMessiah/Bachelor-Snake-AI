@@ -17,8 +17,6 @@ def dist(ground, p_pos, wanted_hit, fac_0, fac_1):
         p_1 = p_pos[1] + fac_1 * i_1
     if not on_playground(p_0, p_1, ground.shape) and bool(wanted_hit):
         return 0
-    # if any((p_pos[i] <= 0 or p_pos[i] >= ground.shape[i]) for i in range(2)):
-    #     return 1.2 if dist_ == 0 else dist_
     return 1 / dist_ if dist_ != 0 else 2
 
 
@@ -26,7 +24,7 @@ def dist(ground, p_pos, wanted_hit, fac_0, fac_1):
 def create_around_view(pos, id, g):
     width = 6
     c_h = id * 2
-    c_s = c_h - 1
+    c_s = id
     tmp_arr = np.zeros((6, width * 2 + 1, width * 2 + 1), dtype=np.float64)
 
     for row in range(-width, width + 1):
@@ -62,7 +60,7 @@ def create_around_view(pos, id, g):
 def create_distances(pos, ground):
     obs = np.zeros(24, dtype=np.float64)
     a = 0
-    for c in [[], list(range(1, 13)), [-2]]:
+    for c in [[], [-1, 1, 2], [-2]]:
         obs[a] = dist(ground, pos, c, -1, 0)
         a += 1
         obs[a] = dist(ground, pos, c, -1, 1)

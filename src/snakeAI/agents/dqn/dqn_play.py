@@ -1,4 +1,3 @@
-import torch as T
 from os import environ
 
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
@@ -19,7 +18,7 @@ def play_dqn(n_iterations, print_stats=True, has_gui=True):
         around_view, cat_obs = game.reset()
         scores = 0
         while not game.has_ended:
-            around_view, cat_obs, action = agent.act(around_view, cat_obs)
+            action = agent.act(around_view, cat_obs)
 
             around_view_new, cat_obs_new, reward, done, won = game.step(action)
             scores += reward

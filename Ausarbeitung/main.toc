@@ -70,5 +70,16 @@
 \contentsline {section}{\numberline {6.1}Bestimmung der Netzstruktur}{36}{section.6.1}%
 \contentsline {chapter}{\numberline {7}Implementierung}{37}{chapter.7}%
 \contentsline {section}{\numberline {7.1}Snake Environment}{37}{section.7.1}%
-\contentsline {chapter}{Literaturverzeichnis}{38}{section*.47}%
+\contentsline {subsection}{\numberline {7.1.1}Schnittstelle}{37}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Spiellogik}{38}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}Reward Function}{42}{subsection.7.1.3}%
+\contentsline {subsection}{\numberline {7.1.4}Observation}{43}{subsection.7.1.4}%
+\contentsline {subsection}{\numberline {7.1.5}Graphische Oberfläche}{46}{subsection.7.1.5}%
+\contentsline {section}{\numberline {7.2}Agenten}{46}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Netzstruktur}{47}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}DQN}{48}{subsection.7.2.2}%
+\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{48}{subsubsection*.48}%
+\contentsline {subsubsection}{\nonumberline Trainingsprozess}{49}{subsubsection*.50}%
+\contentsline {chapter}{Literaturverzeichnis}{50}{section*.51}%
+\contentsline {chapter}{\numberline {A}Anhang}{52}{appendix.A}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

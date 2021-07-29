@@ -85,26 +85,23 @@ class SnakeGame:
             return
 
         if not self.p.done:
-            for s in self.p.tail[1:]:
+            for s in self.p.tail:
                 self.ground[s[0], s[1]] = self.p.c_s
             self.ground[self.p.tail[-1][0], self.p.tail[-1][1]] = -1
             self.ground[self.p.tail[0][0], self.p.tail[0][1]] = self.p.c_h
 
-    def is_done(self):
-        return self.p.done
-
     def evaluate(self):
         if len(self.p.tail) == self.max_snake_length and self.p.done:
-            return 100
-        elif not len(self.p.tail) == self.max_snake_length and self.p.done:
-            return -10
+            return 100.0
+        elif len(self.p.tail) != self.max_snake_length and self.p.done:
+            return -20.0
         if self.has_grown:
-            return 2.5
+            return 2.0
         return -0.01
 
     def view(self):
         if self.has_gui:
-            self.gui.show(self.ground)
+            self.gui.update_GUI(self.ground)
 
     def observe(self):
         return make_obs(self.p.id, self.p.pos, self.p.tail_pos, self.p.direction, self.ground, self.apple,
@@ -123,3 +120,7 @@ class SnakeGame:
     @property
     def max_snake_length(self):
         return self.ground.size
+
+    @property
+    def is_done(self):
+        return self.p.done
