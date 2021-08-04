@@ -15,32 +15,29 @@ from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 
 def train_dqn(N_ITERATIONS, has_gui=False):
-    LR, BOARD_SIZE = 1.5e-4, (8, 8)
+    LR, BOARD_SIZE = 1.0e-4, (8, 8)
     start_time = time_ns()
     scores, apples, wins, dtime, eps, steps_list, dq = [], [], [], [], [], [], deque(maxlen=100)
-    agent = Agent(lr=LR, n_actions=3, batch_size=2 ** 6, eps_dec=5.5e-6, max_mem_size=2 ** 11)
-    # agent.load_model()
-    game = SnakeEnv()
-    game.post_init(field_size=BOARD_SIZE, has_gui=has_gui)
+    agent = Agent(lr=LR, n_actions=3, gamma=0.95, batch_size=2 ** 6, eps_dec=5e-6, max_mem_size=2 ** 11, eps_end=0.001)
+    game = SnakeEnv(BOARD_SIZE, has_gui)
     iter_time = time_ns()
     for i in range(1, N_ITERATIONS + 1):
         score = 0
         steps = 0
-        around_view, cat_obs = game.reset()
+        around_view, scalar_obs = game.reset()
         while not game.has_ended:
-            action = agent.act(around_view, cat_obs)
-
+            action = agent.act(around_view, scalar_obs)
             around_view_new, cat_obs_new, reward, done, won = game.step(action)
             score += reward
             steps += 1
-            agent.mem.add(around_view, cat_obs, action, reward, done, around_view_new, cat_obs_new)
+            agent.mem.add(around_view, scalar_obs, action, reward, done, around_view_new, cat_obs_new)
             agent.learn()
 
             if game.has_gui:
                 game.render()
 
             around_view = around_view_new
-            cat_obs = cat_obs_new
+            scalar_obs = cat_obs_new
 
         apple_count = game.apple_count
 
@@ -71,4 +68,7 @@ def train_dqn(N_ITERATIONS, has_gui=False):
 
 
 if __name__ == '__main__':
-    train_dqn(N_ITERATIONS=20000, has_gui=False)
+    try:
+        train_dqn(N_ITERATIONS=20000, has_gui=False)
+    except KeyboardInterrupt:
+        pass

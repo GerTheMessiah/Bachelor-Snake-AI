@@ -1,22 +1,22 @@
-from os import environ
-
-environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
-
 from time import sleep
+from os import environ
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
+
 from src.snakeAI.agents.common.utils import file_path
 from src.snakeAI.agents.dqn.dqn import Agent
 from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 
 def play_dqn(n_iterations, print_stats=True, has_gui=True):
-    agent = Agent(lr=1e-3, n_actions=3, gamma=0.99, epsilon_start=1.0, batch_size=2 ** 8, eps_end=0.05, eps_dec=1e-5,
+    BOARD_SIZE = (8, 8)
+    agent = Agent(lr=1e-3, n_actions=3, gamma=0.99, epsilon_start=0.0, batch_size=2 ** 8, eps_end=0.00, eps_dec=0,
                   max_mem_size=2 ** 13)
     agent.load_model(file_path(dir=r"models\dqn_models", new_save=False, file_name="model"))
-    game = SnakeEnv()
-    game.post_init(field_size=(8, 8), has_gui=has_gui)
+    game = SnakeEnv(BOARD_SIZE, has_gui)
     for i in range(1, n_iterations + 1):
         around_view, cat_obs = game.reset()
         scores = 0
+        won = False
         while not game.has_ended:
             action = agent.act(around_view, cat_obs)
 
@@ -40,4 +40,7 @@ def play_dqn(n_iterations, print_stats=True, has_gui=True):
 
 
 if __name__ == '__main__':
-    play_dqn(10, print_stats=True, has_gui=True)
+    try:
+        play_dqn(1000, print_stats=True, has_gui=True)
+    except KeyboardInterrupt:
+        pass

@@ -2,7 +2,7 @@ import torch as T
 
 
 class Memory:
-    def __init__(self, max_mem_size, in_dims_av, in_dims_cat_obs, batch_size=64):
+    def __init__(self, max_mem_size, in_dims_av, in_dims_cat_obs, batch_size=2 ** 6):
         self.mem_size = max_mem_size
         self.mem_counter = 0
         self.batch_size = batch_size
@@ -16,8 +16,8 @@ class Memory:
 
     def add(self, av, cat_obs, action, reward, done, new_av, new_cat_obs):
         index = self.mem_counter % self.mem_size
-        self.around_views[index, ...] = av if T.is_tensor(av) else T.tensor(av, dtype=T.float64)
-        self.cat_obs[index, ...] = cat_obs if T.is_tensor(cat_obs) else T.tensor(new_cat_obs, dtype=T.float64)
+        self.around_views[index, ...] = T.tensor(av, dtype=T.float64)
+        self.cat_obs[index, ...] = T.tensor(cat_obs, dtype=T.float64)
         self.actions[index] = action
         self.rewards[index] = reward
         self.terminals[index] = done
