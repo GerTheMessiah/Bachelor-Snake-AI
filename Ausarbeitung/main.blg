@@ -10,30 +10,26 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'wiz_functions' (item size: 4) to 6000 items.
 Database file #1: Bibliographie/Bibliographie.bib
-Warning--entry type for "Deep_RL_Bootcamp" isn't style-file defined
---line 185 of file Bibliographie/Bibliographie.bib
-Warning--I didn't find a database entry for "DRL"
-Warning--empty booktitle in Autonomous_Agents_in_Snake_Game_via_DRL
 You've used 13 entries,
             3552 wiz_defined-function locations,
-            891 strings with 9272 characters,
-and the built_in function-call counts, 14386 in all, are:
-= -- 1791
+            888 strings with 9321 characters,
+and the built_in function-call counts, 14371 in all, are:
+= -- 1786
 > -- 262
-< -- 554
-+ -- 703
+< -- 553
++ -- 702
 - -- 220
-* -- 1383
-:= -- 2588
-add.period$ -- 14
+* -- 1378
+:= -- 2585
+add.period$ -- 15
 call.type$ -- 13
 change.case$ -- 109
 chr.to.int$ -- 13
-cite$ -- 14
-duplicate$ -- 283
-empty$ -- 711
+cite$ -- 13
+duplicate$ -- 284
+empty$ -- 713
 format.name$ -- 365
-if$ -- 2546
+if$ -- 2543
 int.to.chr$ -- 0
 int.to.str$ -- 1
 missing$ -- 30
@@ -43,16 +39,15 @@ pop$ -- 125
 preamble$ -- 1
 purify$ -- 109
 quote$ -- 0
-skip$ -- 681
+skip$ -- 682
 stack$ -- 0
-substring$ -- 1119
-swap$ -- 102
+substring$ -- 1118
+swap$ -- 103
 text.length$ -- 70
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 128
-warning$ -- 1
+warning$ -- 0
 while$ -- 139
 width$ -- 0
 write$ -- 161
-(There were 3 warnings)

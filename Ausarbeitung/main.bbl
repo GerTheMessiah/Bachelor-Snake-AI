@@ -93,10 +93,10 @@
 
 \bibitem[Schulman(2017)]{Deep_RL_Bootcamp}
 \dinatlabel{Schulman 2017} \textsc{Schulman}, John:
-\newblock \emph{{Deep RL Bootcamp Lecture 5: Natural Policy Gradients}}.
-\newblock Video.
-\newblock August 2017. --
-\newblock URL \url{https://www.youtube.com/watch?v=xvRrgxcpaHY&}
+\newblock \emph{Deep RL Bootcamp Lecture 5: Natural Policy Gradients, TRPO,
+  PPO}.
+\newblock \url{https://www.youtube.com/watch?v=xvRrgxcpaHY}.
+\newblock Oktober 2017
 
 \bibitem[Schulman u.\,a.(2015)Schulman, Levine, Moritz, Jordan und
   Abbeel]{TRPO}
@@ -126,12 +126,13 @@
 \newblock The MIT Press, 2018. --
 \newblock URL \url{http://incompleteideas.net/book/bookdraft2018jan1.pdf}
 
-\bibitem[Wei u.\,a.(2018)Wei, Wang, Ming, Tan, Miao und
+\bibitem[Wei u.\,a.(2018)Wei, Wang, Zhang, Tan, Miao und
   Zhou]{Autonomous_Agents_in_Snake_Game_via_DRL}
 \dinatlabel{Wei u.\,a. 2018} \textsc{Wei}, Zhepei~; \textsc{Wang}, Di~;
-  \textsc{Ming}, Zhang~; \textsc{Tan}, Ah-Hwee~; \textsc{Miao}, Chunyan~;
+  \textsc{Zhang}, Ming~; \textsc{Tan}, Ah-Hwee~; \textsc{Miao}, Chunyan~;
   \textsc{Zhou}, You:
-\newblock {Autonomous Agents in Snake Game via Deep Reinforcement Learning}, 07
-  2018, S.~20--25
+\newblock Autonomous Agents in Snake Game via Deep Reinforcement Learning.
+\newblock In: \emph{2018 IEEE International Conference on Agents (ICA)}, 2018,
+  S.~20--25
 
 \end{thebibliography}

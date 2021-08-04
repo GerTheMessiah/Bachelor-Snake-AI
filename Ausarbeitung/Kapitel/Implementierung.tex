@@ -3,146 +3,152 @@ Für eine Umsetzung eines solchen Vergleichs, wie er in dem Kapitel \ref{chap:Vo
 Python bietet im Bereich des DRL eine Vielzahl an Frameworks, welche nicht nur bei der Implementierung des Envs. helfen, sondern auch welche, die Funktionalität der Neuronalen Netzwerke bereitstellen.
 
 \section{Snake Environment}
-Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt. Dieses bietet viele Methoden, welche das Implementieren erleichtern. Jedoch werden nicht nur Methoden, sondern auch die File-Struktur vorgegeben. So besteht das Snake Environment Package, dass den Namen snake\_env trägt, aus den wesentlichen Files:
+Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt (\url{https://gym.openai.com/}). Dieses bietet viele Methoden und Vorgaben in der Projektstruktur, welche das Implementieren erleichtern. So besteht das Snake Environment Package (snake\_env), aus den wesentlichen Files:
 
 \begin{itemize}
-	\item gui.py
-	\item observation.py
-	\item snake\_env.py
-	\item snake\_game\_2d.py
+	\item gui
+	\item observation
+	\item snake\_env
+	\item snake\_game
 \end{itemize}
 
-\subsection{Schnittstelle}
-Die grundlegende Schnittstelle des Snake Env. wird in dem File snake\_env.py bereitgestellt. In diesem File wird eine Klasse SnakeEnv definiert, welche durch das Erben von der Oberklasse gym.Env zentrale Methoden, welche teils als Schnittstellen zu den Agenten dienen, vorgegeben bekommt.\\
-So wird dem Programmierer angeraten, die folgenden Methoden zu implementieren:
-\begin{itemize}
-	\item step
-	\item reset
-	\item render
-	\item close
-\end{itemize}
-Zuzüglich wurde noch eine Methode post\_init definiert, welche für das weitere zentrale Einstellungen, wie z.B. die Spielfeldgröße und ob ein Spielfeld überhaupt visuell dargestellt werden soll, verantwortlich ist. 
-Die step-Methode dient zur Ausführung der vom Agenten ausgewählten Action. Nach der Abarbeitung dieser Action wird die neue Observation, der erhaltende Reward, das done-flag und das has\_won-flag übermittelt. Letzteres dient zur Bestimmung des Sieges.\\
-Die reset-Methode setzt das Spiel zurück, in dem sie das Env. Objekt zerstört und durch ein neues ersetzt. Zum Schluss wird dann noch die Obs. des neues Envs. zurückgegeben.\\
-Die render-Methode ruft die entsprechenden Methoden im gui.py File auf, welche für das visuelle darstellen des Snake Envs. verantwortlich sind.\\
+\subsection{Schnittstelle} \label{sec:Impl_Schnittstelle}
+Die grundlegende Schnittstelle des Snake Env. wird in dem File snake\_env bereitgestellt. In diesem wird die Klasse SnakeEnv definiert, welche durch die Vererbung der Oberklasse gym.Env zentrale Methoden übernimmt. Zu diesen gehören die step, reset, render und close Methode.\\
+Weiterhin bietet die selbst definierte Methode post\_init die Möglichkeit zentrale Einstellungen, wie z.B. die Spielfeldgröße und GUI-Aktivierung, zu editieren. 
+Die step-Methode startet den Ausführungsprozess der vom Agenten ausgewählten Action, durch Aufrufen weiterer Methoden \ref{sec:Impl_Spiellogik}. Nach der Abarbeitung wird die neue Obs, der Reward, das done-flag und das has\_won-flag übermittelt, wobei letzteres zur Bestimmung des Sieges dient.
+Die reset-Methode startet das Spiel von neuem. Zum Schluss wird dann noch die Obs. zurückgegeben.
+Die render-Methode ruft die Methoden für die visuelle Darstellung auf.
 Die close-Methode terminiert das Programm.\\
-\\Alles in allem stellt die Klasse SnakeEnv eine Wrapper-Klasse dar, die als Schnittstelle dient.
+Auf Basis der oben genannten Methoden wird ersichtlich, dass es sich bei der Klasse SnakeEnv um eine Wrapper-Klasse handelt, die als Schnittstelle dient.
 
 
 \subsection{Spiellogik} \label{sec:Impl_Spiellogik}
-Die eigentliche Spiellogik, welche durch die bereits zuvor erwähnte step-Methode angestoßen wird, liegt jedoch ausgelagert im snake\_game\_2d.py File. Dort wird eine Klasse definiert, welche SnakeGame heißt. Diese enthält unter anderen die Methode action(self), welche für die eigentliche Ausführung der Aktionen verantwortlich ist. 
-Neben dieser befinden sich jedoch auch Methoden, wie evaluate(self), die für das Bestimmen des Rewards verwendet wird, observe(self), welche den Generierungsprozess für die Observation anstößt, make\_apple(self), die nach dem ein Apfel gefressen worden ist einen neuen Apfel generiert und einige weitere selbsterklärende, die die Spiellogik aufspannen. Zu den wichtigsten Attributen der Klasse gehören ''p'', welcher das Player-Objekt darstellt, ''ground'', welche die dem Spiel zugrunde liegende Matrix repräsentiert, shape\_tuple, welches die Spielfelddimensionen enthält, gui, welches das GUI-Objekt darstellt, dass für die visualisiert zuständig ist und apple, welche die Position des Apfels speichert.
-\begin{figure}[H]
-	\centering
-	\def\svgscale{0.90}
-	\input{Abbildungen/snake_game_class_diagram.pdf_tex}
-	\caption[Klassendiagramm: snake\_game\_2d]{Darstellung des Klassendiagramms der SnakeGame-Klasse.}
-	\label{fig:SnakeGame_class_diagram}
-\end{figure}
-Neben dieser wird noch eine Datenhaltungsklasse definiert, welche alle Daten des Spielers enthält. Zu diesen gehören z.B. die Position des Kopfes und aller Schwanzglieder, die Blickrichtung, wie viele Schritte seit dem letzten Konsum eines Apfel vergangen sind, die Information, ob der Spieler gestorben ist und eine id zuzüglich weiteres sich aus dieser ergebender Konstanten, welche zur Darstellung des Spiels benötigt werden.
-\begin{figure}[H]
-	\centering
-	\def\svgscale{1.02}
-	\input{Abbildungen/player_class_diagram.pdf_tex}
-	\caption[Klassendiagramm: Player-Datenhaltungsklasse]{dar.}
-	\label{fig:class_diagram}
-\end{figure}
-Die SnakeGame Klasse definiert die grundlegenden Spiellogik. Aufgrund der Tatsache, das Snake ein gering dimensionales Spiels ist, welches nur eine zweidimensionales Spielfeld benötigt, bietet sich die Verwendung einer Matrix an. So kann mit entsprechenden Zahlenwerten innerhalb der Matrix der Position der Snake deutlich gemacht werden. Um auf diesem Konzept weiter aufzubauen, wird mit den Zahlenwerten nicht nur die Anwesenheit der Snake auf dem Feld angezeigt, sondern es wird durch unterschiedliche Werte auch die Position des Kopfes und es letzten Schwanzgliedes symbolisiert. Der Einfachheit halber werden die Positionen der Snake des weiteren auch noch in einer Pos-List (Positionsliste) festgehalten. Diese Positionen werden als Tupel in der List gespeichert, wobei die Tupel dabei die Zeilen- und Spalten-Indexe der Matrix angeben. Dieser Mehraufwand wird getätigt, um später schneller bestimmen zu können, ob die Snake in sich selbst oder in eine Wand gelaufen ist.\\
-\\Mit dem folgenden Aktivitätsdiagramm soll der Fokus weiter auf die action-Methode gelegt werden. Diese wird wie folgt abgearbeitet.
-Zu aller erst wird der sich im Player-Objekt liegende inter\_apple\_steps erhöht. Dieser zählt die Schritt seit dem die Snake das letzte Mal einen Apfel gefressen hat. Sollte dieser counter jedoch größer als, die vorher definierte, Obergrenze an Schritten ohne Apfel sein, so wird die Methode terminiert, der Agent hat verloren und das Spiel startet von neuem.\\
-Befindet sind der Agent Spieler unterhalb der Obergrenze, so überprüft, um welche action es sich handelt. Dabei sind die actions mit den Zahlen von 0 - 2 kodiert. Null für 90° nach links, eins für 90° rechts und zwei für nichts ändert sich, daher weiter geradeaus. Entsprechende wird die direction des Players angepasst. Da es vier Himmelsrichtungen gibt werden diese intern mit den Zahlen von 0 - 3 dargestellt. Wobei null Norden entspricht und eins Osten uns.\\
-Nach der Manipulation der direction des Players, wird das interne Player Positions-Tupel (pos) im Player-Objekt angepasst. Diese Änderung nicht jedoch noch nicht sofort in die Matrix übertrage, da es beim verlassen des Spielfeldes zu Exceptions kommen würde. Es muss daher erst überprüft werden, ob die neue Pos. des Players im Spielfeld liegt. Sollte dies nicht der Fall sein, so wird die Methode abermals terminiert, der Spieler hat verloren und das Spiel startet von neuem.\\
-Sollte dies jedoch nicht der Fall sein, so wird die neue Pos. in die bereits erwähnt List namens tail (im Player-Objekt) eingefügt.\\
-Zu diesem Stand der Abarbeitung ist es möglich, dass das Spiel bereits gewonnen ist. Um dies zu überprüfen, wird die Länge der Snake mit der maximal möglichen Länge, welche sich durch die Spielfeldgröße definiert, verglichen. Wenn die Länge Snake der maximal mögliche entspricht, so wird die Methode terminiert usw.
-\begin{figure}[H]
-	\begin{center}
-		\includegraphics[scale=0.16]{step_flussdiagramm.png}
-		\caption[Step-Methode]{Aktivitätsdiagramm der action(self, action) Methode}
-		\label{fig:action_activity_diagram}
-	\end{center}
-\end{figure}
-Sollte dies nicht der Fall sein, so muss als nächster Schritt die Matrix aktualisiert werden. Um dies jedoch zu tun, muss vorher festgestellt werden, ob die Snake einen Apfel gefressen hat. Sollte sie dies getan haben, so wird die neue Pos. des Kopfes in die Matrix eingepflegt. Des Weiteren wird noch ein neuer Apfel auf einer zufälligen freien Stelle generiert, der inter\_apple\_steps counter wird auf null und ein has\_grown boolean-flag wird auf true gesetzt. Dieses ist für die evaluate Methode, um die Information zu erhalten, ob die Snake einen höheren reward erhält, da sie ein sub-goal erreicht hat.\\
-Ist die Snake jedoch nicht gewachsen, so wird das letzte Schwanzglied aus der Matrix und Liste gelöscht, damit der Anschein von Bewegung entsteht. Des Weiteren wird noch das has\_grown- boolean-flag auf false gesetzt.\\
-Nach dieser Ausführung besteht nun die Möglichkeit, dass die Snake in sich selber gelaufen ist. Um dies festzustellen wird überprüft, ob die Liste mit allen Positionen irgendwelche Duplikate enthält. Sollte dies der Fall sein, so wird die Methode terminiert usw.\\
-Sollte auch dies nicht der Fall gewesen sein, so wird zum Schluss noch durch die gesamte Pos-List durch iteriert und die Felder der Matrix werden mit der Pos-Liste aktualisiert. Dabei wird jedes Schwanzglied in der Matrix eingepflegt. Kopf und das letzte Schwanzglied werden dabei durch einen anderen Zahlenwert wieder besonders hervorgehoben.
-
-\subsection{Reward Function}
-Die evaluate Methode, welche als Reward Function zu beschreiben ist, befindet sich in der SnakeGame Klasse \ref{fig:SnakeGame_class_diagram}. Basierend auf dem letzten Zug wird in dieser Methode der Reward bestimmt. Dies geschieht nach folgenden Vorbild.
+Die Spiellogik, welche durch die step-Methode \ref{sec:Impl_Schnittstelle} angestoßen wird, befindet sich im snake\_game File, welches eine Klasse namens SnakeGame definiert. Neben einigen Methoden werden im SnakeGame-Objekt auch viele spielbezogene Daten, wie z.B. das Spielfeld (ground), ein Player-Objekt (p),
+ein GUI-Objekt (gui) und die Spielfeldgröße (shape), den Schrittzähler (step\_counter) und eine Hilfsvariable (has\_grown), die für die Bestimmung des Reward benötigt wird.\\
+Der Weiteren werden die folgenden Methoden implementiert:
 \begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
-	\caption{Reward Function}
-	\label{tab:Reward_Function} 
+	\caption{Methoden der SnakeGame Klasse}
+	\label{tab:methods_of_SnakeGame} 
 	\endfirsthead
 	\endhead
 	\hline
-	Action & Reward \\
+	Methode & Erklärung \\
 	\hline
-	Letzter Apfel gefressen und das Spiel ist vorbei. & Sollte es der Agent geschafft haben den letzten Apfel des Spiels gefressen zu haben, also wenn die Länge der Snake die maximal mögliche Länge erreicht hat und wenn p.done wahr ist (p.done == True) \ref{fig:action_activity_diagram}, sodann wird ein Reward von +100 zurückgegeben. Dies soll ein Anreiz darstellen, damit die Snake das Spiel möglichst häufig gewinnt.\\
+	action & action ist für die Ausführung der Aktionen verantwortlich.\\
 	\hline
-	Snake ist gestorben. & Wenn die Snake gestorben, also in sich selbst, in eine Wand oder zulange umher gelaufen ist, dann wird ein Reward von -20 zurückgegeben. Diese Verlustbedingung tritt ein, sobald die Länge der Snake nicht die maximal mögliche Länge erreicht hat und p.done gleich wahr ist (p.done == True). Dieser Reward soll den Agenten dazu bewegen, nicht in einen terminalen Zustand zu geraten. \\
+	evaluate & evaluate bestimmt den, durch die Ausführung der Action, zu erhaltenden Reward.\\
 	\hline
-	Snake hat gefressen. & Sollte die Snake einen Apfel gegessen haben und sie dabei nicht gestorben sein, sodann wird ein Reward von +2 zurückgegeben. Dies tritt ein, wenn p.done gleich falsch ist (p.done == Flase) und das has\_grown wahr ist (has\_grown == True) \ref{sec:Impl_Spiellogig}. Der Reward kleine aber positive Reward soll die Snake ermutigen, mehr Äpfel zu sammeln. \\
+	observe & observe stößt den Generierungsprozess der Obs an, welcher ausgelagert im observation File liegt. \\
 	\hline
-	Einen Schritt gehen & Solle keine der oberen Fälle eintreten sein und das p.done falsch als Wert beinhalten (p.done == Flase), so wird ein Reward von -0.01 zurückgegeben. Dies soll die im Weiteren zu einer stärkeren Optimierung des Pathfinding führen, da jeder unnötige Schritt leicht bestraft wird. \\
+	make\_apple & make\_apple erzeugt einen neuen Apfel auf dem Spielfeld. \\
+	\hline
+	reset\_snake\_game & reset\_snake\_game setzt den Spielfortschritt zurück und startet es von neuem. \\
+	\hline
+	max\_snake\_length (getter) & Gibt die maximale Länge der Snake zurück. \\
+	\hline
+	is\_done (getter) & Liefert den Lebensstatus (player.done). \\
 	\hline
 \end{longtable}
 
-\subsection{Observation}
-Die Observation, welche das Snake Env. zurückgibt besteht aus zwei Teilen. Aus der sogenannten around\_view und der static\_Obs, welche beide unterschiedliche Informationen in sich tragen. Zur Erstellung der Obs. wird die observe Methode in der SnakeGame Klasse aufgerufen. Dies ruft ihrerseits die make\_obs Funktion auf, welches ausgelagert im observation.py File liegt. Mit Hilfe verschiedener Unterfunktionen wird dann die Obs. generiert.\\
-Die around\_view lässt sich dabei als ein Ausschnitt der Matrix beschreiben, die nicht das gesamte Spielfeld einnimmt \ref{fig:Observation}. Dieser Ausschnitt vermittelt ein Bild der der Snake umgebenden Umgebung. Strukturen wie Wände und Teile des eigenen Schwanzes, die vielleicht eine Sackgasse aufspannen, werden deutlich. Numerische wird die around\_view als eine one-hot-encoded Matrix der Form (6,13,13) zurückgegeben.\\
-Das One-Hot-Encoding benutzt zum codieren nur null und eins. Sollte ein Merkmal vorhanden sein, so wird dieses mit eins codiert anderenfalls mit null.\\
-Dies ist auch der grund, warum die around\_view Matrix sechs zweidimensionale Schichten besitzt. Diese geben Aufschluss über folgende Informationen:
+Zum Erhalt eines tieferen Verständnisses über die Spiellogik, soll diese exemplarisch erläutert werden. Bevor dies jedoch geschehen kann muss noch die Datenhaltungsklasse Player erwähnt werden, die ebenfalls im Snake\_game File definiert ist.
+Diese speichert spielerbezogen Daten, wie z.B. die Position aller Schwanzglieder inkl. des Kopfes (pos, tail), Blickrichtung (direction), die Anzahl der Schritte seit dem letzten Fressen (inter\_apple\_steps), den Lebensstatus (done) und einige Konstanten, welche für die Visualisierung benötigt werden (id, c\_s und c\_h). Zuzüglich besitzt die Player Klasse noch eine player\_reset Methode und einige getter Methoden.\\
+
+Da Snake ein zweidimensionales Spiels ist, wird eine gleich dimensionale Matrix (ground) zur Spieldarstellung verwendet.
+So kann mit dn Zeilen- und Spaltenindexen der Matrix die Position der Snake deutlich gemacht werden. So wird der Schwanz mit der Konstante c\_s, der Kopf mit c\_h, der Apfel mit -2 und das Ende der Snake mit -1, in der Matrix (ground) deutlich gemacht.
+Der Einfachheit halber werden die Zeilen- und Spaltenindexe, daher die Position, ebenfalls noch in einer List (tail) festgehalten. Dieser erleichtert später die Feststellung des Lebensstatus (done).\\
+\\Mit dem folgenden Aktivitätsdiagramm soll der Fokus weiter auf die action-Methode gelegt werden. Diese wird wie folgt abgearbeitet.
+Als erstes wird der inter\_apple\_steps erhöht. Sollte dieser Zähler größer als, die vorher definierte, Obergrenze sein, so wird der Lebensstatus auf tot gesetzt (p.done = True) und die Methode wird terminiert. Im weiteren Verlauf wird diese Unterprozedur Abbruchprozedur genannt.\\
+Anderenfalls wird als nächstes überprüft, um welche action es sich handelt, wobei die actions mit den Zahlen von null - zwei kodiert sind.
 \begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
-	\caption{Around\_View}
+	\caption{Kodierung der Actions}
+	\label{tab:Aktionscodierung} 
+	\endfirsthead
+	\endhead
+	\hline
+	Action & Erklärung \\
+	\hline
+	0 & Die Snake ändert ihre Richtung um 90° nach links. Z.B. Von N $\longrightarrow$ W \\
+	\hline
+	1 & Snake ändert ihre Richtung um 90° nach rechts. Z.B. Von N $\longrightarrow$ O \\
+	\hline
+	2 & Die Richtung der Snake wird nicht verändert. \\
+	\hline
+\end{longtable}
+Entsprechende der Action wird die direction des Players angepasst. Die vier Himmelsrichtungen werden dabei mit den Zahlen von 0 - 3 dargestellt, wobei null Norden entspricht eins Osten usw.\\
+Nach der Manipulation der direction des Players, wird pos, also die vorläufige neue Position, im Player-Objekt angepasst. 
+Diese Änderung wird jedoch noch nicht sofort in die Matrix übertrage, da das Eintragen on Positionen außerhalb des Spielfeldes zu Fehlern führen würde. Es muss daher erst überprüft werden, ob die neue Position des Players im Spielfeld liegt. Sollte dies nicht der Fall sein, so wird die Abbruchprozedur aufgerufen.\\
+Anderenfalls wird die neue Position in tail eingefügt.\\
+Zu diesem Stand der Abarbeitung ist es möglich, dass das Spiel bereits gewonnen ist. Um dies zu überprüfen, wird die Länge der Snake mit der maximal möglichen Länge, welche sich durch die Spielfeldgröße ergibt, verglichen. Entspricht die Länge Snake der maximal mögliche, so wird die Abbruchprozedur aufgerufen.
+Ansonsten muss als nächster Schritt die Matrix aktualisiert werden. Jedoch muss vorher festgestellt werden, ob die Snake einen Apfel gefressen hat.\\
+Sollte sie dies getan haben, so wird die neue Position des Kopfes in die Matrix eingepflegt, ein neuer Apfel wird auf einer zufälligen freien Stelle generiert, inter\_apple\_steps wird auf null und die Hilfsvariable has\_grown wird auf True gesetzt. Letztere wird von der evaluate Methode verwendet, um di Höhe des rewards zu bestimmen, siehe \ref{sec:Impl_Reward_Function}.\\
+Ist die Snake jedoch nicht gewachsen, so wird das letzte Schwanzglied aus Matrix und Liste gelöscht, um den Anschein von Bewegung zu erwecken. Zuzüglich wird  die Hilfsvariable has\_grown auf False gesetzt.\\
+Zum jetzigen Zeitpunkt besteht immer noch die Möglichkeit, dass die Snake in sich selber gelaufen ist. Um dies festzustellen, wird tail auf Duplikate überprüft. Sollten sich Duplikate in tain befinden, wird die Abbruchprozedur aufgerufen.\\
+Ansonsten wird zum Schluss noch über tail iteriert und die korrespondierenden Einträge der Matrix (ground) werden mit den Positionen von tail aktualisiert, wobei der Kopf und das letzte Schwanzglied mittels eines anderen Zahlenwert dargestellt werden.
+
+\subsection{Reward Function} \label{sec:Impl_Reward_Function}
+Die evaluate Methode, welche den Reward bestimmt, befindet sich in der SnakeGame Klasse. Basierend auf dem letzten Zug wird in dieser Methode der Reward bestimmt. Dies geschieht nach folgenden Vorbild.
+Der Reward ist abhängig von drei Faktoren. Dem Fressen eines Apfels, dem Sieg und dem Verlust. Sollte keiner dieser genannten Faktoren eintreten, wird ein Reward von -0.01 zurückgegeben. Dies hält den Agenten dazu an den kürzesten Pfad zum Apfel zu finden, da jeder Schritt geringfügig bestraft wird.\\
+War es der Snake möglich einen Apfel zu fressen so wird ein Reward von +1.0 zurückgegeben, da ein Sub-Goal erfüllt worden ist.
+Sollte die Snake gestorben sein, durch das Verlassen des Spielfeldes oder das Laufen in sich selbst oder das zu lange Umherlaufen, so wird ein Reward von -10 zurückgegeben, um dieses Verhalten in seiner Häufigkeit zu minimieren.
+Hat die Snake alle Äpfel gefressen, sodass das gesamte Spielfeld mit der Snake ausgefüllt ist, so wird ein Reward von +10 zurückgegeben, um ein solches Verhalten in seiner Häufigkeit zu maximieren.
+
+\subsection{Observation}
+Die Observation, welche das Snake Env. zurückgibt besteht aus zwei Teilen, der around\_view (AV) und der scalar\_obs (SO). Zur Erstellung der Obs wird die observe Methode in der SnakeGame Klasse aufgerufen. Diese ruft ihrerseits die make\_obs Funktion auf, welches im observation File definiert ist. Mit Hilfe verschiedener Unterfunktionen wird dann die Obs generiert.\\
+Die AV lässt sich dabei als ein Ausschnitt der Matrix (ground) beschreiben, welche einen festen Bereich um den Kopf der Snake abdeckt.
+Strukturen wie Wände und Teile des eigenen Schwanzes, welche vielleicht eine Sackgasse aufspannen, werden deutlich. Numerische ist die AV eine one-hot-encoded Matrix der Form (6x13x13).\\
+\\Das One-Hot-Encoding benutzt zum codieren nur null und eins. Sollte ein Merkmal vorhanden sein, so wird dieses mit eins codiert anderenfalls mit null.\\
+Dies ist auch der Grund, warum die AV Matrix sechs Channel (zweidimensionale Schichten) besitzt. Diese geben Aufschluss über folgende Informationen:
+\begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
+	\caption{Channel-Erklärung der Around\_View (AV)}
 	\label{tab:around_view} 
 	\endfirsthead
 	\endhead
 	\hline
-	Erste dim. der Matrix (Ax13x13) & Erklärung \\
+	Channel der Matrix bzw. Erste Dimension (Ax13x13) & Erklärung \\
 	\hline
-	A = 0 & Die erste zweidimensionale Schicht signalisiert den Raum außerhalb des Spielfelds. Sollte sich die Snake dem Rand nähren, so würde die around\_view aus dem Spielfeld herausragen und den Eindruck verschaffen, dass dieses größer ist als es in Realität wirklich ist. Um dies zu vermeiden, werden Felder der around\_view, die sich außerhalb des Spielfeldes befinden, angezeigt.\\
+	A = 0 & Die erste Feature Map signalisiert den Raum außerhalb des Spielfelds. Nährt sich die Snake dem Rand, so würde der Ausschnitt der AV aus dem Spielfeld herausragen und den Eindruck erwecken, dass dieser größer wäre als er in Realität wirklich ist. Darum werden Felder der AV, die sich außerhalb des Spielfeldes befinden, angezeigt.\\
 	\hline
-	A = 1 & Diese Schicht stellt alle Schwanzglieder mit Ausnahme des Kopfes und es letzten Schwanzgliedes dar. \\
+	A = 1 & Diese Feature Map stellt alle Schwanzglieder mit Ausnahme des Kopfes und es letzten Schwanzgliedes dar. \\
 	\hline
-	A = 2 & In dieser Schicht wird der Kopf der Snake dargestellt. \\
+	A = 2 & In dieser Feature Map wird der Kopf der Snake dargestellt. \\
 	\hline
-	A = 3 & Damit gegen Ende des Spiels der Agent noch freie Felder erkennen kann wird in dieser Schicht jedes freie und sich im Spielfeld befindliche Feld mit eins codiert. \\
+	A = 3 & Damit gegen Ende des Spiels der Agent noch freie Felder erkennen kann, wird in dieser Feature Map jedes freie und sich im Spielfeld befindliche Feld mit eins codiert. \\
 	\hline
-	A = 4 & Die vorletzte Schicht codiert das Schwanzende der Snake. \\
+	A = 4 & Die vorletzte Feature Map codiert das Schwanzende der Snake. \\
 	\hline
-	A = 5 & In der letzte Schicht wird der Apfel abgebildet. \\
+	A = 5 & In der letzte Feature Map wird der Apfel abgebildet. \\
 	\hline
 \end{longtable}
-Vorteilhaft an dieser ersten Art von Obs. ist, dass im Gegensatz zu den verwandten Arbeiten \ref{sec:Paper_1} und \ref{sec:Paper_3} nicht das gesamte Feld übertragen wurde sondern nur der wichtigste Ausschnitt, was die Menge an zu verarbeiten Daten drastisch reduzieren kann, je nach Spielfeldgröße. Des weiteren ergeben sich keine Probleme mit der Input-Size der Convolutional Layer.\\
-Ein Nachteil dieser Obs., sollte man diese als einzige Obs. definieren, ist die Vollständigkeit. Sollte der blaue Punkt in \ref{fig:Observation} außerhalb des grauen Kasten und daher außerhalb der around\_view liegen, so besitzt der Agent keinerlei Informationen über den Aufenthaltsort des Apfels. Auch ist der Agent nicht, ohne größere Suchen, in der Lage sich ein Bild der weiterer entfernten Umgebung zu machen. 
-Auch weitere Informationen wie z.B. der Hunger, also die noch verbleibenden Schritte bis das Spiel endet, die Distanzen zu den Wänden und zu, außerhalb der around\_view liegenden, Schwanzteilen und die Blickrichtung der Snake, also die direction.
+Vorteilhaft an der AV ist, dass, im Gegensatz zu den verwandten Arbeiten \ref{sec:Paper_1} und \ref{sec:Paper_3}, nicht das gesamte Feld übertragen wurde sondern nur der wichtigste Ausschnitt, was die Menge an zu verarbeiten Daten drastisch reduzieren kann. Des Weiteren ergeben sich keine Probleme mit der Input-Size der Convolutional Layer.\\
+Ein Nachteil dieser Obs ist jedoch die Vollständigkeit. Sollte der blaue Punkt in \ref{fig:Observation} außerhalb des grauen Kasten und daher außerhalb der AV liegen, so besitzt der Agent keine Informationen über den Aufenthaltsort des Apfels.
+Auch Informationen wie z.B. der Hunger, also die verbleibenden Schritte bis das Spiel endet, die Distanzen zu den Wänden und zu exkludierten Schwanzteilen und die Blickrichtung (direction) der Snake.
 \begin{figure}[H]
 	\centering
 	\def\svgscale{0.95}
 	\input{Abbildungen/Observation.pdf_tex}
-	\caption[Observation]{Partielle Darstellung der verwendeten Observation. Das blaue Rechteck und dessen Schwanz stellt die Snake dar, wobei der rot umrandete Rechteck in der Mitte der Grafik den Kopf symbolisiert. Die schwarzen Felder stellen all die Felder da, welche nicht von der around\_view abgedeckt werden. Graue Felder liegen innerhalb der around\_view. Die gelben gestrichelten Linien stellen ein X-Ray Detektion dar und die roten dickeren Linien liefern die relative Pos. der Snake. Der blaue Kreis stellt den Apfel dar und der grüne viertel Kreis oben links symbolisiert die noch zu gehende Schritt bis das Game endet.}
+	\caption[Observation]{Partielle Darstellung der verwendeten Observation. Das blaue Rechteck und dessen Schwanz stellt die Snake dar, wobei das rot umrandete Rechteck den Kopf darstellt. Die schwarzen Felder werden nicht von der AV abgedeckt, graue liegen innerhalb der AV. 
+	Die gelben gestrichelten Linien stellen ein X-Ray Distanzbestimmung dar. Der blaue Kreis stellt den Apfel dar und der grüne viertel Kreis oben links symbolisiert Hunger.}
 	\label{fig:Observation}
 \end{figure}
-Aus diesem Grund wurde die around\_view mit einer weiteren Obs. verfeinert, der static Obs. Diese beinhaltet Informationen, wie z.B. ein X-Ray, siehe \ref{fig:Observation} (gelbe gestrichelte Linien). Diese X-Rays geben die Distanz zu der nächsten Wand oder Schwanzglied an. Ebenfalls wird die direction, der Hunger, und der Apfelkompass und ein Kompass für das Schwanzende übergeben, wobei diese nicht in \ref{fig:Observation} dargestellt sind. Diese zeigen an in welcher Himmelsrichtung sich das gesuchte Objekt befindet.\\
-Numerisch werden die X-Ray und Hunger partizipial Obs. mit Hilfe der Funktion $1 / \text{Distanz}$ bzw. $1 / \text{max\_steps - p.inter\_apple\_steps}$ definiert. Andere partizipial Obs. wie, z.B. die Kompasse und die direktion, werden mit Vektoren one-hot-encoded basier generiert. Alle partizipial Obs. werden zum Schluss zusammengefügt und mit der around\_view zurückgegeben.
-
+Aus diesem Grund wurde die AV mit der scalar\_obs (SO) ergänzt. Diese beinhaltet skalare Informationen und ist eine Konkatenation aus X-Ray Distanzbestimmung, Hunger- Blickrichtungsanzeige und zwei Kompasse für die relative Positionsinformation zwischen Kopf und Apfel bzw. letztem Schwanzglied.
+Letztere sind eindimensionale Vektoren, welche über das One-Hot-Encoding anzeigen, ob sich das gesucht Objekt relativ zum Kopf oberhalb, unterhalb oder in der selben Zeile (Matrixsicht) befindet. Analog verhält es sich mit der vertikalen Sicht.\\
+Die Blickfeldanzeige ist ebenfalls one-hot-encoded und stellt mit seinem Vektor die vier Ausrichtungen Norden, Osten, Süden und Westen dar.
+Da der Hunger bei einer großen Differenz zwischen inter\_apple\_steps und max\_steps einen kleinen und bei einer geringen Differenz einen großen Einfluss besitzen soll, wurde die Differenz durch eins geteilt. Nähren sich die beiden Werte, so rückt der resultierende näher an unendlich, da den Nenner immer kleiner wird. Um mit der Unendlichkeit auftretende Probleme zu umgehen wir zwei zurückgegeben, wenn die Differenz null ist.\\
+In ähnlicher Weise wird mit den X-Rays Distanzbestimmungen verfahren. Bei ihnen handelt es sich um acht Distanzmesserlinien, die in 45° Abständen ausgesandt werden, siehe \ref{fig:Observation}. Befindet sich das gesucht Objekt in dieser Linie, so wird die durch eins dividierte Differenz zwischen Kopf und Objekt zurückgegeben. Es wird nach Wänden, dem eigenem Schwanz und dem Apfel gesucht. Daher wird die X-Ray Distanzbestimmung in einem Vektor der Größe 24 (3 * 8 = 24) gespeichert.
 
 \subsection{Graphische Oberfläche}
-Im gui.py file wird eine Klasse GUI definiert, welche die Aufgabe besitzt das Spiel graphisch darzustellen. Dies erfolgt mit Hilfe des Frameworks pygame, dass die Möglichkeit bietet graphische Oberflächen zu generieren. Dazu wird in der GUI-Klasse ein Oberfläche erzeugt, welche der dem Spiel zugrundeliegenden Matrix entspricht, siehe \ref{fig:Game_of_Snake}. Diese kann über das screen Attribut angesprochen und angepasst werden. Dies geschieht mit Hilfe der update\_GUI Methode. Diese wird von der SnakeGame Methode view aufgerufen. Die update\_GUI Methode überschreibt jedes einzelne Feld des Spielfeld mit dem korrespondierenden Wert der der Matrix (ground). Spielfeld und Matrix sind daher nicht direkt gekoppelt sondern müssen über die update\_GUI Methode angeglichen werden.\\
-Die Größe der Spieloberfläche wird dynamisch berechnet und kann über das Attribut Particle verändert werden. Dieses beschreibt die einzeln Feldgröße eines entsprechenden Matrixeintrages. Die anderen Methoden und Attribute der GUI Klasse sind selbsterklärend und erfordern daher keiner genaueren Erklärung.
-\begin{figure}[H]
-	\centering
-	\def\svgscale{1.40}
-	\input{Abbildungen/GUI_class_diagram.pdf_tex}
-	\caption[Klassendiagramm: GUI]{Darstellung des Klassendiagramms der GUI-Klasse.}
-	\label{fig:GUI_class_diagram}
-\end{figure}
+Im gui File wird eine Klasse GUI definiert, welche das Spiel mit Hilfe des Frameworks pygame (\url{https://www.pygame.org/}) darstellt. Dazu wird in der GUI-Klasse ein Oberfläche (screen) erzeugt, welche die Matrix ground darstellt, siehe \ref{fig:Game_of_Snake}. 
+Die Methode update\_GUI, welche von der SnakeGame Methode view aufgerufen wird, überschreibt dazu jeden einzelnen Eintrag des pygame-Spielfelds mit dem korrespondierenden Wert von ground. 
+Spielfeld (GUI) und Matrix sind daher nicht direkt gekoppelt sondern müssen über update\_GUI angeglichen werden.\\
+Die Fenstergröße der Spieloberfläche wird dynamisch berechnet und kann über das Attribut Particle verändert werden, welches die Feldgröße eines einzelnen Matrixeintrags darstellt. 
+Die draw Methode ist für das Generieren der einzelnen Spielfeld-Rechtecke zuständig und reset\_GUI versetzt das Spielfeld zurück in den Ursprungszustand.
+
 
 \section{Agenten}
-Dieser teile der Implementierung soll sich mit den Agenten befassen. Dabei wird näher auf die Netzstruktur, den Aktionsauswahlprozess die Lern-Methode und den Speicher (Replay Buffer), eingegangen.
+Dieser Teil der Implementierung soll sich mit den Agenten befassen. Dabei wird näher auf die Netzstruktur, den Aktionsauswahlprozess die Lern-Methode, den Speicher (Replay Buffer) und die Hauptausführungsmethode (main Methode) eingegangen.
 
-
-\subsection{Netzstruktur}
-Zu Beginn soll die Netzstruktur erklärt werden. Dies kann unabhängig von den Agenten geschehen, da sowohl die DQN als auch die PPO Agenten das gleiche Netz nutzen, mit geringfügigen Änderungen.
+\subsection{Netzstruktur} \label{sec:Impl_Netzstruktur}
+Zu Beginn soll die Netzstruktur erklärt werden, wobei dies unabhängig von den Agenten geschehen kann, da sowohl DQN als auch PPO Agenten das annähernd gleiche Netz nutzen.
 \begin{figure}[H]
 	\centering
 	\def\svgscale{0.80}
@@ -150,28 +156,32 @@ Zu Beginn soll die Netzstruktur erklärt werden. Dies kann unabhängig von den A
 	\caption[BaseNet]{Darstellung des BaseNet, welches als Standard für den weiteren Vergleich dient.}
 	\label{fig:Netzsturktur}
 \end{figure}
-Aufgrund der Agentenunabhängigkeit, ist das NN als eine eigenständige Klasse im base.py File ausgelagert. Dieses BaseNet-Klasse besitzt eine forward Methode, welche die Input-Tensoren (av, static\_obs) durch das NN propagiert und einen Output bestimmt. Dieser Prozess geschieht dabei folgendermaßen:\\
-Zuerst wird die av durch zwei Convolutional Layer mit einer ReLU Aktivierungsfunktion durch propagiert. Dabei erhöht sich die Channel-Anzahl auf 32, um eine bessere Merkmalextraktion zu erhalten und die Feature Map wird von 13x13 auf 9x9 minimiert, was ein Effekt der Convolutional Layern ist. 
-Danach wird alles Feature Maps eine Zeile und Spiele mit nullen hinzugefügt, damit beim Max-Pooling unter einer Filtergröße und einem Stride von 2x2, auch die neunte Zeile und Spalte verarbeitet wird. Nach dem max-pooling besitzt die der resultierende Tensor 32 Channel mit Feature Maps der Größe 5x5. Diese werden nun zu einem einzigen eindimensionalen Tensor geebnet (Flatten). Dieser wird durch zwei weitere Fully Connected Layer durch propagiert. Der resultierende Tensor besitzt die Größe 1x128 und ist ein zwischen Ergebnis, da dieser nun mit der static\_obs verbunden  wird (Join).\\
-Da das NN für beide Algorithmusarten verwendet werden soll müssen mehrere unterschiedliche Outputs definiert werden. Dazu wurden drei Netzwerkköpfe definiert, siehe \ref{fig:Netzsturktur}. Alle unterscheiden sich jedoch nur in ihrer Ausgabe. Nach den der Joined Tensor durch zwei weitere FC Layer propagiert wurde, benötigt der Actor der PPO-Agenten eine Wahrscheinlichkeitsverteilung über alle Actions. Daher auch die Ausgabe von einem Tensor der Größe 3 nach dem zweiten FC Layer, siehe \ref{fig:Netzsturktur} rechts oben. Zur Generierung einer Wahrscheinlichkeitsverteilung wird auf den Tensor noch SoftMax angewendet.\\
-Der Critic der PPOs und die DQNs verwendet den in \ref{fig:Netzsturktur} rechts unten dargestellten Netzwerkkopf, den ValueNet-Head. In diesem wird auf den SoftMax verzichtet. Beim Critic wird Tensor mit einziger Zahlenwert und bei den DQNs ein Tensor mit drei Zahlenwerte, entsprechende der Actions zurückgegeben.
+Aufgrund der Agentenunabhängigkeit, ist das NN als eine eigenständige Klasse im base File, welches sich im common Package befindet, ausgelagert. 
+Diese BaseNet-Klasse besitzt eine forward Methode, welche die Obs (AV, SO), nach dem umwandelt in Tensoren, durch das NN propagiert und einen Output bestimmt. Dieser Prozess geschieht dabei folgendermaßen:\\
+Zuerst wird die AV durch zwei Convolutional Layer mit einer ReLU Aktivierungsfunktion durch propagiert. Dabei erhöht sich die Channel-Anzahl auf 32, um eine bessere Merkmalextraktion zu erhalten. Die Feature Map wird während dieses Prozesses von 13x13 auf 9x9 minimiert, was ein Effekt der Convolutional Layern ist. 
+Danach werden allen Feature Maps eine Null-Zeile und Spalte hinzugefügt (Padding), damit beim Max-Pooling unter der Filtergröße und dem Stride von 2x2, auch die neunte Zeile und Spalte verarbeitet wird. Der Tensor besitzt nun die Form (30x10x10) 
+Nach dem max-pooling besitzt der Tensor weiterhin 32 Channel mit Feature Maps der Größe 5x5. Nach der Ebnung (Flatten) des Tensoren zu einem eindimensionalen Tensor-Vektor wird dieser durch zwei weitere Fully Connected Layer (FC) mit einer ReLU Aktivierungsfunktion durch propagiert. Der resultierende Tensor besitzt die Größe 1x128 und ist ein zwischen Ergebnis, da dieser nun mit der SO verbunden wird (Join).\\
+Da das NN in beide Algorithmus-Arten verwendet werden soll, müssen drei unterschiedliche Netzwerkköpfe definiert werden, siehe \ref{fig:Netzsturktur} rechts. Alle unterscheiden sich jedoch nur in ihrer Ausgabe. Nachdem der Joined Tensor (1x128) durch zwei weitere FC Layer propagiert wurde, benötigt der Actor des PPO-Agenten eine Wahrscheinlichkeitsverteilung über alle Actions. Daher auch die Ausgabe von einem Tensor der Größe 3 nach dem zweiten FC Layer auf welchen danach noch SoftMax angewendet wird, siehe \ref{fig:Netzsturktur} rechts oben.\\
+Die Critics der PPOs und die DQNs verwendet den rechts unten dargestellten Netzwerkkopf (ValueNet-Head) \ref{fig:Netzsturktur}. Beim den Critics werden Tensoren mit einem einzigen Zahlenwert (Return) zurückgegeben, wohingegen bei den DQNs Tensoren mit drei Zahlenwerten entsprechende der Actions zurückgegeben.
 
 
 \subsection{DQN}
-Der DQN Algorithmus ist einer der beiden Algorithmus-Arten, welche im Rahmen dieser Ausarbeitung, implementiert wurden. Diese Implementierung erstreckt sich im hauptsächlich über vier Files.
-Im dqn.py File wird die Agentenklasse definiert, welche die Aktionsausführungsmethode act und die lern Methode enthält. 
-Im memoryDQN.py File wird die Memory-Klasse definiert, welche den Replay-Buffer \ref{sec:Q-Learning}. Das dqn\_train.py und dqn\_play.py File enthalten die eigentlichen main-Methoden, welche die Agenten und das Env. erstellen und den Trainings bzw. Spielprozess umsetzt.
+Der DQN Algorithmus ist einer der beiden Algorithmus-Arten, welche im Rahmen dieser Ausarbeitung, implementiert wurden. Diese Implementierung findet hauptsächlich in vier Files statt, welche im dqn Package liegen, dass wiederum zum agents Package gehört.
+Im dqn File wird die Agentenklasse definiert, welche die Aktionsbestimmungsmethode act und die lern Methode enthält. 
+Im memoryDQN File wird die Memory-Klasse definiert, welche den Replay-Buffer darstellt \ref{sec:Q-Learning}. 
+Die Files dqn\_train und dqn\_play beinhalten die eigentlichen main-Methoden, welche Agenten und Env. erstellen und den Trainings- bzw. Spielprozess umsetzt.
 
 \subsubsection{Aktionsauswahlprozess}
-Der Aktionsauswahlprozess wird durch die act Methode durchgeführt. Diese ist im dqn.py File definiert unter der Agent Klasse des DQN. Zur Bestimmung der nächsten Action wird der Methode die momentane Obs. übergeben.
-Die Q-Learning Agenten bestimmen ihre Actions mit des $\epsilon$ Wertes, siehe \ref{sec:Q-Learning}. Dieser bestimmt das Verhältnis zwischen der Wahl einer zufälligen Action und einer von NN bestimmten Action. Dabei wird folgendermaßen vorgegangen.\\
-Zuerst wird ein Zufallswert $a$ generiert, welcher mit $\epsilon$ verglichen wird. Sollte dieser Zufallswert kleiner als $\epsilon$ sein $a < \epsilon$ so wird die Action mittels des NN bestimmt. Sollte dieser Zahlenwert größer sein $a > \epsilon $ sodann wird eine zufällige Action gewählt.\\
-Zur Bestimmung der Action durch das NN wird einfach aus der Obs. ein bzw. zwei Tensoren generiert und dieser bzw. diese zu dem vordefinierten Device (CPU oder GPU) geschickt. Danach werden dieser bzw. diese durch das NN propagiert. Zum Schluss wird die neue Action zurückgegeben.
+Zur Bestimmung der nächsten Action wird der act Methode die momentane Obs übergeben.
+Die Bestimmung der Actions durch den DQN Agenten ist maßgeblich vom $\epsilon$ Wertes abhängig \ref{alg:DQN}, welcher das Verhältnis zwischen der Wahl einer zufälligen und einer NN-basierten Action bestimmt. Dabei wird folgendermaßen vorgegangen \ref{alg:DQN}.
+Zuerst wird ein Zufallswert $rand$ zwischen null und eins generiert, welcher mit $\epsilon$ verglichen wird. Wenn $rand < \epsilon$ so wird die Action mittels des NN bestimmt. Anderenfalls wird eine zufällige Action gewählt.
+Zur NN-basierten Bestimmung der Action werden aus der Obs zwei Tensoren generiert, welche zum vordefinierten Device (CPU oder GPU) geschickt werden. Danach folge die Prozedur, welche in \ref{sec:Impl_Netzstruktur} dargestellt ist.
 
 \subsubsection{Trainingsprozess}
-Der Trainingsprozess wird über die learn Methode ausgeführt, welche in der Agent-Klasse des definiert ist. Der Ablauf der Lernprozedur stellt sich dabei wie folge dar:\\
-Zuerst wird überprüft, ob im Replay Buffer (Memory) genügend Experiances (Exp.) gespeichert sind um einen Mini-Batch zu füllen. Sollte dies nicht der Fall sein, wird die Methode terminiert. Anderenfalls wird ein Mini-Batch aus zufälligen Exp. ohne Duplikate gebildet.\\
-\\Der Replay Buffer bzw. Memory wird durch einen Tensoren dargestellt welche jeweils immer eine Dimension mehr bezitzen als z.B. der Reward die av oder die static\_obs. Dadurch lassen sich diese in der neuen Dimension speichern. So besitzt der Tensor der av die Form (max\_mem\_size, 6, 13, 13). Die Tensoren werden dabei wie eine eine Überlaufliste verwaltet. Wenn die Anzahl an Exp. die max\_mem\_size überschreitet, dann werden die ältesten Einträge durch die neu einzufügenden ersetzt.\\
-\\Als nächstes werden alle Q-Values der States (s) des Mini-Batch berechnet. Daraufhin wird der Q-Value der im Replay-Buffer gespeicherten Action entnommen und unter dem Namen q\_eval, zwischengespeichert. Danach werden die alle Q-Values der Nachfolge-States (s\_next) bestimmt und ebenfalls zwischengespeichert. Die Q-Values terminaler States werden anschließend auf null gesetzt, da die Discounted Sums of Rewards bis zum Ende der Spielepisode null entspricht, siehe \ref{sec:Q-Learning}.\\
-Um nun den sogenannten q-target Wert zu bestimmen, werden die maximalen Q-Values der s\_next bestimmt, diskontiert und mit dem, im Mini-Batch gespeicherten, Reward addiert. Die Logik, warum diese geschieht wird näher in \ref{sec:Q-Learning} erklärt.
-Nachfolgend wird der MSE (Mean Squared Error) zwischen q\_eval und q\_target bestimmt. Zuletzt wird der Fehler Mit Hilfe des Pytorch Frameworks zurück propagiert und entsprechend die Parameter des NN angepasst.
+Der Trainingsprozess wird über die learn Methode ausgeführt und stellt sich dabei wie folge dar:\\
+Zuerst wird überprüft, ob im Memory genügend Experiences (Exp) gespeichert sind, um einen Mini-Batch mit der zuvor definierten batch\_size, zu extrahieren. Sollte dies nicht der Fall sein, wird die Methode terminiert. Anderenfalls wird ein Mini-Batch aus zufälligen Exp. ohne Duplikate gebildet.\\
+\\Das Memory (Replay Buffer) wird durch Tensoren dargestellt, welche die Erfahrungen in einer zusätzlichen Dimension speichern. So besitzt der Tensor der AV die Form (max\_mem\_size, 6, 13, 13). Die Tensoren werden dabei wie eine Überlaufliste verwaltet, sodass wenn die Anzahl an Exp die max\_mem\_size überschreitet, die ältesten Einträge durch die neuen ersetzt werden.\\
+\\Danach folgt die Bestimmung aller Q-Values der States (s) des Mini-Batch, wobei der Q-Value der zum State (s) gespeicherten Action entnommen und als q\_eval, gespeichert wird. 
+Anschließend werden alle Q-Values der Nachfolge-States (s\_next) bestimmt und als q\_next gespeichert. Die Q-Values terminaler States werden anschließend auf null gesetzt, da die Discounted Sums of Rewards bis zum Ende der Spielepisode null entspricht, siehe \ref{sec:Q-Learning}.\\
+Um nun q-target zu bestimmen, werden die maximalen Q-Values der s\_next bestimmt, diskontiert und mit dem, im Mini-Batch gespeicherten, Reward addiert, siehe \ref{eq:DQN_Loss}.
+Nachfolgend wird der MSE (Mean Squared Error) zwischen q\_eval und q\_target bestimmt. Zuletzt wird der Fehler Mit Hilfe des Pytorch Frameworks mit Hilfe von Backpropagation und Gradient Descent \ref{Backprop_GD} zurück propagiert und entsprechend die Parameter des NN angepasst.

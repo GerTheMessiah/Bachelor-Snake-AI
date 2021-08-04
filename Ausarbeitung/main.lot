@@ -9,10 +9,12 @@
 \contentsline {table}{\numberline {3.3}{\ignorespaces Evaluationskriterien\relax }}{24}{table.3.3}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Agenten\relax }}{33}{table.5.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces Reward Function\relax }}{42}{table.7.1}%
-\contentsline {table}{\numberline {7.2}{\ignorespaces Around\_View\relax }}{44}{table.7.2}%
+\contentsline {table}{\numberline {7.1}{\ignorespaces Methoden der SnakeGame Klasse\relax }}{35}{table.7.1}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces Kodierung der Actions\relax }}{36}{table.7.2}%
+\contentsline {table}{\numberline {7.3}{\ignorespaces Channel-Erklärung der Around\_View (AV)\relax }}{38}{table.7.3}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

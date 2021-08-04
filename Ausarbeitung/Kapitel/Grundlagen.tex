@@ -1,16 +1,16 @@
 
 \chapter{Grundlagen}\label{sec:Grundlagen}
-Im folgenden Kapitel soll das benötigte Wissen vermittelt werden, welcher zum Verständnis dieser Arbeit benötigt wird. Dabei sollen verschiedene Reinforcement Learning Algorithmen, wie auch grundlegende Informationen des Reinforcement Learnings selbst thematisiert werden. 
+Im folgenden Kapitel soll das benötigte Wissen vermittelt werden, welcher zum Verständnis dieser Arbeit benötigt wird. Dabei sollen verschiedene Reinforcement Learning Algorithmen, wie auch grundlegende Informationen des Reinforcement Learnings selbst thematisiert werden. Auch das Spiel Snake wird Erwähnung finden. 
 \section{Game of Snake}
-Snake (englisch für Schlange) zählt zu den meist bekannten Computerspielen unserer Zeit. Es zeichnet sich durch sein simples und einfach zu verstehendes Spielprinzip aus.
-In seiner ursprünglichen Form ist Snake als ein zweidimensionales rechteckiges Feld. Dieses Beschreibe das komplette Spielfeld, in welchem man sich als Snake bewegt. Häufig wird diese als einfacher grüner Punkt (Quadrat) dargestellt. Dieser stellt den Kopf der Snake dar. Neben dem Kopf der Snake befindet sich auf dem Spielfeld auch noch der sogenannte Apfel. Dieser wird häufig als roter Punkt (Quadrat) dargestellt.
 \begin{figure}[H]
 	\centering
-	\def\svgscale{0.80}
+	\def\svgscale{0.90}
 	\input{Abbildungen/Game_of_Snake.pdf_tex}
 	\caption[Game of Snake]{Game of Snake - Abbildung eines Snake Spiels in welchem der Apfel durch das rote und der Snake Kopf durch das dunkelgrüne Quadrat dargestellt wird. Die hellgrünen Quadrate stellen den Schwanz der Snake dar.}
 	\label{fig:Game_of_Snake}
 \end{figure}
+Snake (englisch für Schlange) zählt zu den meist bekannten Computerspielen unserer Zeit. Es zeichnet sich durch sein simples und einfach zu verstehendes Spielprinzip aus.
+In seiner ursprünglichen Form ist Snake als ein zweidimensionales rechteckiges Feld. Dieses Beschreibe das komplette Spielfeld, in welchem man sich als Snake bewegt. Häufig wird diese als einfacher grüner Punkt (Quadrat) dargestellt. Dieser stellt den Kopf der Snake dar. Neben dem Kopf der Snake befindet sich auf dem Spielfeld auch noch der sogenannte Apfel. Dieser wird häufig als roter Punkt (Quadrat) dargestellt.
 Ziel der Snake ist es nun Äpfel zu fressen. Dies geschieht, wenn der Kopf der Snake auf das Feld des Apfels läuft. Danach verschwindet der Apfel und ein neuer erscheint in einem noch freies Feld). Außerdem wächst, durch das Essen des Apfels, die Snake um ein Schwanzglied. Diese Glieder folgen dabei in ihren Bewegungen den vorangegangenen Schwanzglied bis hin zum Kopf. Dem Spieler ist es nur möglich den Kopf der Snake zu steuern.
 Der Snake ist es nicht erlaubt die Wände oder sich selbst zu berühren, geschieht dies, im Laufe des Spiels, trotzdem endet dieses sofort. Diese Einschränkung führt zu einem Ansteigen der Komplexität gegen Ende des Spiels. Ein Spiel gilt als gewonnen, wenn es der Snake gelungen ist, das komplette Spielfeld auszufüllen.
 
@@ -51,7 +51,7 @@ Es hat sich als Faustregel herausgestellt, dass man sich bei dem Designing der O
 Der Reward bzw. die Belohnung ist der letzte Datenübertragungsweg. Er ist neben der Action und der Obs. eines der wichtigsten Elemente des RL und von besonderer Bedeutung für den Lernerfolg.
 Bei dem Reward handelt es sich um eine einfache skalare Zahl, welche vom Env. übermittelt wird. Sie gibt an, wie gut oder schlecht eine ausgeführte Action im Env. war. \cite[S. 42]{Sutton1998}\\
 Um eine solche Einschätzung zu tätigen, ist es nötig eine Bewertungsfunktion zu implementieren, welche den Reward bestimmt.\\ 
-Bei der Modellierung des Rewards kommt es voralledem darauf an, in welchen Zeitabständen dieser an den Agenten gesendet wird (sekündlich, minütlich, nur ein Mal). Aus Bequemlichkeitsgründen ist es jedoch gängige Praxis geworden, dass der Reward in fest definierten Zeitabständen erhoben und üermittelt wird. \cite[S. 29 f.]{DRL_Lapan}\\
+Bei der Modellierung des Rewards kommt es vor alledem darauf an, in welchen Zeitabständen dieser an den Agenten gesendet wird (sekündlich, minütlich, nur ein Mal). Aus Bequemlichkeitsgründen ist es jedoch gängige Praxis geworden, dass der Reward in fest definierten Zeitabständen erhoben und üermittelt wird. \cite[S. 29 f.]{DRL_Lapan}\\
 Je nach Implementierung hat dies große Auswirkungen auf das zu erwartende Lernverhalten.
 
 \subsubsection{State}\label{sec:State}
@@ -248,7 +248,7 @@ Angestammtes Ziel aller Q-Learning-Algorithmen ist es, jedem State-Action-Pair $
 	Q_{i+1}(s,a) = \mathbb{E} \bigl\lbrack r + \gamma \max_{a'} Q(s',a')|s,a \bigr\rbrack
 \end{align}
 In der Theorie konvergiert ein solches Iterationsverfahren $Q_i \longrightarrow Q^*$ jedoch nur, wenn i gegen unendlich läuft $i \longrightarrow \infty$, wobei $Q^*$ die optimale Aktionswert-Funktion darstellt. Da dies jedoch nicht möglich ist, muss $Q^*$ angenäht werden $Q(s,a;\theta) \approx Q^* $. Dies geschieht mittels eines NN.\\
-Damit dieses nicht ausschließlich Zufallsgetrieben Q-Values ermittelt, ist eine Anpassung der Gewicht des NN nötig. Dafür muss jedoch zuerst der Loss des DQN bestimmt werden. Dies geschieht mit Hilfe einer Loss-Function :
+Damit dieses nicht ausschließlich Zufallsgetrieben Q-Values ermittelt, ist eine Anpassung der Gewicht des NN nötig. Dafür muss jedoch zuerst der Loss des DQN bestimmt werden. Dies geschieht mit Hilfe einer Loss-Function:
 \begin{align}
 	\label{eq:DQN_Loss}
 	L_i(\theta_i) = \mathbb{E}_{s,a \sim p(\cdot)} \Bigl\lbrack (y_i - Q(s,a;\theta_i))^2 \Bigr\rbrack
@@ -263,8 +263,8 @@ Da $Q(s,a)$ rekursiv definiert werden kann, ergibt sich in vereinfachter Form \c
 	Q(s,a) = r + \gamma \max_{a \in A}Q(s',a') = \mathbb{E}_{s' \sim \mathcal{E}} \bigl\lbrack r+\gamma \max_{a'}Q(s',a';\theta_{i-1})|s,a \bigr\rbrack = y_i
 \end{align}
 Es wird erkenntlich, dass $Q(s,a;\theta)$ dem Q-target $y_i$ $Q(s,a;\theta) \longrightarrow y_i$ entsprechen soll, darum wird die Differenz zwischen beiden bestimmt und als Loss deklariert. Dieser wird noch quadriert, damit der Loss positiv ist und damit er für den MSE (Mean Squared Error) anwendbar ist.
-Zur besseren Anwendbarkeit haben Volodymyr Mnhi et al. einen Algorithmus entworfen, welcher das Q-Learning anschaulich erklärt. Da jedoch in diesem Algorithmus weiterhin auf Teile der Loss-Function eingegangen wird, folge nun eine bereinigte Version, welche sich auch für den allgemeinen Gebrauch anbietet \cite[S. 149 f.]{DRL_Lapan}.
-\begin{enumerate}
+Zur besseren Anwendbarkeit haben Volodymyr Mnhi et al. einen Algorithmus entworfen, welcher den DQN anschaulich erklärt. Da jedoch in diesem Algorithmus weiterhin auf Teile der Loss-Function eingegangen wird, folge eine bereinigte Version, welche sich auch für den allgemeinen Gebrauch besser anbietet \cite[S. 149 f.]{DRL_Lapan}.
+\begin{enumerate} \label{alg:DQN}
 	\item Initialisiere alle Hyperparameter. Initialisiere die Gewichte für $(s,a)$ und $Q(s',a')$ zufallsbasiert. Setzt Setzte Epsilon $\epsilon = 1.00$ und Erzeuge leeren Replay-Buffer $RB$.
 	\item Wähle mit der Wahrscheinlichkeit $\epsilon$  eine zufällige Action $a$ oder nutze $a = \arg\max_{a} Q(s,a)$
 	\item Führt Action $a$ aus und ermittle den Reward $r$ und den Folgezustand $s'$.
@@ -277,9 +277,3 @@ Zur besseren Anwendbarkeit haben Volodymyr Mnhi et al. einen Algorithmus entworf
 	\item Kopierte alle $N$ Schritte die Gewichte von $Q(s,a)$ nach $\hat{Q}(s,a)$ $\theta_{Q(s,a)} \longrightarrow \hat{Q}(s,a)$
 	\item Wiederhole alle Schritte von Schritt 2 an bis sich eine Konvergenz einstellt.
 \end{enumerate}
-
-\section{Backpropagation und das Gradientenverfahren} \label{Backprop_GD}
-Nachdem nun alle Agenten-Klassen vorgestellt sind, man sich vielleicht der eine oder andere Leser frage, wie denn nun das eigentliche Lernen vonstattengeht. Die dem Lernen zugrunde liegenden Verfahren sind das Backpropagation und das Gradient Descent. Dabei wird häufig fälschlicherweise angenommen, dass sich hinter dem Begriff Backpropagation der komplette Lernprozess verbirgt. Dem ist jedoch nicht so.\\
-Der Backpropagation-Algorithmus oder auch häufig einfach nur Backprop genannt, ist der Algorithmus, welcher zuständig für die Bestimmung der Gradienten in einer Funktion. Häufig wird ebenfalls angenommen, dass Backprop nur für NN anwendbar sind, den ist jedoch nicht so. Prinzipiell können mit dem Backprob-Algorithmus die Gradienten einer jeden Funktion bestimmt werden, egal ob NN oder eine Aktivierungsfunktion, wie z.B. Sigmoid oder TanH \cite[S. 90ff.]{DL}.\\
-\\Das Gradientenverfahren oder im Englischen auch Gradient Descent genannt, wird dafür eingesetzt um die eigentliche Optimierung des NN durchzuführen. Dafür werden jedoch die Gradienten benötigt, welche im Vorhinein durch den Backprop-Algorithmus bestimmt wurden. Jedes NN definiert je nach den Gewichten des NN eine mathematische Funktion. Diese steht in Abhängigkeit von den Inputs und berechnet auf deren Basis die Outputs bzw. Ergebnisse. Basierende auf dieser Funktion lässt sich eine zweite Funktion definieren, die Loss Function oder Kostenfunktion oder Verlustfunktion usw. Diese gibt den Fehler wieder und soll im Optimierungsverlauf minimiert werden, um optimale Ergebnisse zu erhalten. Diese Fehlerfunktion zu minimieren müssen die Gewichte des NN soweit angepasst werden, der die Fehlerfunktion geringe Werte ausgibt. ist diese für alle Daten, mit welchen das NN jemals konfrontiert wird geschafft, so ist das NN perfekt angepasst \cite[S. 225ff.]{DL}.\\
-\\Ein näheres Eingehen auf die Bestimmung der Gradienten im Rahmen des Back-propagation-Algorithmus und auf die Anpassung der Gewicht im Rahmen des Gradientenverfahrens wird der Übersichtlichkeit entfallen. Des Weiteren machen moderne Framework wie Facebooks PyTorch, Googles Tensorflow oder Microsofts CNTK das detaillierte Wissen um diese Verfahren für anwendungsorientiert Benutzer obsolet.

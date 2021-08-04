@@ -2,18 +2,16 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Game of Snake}}{4}{figure.2.1}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Game of Snake}}{3}{figure.2.1}%
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Reinforcement Learning}}{8}{figure.2.2}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Klassendiagramm: snake\_game\_2d}}{39}{figure.7.1}%
-\contentsline {figure}{\numberline {7.2}{\ignorespaces Klassendiagramm: Player-Datenhaltungsklasse}}{39}{figure.7.2}%
-\contentsline {figure}{\numberline {7.3}{\ignorespaces Step-Methode}}{41}{figure.7.3}%
-\contentsline {figure}{\numberline {7.4}{\ignorespaces Observation}}{45}{figure.7.4}%
-\contentsline {figure}{\numberline {7.5}{\ignorespaces Klassendiagramm: GUI}}{46}{figure.7.5}%
-\contentsline {figure}{\numberline {7.6}{\ignorespaces BaseNet}}{47}{figure.7.6}%
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Observation}}{39}{figure.7.1}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces BaseNet}}{41}{figure.7.2}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
