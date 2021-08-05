@@ -49,8 +49,6 @@
 \contentsline {subsection}{\numberline {3.3.2}Datenspeicherung}{22}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}Variation der Datenerhebungsparameter}{23}{subsection.3.3.3}%
 \contentsline {subsubsection}{\nonumberline Variation der Reward-Funktion}{24}{subsubsection*.42}%
-\contentsline {subsubsection}{\nonumberline Variation der Netzstruktur}{24}{subsubsection*.44}%
-\contentsline {subsubsection}{\nonumberline Variation der Observation}{24}{subsubsection*.46}%
 \contentsline {section}{\numberline {3.4}Anforderungen an die Evaluation}{24}{section.3.4}%
 \contentsline {chapter}{\numberline {4}Verwandte Arbeiten}{26}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Autonomous Agents in Snake Game via Deep Reinforcement Learning}{26}{section.4.1}%
@@ -61,22 +59,24 @@
 \contentsline {chapter}{\numberline {5}Agenten}{31}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Agenten}{31}{section.5.1}%
 \contentsline {chapter}{\numberline {6}Vorgehen}{33}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Bestimmung der Netzstruktur}{33}{section.6.1}%
-\contentsline {chapter}{\numberline {7}Implementierung}{34}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Snake Environment}{34}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}Schnittstelle}{34}{subsection.7.1.1}%
-\contentsline {subsection}{\numberline {7.1.2}Spiellogik}{35}{subsection.7.1.2}%
-\contentsline {subsection}{\numberline {7.1.3}Reward Function}{37}{subsection.7.1.3}%
-\contentsline {subsection}{\numberline {7.1.4}Observation}{38}{subsection.7.1.4}%
-\contentsline {subsection}{\numberline {7.1.5}Graphische Oberfläche}{40}{subsection.7.1.5}%
-\contentsline {section}{\numberline {7.2}Agenten}{40}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Netzstruktur}{41}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}DQN}{42}{subsection.7.2.2}%
-\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{42}{subsubsection*.48}%
-\contentsline {subsubsection}{\nonumberline Trainingsprozess}{43}{subsubsection*.50}%
-\contentsline {chapter}{\numberline {8}Optimierungen}{44}{chapter.8}%
-\contentsline {chapter}{\numberline {9}Evaluation}{45}{chapter.9}%
-\contentsline {chapter}{Literaturverzeichnis}{46}{section*.51}%
-\contentsline {chapter}{\numberline {A}Anhang}{48}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{48}{section.A.1}%
+\contentsline {section}{\numberline {6.1}Bemerkung zur Netzstruktur}{33}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Baseline Datenerhebung, Vergleich und Evaluation}{33}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Anwendung der Optimierungen}{34}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Implementierung}{35}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Snake Environment}{35}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Schnittstelle}{35}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Spiellogik}{36}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}Reward Function}{38}{subsection.7.1.3}%
+\contentsline {subsection}{\numberline {7.1.4}Observation}{39}{subsection.7.1.4}%
+\contentsline {subsection}{\numberline {7.1.5}Graphische Oberfläche}{41}{subsection.7.1.5}%
+\contentsline {section}{\numberline {7.2}Agenten}{41}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Netzstruktur}{42}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}DQN}{43}{subsection.7.2.2}%
+\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{43}{subsubsection*.44}%
+\contentsline {subsubsection}{\nonumberline Trainingsprozess}{44}{subsubsection*.46}%
+\contentsline {chapter}{\numberline {8}Optimierungen}{45}{chapter.8}%
+\contentsline {chapter}{\numberline {9}Evaluation}{46}{chapter.9}%
+\contentsline {chapter}{Literaturverzeichnis}{47}{section*.47}%
+\contentsline {chapter}{\numberline {A}Anhang}{49}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{49}{section.A.1}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
