@@ -2,36 +2,39 @@ import torch as T
 import torch.nn as nn
 from torch.distributions import Categorical
 
-from src.snakeAI.agents.common.base import BaseNet
+from src.snakeAI.agents.ppo.actor import ActorNetwork
+from src.snakeAI.agents.ppo.critic import CriticNetwork
 
 
 class ActorCritic(nn.Module):
-    def __init__(self, n_actions, lr_actor=1e-4, lr_critic=1e-4, device="cpu"):
+    def __init__(self, n_actions=3, lr_actor=1.0e-3, lr_critic=1.5e-3, device="cpu"):
         super(ActorCritic, self).__init__()
+        T.set_default_dtype(T.float64)
         T.manual_seed(10)
         self.device = device
-
-        self.base_actor = BaseNet(n_actions, 'actor', lr=lr_actor)
-        self.base_critic = BaseNet(1, 'critic', lr=lr_critic)
+        self.actor = ActorNetwork(output=n_actions, lr=lr_actor, device=self.device)
+        self.critic = CriticNetwork(lr=lr_critic, device=self.device)
         self.to(self.device)
 
-    def forward(self, around_view, cat_obs):
-        actor = self.base_actor(around_view, cat_obs)
-        critic = self.base_critic(around_view, cat_obs)
-        return actor, critic
+    def forward(self, av, scalar_obs):
+        policy = self.actor(av, scalar_obs)
+        value = self.critic(av, scalar_obs)
+        return policy, value
 
     @T.no_grad()
-    def act(self, around_view, cat_obs):
-        around_view_ = T.from_numpy(around_view).to(self.device)
-        cat_obs_ = T.from_numpy(cat_obs).to(self.device)
-        policy = self.base_actor(around_view_, cat_obs_)
+    def act(self, av, scalar_obs):
+        av_ = T.from_numpy(av).to(self.device)
+        scalar_obs_ = T.from_numpy(scalar_obs).to(self.device)
+        policy = self.actor(av_, scalar_obs_)
+
         dist = Categorical(policy)
         action = dist.sample()
-        return around_view_, cat_obs_, action.item(), dist.log_prob(action)
+        return av_, scalar_obs_, action.item(), dist.log_prob(action)
 
-    def evaluate(self, around_view, cat_obs, action):
-        policy, value = self(around_view, cat_obs)
+    def evaluate(self, av, scalar_obs, action):
+        policy, value = self.forward(av, scalar_obs)
         dist = Categorical(policy)
-        action_logprobs = dist.log_prob(action)
+
+        action_probs = dist.log_prob(action)
         dist_entropy = dist.entropy()
-        return action_logprobs, T.squeeze(value), dist_entropy
+        return action_probs, T.squeeze(value), dist_entropy

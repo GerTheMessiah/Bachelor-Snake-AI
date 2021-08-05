@@ -60,7 +60,7 @@ def train_play(N_ITERATIONS: int, ps: ParameterServer, BOARD_SIZE: tuple):
 
             around_view_new, cat_obs_new, reward, done, won = game.step(action)
 
-            mem.add(around_view, cat_obs, action, log_probs, reward, done)
+            mem.store(around_view, cat_obs, action, log_probs, reward, done)
 
             score += reward
             around_view = around_view_new
