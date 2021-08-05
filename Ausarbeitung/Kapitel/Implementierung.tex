@@ -82,7 +82,7 @@ Zu diesem Stand der Abarbeitung ist es möglich, dass das Spiel bereits gewonnen
 Ansonsten muss als nächster Schritt die Matrix aktualisiert werden. Jedoch muss vorher festgestellt werden, ob die Snake einen Apfel gefressen hat.\\
 Sollte sie dies getan haben, so wird die neue Position des Kopfes in die Matrix eingepflegt, ein neuer Apfel wird auf einer zufälligen freien Stelle generiert, inter\_apple\_steps wird auf null und die Hilfsvariable has\_grown wird auf True gesetzt. Letztere wird von der evaluate Methode verwendet, um di Höhe des rewards zu bestimmen, siehe \ref{sec:Impl_Reward_Function}.\\
 Ist die Snake jedoch nicht gewachsen, so wird das letzte Schwanzglied aus Matrix und Liste gelöscht, um den Anschein von Bewegung zu erwecken. Zuzüglich wird  die Hilfsvariable has\_grown auf False gesetzt.\\
-Zum jetzigen Zeitpunkt besteht immer noch die Möglichkeit, dass die Snake in sich selber gelaufen ist. Um dies festzustellen, wird tail auf Duplikate überprüft. Sollten sich Duplikate in tain befinden, wird die Abbruchprozedur aufgerufen.\\
+Zum jetzigen Zeitpunkt besteht immer noch die Möglichkeit, dass die Snake in sich selber gelaufen ist. Um dies festzustellen, wird tail auf Duplikate überprüft. Sollten sich Duplikate in tail befinden, wird die Abbruchprozedur aufgerufen.\\
 Ansonsten wird zum Schluss noch über tail iteriert und die korrespondierenden Einträge der Matrix (ground) werden mit den Positionen von tail aktualisiert, wobei der Kopf und das letzte Schwanzglied mittels eines anderen Zahlenwert dargestellt werden.
 
 \subsection{Reward Function} \label{sec:Impl_Reward_Function}
@@ -119,7 +119,7 @@ Dies ist auch der Grund, warum die AV Matrix sechs Channel (zweidimensionale Sch
 	A = 5 & In der letzte Feature Map wird der Apfel abgebildet. \\
 	\hline
 \end{longtable}
-Vorteilhaft an der AV ist, dass, im Gegensatz zu den verwandten Arbeiten \ref{sec:Paper_1} und \ref{sec:Paper_3}, nicht das gesamte Feld übertragen wurde sondern nur der wichtigste Ausschnitt, was die Menge an zu verarbeiten Daten drastisch reduzieren kann. Des Weiteren ergeben sich keine Probleme mit der Input-Size der Convolutional Layer.\\
+Vorteilhaft an der AV ist, dass, im Gegensatz zu den verwandten Arbeiten \ref{sec:Paper_1} und \ref{sec:Paper_2}, nicht das gesamte Feld übertragen wurde sondern nur der wichtigste Ausschnitt, was die Menge an zu verarbeiten Daten drastisch reduzieren kann. Des Weiteren ergeben sich keine Probleme mit der Input-Size der Convolutional Layer.\\
 Ein Nachteil dieser Obs ist jedoch die Vollständigkeit. Sollte der blaue Punkt in \ref{fig:Observation} außerhalb des grauen Kasten und daher außerhalb der AV liegen, so besitzt der Agent keine Informationen über den Aufenthaltsort des Apfels.
 Auch Informationen wie z.B. der Hunger, also die verbleibenden Schritte bis das Spiel endet, die Distanzen zu den Wänden und zu exkludierten Schwanzteilen und die Blickrichtung (direction) der Snake.
 \begin{figure}[H]

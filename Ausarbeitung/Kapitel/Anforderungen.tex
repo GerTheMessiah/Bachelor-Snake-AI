@@ -1,4 +1,4 @@
-\chapter{Anforderungen}
+\chapter{Anforderungen} \label{chap:Anforderungen}
 In dem letzten Kapitel \ref{sec:Grundlagen}, wurden die Grundlagen für den weiteren Vergleich, der Deep Reinforcement Learning Algorithmen, gelegt. Es wurde daher entschieden, dass der Vergleich exemplarisch an zwei RL Agenten unterschiedlicher Gattungen durchgeführt werden soll. Dies erlaubt eine Abstraktion des Vorgehens auch für andere Agenten.\\
 Problematisch an einem solchen Vergleich ist die Objektivität. Wie kann also sicher gestellt werden, dass die Ergebnisse vergleichbar sind?\\
 Die Antwort auf diese Frage sind feste Anforderungen bzw. Rahmenbedingungen, die bei den einzelnen, am Vergleich beteiligten, Teilen gelten müssen. Dabei gibt es verschiedene Anforderungen an unterschiedliche Systembereiche. In dieser Ausarbeitung existieren es vier Anforderungsbereiche, welche Anforderungen an die folgenden Bereiche stellen:
@@ -93,12 +93,6 @@ Um die Möglichkeit auszuschließen, dass die momentan ausgewählten Parameter, 
 
 \subsubsection{Variation der Reward-Funktion}
 Durch das Verändern der Reward-Funktion soll überprüft werden, ob die Agenten unterschiedlich gut auf eine andere Reward-Funktion reagieren. Sollte die Reward-Funktion eins $R_{1}()$ für den Agenten eins $A_{1}$ überdurchschnittlich bessere Resultate liefern, so wird dies erkannt und in der Evaluation berücksichtigt.
-
-\subsubsection{Variation der Netzstruktur}
-Jeder Agent ist abhängig von einer ganzen Reihe an Faktoren, welche über Erfolg und Misserfolg entscheiden. Die Netzstruktur ist dabei einer der besonders wichtigen Faktoren. Je nach Variation der Netzstruktur, kann dies die Qualität eines Agenten entscheidend beeinflussen. Es ist daher angebracht, die einzelnen Agenten unter verschiedenen Netzstrukturen laufen zu lassen, um sicherzustellen, dass die vorherrschende Netzstruktur  für alle Agenten jeweils vorteilhafte ist.
-
-\subsubsection{Variation der Observation}
-Eine Überprüfung der Agenten, neben den bereits genannten Variationen, ist auch noch mit der Variation der Observation durchführbar. Diese Veränderung soll Aufschluss über die Qualität der Agenten bei unterschiedlichen Eingabeinformationen liefern. Auch wir so wieder die Wahrscheinlichkeit gesenkt, dass gerade diese Observation für einen spezifischen Agenten vorteilhaft ist.
 
 \section{Anforderungen an die Evaluation} \label{sec:Anforderungen_an_die_Evaluation}
 Bei der Evaluation soll der optimale Agent bestimmt werden. Dabei stellt sich jedoch die Frage, was optimal im Sachzusammenhang bedeutet. 
