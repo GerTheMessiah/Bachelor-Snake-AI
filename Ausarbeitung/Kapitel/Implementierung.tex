@@ -153,16 +153,16 @@ Zu Beginn soll die Netzstruktur erklärt werden, wobei dies unabhängig von den 
 	\centering
 	\def\svgscale{0.80}
 	\input{Abbildungen/BaseNet.pdf_tex}
-	\caption[BaseNet]{Darstellung des BaseNet, welches als Standard für den weiteren Vergleich dient.}
+	\caption[BaseNet]{Darstellung des NN, welches als Standard für den weiteren Vergleich dient.}
 	\label{fig:Netzsturktur}
 \end{figure}
-Aufgrund der Agentenunabhängigkeit, ist das NN als eine eigenständige Klasse im base File, welches sich im common Package befindet, ausgelagert. 
-Diese BaseNet-Klasse besitzt eine forward Methode, welche die Obs (AV, SO), nach dem umwandelt in Tensoren, durch das NN propagiert und einen Output bestimmt. Dieser Prozess geschieht dabei folgendermaßen:\\
-Zuerst wird die AV durch zwei Convolutional Layer mit einer ReLU Aktivierungsfunktion durch propagiert. Dabei erhöht sich die Channel-Anzahl auf 32, um eine bessere Merkmalextraktion zu erhalten. Die Feature Map wird während dieses Prozesses von 13x13 auf 9x9 minimiert, was ein Effekt der Convolutional Layern ist. 
-Danach werden allen Feature Maps eine Null-Zeile und Spalte hinzugefügt (Padding), damit beim Max-Pooling unter der Filtergröße und dem Stride von 2x2, auch die neunte Zeile und Spalte verarbeitet wird. Der Tensor besitzt nun die Form (30x10x10) 
-Nach dem max-pooling besitzt der Tensor weiterhin 32 Channel mit Feature Maps der Größe 5x5. Nach der Ebnung (Flatten) des Tensoren zu einem eindimensionalen Tensor-Vektor wird dieser durch zwei weitere Fully Connected Layer (FC) mit einer ReLU Aktivierungsfunktion durch propagiert. Der resultierende Tensor besitzt die Größe 1x128 und ist ein zwischen Ergebnis, da dieser nun mit der SO verbunden wird (Join).\\
-Da das NN in beide Algorithmus-Arten verwendet werden soll, müssen drei unterschiedliche Netzwerkköpfe definiert werden, siehe \ref{fig:Netzsturktur} rechts. Alle unterscheiden sich jedoch nur in ihrer Ausgabe. Nachdem der Joined Tensor (1x128) durch zwei weitere FC Layer propagiert wurde, benötigt der Actor des PPO-Agenten eine Wahrscheinlichkeitsverteilung über alle Actions. Daher auch die Ausgabe von einem Tensor der Größe 3 nach dem zweiten FC Layer auf welchen danach noch SoftMax angewendet wird, siehe \ref{fig:Netzsturktur} rechts oben.\\
-Die Critics der PPOs und die DQNs verwendet den rechts unten dargestellten Netzwerkkopf (ValueNet-Head) \ref{fig:Netzsturktur}. Beim den Critics werden Tensoren mit einem einzigen Zahlenwert (Return) zurückgegeben, wohingegen bei den DQNs Tensoren mit drei Zahlenwerten entsprechende der Actions zurückgegeben.
+Das Netz findet sich in den Files actor und critic der PPO Package und im q\_net des DQN Package. 
+Diese Klassen besitzen eine forward Methode, welche die Obs (AV, SO), nach dem umwandelt in Tensoren, durch das NN propagiert und einen Output bestimmt. Dieser Prozess geschieht dabei folgendermaßen:\\
+Zuerst wird die AV durch zwei Convolutional Layer mit einer ReLU Aktivierungsfunktion durch propagiert. Dabei erhöht sich die Channel-Anzahl auf acht, da die AV bereits sehr stark optimiert wurde und ein Anstieg auf 16 oder 32 Channeln nicht nötig ist. Die Feature Map wird während dieses Prozesses nicht minimiert, aufgrund eines Paddings. Dies soll den Informationsverlust an den Rändern minimieren.  
+Danach werden allen Feature Maps eine Null-Zeile und Spalte hinzugefügt (Padding), damit beim Max-Pooling unter der Filtergröße und dem Stride von 2x2, auch die letzten Zeile und Spalte verarbeitet wird. Der Tensor besitzt nun die Form (8x14x14) 
+Nach dem max-pooling besitzt der Tensor Feature Maps der Größe 7x7. Nach der Einebnung (Flatten) des Tensoren zu einem eindimensionalen Tensor-Vektor wird dieser durch zwei weitere Fully Connected Layer (FC) mit einer ReLU Aktivierungsfunktion durch propagiert. Der resultierende Tensor besitzt die Größe 1x128 und ist ein zwischen Ergebnis, da dieser nun mit der SO verbunden wird (Join).\\
+Da das NN in beide Algorithmus-Arten verwendet wird, müssen drei unterschiedliche Netzwerkköpfe definiert werden, siehe \ref{fig:Netzsturktur} rechts. Alle unterscheiden sich jedoch nur in ihrer Ausgabe. Nachdem der Joined Tensor (1x128) durch zwei weitere FC Layer mit ReLU Aktivierungsfunktion propagiert wurde, benötigt der Actor des PPO-Agenten eine Wahrscheinlichkeitsverteilung über alle Actions. Daher auch die Ausgabe von einem Tensor der Größe drei, auf welchen zur Erstellung der Wahrscheinlichkeitsverteilung SoftMax angewendet wird, siehe \ref{fig:Netzsturktur} rechts oben.\\
+Die Critics der PPOs und die DQNs verwendet den rechts unten dargestellten Netzwerkkopf (ValueNet-Head) \ref{fig:Netzsturktur}. Beim den Critics werden Tensoren mit einem einzigen Zahlenwert zurückgegeben, wohingegen bei den DQNs Tensoren mit drei Q-Values entsprechende der Aktionsanzahl zurückgegeben werden.
 
 
 \subsection{DQN}

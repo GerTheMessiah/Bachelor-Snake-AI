@@ -1,10 +1,9 @@
 import torch.nn as nn
 import torch as T
-from torch.optim.adam import Adam
 
 
 class CriticNetwork(nn.Module):
-    def __init__(self, scalar_in=41, lr=1.5e-3, device='cpu'):
+    def __init__(self, scalar_in=41):
         super(CriticNetwork, self).__init__()
         self.av_net = nn.Sequential(
             nn.Conv2d(in_channels=6, out_channels=8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
@@ -24,8 +23,6 @@ class CriticNetwork(nn.Module):
             nn.ReLU(),
             nn.Linear(64, 1),
         )
-        self.optimizer = Adam(self.parameters(), lr=lr)
-        self.device = device
 
     def forward(self, av, scalar_obs):
         av_out = self.av_net(av)

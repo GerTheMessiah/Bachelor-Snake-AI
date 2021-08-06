@@ -4,7 +4,7 @@ from torch.nn import MSELoss
 
 from src.snakeAI.agents.common.utils import file_path
 from src.snakeAI.agents.dqn.memoryDQN import Memory
-from src.snakeAI.agents.common.base import BaseNet
+from src.snakeAI.agents.dqn.q_net import QNetwork
 
 
 class Agent:
@@ -18,7 +18,7 @@ class Agent:
         self.mem_size = max_mem_size
         self.batch_size = batch_size
 
-        self.Q_eval = BaseNet(output=n_actions, head_type='critic', lr=lr, device="cuda:0")
+        self.Q_eval = QNetwork(output=n_actions, lr=lr, device="cuda:0")
         self.loss = MSELoss()
         self.mem = Memory(max_mem_size=self.mem_size, in_dims_av=(6, 13, 13), in_dims_cat_obs=(41,), batch_size=batch_size)
 
