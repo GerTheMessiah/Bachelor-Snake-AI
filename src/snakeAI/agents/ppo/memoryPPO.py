@@ -1,41 +1,40 @@
-
+import torch as T
 
 class Memory:
-    def __init__(self):
-        self.actions = []
-        self.around_view = []
-        self.cat_obs = []
-        self.logprobs = []
+    def __init__(self, mem_size=600, device='cpu'):
+        self.mem_size = mem_size
+        self.counter = 0
+        self.av = T.zeros((self.mem_size, 6, 13, 13), dtype=T.float64, device=device)
+        self.scalar_obs = T.zeros((self.mem_size, 41), dtype=T.float64, device=device)
+        self.actions = T.zeros(self.mem_size, dtype=T.int64, device=device)
+        self.probs = T.zeros(self.mem_size, dtype=T.float64, device=device)
         self.rewards = []
         self.dones = []
 
-    def __add__(self, other):
-        self.actions += other.actions
-        self.around_view += other.around_view
-        self.cat_obs += other.cat_obs
-        self.logprobs += other.logprobs
-        self.rewards += other.rewards
-        self.dones += other.dones
-        return self
-
-    def add(self, around_view, cat_obs, action, log_probs, reward, done):
-        self.around_view.append(around_view)
-        self.cat_obs.append(cat_obs)
-        self.actions.append(action)
-        self.logprobs.append(log_probs)
+    def store(self, av, scalar_obs, action, probs, reward, done):
+        self.av[self.counter, ...] = av.clone().detach()
+        self.scalar_obs[self.counter, ...] = scalar_obs.clone().detach()
+        self.actions[self.counter] = action
+        self.probs[self.counter] = probs.clone().detach()
         self.rewards.append(reward)
         self.dones.append(done)
+        self.counter += 1
 
-    def __radd__(self, other):
-        return self.__add__(other)
+    def generate_batches(self):
+        raise NotImplementedError
+
+    def get_data(self):
+        return self.av[:self.counter, ...], \
+               self.scalar_obs[:self.counter, ...], \
+               self.actions[:self.counter, ...], \
+               self.probs[:self.counter, ...], \
+               self.rewards, \
+               self.dones
 
     def __len__(self):
-        return len(self.around_view)
+        return self.counter
 
     def clear_memory(self):
-        del self.actions[:]
-        del self.cat_obs[:]
-        del self.around_view[:]
-        del self.logprobs[:]
         del self.rewards[:]
         del self.dones[:]
+        self.counter = 0

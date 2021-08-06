@@ -102,7 +102,7 @@ def compass_obs(pos, obj):
 
 
 # a + 1
-def step_counter_obs(apple_stepCounter, size):
+def hunger(apple_stepCounter, size):
     obs = np.zeros(1, dtype=np.float64)
     obs[0] = 1 / (size - apple_stepCounter) if apple_stepCounter != size else 2
     return obs
@@ -113,8 +113,7 @@ def make_obs(p_id, pos, tail_pos, direction, ground, food, iter_apple_counter):
     distances = create_distances(pos, ground)
     direction = direction_obs(direction)
     apple_dir = compass_obs(pos, food)
-    step_obs = step_counter_obs(iter_apple_counter, ground.size)
-
+    step_obs = hunger(iter_apple_counter, ground.size)
     tail_obs = compass_obs(pos, tail_pos)
     cat_tensor = np.concatenate((distances, direction, apple_dir, step_obs, tail_obs))
     return around_view, np.expand_dims(cat_tensor, axis=0)

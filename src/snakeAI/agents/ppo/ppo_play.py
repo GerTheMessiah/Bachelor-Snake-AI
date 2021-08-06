@@ -16,13 +16,12 @@ def test_play(n_iterations, print_stats=True):
         agent.load_model(T.load(file_path(dir=r'models\ppo_models', new_save=False, file_name="model")))
     except FileNotFoundError:
         pass
-    game = SnakeEnv()
-    game.post_init(field_size=(8, 8), has_gui=True)
+    game = SnakeEnv((8, 8), True)
     for i in range(1, n_iterations + 1):
         around_view, cat_obs = game.reset()
         scores = 0
         while not game.has_ended:
-            around_view, cat_obs, action, _ = agent.policy_old.act(around_view, cat_obs)
+            around_view, cat_obs, action, _ = agent.old_policy.act(around_view, cat_obs)
             around_view_new, cat_obs_new, reward, done, won = game.step(action)
             scores += reward
 
