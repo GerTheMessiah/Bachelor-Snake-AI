@@ -1,6 +1,7 @@
 import torch as T
 import torch.nn as nn
 from torch.distributions import Categorical
+from torch.optim import Adam
 
 from src.snakeAI.agents.ppo.actor import ActorNetwork
 from src.snakeAI.agents.ppo.critic import CriticNetwork
@@ -11,8 +12,10 @@ class ActorCritic(nn.Module):
         super(ActorCritic, self).__init__()
         T.set_default_dtype(T.float64)
         T.manual_seed(10)
-        self.actor = ActorNetwork(output=n_actions, lr=lr_actor, device=self.device)
-        self.critic = CriticNetwork(lr=lr_critic, device=self.device)
+        self.actor = ActorNetwork(output=n_actions)
+        self.critic = CriticNetwork()
+        self.optimizer = Adam([{'params': self.actor.parameters(), 'lr': lr_actor},
+                               {'params': self.critic.parameters(), 'lr': lr_critic}])
         self.device = device
         self.to(self.device)
 

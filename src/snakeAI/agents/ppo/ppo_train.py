@@ -18,10 +18,10 @@ from src.snakeAI.gym_game.snake_env import SnakeEnv
 def train_play(N_ITERATIONS: int, BOARD_SIZE: tuple):
     try:
         a = 0
-        LR_ACTOR, LR_CRITIC, = 0.6e-3, 1.0e-3
+        LR_ACTOR, LR_CRITIC, = 0.1e-3, 0.2e-3
         scores, apples, wins, dtime = [], [], [], []
         start_time = time()
-        agent = Agent(lr_actor=LR_ACTOR, lr_critic=LR_CRITIC, gamma=0.95, K_epochs=10, eps_clip=0.2, gpu=True)
+        agent = Agent(lr_actor=LR_ACTOR, lr_critic=LR_CRITIC, gamma=0.99, K_epochs=10, eps_clip=0.2, gpu=True)
         #actor_scheduler = ExponentialLR(agent.optimizer, 0.95, verbose=True)
         # try:
         #     agent.load_model(T.load(file_path(dir=r'models\ppo_models', new_save=False, file_name="model")))

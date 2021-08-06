@@ -1,6 +1,5 @@
 import torch as T
 import torch.nn as nn
-import numpy as np
 
 from src.snakeAI.agents.ppo.actor_critic import ActorCritic
 from src.snakeAI.agents.ppo.memoryPPO import Memory
@@ -43,14 +42,12 @@ class Agent:
             loss_actor = -(T.min(surr1, surr2) + dist_entropy * self.ent_coeff).mean()
 
             loss_critic = self.critic_coeff * self.MSEloss(rewards, state_values)
+            loss = loss_actor + loss_critic
 
-            self.policy.actor.optimizer.zero_grad()
-            loss_actor.backward()
-            self.policy.actor.optimizer.step()
-
-            self.policy.critic.optimizer.zero_grad()
-            loss_critic.backward()
-            self.policy.critic.optimizer.step()
+            self.policy.optimizer.zero_grad()
+            loss.backward()
+            # T.nn.utils.clip_grad_norm_(self.policy.parameters(), 0.5)
+            self.policy.optimizer.step()
 
         self.old_policy.load_state_dict(self.policy.state_dict())
         T.cuda.empty_cache()
