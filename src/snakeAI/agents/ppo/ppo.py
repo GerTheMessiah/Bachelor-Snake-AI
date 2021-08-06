@@ -17,26 +17,23 @@ class Agent:
         self.model_id = 0
         self.MSEloss = nn.MSELoss()
 
-        self.mem = Memory()
+        self.mem = Memory(device=self.device)
         self.policy = ActorCritic(n_actions=3, lr_actor=lr_actor, lr_critic=lr_critic, device=self.device)
         self.old_policy = ActorCritic(n_actions=3, lr_actor=lr_actor, lr_critic=lr_critic, device=self.device)
         self.old_policy.load_state_dict(self.policy.state_dict(destination=None))
 
     def learn(self):
-        rewards = self.generate_reward(self.mem.rewards, self.mem.dones)
+        old_av, old_scalar, old_action, probs_old, reward_list, dones_list = self.mem.get_data()
+
+        rewards = self.generate_reward(reward_list, dones_list)
 
         rewards = T.tensor(rewards, dtype=T.float64).to(self.device)
         rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-7)
 
-        old_av = T.cat(self.mem.av, dim=0).to(self.device).detach()
-        old_scalar = T.cat(self.mem.scalar_obs, dim=0).to(self.device).detach()
-        old_action = T.tensor(self.mem.actions, dtype=T.int64, device=self.device)
-        probs_old = T.cat(self.mem.probs).to(self.device).detach()
-
         for _ in range(self.K_epochs):
             probs, state_values, dist_entropy = self.policy.evaluate(old_av, old_scalar, old_action)
 
-            ratios = T.exp(probs - probs_old.detach())
+            ratios = T.exp(probs - probs_old)
 
             advantages = rewards - state_values.detach()
 
@@ -64,7 +61,7 @@ class Agent:
         for reward, is_terminal in zip(reversed(rewards_in), reversed(terminals_in)):
             if is_terminal:
                 discounted_reward = 0
-            discounted_reward = reward + (self.gamma * discounted_reward)
+            discounted_reward = reward + self.gamma * discounted_reward
             rewards.insert(0, discounted_reward)
         return rewards
 

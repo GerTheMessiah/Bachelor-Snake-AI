@@ -18,7 +18,7 @@ from src.snakeAI.gym_game.snake_env import SnakeEnv
 def train_play(N_ITERATIONS: int, BOARD_SIZE: tuple):
     try:
         a = 0
-        LR_ACTOR, LR_CRITIC, = 0.8e-3, 1.25e-3
+        LR_ACTOR, LR_CRITIC, = 0.6e-3, 1.0e-3
         scores, apples, wins, dtime = [], [], [], []
         start_time = time()
         agent = Agent(lr_actor=LR_ACTOR, lr_critic=LR_CRITIC, gamma=0.95, K_epochs=10, eps_clip=0.2, gpu=True)
@@ -44,7 +44,7 @@ def train_play(N_ITERATIONS: int, BOARD_SIZE: tuple):
                 av = av_new
                 scalar_obs = scalac_obs_new
 
-            if len(agent.mem) >= 2 ** 7:
+            if len(agent.mem) >= 2 ** 6:
                 agent.learn()
                 agent.mem.clear_memory()
 
@@ -84,14 +84,7 @@ def train_play(N_ITERATIONS: int, BOARD_SIZE: tuple):
         print(df)
         print(a)
     except KeyboardInterrupt:
-        T.save(agent.policy.state_dict(), path_model)
-        save_worked = False
-        while not save_worked:
-            try:
-                agent.policy.load_state_dict(T.load(file_path(dir=r"models\ppo_models", new_save=False)))
-                save_worked = True
-            except FileNotFoundError:
-                T.save(agent.policy.state_dict(), path_model)
+        pass
 
 
 if __name__ == '__main__':

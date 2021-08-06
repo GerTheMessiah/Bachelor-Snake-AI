@@ -1,32 +1,40 @@
-
+import torch as T
 
 class Memory:
-    def __init__(self):
-        self.av = []
-        self.scalar_obs = []
-        self.actions = []
-        self.probs = []
+    def __init__(self, mem_size=600, device='cpu'):
+        self.mem_size = mem_size
+        self.counter = 0
+        self.av = T.zeros((self.mem_size, 6, 13, 13), dtype=T.float64, device=device)
+        self.scalar_obs = T.zeros((self.mem_size, 41), dtype=T.float64, device=device)
+        self.actions = T.zeros(self.mem_size, dtype=T.int64, device=device)
+        self.probs = T.zeros(self.mem_size, dtype=T.float64, device=device)
         self.rewards = []
         self.dones = []
 
     def store(self, av, scalar_obs, action, probs, reward, done):
-        self.av.append(av)
-        self.scalar_obs.append(scalar_obs)
-        self.actions.append(action)
-        self.probs.append(probs)
+        self.av[self.counter, ...] = av.clone().detach()
+        self.scalar_obs[self.counter, ...] = scalar_obs.clone().detach()
+        self.actions[self.counter] = action
+        self.probs[self.counter] = probs.clone().detach()
         self.rewards.append(reward)
         self.dones.append(done)
+        self.counter += 1
 
     def generate_batches(self):
         raise NotImplementedError
 
+    def get_data(self):
+        return self.av[:self.counter, ...], \
+               self.scalar_obs[:self.counter, ...], \
+               self.actions[:self.counter, ...], \
+               self.probs[:self.counter, ...], \
+               self.rewards, \
+               self.dones
+
     def __len__(self):
-        return len(self.av)
+        return self.counter
 
     def clear_memory(self):
-        del self.av[:]
-        del self.scalar_obs[:]
-        del self.actions[:]
-        del self.probs[:]
         del self.rewards[:]
         del self.dones[:]
+        self.counter = 0

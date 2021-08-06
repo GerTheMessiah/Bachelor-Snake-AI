@@ -11,9 +11,9 @@ class ActorCritic(nn.Module):
         super(ActorCritic, self).__init__()
         T.set_default_dtype(T.float64)
         T.manual_seed(10)
-        self.device = device
         self.actor = ActorNetwork(output=n_actions, lr=lr_actor, device=self.device)
         self.critic = CriticNetwork(lr=lr_critic, device=self.device)
+        self.device = device
         self.to(self.device)
 
     def forward(self, av, scalar_obs):
@@ -23,13 +23,13 @@ class ActorCritic(nn.Module):
 
     @T.no_grad()
     def act(self, av, scalar_obs):
-        av_ = T.from_numpy(av).to(self.device)
-        scalar_obs_ = T.from_numpy(scalar_obs).to(self.device)
-        policy = self.actor(av_, scalar_obs_)
+        av = T.from_numpy(av).to(self.device)
+        scalar_obs = T.from_numpy(scalar_obs).to(self.device)
+        policy = self.actor(av, scalar_obs)
 
         dist = Categorical(policy)
         action = dist.sample()
-        return av_, scalar_obs_, action.item(), dist.log_prob(action)
+        return av, scalar_obs, action.item(), dist.log_prob(action)
 
     def evaluate(self, av, scalar_obs, action):
         policy, value = self.forward(av, scalar_obs)
