@@ -1,7 +1,7 @@
 \chapter{Anforderungen} \label{chap:Anforderungen}
-In dem letzten Kapitel \ref{sec:Grundlagen}, wurden die Grundlagen für den weiteren Vergleich, der Deep Reinforcement Learning Algorithmen, gelegt. Es wurde daher entschieden, dass der Vergleich exemplarisch an zwei RL Agenten unterschiedlicher Gattungen durchgeführt werden soll. Dies erlaubt eine Abstraktion des Vorgehens auch für andere Agenten.\\
-Problematisch an einem solchen Vergleich ist die Objektivität. Wie kann also sicher gestellt werden, dass die Ergebnisse vergleichbar sind?\\
-Die Antwort auf diese Frage sind feste Anforderungen bzw. Rahmenbedingungen, die bei den einzelnen, am Vergleich beteiligten, Teilen gelten müssen. Dabei gibt es verschiedene Anforderungen an unterschiedliche Systembereiche. In dieser Ausarbeitung existieren es vier Anforderungsbereiche, welche Anforderungen an die folgenden Bereiche stellen:
+In Kapitel \ref{sec:Grundlagen}, wurden die Grundlagen für den weiteren Vergleich der Reinforcement Learning Agenten gelegt. Interessant erscheint dabei der Vergleich zweier unterschiedlicher Algorithmus Arten (DQN und PPO), da diese unterschiedlichen Vorgehensweisen aufweisen basieren. \\
+Problematisch an einem solchen Vergleich ist die Objektivität. Wie kann sicher gestellt werden, dass die Ergebnisse vergleichbar sind?\\
+Eine Antwort basiert auf festen Anforderungen bzw. Rahmenbedingungen, welche bei der Implementierungen, Datenerhebung und bei dem Vergleich gelten müssen. Dabei gibt es vier verschiedene Anforderungsbereiche, welche Forderungen an die folgenden Bereiche stellen:
 \begin{itemize}
 	\item Spielimplementierung
 	\item Agenten
@@ -13,7 +13,7 @@ Die Antwort auf diese Frage sind feste Anforderungen bzw. Rahmenbedingungen, die
 Die Anforderungen, welche an eine Reinforcement Learning Environment gestellt werden, sind vielseitiger Natur. Sie stammen unter anderem aus der Softwaretechnik, aus dem RL und aus dem gesundem Menschenverstand.
 
 \subsection{Kommunikation}
-Damit keine vollkommene Abtrennung des Environments jegliches Interagieren unmöglich macht, sollen nach dem Vorbild aus \ref{sec:Environment} drei Kommunikationskanäle implementiert werden. Das Env. soll in der Lage sein, Actions zu empfangen und Observation und Rewards zu senden.
+Damit keine vollkommene Abtrennung des Environments jegliches Interagieren unmöglich macht, sollen nach dem Vorbild aus \ref{sec:Environment} drei Kommunikationskanäle implementiert werden. Das Env soll in der Lage sein, Actions zu empfangen und Observation und Rewards zu senden.
 
 \subsection{Funktionalität} \label{sec:funktionalität_Env}
 Die Funktionalität des Environments ist in drei Unterfunktionalitäten aufzuteilen.
@@ -74,8 +74,6 @@ Folgenden Daten sollen für die Auswertung erhoben und gespeichert werden:
 	\hline
 	apples & Die Anzahl der gefressenen Äpfel in einem Spiel. Maßgeblicher Evaluationsfaktor zur Einschätzung des Lernerfolges. \\
 	\hline
-	scores & Die gesammelten und aufsummierten Rewards, welche der Agent in einem Spiel gesammelt hat. Auch dieser Datenwert gibt Aufschluss über den Lernerfolg. Gleichzeitig lässt sich den Scores auch noch die Effizienz der Lösung und damit des Lernens entnehmen. \\
-	\hline
 	wins & Hat der Agent das Spiel gewonnen. Dieser Wert stellt die Endkontrolle des Agenten dar. \\
 	\hline
 	epsilon (nur beim Deep Q-Learning Algorithmus) & Gibt die Wahrscheinlichkeit für das Ziehen einer zufälligen Aktion wieder.  \\
@@ -109,14 +107,12 @@ Die einzelnen Kriterien lauten:
 	\hline
 	Performance & Welcher Agent erreicht, nach einer festen Anzahl an absolvierten Spielen, das beste Ergebnis? Im Sachzusammenhang mit dem Spiel Snake bedeutet dies: Welcher Agent frisst die meisten Äpfel, nach dem er über eine feste Anzahl an Spielen trainiert wurde? \\
 	\hline
-	Effizienz & Welcher Agent löst das Spiel mit der größten Effizienz. Bezogen auf das Spiel Snake bedeutet dies, welches Agent ist in der Lage die Äpfel mit möglichst wenig Schritten zu erreichen und zu fressen? Hierbei werden beispielsweise Probleme, wie das im Kreis laufen sichtbar. \\
+	Effizienz & Welcher Agent löst das Spiel mit der größten Effizienz. Bezogen auf das Spiel Snake bedeutet dies, welches Agent ist in der Lage die Äpfel mit möglichst wenig Schritten zu fressen? \\
 	\hline
 	Robustheit & Welcher Agent ist in der Lage in einer modifizierten Umgebung das Spielziel am besten zu erreichen? In Bezug auf Snake bedeutet dies: Welcher Agent ist in der Lage auf einem größeren oder kleineren Spielfeld die meisten Äpfel zu fressen? \\
 	\hline
-	Trainingszeit & Welcher Agent schafft es ein festes Ziel in der geringstmöglichen Zeit zu erreichen oder welcher Agent ist als erstes in der Lage durchschnittlich 10 Äpfel zu fressen. \\
+	Trainingszeit & Welcher Agent schafft es ein festes Ziel in der geringstmöglichen Zeit zu erreichen bzw. welcher Agent ist als erstes in der Lage durchschnittlich $x$ Äpfel zu fressen. \\
 	\hline
-	Spielzeit & Welcher Agent schafft es am längsten ein durchzuhalten bevor ein terminaler Zustand erreicht wird? Auf Snake bezogen: Welcher Agent schafft es am längsten am Leben zu bleiben. \\
-	\hline
-	Multiprocessing fähig (boolscher Wert) & Welche Agenten sind multiprocessing fähig und können damit schneller und ausgiebiger trainiert werden. \\
+	Spielzeit & Welcher Agent schafft es im Durchschnitt am längsten einen terminalen Zustand zu vermeiden? Auf Snake bezogen: Welcher Agent schafft es am längsten nicht zu sterben. \\
 	\hline
 \end{longtable}

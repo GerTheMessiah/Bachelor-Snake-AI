@@ -14,12 +14,11 @@ from src.snakeAI.agents.dqn.dqn import Agent
 from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 
-def train_dqn(N_ITERATIONS, has_gui=False):
-    LR, BOARD_SIZE = 1.0e-4, (8, 8)
+def train_dqn(N_ITERATIONS, LR, GAMMA=0.95, BACH_SIZE=2**6, MAX_MEM_SIZE=2**11, EPS_DEC=1e-5, EPS_END=0.001, BOARD_SIZE=(8, 8)):
     start_time = time_ns()
     scores, apples, wins, dtime, eps, steps_list, dq = [], [], [], [], [], [], deque(maxlen=100)
-    agent = Agent(lr=LR, n_actions=3, gamma=0.95, batch_size=2 ** 6, eps_dec=5e-6, max_mem_size=2 ** 11, eps_end=0.001)
-    game = SnakeEnv(BOARD_SIZE, has_gui)
+    agent = Agent(lr=LR, n_actions=3, gamma=GAMMA, batch_size=BACH_SIZE, eps_dec=EPS_DEC, max_mem_size=MAX_MEM_SIZE, eps_end=EPS_END)
+    game = SnakeEnv(BOARD_SIZE, False)
     iter_time = time_ns()
     for i in range(1, N_ITERATIONS + 1):
         score = 0
@@ -69,6 +68,6 @@ def train_dqn(N_ITERATIONS, has_gui=False):
 
 if __name__ == '__main__':
     try:
-        train_dqn(N_ITERATIONS=20000, has_gui=False)
+        train_dqn(20000, 1e-4, 0.95, 2**6, 2**1, 7.5e-6, 1e-3, (8, 8))
     except KeyboardInterrupt:
         pass
