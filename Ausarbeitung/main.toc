@@ -1,7 +1,7 @@
 \babel@toc {ngerman}{}
-\contentsline {chapter}{\nonumberline Abbildungsverzeichnis}{iv}{chapter*.2}%
-\contentsline {chapter}{\nonumberline Tabellenverzeichnis}{v}{chapter*.3}%
-\contentsline {chapter}{\nonumberline Abkürzungsverzeichnis}{vi}{chapter*.4}%
+\contentsline {chapter}{\nonumberline Abbildungsverzeichnis}{v}{chapter*.2}%
+\contentsline {chapter}{\nonumberline Tabellenverzeichnis}{vi}{chapter*.3}%
+\contentsline {chapter}{\nonumberline Abkürzungsverzeichnis}{vii}{chapter*.4}%
 \contentsline {chapter}{\numberline {1}Einleitung}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Motivation}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Zielsetzung}{2}{section.1.2}%
@@ -72,17 +72,20 @@
 \contentsline {section}{\numberline {7.2}Agenten}{40}{section.7.2}%
 \contentsline {subsection}{\numberline {7.2.1}Netzstruktur}{41}{subsection.7.2.1}%
 \contentsline {subsection}{\numberline {7.2.2}DQN}{42}{subsection.7.2.2}%
-\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{42}{subsubsection*.44}%
+\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{43}{subsubsection*.44}%
 \contentsline {subsubsection}{\nonumberline Trainingsprozess}{43}{subsubsection*.46}%
-\contentsline {subsubsection}{\nonumberline Main-Methode}{43}{subsubsection*.48}%
+\contentsline {subsubsection}{\nonumberline Main-Methode}{44}{subsubsection*.48}%
 \contentsline {subsection}{\numberline {7.2.3}PPO}{44}{subsection.7.2.3}%
 \contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{44}{subsubsection*.50}%
 \contentsline {subsubsection}{\nonumberline Trainingsprozess}{45}{subsubsection*.52}%
 \contentsline {subsubsection}{\nonumberline Main-Methode}{46}{subsubsection*.54}%
 \contentsline {chapter}{\numberline {8}Optimierungen}{47}{chapter.8}%
 \contentsline {section}{\numberline {8.1}Optimierung 1 - Dual Experience Replay}{47}{section.8.1}%
-\contentsline {chapter}{\numberline {9}Evaluation}{49}{chapter.9}%
-\contentsline {chapter}{Literaturverzeichnis}{50}{section*.55}%
-\contentsline {chapter}{\numberline {A}Anhang}{52}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{52}{section.A.1}%
+\contentsline {section}{\numberline {8.2}Optimierung 2 - Joined Reward Function}{48}{section.8.2}%
+\contentsline {section}{\numberline {8.3}Optimierung 3 - Odor Reward Function \& Loop Storm Strategy}{49}{section.8.3}%
+\contentsline {section}{\numberline {8.4}Optimierung 4 - Dynamische Lernrate}{49}{section.8.4}%
+\contentsline {chapter}{\numberline {9}Evaluation}{50}{chapter.9}%
+\contentsline {chapter}{Literaturverzeichnis}{51}{section*.55}%
+\contentsline {chapter}{\numberline {A}Anhang}{53}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{53}{section.A.1}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
