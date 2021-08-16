@@ -69,14 +69,16 @@
 \contentsline {subsection}{\numberline {7.1.3}Reward Function}{37}{subsection.7.1.3}%
 \contentsline {subsection}{\numberline {7.1.4}Observation}{38}{subsection.7.1.4}%
 \contentsline {subsection}{\numberline {7.1.5}Graphische Oberfläche}{40}{subsection.7.1.5}%
+\contentsline {subsection}{\numberline {7.1.6}Testung des Environment}{40}{subsection.7.1.6}%
 \contentsline {section}{\numberline {7.2}Agenten}{40}{section.7.2}%
 \contentsline {subsection}{\numberline {7.2.1}Netzstruktur}{41}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}DQN}{42}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.2.2}Testung der Agenten}{42}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.2.3}DQN}{42}{subsection.7.2.3}%
 \contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{43}{subsubsection*.44}%
 \contentsline {subsubsection}{\nonumberline Trainingsprozess}{43}{subsubsection*.46}%
 \contentsline {subsubsection}{\nonumberline Main-Methode}{44}{subsubsection*.48}%
-\contentsline {subsection}{\numberline {7.2.3}PPO}{44}{subsection.7.2.3}%
-\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{44}{subsubsection*.50}%
+\contentsline {subsection}{\numberline {7.2.4}PPO}{44}{subsection.7.2.4}%
+\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{45}{subsubsection*.50}%
 \contentsline {subsubsection}{\nonumberline Trainingsprozess}{45}{subsubsection*.52}%
 \contentsline {subsubsection}{\nonumberline Main-Methode}{46}{subsubsection*.54}%
 \contentsline {chapter}{\numberline {8}Optimierungen}{47}{chapter.8}%
@@ -88,4 +90,9 @@
 \contentsline {chapter}{Literaturverzeichnis}{51}{section*.55}%
 \contentsline {chapter}{\numberline {A}Anhang}{53}{appendix.A}%
 \contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{53}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Tensoren}{54}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Convolution Layers}{54}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}Convolutional Layer}{54}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Pooling Layer}{56}{subsection.A.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Fully Connected Layer}{57}{subsection.A.3.3}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

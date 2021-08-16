@@ -1,5 +1,5 @@
 \chapter{Implementierung}
-Für eine Umsetzung eines solchen Vergleichs, wie er in dem Kapitel \ref{chap:Vorgehen} beschrieben worden ist, ist es nötig eine Implementierung des Spiels Snake und der beiden Agenten, inklusive der Ablaufroutine, durchzuführen. Als Programmiersprache wurde Python (3.7.9) gewählt.\\
+Für eine Umsetzung eines solchen Vergleichs, wie er in dem Kapitel \ref{chap:Vorgehen} beschrieben worden ist, ist es nötig eine Implementierung des Spiels Snake und der beiden Agenten, inklusive der Ablaufroutine, durchzuführen. Als Programmiersprache wurde Python (3.7) gewählt.\\
 Python bietet im Bereich des DRL eine Vielzahl an Frameworks, welche nicht nur bei der Implementierung des Envs. helfen, sondern auch welche, die Funktionalität der Neuronalen Netzwerke bereitstellen.
 
 \section{Snake Environment}
@@ -20,7 +20,6 @@ Die reset-Methode startet das Spiel von neuem. Zum Schluss wird dann noch die Ob
 Die render-Methode ruft die Methoden für die visuelle Darstellung auf.
 Die close-Methode terminiert das Programm.\\
 Auf Basis der oben genannten Methoden wird ersichtlich, dass es sich bei der Klasse SnakeEnv um eine Wrapper-Klasse handelt, die als Schnittstelle dient.
-
 
 \subsection{Spiellogik} \label{sec:Impl_Spiellogik}
 Die Spiellogik, welche durch die step-Methode \ref{sec:Impl_Schnittstelle} angestoßen wird, befindet sich im snake\_game File, welches eine Klasse namens SnakeGame definiert. Neben einigen Methoden werden im SnakeGame-Objekt auch viele spielbezogene Daten, wie z.B. das Spielfeld (ground), ein Player-Objekt (p),
@@ -143,6 +142,8 @@ Spielfeld (GUI) und Matrix sind daher nicht direkt gekoppelt sondern müssen üb
 Die Fenstergröße der Spieloberfläche wird dynamisch berechnet und kann über das Attribut Particle verändert werden, welches die Feldgröße eines einzelnen Matrixeintrags darstellt. 
 Die draw Methode ist für das Generieren der einzelnen Spielfeld-Rechtecke zuständig und reset\_GUI versetzt das Spielfeld zurück in den Ursprungszustand.
 
+\subsection{Testung des Environment}
+
 
 \section{Agenten}
 Dieser Teil der Implementierung soll sich mit den Agenten befassen. Dabei wird näher auf die Netzstruktur, den Aktionsauswahlprozess die Lern-Methode, den Speicher (Replay Buffer) und die Hauptausführungsmethode (main Methode) eingegangen.
@@ -164,6 +165,8 @@ Nach dem max-pooling besitzt der Tensor Feature Maps der Größe 7x7. Nach der E
 Da das NN in beide Algorithmus-Arten verwendet wird, müssen drei unterschiedliche Netzwerkköpfe definiert werden, siehe \ref{fig:Netzsturktur} rechts. Alle unterscheiden sich jedoch nur in ihrer Ausgabe. Nachdem der Joined Tensor (1x128) durch zwei weitere FC Layer mit ReLU Aktivierungsfunktion propagiert wurde, benötigt der Actor des PPO-Agenten eine Wahrscheinlichkeitsverteilung über alle Actions. Daher auch die Ausgabe von einem Tensor der Größe drei, auf welchen zur Erstellung der Wahrscheinlichkeitsverteilung SoftMax angewendet wird, siehe \ref{fig:Netzsturktur} rechts oben.\\
 Die Critics der PPOs und die DQNs verwendet den rechts unten dargestellten Netzwerkkopf (ValueNet-Head) \ref{fig:Netzsturktur}. Beim den Critics werden Tensoren mit einem einzigen Zahlenwert zurückgegeben, wohingegen bei den DQNs Tensoren mit drei Q-Values entsprechende der Aktionsanzahl zurückgegeben werden.
 
+\subsection{Testung der Agenten}
+Aufgrund der Tatsache, dass die Agenten zu einem großen Teil auf dem Zufall basieren, stellt sich eine Testung mittels Testmethoden als nicht durchführbar heraus. Dennoch wurden beide Agenten mit Debug-Methoden manuell getestet. Dabei stellten sie sich als funktionsfähig heraus. Als beleg für diese Behauptung dienen die Evaluationsresultate, welche ohne funktionsfähige Agenten nicht zu erbringen seien.
 
 \subsection{DQN} \label{sec:Impl:DQN}
 Der DQN Algorithmus ist einer der beiden Algorithmus-Arten, welche im Rahmen dieser Ausarbeitung, implementiert wurden. Diese Implementierung findet hauptsächlich in vier Files statt, welche im dqn Package liegen, dass wiederum zum agents Package gehört.
