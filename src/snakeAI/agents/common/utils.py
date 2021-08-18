@@ -1,3 +1,4 @@
+import os
 import re
 import sys
 from os import listdir
@@ -68,3 +69,18 @@ def file_path(dir: str, new_save: bool, file_name: str = "model"):
         print("Loading model failed")
         return rf"{MODEL_DIR_PATH}\{file_name}_0"
     return rf"{MODEL_DIR_PATH}\{file_name}_{MODEL_ID + 1 if new_save else MODEL_ID}"
+
+
+def save_file(path, **kwargs) -> str:
+
+    MODEL_DIR_PATH = str(Path(__file__).parent.parent.parent.parent) + "\\resources\\" if not path else path
+    DIR_NAME = "Save-"
+    for parameter, value in kwargs.items():
+
+        DIR_NAME += (str(parameter).lower() + "_" + str(value) + "-")
+
+    DIR_NAME = DIR_NAME[:-1]
+
+    os.mkdir(MODEL_DIR_PATH + DIR_NAME)
+
+    return MODEL_DIR_PATH + DIR_NAME

@@ -1,9 +1,11 @@
 import torch as T
 
+
 class Memory:
-    def __init__(self, mem_size=600, device='cpu'):
+    def __init__(self, mem_size=2000, batch_size=64, device='cpu'):
         self.mem_size = mem_size
         self.counter = 0
+        self.batch_size = batch_size
         self.av = T.zeros((self.mem_size, 6, 13, 13), dtype=T.float64, device=device)
         self.scalar_obs = T.zeros((self.mem_size, 41), dtype=T.float64, device=device)
         self.actions = T.zeros(self.mem_size, dtype=T.int64, device=device)
@@ -19,9 +21,6 @@ class Memory:
         self.rewards.append(reward)
         self.dones.append(done)
         self.counter += 1
-
-    def generate_batches(self):
-        raise NotImplementedError
 
     def get_data(self):
         return self.av[:self.counter, ...], \

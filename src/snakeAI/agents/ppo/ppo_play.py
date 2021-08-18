@@ -2,22 +2,22 @@ from os import environ
 from time import sleep
 import torch as T
 
-from src.snakeAI.agents.common.utils import file_path
-
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 
 from src.snakeAI.agents.ppo.ppo import Agent
 from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 
-def test_play(n_iterations, print_stats=True):
+def play_ppo(PATH, N_ITERATIONS, BOARD_SIZE=(8, 8), PRINT_STATS=True, HAS_GUI=True):
     agent = Agent()
     try:
-        agent.load_model(T.load(file_path(dir=r'models\ppo_models', new_save=False, file_name="model")))
-    except FileNotFoundError:
-        pass
-    game = SnakeEnv((8, 8), True)
-    for i in range(1, n_iterations + 1):
+        agent.load_model(T.load(PATH))
+    except (FileNotFoundError, IOError):
+        print("Wrong Path or File doesn't exist!")
+        return
+
+    game = SnakeEnv(BOARD_SIZE, HAS_GUI)
+    for i in range(1, N_ITERATIONS + 1):
         around_view, cat_obs = game.reset()
         scores = 0
         while not game.has_ended:
@@ -32,11 +32,11 @@ def test_play(n_iterations, print_stats=True):
             cat_obs = cat_obs_new
             sleep(0.255)
         apple_count = game.apple_count
-        if print_stats:
+        if PRINT_STATS:
             print(f"Score: {round(scores, 2)} || Apple_Counter: {apple_count} || won: {won}")
             print("\n")
         sleep(0.255)
 
 
 if __name__ == '__main__':
-    test_play(100, True)
+    play_ppo(100, True)
