@@ -1,0 +1,160 @@
+\chapter{Konzept}
+In diesem Kapitel soll das Konzept dieser Ausarbeitung vorgestellt werden. Dieses besteht aus vier Teilen. Zuerst soll das Vorgehen erklärt werden, gefolgt von der Darstellung des Environments und der Agenten. Danach soll im weiteren auf die Datenerhebung eingegangen werden.\\
+Ziel dieses Abschnittes ist es das Vorgehen und alle weiteren dazu benötigten Elemente unabhängig von der Implementierung darzustellen, sodass die Ergebnisse mit jeder Implementierung reproduzierbar sind.
+
+\section{Vorgehen} \label{sec:Vorgehen}
+Das Vorgehen lässt sich am besten mit Hilfe eines Flussdiagramms darstellen, in welchem die einzelnen Schritte des Vergleichs visuell dargestellt sind.\\
+Zu Beginn sei erwähnt, dass davon ausgegangen wird, dass alle für den Verglich benötigten Komponenten, wie z.B. Environment, Agenten und statistische Analysekomponenten entsprechende der Anforderungen \ref{chap:Anforderungen} implementiert sind.\\
+Als erstes werden die Agenten erstellt \ref{fig:Vorgehen}. Für diese Initialisierung werden die Hyperparameter aus \ref{sec:Konzept_Agenten} verwendet.
+Mit diesem Baseline Agenten Bestand werden nun die weiteren Vergleich durchgeführt.\\
+Für jedes Evaluationskriterien werden aus dem gegebenen Agenten-Bestand die zwei optimalen Baseline Agenten ausgewählt. Die Algorithmus-Art besitzt dabei der Auswahl der Agenten keinen Einfluss. Genauere Details zur Durchführung der Baseline Vergleiche finden sich in \ref{sec:Konzept_Vergleich}.\\
+Basierend auf den beiden Sieger Agenten (Agent-01 und Agent-02) \ref{fig:Vorgehen}, werden nun die Optimierungen auf das Env. und die Agenten angewendet. Mit diesen optimierten Agenten (Agent-01 Optimierung A bis Agent-02 Optimierung C) werden nun die Vergleiche bezüglich jedes einzelnen Evaluationskriteriums \ref{tab:Kriterien} wiederholt.\\
+Im letzten Schritt soll in der gesamt Evaluation der optimale Agent für jedes Evaluationskriterium ermittelt werden. Dabei können dies auch Baseline Agenten sein.
+\begin{figure}[H]
+	\centering
+	\def\svgscale{0.095}
+	\input{Abbildungen/Vorgehen.pdf_tex}
+	\caption[Flussdiagramm des Vorgehens]{Darstellung des Vorgehens.}
+	\label{fig:Vorgehen}
+\end{figure}
+
+\section{Environment} \label{sec:Konzept_Environment}
+Das Env besteht im wesentlichen aus einer Hauptkomponenten (Wrapper), welche benötigt wird, um die in \ref{sec:Anforderungen_Schnittstelle} aufgestellten Anforderung zu erfüllen. Diese Hauptkomponente beinhaltet die Spiellogik-Komponente, welche aus fünf weiteren Unterkomponenten besteht.
+Zu diesen gehören die Game-, Player-, Reward-, Observation- und GUI-Komponenten.
+
+\subsection{Wrapper} \label{sec:Konzept_Wrapper}
+Der Wrapper oder auch die Verbindungskomponente verbindet alle bereits erwähnten Komponenten miteinander. Zu diesem Zweck muss er einige Funktionalitäten implementieren. Diese beziehen sich auf die im Wrapper vorhandenen Komponenten.
+\begin{figure}[H]
+	\centering
+	\def\svgscale{0.15}
+	\input{Abbildungen/Wrapper.pdf_tex}
+	\caption[Wrapper]{Darstellung des Wrappers.}
+	\label{fig:Wrapper}
+\end{figure}
+Die step Funktionalität \ref{fig:Wrapper} ist die Hauptmethode im Wrapper. Sie bekommt eine Aktion übergeben, welche zuvor vom Agent bestimmt wurde. Diese wird mit Hilfe der Spiellogik umgesetzt. Entsprechend der Anforderung \ref{sec:Anforderungen_Schnittstelle} gibt diese Methode nur einen Reward und eine Obs zurück.\\
+Reset setzt den bereits vorhandenen Spielfortschritt zurück, wobei auf die Spiellogikkomponente zugegriffen wird. Die Anforderung \ref{sec:Anforderung_Reset} ist damit erfüllt.\\
+Die Render Methode ist für die Visualisierung verantwortlich und ruft Methoden in der GUI-Unterkomponente auf, welche ein genaues Bild von der Spiellogik-Komponente erhält. Die Anforderung \ref{sec:visualisierung_Env} ist damit erfüllt.\\
+Die has\_won und has\_ended Methodiken geben Statusinformationen über den Momentanen Spielstand zurück, welche für den Spiel- bzw. Trainingsablauf benötigt werden.
+
+\subsection{Spiellogik} \label{sec:Konzept_Spiellogik}
+Die Spiellogik besteht aus den fünf Unterkomponenten, welche in \ref{sec:Konzept_Environment} bereits benannt wurden.\\
+Die Game-Komponente ist die wichtigste Komponente von allen, da sie die eigentliche Aktionsdurchführung implementiert. Sie beinhaltet jeweils eine Instanzen der Reward-, Observation-, GUI- und Player-Komponente. Letztere ist eine Datenhaltungskomponente, welche die Daten der Snake, wie z.B. Position oder Ausrichtung (Direction) beinhaltet.\\
+\\Die Reward-Komponente bestimmt den auszugebenden Reward nach jeder Aktionsabfertigung. Dieser berechnet sich wie in \ref{sec:Konzept_Reward} angegeben. Zuzüglich wird im Rahmen eine der Optimierungen, siehe \ref{sec:Konzept_Vergleich}, eine weitere Reward Funktion implementiert. Diese berechnet sich wie in \ref{sec:Konzept_Optimierung02} angegeben.\\
+\\In der Game-Komponente werden wichtige Spielbezogene Daten verwaltet. Zu diesen gehören das Spielfeld (ground), sowie die Form des Spielfeldes (shape) und die Position des Apfels auf dem Spielfeld. Sie beinhaltet viele Methoden, wie z.B. die action, observe, evaluate, reset, view, make\_apple.
+\\In der Player-Komponente, welche zur Datenverwaltung dient, werden Spielerbezogene Daten verwaltet. Zu diesen zählen die Position des Kopfes der Snake, sowie ihrer Schwanzglieder, ihre Ausrichtung (Direction), ihre gelaufenen Schritte seit dem letzten Fressen eines Apfels (inter\_apple\_steps), ihr Lebensstatus (done), daher ob sie tot oder lebendig ist und weitere Farbkonstanten für die GUI.\\
+\\Die Observation-Komponente beinhaltet viele einzelne Funktionen zur schrittweisen Erstellung der Observation, wie sie in \ref{sec:Konzept_Observation} erklärt wird.
+\\Zur Erstellung der graphischen Oberfläche implementiert die GUI-Komponente die Funktionalität ein Fenster zu öffnen, welches das Spielgeschehen, daher das Spielfeld (ground) anzeigt und stetig an den neusten Stand anpasst.
+\begin{figure}[H]
+	\centering
+	\def\svgscale{0.17}
+	\input{Abbildungen/Spiellogik.pdf_tex}
+	\caption[Spiellogik]{Darstellung der Spiellogik mit ihren Unterkomponenten.}
+	\label{fig:Spiellogik}
+\end{figure}
+
+\subsubsection{Spielablauf}
+Die eigentliche Aktionsabarbeitung wird durch das Aufrufen der step Funktionalität im Wrapper \ref{sec:Konzept_Wrapper} bewirkt. Diese ruft die evaluate und observe Methoden auf, welche in der Game-Komponente implementiert sind \ref{fig:Spiellogik}.
+Um jedoch zuerst die Abarbeitung einer Aktion durchzuführen, muss die action Methode als aller erste aufgerufen werden, welche die von Agenten bestimmte Aktion (action) übergeben bekommt. 
+\begin{figure}[H]
+	\centering
+	\def\svgscale{0.105}
+	\input{Abbildungen/Spielablauf.pdf_tex}
+	\caption[Spielablauf]{Darstellung eines Schrittes in der Spielepisode.}
+	\label{fig:Spielablauf}
+\end{figure}
+Zu Beginn wird überprüft, ob die Snake seit dem letzten Fressen mehr Schritte als die eigentliche Spielfeldgröße gegangen ist. Die Spielfeldgröße berechnet sich dabei wie folgt (8, 8) = 64, daher ist die Spielfeldgröße 64. Sollte die Snake mehr Schritte gelaufen sein als diese Größe, so wird das Spiel terminiert, da die Snake eventuell in einer Schleife steckt und daher diese nie wieder verlassen würde.\\
+Andernfalls wird die Aktion verarbeitet, in dem sie die direction verändert der Snake manipuliert. Das Spiel Snake besitzt in diesem Konzept drei Actions turn left, turn right oder do nothing.
+\begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
+	\caption{Kodierung der Actions}
+	\label{tab:Aktionscodierung} 
+	\endfirsthead
+	\endhead
+	\hline
+	Action & Erklärung \\
+	\hline
+	turn left & Die Snake ändert ihre Richtung um 90° nach links. Z.B. Von N $\longrightarrow$ W \\
+	\hline
+	turn right & Snake ändert ihre Richtung um 90° nach rechts. Z.B. Von N $\longrightarrow$ O \\
+	\hline
+	do nothing & Die Richtung der Snake wird nicht verändert. \\
+	\hline
+\end{longtable}
+Entsprechend der Beispiele in \ref{tab:Aktionscodierung} wird klar, dass die Direktion entweder nur Norden, Osten, Süden oder Westen sein kann.
+Als nächstes wird ein Schritt der Snake mit der aktualisierten Aktion hypothetisch durchgeführt. Dabei lässt sich feststellen, ob die Ausführung des Schrittes zum Tod der Snake führt. Sollte dies der Fall sein, so wird der Spielablauf terminiert. Dabei führt das laufen in sich selbst und das Verlassen des Spielfeldes zum Tod \ref{sec:Snake}. \\ 
+Anderenfalls wird der Schritt durchgeführt. Dabei wird zwischen zwei Fällen unterschieden. Sollte die Snake einen Apfel gefressen haben, also der Kopf der Snake und der Apfel die selbe Position einnehmen, so wächst die Snake um ein Schwanzglied. Der alte Apfel wird entfernt und ein neuer erscheint zufallsbasiert irgendwo auf einem freien Platz des Spielfelds.\\
+Sollte die Snake hingegen keinen Apfel gefressen haben, so geht sie einfach den Schritt, es bewegen sich daher Alle Schwanzglieder auf die Vorgängerposition, mit Ausnahme des Kopfes, welcher die, durch die direktion definierte, neue Position einnimmt.\\
+Nach der Ausführung einer dieser beiden Fälle, wird die GUI aktualisiert mit der update\_gui Methode. Nach diesem Schritt ist die Abarbeitung der action Methode abgeschlossen. Damit jedoch die der Agent den Nachfolgezustand und Reward erhält wird die evaluate Methode in der Reward-Komponente und die observe Methode in der Observation-Komponente aufgerufen.\\
+Zum Schluss werden Obs und Reward zurückgegeben.
+
+\subsubsection{Reward} \label{sec:Konzept_Reward}
+Die evaluate Methode befindet sich in der Game-Komponente und ruft ihrerseits die standard\_reward Method in der Reward-Komponente auf. Sie bestimmt, basierend auf dem letzten Zug, den Reward, was nach folgenden Vorbild geschieht.
+Der Reward ist abhängig von drei Faktoren. Dem Fressen eines Apfels, dem Sieg und dem Verlust. Sollte keiner dieser genannten Faktoren eintreten, wird ein Reward von -0.01 zurückgegeben. Dies hält den Agenten dazu an den kürzesten Pfad zum Apfel zu finden, da jeder Schritt geringfügig bestraft wird.\\
+War es der Snake möglich einen Apfel zu fressen so wird ein Reward von +1.0 zurückgegeben, da ein Sub-Goal erfüllt worden ist.
+Sollte die Snake gestorben sein, durch das Verlassen des Spielfeldes oder das Laufen in sich selbst oder das zu lange Umherlaufen, so wird ein Reward von -10 zurückgegeben, um dieses Verhalten in seiner Häufigkeit zu minimieren.
+Hat die Snake alle Äpfel gefressen, sodass das gesamte Spielfeld mit der Snake ausgefüllt ist, so wird ein Reward von +10 zurückgegeben, um ein solches Verhalten in seiner Häufigkeit zu maximieren.
+
+\subsubsection{Observation} \label{sec:Konzept_Observation}
+Die Observation, welche von der step Method des Wrappers \ref{sec:Konzept_Wrapper} zurückgegeben wird, besteht aus der around\_view (AV) und der scalar\_obs (SO). Zur Erstellung der Obs wird die observe Methode in der Game-Komponente \ref{sec:Konzept_Spiellogik} aufgerufen. Diese ruft ihrerseits die make\_obs Funktion in der Observation-Komponente auf. Mit Hilfe verschiedener Unterfunktionen wird dann die Obs generiert.\\
+Die AV lässt sich dabei als ein Ausschnitt des Spielfeldes (ground) beschreiben, welcher einen festen Bereich um den Kopf der Snake abdeckt.
+Strukturen wie Wände und Teile des eigenen Schwanzes, welche vielleicht eine Sackgasse aufspannen könnte, werden dadurch deutlich. Mathematisch ist die AV eine one-hot-encoded Matrix der Form (6x13x13).\\
+\\Das One-Hot-Encoding ist ein binäres encoding System. Sollte ein Merkmal vorhanden sein, so wird dieses mit eins codiert anderenfalls mit null.\\
+Dies ist auch der Grund, warum die AV Matrix sechs Channel (zweidimensionale Schichten) besitzt. Diese geben Aufschluss über folgende Informationen:
+\begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
+	\caption{Channel-Erklärung der Around\_View (AV)}
+	\label{tab:around_view} 
+	\endfirsthead
+	\endhead
+	\hline
+	Channel der Matrix bzw. Erste Dimension (Ax13x13) & Erklärung \\
+	\hline
+	A = 0 & Die erste Feature Map signalisiert den Raum außerhalb des Spielfelds. Nährt sich die Snake dem Rand, so würde der Ausschnitt der AV aus dem Spielfeld herausragen und den Eindruck erwecken, dass dieser größer wäre als er in Realität wirklich ist. Darum werden Felder der AV, die sich außerhalb des Spielfeldes befinden, angezeigt.\\
+	\hline
+	A = 1 & Diese Feature Map stellt alle Schwanzglieder mit Ausnahme des Kopfes und es letzten Schwanzgliedes dar. \\
+	\hline
+	A = 2 & In dieser Feature Map wird der Kopf der Snake dargestellt. \\
+	\hline
+	A = 3 & Damit gegen Ende des Spiels der Agent noch freie Felder erkennen kann, wird in dieser Feature Map jedes freie und sich im Spielfeld befindliche Feld mit eins codiert. \\
+	\hline
+	A = 4 & Die vorletzte Feature Map codiert das Schwanzende der Snake. \\
+	\hline
+	A = 5 & In der letzte Feature Map wird der Apfel abgebildet. \\
+	\hline
+\end{longtable}
+Vorteilhaft an der AV ist, dass, im Gegensatz zu den verwandten Arbeiten \ref{sec:Paper_1} und \ref{sec:Paper_2}, nicht das gesamte Feld übertragen wird, sondern nur der wichtigste Ausschnitt, was die Menge an zu verarbeiten Daten reduziert. Des Weiteren ergeben sich keine Probleme zwischen variablen Spielfeldgrößen und der Input-Size von Convolutional Layers \ref{sec:Anhang_Conv_Layer}.\\
+Ein Nachteil dieser Obs ist jedoch die Unvollständigkeit. Sollte der blaue Punkt in \ref{fig:Observation} außerhalb des grauen Kasten und daher außerhalb der AV liegen, so bleibt der Agent im Unklaren über den Aufenthaltsort des Apfels.
+Auch Informationen wie z.B. der Hunger, also die verbleibenden Schritte bis das Spiel endet, die Distanzen zu den Wänden und zu, außerhalb der AV liegenden, Schwanzteilen und die Ausrichtung (direction) der Snake, werden durch die AV nur eingeschränkt oder gar nicht geliefert.
+\begin{figure}[H]
+	\centering
+	\def\svgscale{0.80}
+	\input{Abbildungen/Observation.pdf_tex}
+	\caption[Observation]{Partielle Darstellung der verwendeten Observation. Das blaue Rechteck und dessen Schwanz stellt die Snake dar, wobei das rot umrandete Rechteck den Kopf darstellt. Die schwarzen Felder werden nicht von der AV abgedeckt, graue liegen innerhalb der AV. 
+		Die gelben gestrichelten Linien stellen ein X-Ray Distanzbestimmung dar. Der blaue Kreis stellt den Apfel dar und der grüne viertel Kreis oben links symbolisiert Hunger.}
+	\label{fig:Observation}
+\end{figure}
+Aus diesem Grund wurde die AV durch die scalar\_obs (SO) ergänzt. Diese beinhaltet skalare Informationen und ist eine Konkatenation aus X-Ray Distanzbestimmung, Hunger- und Blickrichtungsanzeige. Zuzüglich werden der SO noch zwei Kompasse für relative Positionsinformation zwischen Kopf und Apfel bzw. letztem Schwanzglied hinzugefügt.
+Letztere sind eindimensionale Vektoren, welche über das One-Hot-Encoding anzeigen, ob sich das gesucht Objekt relativ zum Kopf oberhalb, unterhalb oder in der selben Zeile (Matrixsicht) befindet.Analog verhält es sich mit der vertikalen Sicht.\\
+Die Blickfeldanzeige ist ebenfalls one-hot-encoded und stellt mit ihrem Vektor die vier Ausrichtungen Norden, Osten, Süden und Westen dar.\\
+Der Hunger ist ein eindimensionaler Vektor mit einem einzigen Eintrag, welcher sich aus der Differenz zwischen der Anzahl der gegangenen Schritten seit dem letzten Fressen (inter\_apple\_steps) und der maximalen Schrittanzahl ohne einen Apfel gefressen zu haben (max\_steps), berechnet. Diese maximale Schrittanzahl ist als Spielfeldgröße definiert. Da der Hunger bei einer großen Differenz einen kleinen Einfluss und bei einer geringen Differenz einen großen Einfluss besitzen soll, wurde diese durch eins geteilt. Nähren sich die beiden Werte an, so rückt der Wert des Bruches näher an unendlich, da den Nenner immer kleiner wird.
+\begin{align}
+	\min(2, \frac{1}{inter\_apple\_steps - max\_steps})
+\end{align}
+Um mit der Unendlichkeit auftretende Probleme zu umgehen wird zwei zurückgegeben, wenn die Differenz null ist.\\
+In ähnlicher Weise wird mit den X-Rays Distanzbestimmungen verfahren. Bei ihnen handelt es sich um acht Distanzmesserlinien, die in 45° Abständen ausgesandt werden, siehe \ref{fig:Observation}. Befindet sich das gesucht Objekt in dieser Linie, so wird die Distanz zwischen dem Kopf der Snake und dem Objekt durch eins dividiert und zurückgegeben. Es wird nach Wänden, dem eigenem Schwanz und dem Apfel gesucht. Daher wird die X-Ray Distanzbestimmung in einem Vektor der Größe 24 (3 * 8 = 24) gespeichert.
+
+\subsubsection{GUI}
+Die graphische Oberfläche oder auch GUI genannt kann optional ein oder aus geschaltet werden. Beim lernen der Agenten bietet es sich beispielsweise an diese auszuschalten, da diese den Lernprozess senkt. Beim Start der GUI wird ein Fenster geöffnet, welches den momentanen Stand der Spielgeschehens anzeigt. Da Snake eine zweidimensionale Spieloberfläche besitzt, wird diese im Fenster dargestellt. Nach jeder Aktionsdurchführung muss die GUI mit der update\_gui Methode aktualisiert werden, um stets den neusten Stand des Spiels zu zeigen.
+
+\section{Agenten} \label{sec:Konzept_Agenten}
+In diesem Abschnitt des Konzepts sollen die Agenten vorgestellt werden. Dazu werden die Algorithmus-Arten (PPO und DQN) näher erläutert. Zuzüglich wird noch die Netzstruktur für diese Agenten beleuchtet.
+
+\subsection{Netzstruktur}
+Zu Beginn soll die Netzstruktur erklärt werden, wobei dies unabhängig von der Algorithmus-Art geschehen kann, da sowohl DQN als auch PPO Agenten das annähernd gleiche Netz nutzen.
+
+
+\section{Optimierungen}
+
+\subsection{Optimierung 02} \label{sec:Konzept_Optimierung02}
+
+\section{Datenerhebung} \label{sec:Konzept_Datenerhebung}
+
+\section{Vergleich} \label{sec:Konzept_Vergleich}

@@ -1,7 +1,7 @@
 
 \chapter{Grundlagen}\label{sec:Grundlagen}
 Im folgenden Kapitel soll das benötigte Wissen vermittelt werden, welcher zum Verständnis dieser Arbeit benötigt wird. Dabei sollen verschiedene Reinforcement Learning Algorithmen, wie auch grundlegende Informationen des Reinforcement Learnings selbst thematisiert werden. Auch das Spiel Snake wird Erwähnung finden. 
-\section{Game of Snake}
+\section{Game of Snake} \label{sec:Snake}
 \begin{figure}[H]
 	\centering
 	\def\svgscale{0.90}
@@ -19,9 +19,9 @@ Das Reinforcement Learning (Bestärkendes Lernen) ist einer der drei großen Tei
 Einordnen lässt sich das Reinforcement Learning (RL) irgendwo zwischen vollständig überwachtem Lernen und dem vollständigen Fehlen vordefinierter Labels \cite[S. 26]{DRL_Lapan}. Viele Aspekte des (SL), wie z.B. neuronale Netze zum Approximation einer Lösungsfunktion, Gradientenabstiegsverfahren und Backpropagation zur Erlernung von Datenrepräsentationen, werden auch im RL verwendet.\\
 Auf Menschen wirkt das RL, im Vergleich zu den anderen Disziplinen des Machine Learnings, am nachvollziehbarsten. Dies liegt an der Lernstrategie die sich dieses Verfahren zu Nutze macht. Beim RL wird anhand eines 
 \grqq trial-and-error\glqq{} Verfahrens gelernt. Ein gutes Beispiel für eine solche Art des Lernens ist die Erziehung eines Kindes. Wenn eben dieses Kind etwas gutes tut, dann wird es belohnt. Angetrieben von der Belohnung, versucht das Kind dieses Verhalten fortzusetzen. Entsprechend wird das Kind bestraft, wenn es etwas schlechtes tut. Schlechtes Verhalten kommt weniger häufig zum Vorschein, um Bestrafungen zu vermeiden. \cite[S.1 ff.]{Sutton1998}\\
-Beim RL funktioniert es genau so. Das ist auch der Grund dafür, dass viele der Aufgaben des RL dem menschlichen Arbeitsspektrum sehr nahe sind. So wird das RL beispielsweise im Finanzhandel eingesetzt. Auch im Bereich der Robotik ist das RL auf dem Vormarsch. Wo früher noch komplexe Bewegungsabfolgen eines Roboterarms mühevoll programmiert werden mussten, da können wir heute bereits Roboter mit RL Agenten ausstatten, welche selbstständig die Bewegungsabfolgen meisten. \cite[Kapitel 18]{DRL_Lapan}
+Beim RL funktioniert es genau so. Das ist auch der Grund dafür, dass viele der Aufgaben des RL dem menschlichen Arbeitsspektrum sehr nahe sind. So wird das RL beispielsweise im Finanzhandel eingesetzt. Auch im Bereich der Robotik ist das RL auf dem Vormarsch. Wo früher noch komplexe Bewegungsabfolgen eines Roboterarms mühevoll programmiert werden mussten, ist es heute bereits möglich Roboter durch RL Agenten steuern zu lassen, welche selbstständig die Bewegungsabfolgen meisten. \cite[Kapitel 18]{DRL_Lapan}
 
-\subsection{Vokabular}
+\subsection{Vokabular} \label{sec:Vokabular}
 Um ein tiefer gehendes Verständnis für das RL zu erhalten, ist es erforderlich die gängigen Begrifflichkeiten zu erlernen und deren Bedeutung zu verstehen.
 
 \subsubsection{Agent}\label{sec:Agent}
@@ -36,7 +36,7 @@ Dies wirft die Frage auf, ob es in dem Env. einen terminalen Zustand (häufig do
 \subsubsection{Action}\label{sec:Action}
 Die Actions bzw. die Aktionen sind einer der drei Datenübermittlungswege. Bei ihnen handelt es sich um Handlungen welche im Env. ausgeführt werden. Actions können z.B. erlaubte Züge in Spielen, das Abbiegen im autonomen Fahren oder das Ausfüllen eines Antragen sein. Es wird ersichtlich, dass die Actions, welche ein RL Agent ausführen kann, prinzipiell nicht in der Komplexität beschränkt sind. 
 Dennoch ist es hier gängige Praxis geworden, dass arbeitsteilig vorgegangen werden soll, da der Agent ansonsten zu viele Ressourcen in Anspruch nehmen müssten.\\
-Im RL wird zwischen diskreten und stetigen Aktionsraum unterschieden. Der diskrete Aktionsraum umfassen eine endliche Menge an sich gegenseitig ausschließenden Actions. Beispielhaft dafür wäre das Gehen an einer T-Kreuzung. Der Agent kann entweder Links, Rechts oder zurück gehen. Es ist ihm aber nicht möglich ein bisschen Rechts und viel Links zu gehen.
+Im Environment wird zwischen diskreten und stetigen Aktionsraum unterschieden. Der diskrete Aktionsraum umfassen eine endliche Menge an sich gegenseitig ausschließenden Actions. Beispielhaft dafür wäre das Gehen an einer T-Kreuzung. Der Agent kann entweder Links, Rechts oder zurück gehen. Es ist ihm aber nicht möglich ein bisschen Rechts und viel Links zu gehen.
 Anders verhält es sich beim stetigen Aktionsraum. Dieser zeichnet sich durch stetige Werte aus. Hier ist das Steuern eines Autos beispielhaft. Um wie viel Grad muss der Agent das Steuer drehen, damit das Fahrzeug auf der Spur bleibt? \cite[S. 31 f.]{DRL_Lapan}
 
 \subsubsection{Observation}\label{sec:Observation}
@@ -64,7 +64,7 @@ Sollte daher ein Agent der Policy $\pi_{t}$ zum Zeitpunkt $t$ folgen, so ist $\p
 \cite[S. 45 ff.]{Sutton1998}
 
 \subsubsection{Value}
-Values geben eine Einschätzung ab, wie gut oder schlecht eine State oder State-Action-Pair ist. Sie werden gewöhnlich mit einer Funktion ermittelt. So bestimmt die Value-Function $V(s)$ beispielsweise den Wert des States $s$. Dieser ist ein Maß dafür, wie gut es für den Agenten ist, in diesen State zu wechseln. Ein andere Wert $Q$, welcher durch die Q-Value-Function $Q(s,a)$ bestimmt wird, gibt Aufschluss darüber, welche Action $a$ im State $s$ den größten Return (diskontierte gesamt Belohnung) über der gesamten Spielepisode erzielen wird.
+Values geben eine Einschätzung ab, wie gut oder schlecht eine State oder State-Action-Pair ist. Sie werden gewöhnlich mit einer Funktion ermittelt. So bestimmt die Value-Function $V(s)$ beispielsweise den Wert des States $s$. Dieser ist ein Maß dafür, wie gut es für den Agenten ist, in diesen State zu wechseln. Ein andere Wert $Q$, welcher durch die Maximierung der Q-Value-Function $Q(s,a)$ bestimmt wird, gibt Aufschluss darüber, welche Action $a$ im State $s$ den größten Return (diskontierte gesamt Belohnung) über der gesamten Spielepisode erzielen wird.
 Diese Values werden ebenfalls unter einer Policy (Regelwerk des Agenten) bestimmt, daher folgt: für die Value-Functions $V(s) = V_\pi(s)$ und
 $Q(s,a) = Q_\pi(s,a)$. \cite[S. 46]{Sutton1998} \\
 Bei einem Verfahren wie z.B. dem Q-Learning lässt sich die Policy formal angeben: $\pi(s) = \arg\max_{a} Q_\pi(s,a)$. Dies ist die Auswahlregel der Actions $a$ im State $s$. \cite[S.291]{DRL_Lapan}
@@ -109,8 +109,9 @@ On-Policy-Verfahren sind dagegen sehr wohl abhängig von aktuellen Daten, da sie
 \\Auch hier besitzen beide Klassen ihre Vor- und Nachteile. So können beispielsweise Off-Policy Verfahren mit älteren Daten immer noch trainiert werden. Dies macht Off-Policy RL Verfahren Daten effizienter als On-Policy Verfahren. Meist ist es jedoch so, dass diese Art von Verfahren langsamer konvergieren.\\
 On-Policy Verfahren konvergieren dagegen meist schneller. Sie benötigen aber dafür auch mehr Daten aus dem Environment, dessen Beschaffung aufwendig und teuer sein könnte. Die Dateneffizienz nimmt ab.\cite[S. 210 f.]{DRL_Lapan}
 
-\section{Proximal Policy Optimization}
-Der Proximal Policy Optimization Algorithmus oder auch PPO abgekürzt wurde von den Open-AI-Team entwickelt. Im Jahr 2017 erschien das gleichnamige Paper, welches von John Schulman et al. veröffentlicht wurde. In diesem werden die besonderen Funktionsweise genauer erläutert wird \cite{PPO}.
+\section{Proximal Policy Optimization} \label{sec:PPO}
+Der Proximal Policy Optimization Algorithmus oder auch PPO abgekürzt wurde von den Open-AI-Team entwickelt. Im Jahr 2017 erschien das gleichnamige Paper, welches von John Schulman et al. veröffentlicht wurde. In diesem werden die besonderen Funktionsweise genauer erläutert wird \cite{PPO}.\\
+Der PPO bietet sich besonders durch seine bereits erbrachten Erfolge \cite{PPO} und seine gute Performance an, was ihn zu einem idealen Kandidaten für einem möglichst optimalen Algorithmus, im Sinne der Forschungsfrage, auszeichnet.
 
 \subsection{Actor-Critic Modell} \label{sec:actor_critic}
 Der PPO Algorithmus ist ein policy-based RL-Verfahren, welches, im Vergleich mit anderen Verfahren, einige Verbesserungen aufweist. Er ist eine Weiterentwicklung des Actor-Critic-Verfahrens und basiert intern auf zwei NN, dem sogenanntes Actor-Network bzw. Policy-Network und das Critic-Network bzw. Value-Network. \cite[S. 273 f.]{Sutton1998}\\
@@ -160,7 +161,7 @@ Die einzelnen Erklärungen basieren auf den PPO Paper \cite{PPO}.
 	\hline
 	$\epsilon$ & Epsilon ist ein Hyperparameter, welcher die Ober- und Untergrenze der Clip Funktion festlegt. Gewöhnlich wird für $\epsilon$ ein Wert zwischen $0.1$ und $0.2$ gewählt. \\
 	\hline
-	$\gamma$ & Gamma bzw. Abzinsungsfaktor ist ein Hyperparameter, der die Zeitpräferenz des Agenten kontrolliert. Gewöhnlich liegt Gamma $\gamma$ zwischen 0.9 bis 0.99. Große Werte sorgen für ein weitsichtiges Lernen des Agenten wohingegen ein kleine Werte zu einem kurzfristigen Lernen führen \cite[S. 43 bzw. Summary of Notation S. xv]{Sutton1998}. \\
+	$\gamma$ \label{sign:Gamma} & Gamma bzw. Abzinsungsfaktor ist ein Hyperparameter, der die Zeitpräferenz des Agenten kontrolliert. Gewöhnlich liegt Gamma $\gamma$ zwischen 0.9 bis 0.99. Große Werte sorgen für ein weitsichtiges Lernen des Agenten wohingegen ein kleine Werte zu einem kurzfristigen Lernen führen \cite[S. 43 bzw. Summary of Notation S. xv]{Sutton1998}. \\
 	\hline
 \end{longtable}
 
@@ -223,7 +224,7 @@ Es ergibt sich damit der bereits oben erwähnte PPO Training Loss \ref{PPO_Train
 	$L^\text{PPO}_{t} (\theta) = L^\text{CLIP + VF + S}_{t} (\theta) = \mathbb{\hat{E}}_{t} [L^{\text{CLIP}}_{t}(\theta) - c_{1}L^{\text{VF}}_{t} + c_{2}S[\pi_{\theta}](s_{t})]$
 \end{center}
 
-\subsection{PPO - Algorithmus}
+\subsection{PPO - Algorithmus} \label{sec:PPO_Algorithmus}
 Um die Theorie näher an die eigentliche Implementierung zu bewegen soll nun eine Ablauffolge diesen Abschnitt vervollständigen. Diese basiert dabei auf der Quelle \cite{PPO} und einigen weiteren Anpassungen.
 \begin{enumerate}
 	\item Initialisiere alle Hyperparameter. Initialisiere die Gewichte für Actor $\theta$ und Critic $w$ zufallsbasiert. Erstelle ein Experience Buffer $EB$.
@@ -242,39 +243,40 @@ Um die Theorie näher an die eigentliche Implementierung zu bewegen soll nun ein
 \end{enumerate}
 
 \section{Deep Q-Network} \label{sec:Q-Learning}
-Der DQN (Deep Q-Network-Algorithmus) ist ein weiterer Reinforcement Learning Agent, welcher auf einer ihm zugrundeliegenden Formel basiert. Er hat bereits große Erfolge besonders in der Gaming Branche erzielen können. Daher erscheint es auch nicht weiter verwunderlich, dass sich dieser Algorithmus großer Beliebtheit erfreut. Ebenfalls wurden bereits viele Erweiterungen, wie der DDQN (Double Deep Q-Network) oder der DQN Implementierungen mit Verrauschen Netzen usw.\\
+Der DQN (Deep Q-Network-Algorithmus) ist ein weiterer Reinforcement Learning Algorithmus, welcher auf einer ihm zugrundeliegenden Formel basiert. Er hat bereits große Erfolge besonders in der Gaming Branche erzielen können. Daher erscheint es auch nicht weiter verwunderlich, dass sich dieser Algorithmus großer Beliebtheit erfreut. Ebenfalls wurden bereits viele Erweiterungen, wie der DDQN (Double Deep Q-Network) oder der DQN Implementierungen mit Verrauschen Netzen usw.\\
+Aufgrund seiner großen Beliebtheit ergibt sich die Frage, ob der DQN dieser auch gerecht wird und dieser wirklich optimale Agenten zur Lösung des Spiels Snake hervorbringen kann? Eine weitere naheliegende Frage ist, ob dieser Algorithmus im Vergleich zu anderen Arten konkurrenzfähig ist? Diese beiden Fragen lassen sich mit einem Vergleich beantworten, was diesen Algorithmus zu einem weiteren guten Kandidaten macht.\\ 
 Angestammtes Ziel aller Q-Learning-Algorithmen ist es, jedem State-Action-Pair $(s,a)$ (Zustands-Aktions-Paar) einem Aktionswert (Q-Value) $Q$ zuzuweisen \cite[S. 126]{DRL_Lapan}. Dies ist beispielsweise über eine Tabelle möglich, was jedoch bei großen State-Action-Spaces (Zustands-Aktions-Räumen) schnell ineffizient wird. Ein weiterer Ansatz sind NN, welches durch seine zumeist zufällige Initialisierung der Gewichte bereits für jeden (State-Action-Pair) ein Q-Value liefert. Es sei erwähnt, dass es bei NN häufig so ist, dass nur der State als Input für das Value-NN dient.\\
 \\Ein kleiner Blick in die dem Algorithmus zugrunde liegende Logik, eröffnet des weiteren einen besseren Überblick. So ist die Idee von vielen RL-Verfahren, die Aktionswert Funktion mit Hilfe der Bellman-Gleichung iterativ zu bestimmen. Daraus ergibt sich:
 \begin{align}
 	Q_{i+1}(s,a) = \mathbb{E} \bigl\lbrack r + \gamma \max_{a'} Q(s',a')|s,a \bigr\rbrack
 \end{align}
 In der Theorie konvergiert ein solches Iterationsverfahren $Q_i \longrightarrow Q^*$ jedoch nur, wenn i gegen unendlich läuft $i \longrightarrow \infty$, wobei $Q^*$ die optimale Aktionswert-Funktion darstellt. Da dies jedoch nicht möglich ist, muss $Q^*$ angenäht werden $Q(s,a;\theta) \approx Q^* $. Dies geschieht mittels eines NN.\\
-Damit dieses nicht ausschließlich Zufallsgetrieben Q-Values ermittelt, ist eine Anpassung der Gewicht des NN nötig. Dafür muss jedoch zuerst der Loss des DQN bestimmt werden. Dies geschieht mit Hilfe einer Loss-Function:
+Damit dieses nicht ausschließlich Zufallsgetrieben Q-Values ermittelt, ist eine Anpassung der Gewicht des NN nötig. Dafür muss jedoch zuerst der Loss des DQN bestimmt werden. Dies geschieht mit Hilfe mehrerer Loss-Function. Die $i$-te Loss-Function mit den $i$-ten NN-Parametern ist wie folgt definiert \cite{DQN}:
 \begin{align}
 	\label{eq:DQN_Loss}
-	L_i(\theta_i) = \mathbb{E}_{s,a \sim p(\cdot)} \Bigl\lbrack (y_i - Q(s,a;\theta_i))^2 \Bigr\rbrack
+	L_i(\theta_i) = \mathbb{E} \Bigl\lbrack (r(s,a) +\gamma \max_{a'}Q(s',a';\theta_{i-1}) - Q(s,a;\theta_i))^2 \Bigr\rbrack
 \end{align}
-wobei $y_i = \mathbb{E}_{s' \sim \mathcal{E}} \bigl\lbrack r+\gamma \max_{a'}Q(s',a';\theta_{i-1})|s,a \bigr\rbrack$ ist \cite{DQN}. 
-Wie auf den ersten Blick erkannt werden kann ist diese Loss Formel nicht für den allgemeinen Gebrauch geeignet. Daher soll nur oberflächlich thematisiert werden.\\
-Die Formel \ref{eq:DQN_Loss} besagt, dass der Loss eines zufällig ausgesuchten State-Action Tuples (s,a) sich wie folgt zusammensetzt. 
+Die Formel \ref{eq:DQN_Loss} besagt, dass der Loss eines zufällig ausgesuchten State-Action Tupels (s,a) sich wie folgt zusammensetzt. 
 Der Fehler ist die Differenz aus dem Aktionswerts $Q(s,a; \theta_{i})$, welcher Aufschluss über den, in dieser Episode, zu erwartenden Reward liefert und $y_i$. Dabei ist $y_i$ nichts anderen als der Reward, welche durch die Ausführung der Action $a$ im State $s$ im Env. erzielt wurde, addiert mit dem Q-Value der Folgeaktion $a'$ und dem Folgezustand $s'$.\\
 Da $Q(s,a)$ rekursiv definiert werden kann, ergibt sich in vereinfachter Form \cite[S.126]{DRL_Lapan}:
 \begin{align}
 	\label{eq:Q-Value_rekursive_def}
 	Q(s,a) = r + \gamma \max_{a \in A}Q(s',a') = \mathbb{E}_{s' \sim \mathcal{E}} \bigl\lbrack r+\gamma \max_{a'}Q(s',a';\theta_{i-1})|s,a \bigr\rbrack = y_i
 \end{align}
-Es wird erkenntlich, dass $Q(s,a;\theta)$ dem Q-target $y_i$ $Q(s,a;\theta) \longrightarrow y_i$ entsprechen soll, darum wird die Differenz zwischen beiden bestimmt und als Loss deklariert. Dieser wird noch quadriert, damit der Loss positiv ist und damit er für den MSE (Mean Squared Error) anwendbar ist.
+Es wird erkenntlich, dass $Q(s,a;\theta)$ dem Q-target $Q(s,a;\theta) \longrightarrow y_i$ entsprechen soll, darum wird die Differenz zwischen beiden bestimmt und als Loss deklariert. Dieser wird noch quadriert, damit der Loss positiv ist und damit er für den MSE (Mean Squared Error) anwendbar ist.
+
+\subsection{DQN - Algorithmus} \label{alg:DQN}
 Zur besseren Anwendbarkeit haben Volodymyr Mnhi et al. einen Algorithmus entworfen, welcher den DQN anschaulich erklärt. Da jedoch in diesem Algorithmus weiterhin auf Teile der Loss-Function eingegangen wird, folge eine bereinigte Version, welche sich auch für den allgemeinen Gebrauch besser anbietet \cite[S. 149 f.]{DRL_Lapan}.
-\begin{enumerate} \label{alg:DQN}
-	\item Initialisiere alle Hyperparameter. Initialisiere die Gewichte für $(s,a)$ und $Q(s',a')$ zufallsbasiert. Setzt Setzte Epsilon $\epsilon = 1.00$ und Erzeuge leeren Replay-Buffer $RB$.
+\begin{enumerate} 
+	\item Initialisiere alle Hyperparameter. Initialisiere die Gewichte für das Q-NN zufallsbasiert. Setzte Epsilon $\epsilon = 1.00$ und Erzeuge leeren Replay-Buffer $RB$.
 	\item Wähle mit der Wahrscheinlichkeit $\epsilon$  eine zufällige Action $a$ oder nutze $a = \arg\max_{a} Q(s,a)$
 	\item Führt Action $a$ aus und ermittle den Reward $r$ und den Folgezustand $s'$.
-	\item Speichern von State $s$, Action $a$, Reward $r$ und Folgestate $s'$. $(s,a,r,s') \longrightarrow RB$
+	\item Speichern von State $s$, Action $a$, Reward $r$ und Folgestate $s'$. $(s,a,r,s') \longrightarrow \text{Replay-Buffer}$
 	\item Senkt $\epsilon$, sodass die Wahrscheinlichkeit eine zufällige Action zu wählen minimiert wird. Gewöhnlich existiert eine untere Grenze für $\epsilon$, sodass immer noch einige wenige Actions zufällig gewählt werden, je nach Grenze.
 	\item Entnehme auf zufallsbasiert Mini-Batches aus dem Replay Buffer.
 	\item Berechne für alle sich im Mini-Batch befindliche Übergänge den Zielwert $y = r$ wenn die Episode in diesem Übergang endet. Ansonsten soll $y = r + \gamma \max_{a \in A}\hat{Q}(s',a')$.
 	\item Berechne den Verlust $\mathbb{L} = (Q(s,a) - y)^2$
-	\item Update Q(s,a) durch SGD (Stochastischen Gradientenabstiegsverfahren, Englisch: Stochastic Gradient Descent)
+	\item Update $Q_\theta(s,a)$ durch SGD (Stochastischen Gradientenabstiegsverfahren, Englisch: Stochastic Gradient Descent). Daher $Q_{\theta_{i}}(s,a) \longrightarrow Q_{\theta_{i+1}}(s,a)$
 	\item Kopierte alle $N$ Schritte die Gewichte von $Q(s,a)$ nach $\hat{Q}(s,a)$ $\theta_{Q(s,a)} \longrightarrow \hat{Q}(s,a)$
 	\item Wiederhole alle Schritte von Schritt 2 an bis sich eine Konvergenz einstellt.
 \end{enumerate}

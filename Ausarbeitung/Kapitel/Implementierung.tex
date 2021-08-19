@@ -57,23 +57,8 @@ So kann mit dn Zeilen- und Spaltenindexen der Matrix die Position der Snake deut
 Der Einfachheit halber werden die Zeilen- und Spaltenindexe, daher die Position, ebenfalls noch in einer List (tail) festgehalten. Dieser erleichtert später die Feststellung des Lebensstatus (done).\\
 \\Mit dem folgenden Aktivitätsdiagramm soll der Fokus weiter auf die action-Methode gelegt werden. Diese wird wie folgt abgearbeitet.
 Als erstes wird der inter\_apple\_steps erhöht. Sollte dieser Zähler größer als, die vorher definierte, Obergrenze sein, so wird der Lebensstatus auf tot gesetzt (p.done = True) und die Methode wird terminiert. Im weiteren Verlauf wird diese Unterprozedur Abbruchprozedur genannt.\\
-Anderenfalls wird als nächstes überprüft, um welche action es sich handelt, wobei die actions mit den Zahlen von null - zwei kodiert sind.
-\begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
-	\caption{Kodierung der Actions}
-	\label{tab:Aktionscodierung} 
-	\endfirsthead
-	\endhead
-	\hline
-	Action & Erklärung \\
-	\hline
-	0 & Die Snake ändert ihre Richtung um 90° nach links. Z.B. Von N $\longrightarrow$ W \\
-	\hline
-	1 & Snake ändert ihre Richtung um 90° nach rechts. Z.B. Von N $\longrightarrow$ O \\
-	\hline
-	2 & Die Richtung der Snake wird nicht verändert. \\
-	\hline
-\end{longtable}
-Entsprechende der Action wird die direction des Players angepasst. Die vier Himmelsrichtungen werden dabei mit den Zahlen von 0 - 3 dargestellt, wobei null Norden entspricht eins Osten usw.\\
+Anderenfalls wird als nächstes überprüft, um welche action es sich handelt, wobei die actions mit den Zahlen von null - zwei kodiert sind.\\
+\\Entsprechende der Action wird die direction des Players angepasst. Die vier Himmelsrichtungen werden dabei mit den Zahlen von 0 - 3 dargestellt, wobei null Norden entspricht eins Osten usw.\\
 Nach der Manipulation der direction des Players, wird pos, also die vorläufige neue Position, im Player-Objekt angepasst. 
 Diese Änderung wird jedoch noch nicht sofort in die Matrix übertrage, da das Eintragen on Positionen außerhalb des Spielfeldes zu Fehlern führen würde. Es muss daher erst überprüft werden, ob die neue Position des Players im Spielfeld liegt. Sollte dies nicht der Fall sein, so wird die Abbruchprozedur aufgerufen.\\
 Anderenfalls wird die neue Position in tail eingefügt.\\
@@ -84,65 +69,14 @@ Ist die Snake jedoch nicht gewachsen, so wird das letzte Schwanzglied aus Matrix
 Zum jetzigen Zeitpunkt besteht immer noch die Möglichkeit, dass die Snake in sich selber gelaufen ist. Um dies festzustellen, wird tail auf Duplikate überprüft. Sollten sich Duplikate in tail befinden, wird die Abbruchprozedur aufgerufen.\\
 Ansonsten wird zum Schluss noch über tail iteriert und die korrespondierenden Einträge der Matrix (ground) werden mit den Positionen von tail aktualisiert, wobei der Kopf und das letzte Schwanzglied mittels eines anderen Zahlenwert dargestellt werden.
 
-\subsection{Reward Function} \label{sec:Impl_Reward_Function}
-Die evaluate Methode, welche den Reward bestimmt, befindet sich in der SnakeGame Klasse. Basierend auf dem letzten Zug wird in dieser Methode der Reward bestimmt. Dies geschieht nach folgenden Vorbild.
-Der Reward ist abhängig von drei Faktoren. Dem Fressen eines Apfels, dem Sieg und dem Verlust. Sollte keiner dieser genannten Faktoren eintreten, wird ein Reward von -0.01 zurückgegeben. Dies hält den Agenten dazu an den kürzesten Pfad zum Apfel zu finden, da jeder Schritt geringfügig bestraft wird.\\
-War es der Snake möglich einen Apfel zu fressen so wird ein Reward von +1.0 zurückgegeben, da ein Sub-Goal erfüllt worden ist.
-Sollte die Snake gestorben sein, durch das Verlassen des Spielfeldes oder das Laufen in sich selbst oder das zu lange Umherlaufen, so wird ein Reward von -10 zurückgegeben, um dieses Verhalten in seiner Häufigkeit zu minimieren.
-Hat die Snake alle Äpfel gefressen, sodass das gesamte Spielfeld mit der Snake ausgefüllt ist, so wird ein Reward von +10 zurückgegeben, um ein solches Verhalten in seiner Häufigkeit zu maximieren.
 
-\subsection{Observation}
-Die Observation, welche das Snake Env. zurückgibt besteht aus zwei Teilen, der around\_view (AV) und der scalar\_obs (SO). Zur Erstellung der Obs wird die observe Methode in der SnakeGame Klasse aufgerufen. Diese ruft ihrerseits die make\_obs Funktion auf, welches im observation File definiert ist. Mit Hilfe verschiedener Unterfunktionen wird dann die Obs generiert.\\
-Die AV lässt sich dabei als ein Ausschnitt der Matrix (ground) beschreiben, welche einen festen Bereich um den Kopf der Snake abdeckt.
-Strukturen wie Wände und Teile des eigenen Schwanzes, welche vielleicht eine Sackgasse aufspannen, werden deutlich. Numerische ist die AV eine one-hot-encoded Matrix der Form (6x13x13).\\
-\\Das One-Hot-Encoding benutzt zum codieren nur null und eins. Sollte ein Merkmal vorhanden sein, so wird dieses mit eins codiert anderenfalls mit null.\\
-Dies ist auch der Grund, warum die AV Matrix sechs Channel (zweidimensionale Schichten) besitzt. Diese geben Aufschluss über folgende Informationen:
-\begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
-	\caption{Channel-Erklärung der Around\_View (AV)}
-	\label{tab:around_view} 
-	\endfirsthead
-	\endhead
-	\hline
-	Channel der Matrix bzw. Erste Dimension (Ax13x13) & Erklärung \\
-	\hline
-	A = 0 & Die erste Feature Map signalisiert den Raum außerhalb des Spielfelds. Nährt sich die Snake dem Rand, so würde der Ausschnitt der AV aus dem Spielfeld herausragen und den Eindruck erwecken, dass dieser größer wäre als er in Realität wirklich ist. Darum werden Felder der AV, die sich außerhalb des Spielfeldes befinden, angezeigt.\\
-	\hline
-	A = 1 & Diese Feature Map stellt alle Schwanzglieder mit Ausnahme des Kopfes und es letzten Schwanzgliedes dar. \\
-	\hline
-	A = 2 & In dieser Feature Map wird der Kopf der Snake dargestellt. \\
-	\hline
-	A = 3 & Damit gegen Ende des Spiels der Agent noch freie Felder erkennen kann, wird in dieser Feature Map jedes freie und sich im Spielfeld befindliche Feld mit eins codiert. \\
-	\hline
-	A = 4 & Die vorletzte Feature Map codiert das Schwanzende der Snake. \\
-	\hline
-	A = 5 & In der letzte Feature Map wird der Apfel abgebildet. \\
-	\hline
-\end{longtable}
-Vorteilhaft an der AV ist, dass, im Gegensatz zu den verwandten Arbeiten \ref{sec:Paper_1} und \ref{sec:Paper_2}, nicht das gesamte Feld übertragen wurde sondern nur der wichtigste Ausschnitt, was die Menge an zu verarbeiten Daten drastisch reduzieren kann. Des Weiteren ergeben sich keine Probleme mit der Input-Size der Convolutional Layer.\\
-Ein Nachteil dieser Obs ist jedoch die Vollständigkeit. Sollte der blaue Punkt in \ref{fig:Observation} außerhalb des grauen Kasten und daher außerhalb der AV liegen, so besitzt der Agent keine Informationen über den Aufenthaltsort des Apfels.
-Auch Informationen wie z.B. der Hunger, also die verbleibenden Schritte bis das Spiel endet, die Distanzen zu den Wänden und zu exkludierten Schwanzteilen und die Blickrichtung (direction) der Snake.
-\begin{figure}[H]
-	\centering
-	\def\svgscale{0.95}
-	\input{Abbildungen/Observation.pdf_tex}
-	\caption[Observation]{Partielle Darstellung der verwendeten Observation. Das blaue Rechteck und dessen Schwanz stellt die Snake dar, wobei das rot umrandete Rechteck den Kopf darstellt. Die schwarzen Felder werden nicht von der AV abgedeckt, graue liegen innerhalb der AV. 
-	Die gelben gestrichelten Linien stellen ein X-Ray Distanzbestimmung dar. Der blaue Kreis stellt den Apfel dar und der grüne viertel Kreis oben links symbolisiert Hunger.}
-	\label{fig:Observation}
-\end{figure}
-Aus diesem Grund wurde die AV mit der scalar\_obs (SO) ergänzt. Diese beinhaltet skalare Informationen und ist eine Konkatenation aus X-Ray Distanzbestimmung, Hunger- Blickrichtungsanzeige und zwei Kompasse für die relative Positionsinformation zwischen Kopf und Apfel bzw. letztem Schwanzglied.
-Letztere sind eindimensionale Vektoren, welche über das One-Hot-Encoding anzeigen, ob sich das gesucht Objekt relativ zum Kopf oberhalb, unterhalb oder in der selben Zeile (Matrixsicht) befindet. Analog verhält es sich mit der vertikalen Sicht.\\
-Die Blickfeldanzeige ist ebenfalls one-hot-encoded und stellt mit seinem Vektor die vier Ausrichtungen Norden, Osten, Süden und Westen dar.
-Da der Hunger bei einer großen Differenz zwischen inter\_apple\_steps und max\_steps einen kleinen und bei einer geringen Differenz einen großen Einfluss besitzen soll, wurde die Differenz durch eins geteilt. Nähren sich die beiden Werte, so rückt der resultierende näher an unendlich, da den Nenner immer kleiner wird. Um mit der Unendlichkeit auftretende Probleme zu umgehen wir zwei zurückgegeben, wenn die Differenz null ist.\\
-In ähnlicher Weise wird mit den X-Rays Distanzbestimmungen verfahren. Bei ihnen handelt es sich um acht Distanzmesserlinien, die in 45° Abständen ausgesandt werden, siehe \ref{fig:Observation}. Befindet sich das gesucht Objekt in dieser Linie, so wird die durch eins dividierte Differenz zwischen Kopf und Objekt zurückgegeben. Es wird nach Wänden, dem eigenem Schwanz und dem Apfel gesucht. Daher wird die X-Ray Distanzbestimmung in einem Vektor der Größe 24 (3 * 8 = 24) gespeichert.
-
-\subsection{Graphische Oberfläche}
+\subsection{Graphische Oberfläche} \label{sec:Impl_GUI}
 Im gui File wird eine Klasse GUI definiert, welche das Spiel mit Hilfe des Frameworks pygame (\url{https://www.pygame.org/}) darstellt. Dazu wird in der GUI-Klasse ein Oberfläche (screen) erzeugt, welche die Matrix ground darstellt, siehe \ref{fig:Game_of_Snake}. 
 Die Methode update\_GUI, welche von der SnakeGame Methode view aufgerufen wird, überschreibt dazu jeden einzelnen Eintrag des pygame-Spielfelds mit dem korrespondierenden Wert von ground. 
 Spielfeld (GUI) und Matrix sind daher nicht direkt gekoppelt sondern müssen über update\_GUI angeglichen werden.\\
 Die Fenstergröße der Spieloberfläche wird dynamisch berechnet und kann über das Attribut Particle verändert werden, welches die Feldgröße eines einzelnen Matrixeintrags darstellt. 
 Die draw Methode ist für das Generieren der einzelnen Spielfeld-Rechtecke zuständig und reset\_GUI versetzt das Spielfeld zurück in den Ursprungszustand.
 
-\subsection{Testung des Environment}
 
 
 \section{Agenten}

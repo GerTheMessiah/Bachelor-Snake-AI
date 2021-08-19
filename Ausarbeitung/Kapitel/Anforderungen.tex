@@ -1,65 +1,52 @@
 \chapter{Anforderungen} \label{chap:Anforderungen}
-In Kapitel \ref{sec:Grundlagen}, wurden die Grundlagen für den weiteren Vergleich der Reinforcement Learning Agenten gelegt. Interessant erscheint dabei der Vergleich zweier unterschiedlicher Algorithmus Arten (DQN und PPO), da diese unterschiedlichen Vorgehensweisen aufweisen basieren. \\
-Problematisch an einem solchen Vergleich ist die Objektivität. Wie kann sicher gestellt werden, dass die Ergebnisse vergleichbar sind?\\
-Eine Antwort basiert auf festen Anforderungen bzw. Rahmenbedingungen, welche bei der Implementierungen, Datenerhebung und bei dem Vergleich gelten müssen. Dabei gibt es vier verschiedene Anforderungsbereiche, welche Forderungen an die folgenden Bereiche stellen:
-\begin{itemize}
-	\item Spielimplementierung
-	\item Agenten
-	\item statistische Datenerhebung
-	\item Evaluation
-\end{itemize}
+In Kapitel \ref{sec:Grundlagen}, wurden die Grundlagen für den weiteren Vergleich der Reinforcement Learning Agenten gelegt, welche auf zwei unterschiedlichen Algorithmus-Arten (DQN und PPO) basieren.\\
+Um diesem Vergleich durchzuführen soll ein System erstellt werden, welches diese geplanten Vergleich durchführen, festhalten und auswerten kann. Dieses soll aus einem Environment, aus mehreren Agenten beider Algorithmus-Arten, sowie aus statistischen Analysekomponenten zur Leistungsbestimmung, bestehen. Zuzüglich sollen weitere Anforderungen an die Evaluation gestellt werden, um die Vergleichbarkeit sicherstellen.
 
-\section{Anforderungen an das Environment}
-Die Anforderungen, welche an eine Reinforcement Learning Environment gestellt werden, sind vielseitiger Natur. Sie stammen unter anderem aus der Softwaretechnik, aus dem RL und aus dem gesundem Menschenverstand.
+\section{Anforderungen an das Environment} \label{sec:Anforderungen_Env}
+In diesem Abschnitt werden die Anforderungen an das Env dargestellt. Neben der Hauptanforderung, dass das Env das Spiel Snake implementieren soll, ergeben sich weitere zusätzliche Anforderungen.
 
-\subsection{Kommunikation}
-Damit keine vollkommene Abtrennung des Environments jegliches Interagieren unmöglich macht, sollen nach dem Vorbild aus \ref{sec:Environment} drei Kommunikationskanäle implementiert werden. Das Env soll in der Lage sein, Actions zu empfangen und Observation und Rewards zu senden.
+\subsection{Standardisierte Schnittstelle} \label{sec:Anforderungen_Schnittstelle}
+Das Env soll eine standardisierte Schnittstelle besitzen, sodass nach \ref{sec:Environment} drei Kommunikationskanäle implementiert werden. Das Env soll in der Lage sein, Actions zu empfangen. Des Weiteren soll es Observation und Rewards an den Agenten übergeben können.
 
-\subsection{Funktionalität} \label{sec:funktionalität_Env}
-Die Funktionalität des Environments ist in drei Unterfunktionalitäten aufzuteilen.
-\begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
-	\caption{Funktionalität des Environment}
-	\label{tab:Funktionalität_Env} 
-	\endfirsthead
-	\endhead
-	\hline
-	Funktionalität & Erklärung \\
-	\hline
-	Step & Step steht im Sachzusammenhang für das Gehen eines Schrittes im Env. Es beschreibt daher die Umsetzung der von Agenten bestimmten Actions. \\
-	\hline
-	Reset & Um den Fortschritt einer Spielepisode wieder zu löschen, ist das Vorhandensein einer Reset-Funktionalität erforderlich. \\
-	\hline
-	Render & Render beschreibt die Darstellung des Spielgeschehens auf visueller Basis. Näheres dazu unter \ref{sec:visualisierung_Env} \\
-	\hline
-\end{longtable}
+\subsection{Funktionalitäten} \label{sec:funktionalität_Env}
+Das Env soll die folgenden Funktionalitäten implementieren.
 
-\subsection{Visualisierung} \label{sec:visualisierung_Env}
-Um den Spielfortschritt besser evaluieren zu können und aus Gründen der Ästhetik soll eine graphische Oberfläche implementiert werden. Diese soll das Spielgeschehen graphisch wiedergeben.
+\subsubsection{Aktionsausführung}
+Das Env muss eine Funktionalität beinhalten, welche die vom Agenten bestimmt Aktion ausführen kann. Diese Aktionsausführung muss sich nach den Regeln des Spiels Snake richten \ref{sec:Snake}.
 
-\subsection{Test}
-Um zu garantieren, dass das Env. voll funktionsfähig ist sollen dieses mit Tests überprüft werden. Dies dient der Sicherheit, da Fehler im Env. zu Fehlern im Entscheidungsfindungsprozess führen können, wie das Hide and Seek Environment von OpenAI zeigt \cite{DBLP:journals/corr/abs-1909-07528}.
+\subsubsection{Reset} \label{sec:Anforderung_Reset}
+Das Env muss eine Reset Methode implementieren, um einen erbrachten Spielfortschritt zu löschen. Dies ist für ein stetiges Lernen unentbehrlich.
+
+\subsubsection{Render} \label{sec:visualisierung_Env}
+Das Env muss eine Render Funktionalität implementieren, um eine Visualisierung des Spiels Snake zu ermöglichen. Diese dient der besseren Evaluation.
 
 \section{Anforderungen an die Agenten}
-Neben dem Environment gelten für die Agenten ebenfalls spezielle Anforderungen, welche zum einem objektiven Vergleich führen sollen. Auch sollen Anforderungen an die Implementierung gestellt werden, um Standards einzuführen.
+In diesem Abschnitt werden die Anforderungen an die Agenten, welche auf den beide Algorithmus-Arten (PPO, DQN) basieren, dargestellt.
 
-\subsection{Funktionalität}
-Reinforcement Learning Agenten können ein großes Repertoire an Funktionen besitzen. Zu den wichtigsten Funktionalitäten gehören das Spielen, daher das Bestimmen von Actions und das Lernen, daher die Anpassung des NN, um bessere Actions zu wählen, was dann zu optimalen Resultaten führt.
+\subsection{Funktionalitäten} \label{sec:Agent_Funktionalitäten}
+Die Agenten müssen folgende Funktionalitäten implementieren.
 
-\subsection{Parametrisierung}
-Um den Vergleich der verschiedenen Systeme mit dem größtmöglichen Maß an Objektivität zu vollziehen, ist es wichtig, dass die Einzigartigkeit eines Agenten nicht alleine durch die Art (PPO oder DQN) definiert wird, sondern auch durch die dem Agenten zugehörigen Parameter. Siehe \ref{chap:Agenten}
+\subsubsection{Aktionsbestimmung}
+Die Agenten müssen in der Lage sein aus der Obs Aktionen zu bestimmen, welche dem Env übergeben werden.
 
-\subsection{Test}
-Zur Prüfung der Funktionalität der einzelnen Agenten, sollen Tests implementiert werden, welche im besonderen das Lernen und die Aktionsbestimmung abdecken sollen. Dies dient zum Ausschluss von Fehlern.
+\subsubsection{Lernen}
+Die Agenten müssen fähig sein, auf Grundlage vergangener Spielepisoden zu lernen und damit ihre Spielergebnisse zu verbessern.
 
-\section{Anforderungen an die Datenerhebung} \label{sec:Anforderungen_an_die Datenerhebung}
-Auch die statistische Datenerhebung soll durch Anforderungen konkretisiert und definiert werden. Um die Objektivität sicherzustellen, werden dafür Anforderungen bezüglich der Durchführung, der Datenspeicherung und den Spezifikationen der Datenerhebung erhoben.
+\subsection{Parametrisierung} \label{sec:Parametrisierung}
+Das System muss die Möglichkeit besitzen, mehrere Agenten der gleichen Algorithmus-Art zu erstellen, welche sich jedoch durch verwendeten Hyperparameter und Algorithmus-Art unterscheiden. Diese Definition von Agenten ist in der Evaluation zu berücksichtigen.
+
+\subsection{Diversität der RL Algorithmen}
+Um nicht nur Agenten einer Algorithmus-Art untereinander zu vergleichen, sondern auch den Vergleich zu anderen Algorithmus-Arten zu erbringen, sollen ein DQN- und PPO-Algorithmus miteinander verglichen werden. Diese bieten sich wie in \ref{sec:PPO} und \ref{sec:Q-Learning} für den Vergleich an.
+
+\section{Anforderungen an die Datenerhebung} \label{sec:Anforderungen_an_die_Datenerhebung}
+In diesem Teil sollen Anforderungen an die statistische Datenerhebung und an die damit verbundenen Analysekomponenten gestellt werden.
 
 \subsection{Mehrfache Datenerhebung}
-Um die Validität der zu erzeugenden Trainingsdaten zu garantieren, soll für jeden Agenten die Datenerhebung mehrmalig durchgeführt werden. Dies trägt nicht nur zur Objektivität bei, sondern sichert das Ergebnis ebenfalls auch vor Schwankungen ab, welche beim Reinforcement Learning natürlicherweise auftreten, bedingt durch die zufälligen Spielverläufe des Environment.
+Die Datenermittlung der muss für jeden einzelnen Agenten mehrfach durchgeführt werden, um die Validität der Messung zu gewährleisten.
 
 \subsection{Datenspeicherung}
-Damit aus den erzeugten Daten statistische Schlüsse gezogen werden können ist es wichtig, dass die erzeugten Spieldaten gespeichert werden. Da jedoch die Menge an Daten die schnell riesige Dimensionen annimmt, sollen stellvertretend nur die Daten ganzer Spiele gespeichert werden. Dies ist ein Kompromiss zwischen Vollständigkeit und effizientem Speicherplatzmanagement.\\
-Folgenden Daten sollen für die Auswertung erhoben und gespeichert werden:
+Damit aus den erzeugten Daten statistische Schlüsse gezogen werden können ist es wichtig, dass die erzeugten Spieldaten gespeichert werden. Da jedoch die Menge an Daten schnell riesige Dimensionen annimmt, sollen stellvertretend nur die Daten ganzer Spiele gespeichert werden. Dies diese Strategie stellt einen Kompromiss zwischen Vollständigkeit und effizientem Speicherplatzmanagement dar.\\
+Das System muss daher folgende Daten speichern:
 \begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
 	\caption{Zu erhebende Daten}
 	\label{tab:Datenerhebung} 
@@ -76,26 +63,18 @@ Folgenden Daten sollen für die Auswertung erhoben und gespeichert werden:
 	\hline
 	wins & Hat der Agent das Spiel gewonnen. Dieser Wert stellt die Endkontrolle des Agenten dar. \\
 	\hline
-	epsilon (nur beim Deep Q-Learning Algorithmus) & Gibt die Wahrscheinlichkeit für das Ziehen einer zufälligen Aktion wieder.  \\
-	\hline
-	Learning Rate (lr) & einmalig zu speichernder skalarer Wert, welcher ein Maß für die Anpassung der Gewichte des bzw. der NN wiedergibt. \\
+	epsilon (nur beim Deep Q-Learning Algorithmus) & Gibt die Wahrscheinlichkeit für das Ziehen einer zufälligen Aktion wieder. \\
 	\hline
 	board\_size &  einmalige zu speichernder vektorieller Wert. Dieser gibt die Feldgröße des Environments an. Dieser ist wichtig für die Evaluation der Robustheit der Agenten. \\
 	\hline
-	andere Hyperparameter der Agenten & Die Agenten werden maßgeblich durch die ihnen zugrundeliegenden Paramente gesteuert. Um einen Vergleich verschiedenen Agenten durchführen zu können, sind daher die Hyperparameter von größter Wichtigkeit. \\
-	\hline
 \end{longtable}
 
-\subsection{Variation der Datenerhebungsparameter}
-Um die Möglichkeit auszuschließen, dass die momentan ausgewählten Parameter, wie z.B. Feldgröße, Lernrate, Reward-Funktion usw., für einzelne Agenten vorteilhafte Bedingungen hervorbringen können, sollen die einzelnen Agenten unter verschiedenen Modifikationen getestet werden. Dazu soll die Datenerhebung unter der Anwendung einer Modifikation durchgeführt werden. Zu den Modifikationen zählen:
-
-\subsubsection{Variation der Reward-Funktion}
-Durch das Verändern der Reward-Funktion soll überprüft werden, ob die Agenten unterschiedlich gut auf eine andere Reward-Funktion reagieren. Sollte die Reward-Funktion eins $R_{1}()$ für den Agenten eins $A_{1}$ überdurchschnittlich bessere Resultate liefern, so wird dies erkannt und in der Evaluation berücksichtigt.
+\section{Anforderungen an die Statistiken}
+Das System muss in der Lage sein, Statistiken zu generieren und zu speichern, welche für die Evaluation verwendet werden. Diese Statistiken sollen auf den Werten der Evaluationskriterien \ref{tab:Kriterien} basieren.
 
 \section{Anforderungen an die Evaluation} \label{sec:Anforderungen_an_die_Evaluation}
-Bei der Evaluation soll der optimale Agent bestimmt werden. Dabei stellt sich jedoch die Frage, was optimal im Sachzusammenhang bedeutet. 
-Daher sollen die Agenten unter verschiedenen Gesichtspunkten evaluiert werden, um ein möglichst großes Spektrum an Kriterien abzudecken.
-Einige dieser Kriterien stammen aus der verwendeten Literatur \ref{chap:Verwandte_Arbeiten} wie z.B. die Performance und Spielzeit die anderen ergeben sich aus den zu speichernden Daten.
+Bei der Evaluation soll der möglichst optimale Agent entsprechend verschiedener Gesichtspunkten ermittelt werden.
+Einige dieser Kriterien stammen aus der verwendeten Literatur \cite{Autonomous_Agents_in_Snake_Game_via_DRL} und \cite{UAV} wie z.B. die Performance und Spielzeit. Die anderen ergeben sich aus den zu speichernden Daten.
 Die einzelnen Kriterien lauten:
 \begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
 	\caption{Evaluationskriterien}

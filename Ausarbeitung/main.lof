@@ -7,13 +7,18 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Flussdiagramm des Vorgehens}}{31}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Wrapper}}{32}{figure.5.2}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Spiellogik}}{33}{figure.5.3}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Spielablauf}}{34}{figure.5.4}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Observation}}{37}{figure.5.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Observation}}{39}{figure.7.1}%
-\contentsline {figure}{\numberline {7.2}{\ignorespaces BaseNet}}{41}{figure.7.2}%
+\contentsline {figure}{\numberline {7.1}{\ignorespaces BaseNet}}{46}{figure.7.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{56}{figure.A.1}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{56}{figure.A.2}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{61}{figure.A.1}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{61}{figure.A.2}%
+\addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
