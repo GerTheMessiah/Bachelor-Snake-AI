@@ -123,12 +123,12 @@ Das Critic- bzw. Value-Network evaluiert die Actions, welche vom Actor-Network b
 Nun da einige Grundlagen näher beleuchtet worden sind, ist das nächste Ziel die dem PPO zugrunde liegende mathematische Funktion zu verstehen, um im späteren eine eigene Implementierung des PPO durchführen zu können und um einen objektiveren Vergleich der zwei RL-Verfahren durchführen zu können.
 \\Der PPO basiert auf den folgenden mathematischen Formel, welche den Loss eines Updates bestimmt \cite[S. 5]{PPO}:
 \begin{align}
-	\label{PPO_Training_Loss}
+	\label{eq:PPO_Training_Loss}
 	L^\text{PPO}_{t} (\theta) = L^\text{CLIP + VF + S}_{t} (\theta) = \mathbb{\hat{E}}_{t} [L^{\text{CLIP}}_{t}(\theta) - c_{1}L^{\text{VF}}_{t} + c_{2}S[\pi_{\theta}](s_{t})]
 \end{align}
 Dabei besteht die Loss-Function aus drei unterschiedlichen Teilen. Zum einen aus dem Actor-Loss bzw. Policy-Loss bzw. Main Objective Function $L^{\text{CLIP}}_{t}(\theta)$, zum anderen aus dem Critic-Loss bzw. Value-Loss $L^{\text{VF}}_{t}$ und aus dem Entropy Bonus $S[\pi_{\theta}](s_{t})$. Die Main Objective Function sei dabei durch folgenden Term gegeben \cite[S. 3]{PPO}.
 \begin{align}
-	\label{clip_loss_ppo}
+	\label{eq:clip_loss_ppo}
 	L^\text{CLIP}_{t} (\theta) = \mathbb{\hat{E}}_{t} [ \min(r_{t}(\theta) \hat{A}_{t}(s, a), \text{clip}(r_{t}(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_{t}(s, a))]
 \end{align}
 
@@ -166,7 +166,7 @@ Die einzelnen Erklärungen basieren auf den PPO Paper \cite{PPO}.
 \end{longtable}
 
 \subsubsection{Return} \label{sec:Return}
-Der Return $R_{t}$ stellt dabei die Summe der Rewards in der gesamten Spielepisode von dem Zeitpunkt $t$ an dar. Diese kann ermittelt werden, da alle Rewards, durch das Sammeln von Daten, bereits bekannt sind. Des Weiteren werden die einzelnen Summanden mit einem Discount Factor $\gamma$ multipliziert, um die Zeitpräferenz des Agenten besser zu steuern. Gamma liegt dabei gewöhnlich zwischen einem Wert von 0.9 bis 0.99. Kleine Werte für Gamma sorgen dafür, dass der Agent langfristig eher dazu tendiert Actions bzw. Aktionen zu wählen, welche unmittelbar zu positiven Reward führen. Entsprechend verhält es sich mit großen Werten für Gamma. \cite[S. 42 ff.]{Sutton1998}
+Der Return $R_{t}$ stellt dabei die Summe der Rewards in der gesamten Spielepisode von dem Zeitpunkt $t$ an dar. Diese kann ermittelt werden, da alle Rewards, durch das Sammeln von Daten, bereits bekannt sind. Des Weiteren werden die einzelnen Summanden mit einem Discount Factor $\gamma$ multipliziert, um die Zeitpräferenz des Agenten besser zu steuern. Gamma liegt dabei gewöhnlich zwischen einem Wert von 0.9 bis 0.99. Kleine Werte für Gamma sorgen dafür, dass der Agent langfristig eher dazu tendiert Aktionen zu wählen, welche unmittelbar zu positiven Reward führen. Entsprechend verhält es sich mit großen Werten für Gamma. \cite[S. 42 ff.]{Sutton1998}
 
 \subsubsection{Baseline Estimate} \label{sec:Baseline_Estimate}
 Der Baseline Estimate $b(s_{t})$ oder auch die Value function ist eine Funktion, welche durch ein NN realisiert wird. Es handelt sich dabei um den Critic des Actor-Critic-Verfahrens. Die Value function versucht eine Schätzung des zu erwartenden Discounted Rewards $R_{t}$ bzw. des Returns, vom aktuellen State $s_{t}$, zu bestimmen. Da es sich hierbei um die Ausgabe eines NN handelt, wird in der Ausgaben immer eine Varianz bzw. Rauschen vorhanden sein. \cite[Kapitel 3]{asynchronous_methods_for_deep_rl}
@@ -201,12 +201,13 @@ Nun können generierte Daten mehrfach für Updates der Policy genutzt werden, wa
 Der Name Surrogate (Ersatz) Objective Function ergibt sich aus der Tatsache, dass die Policy Gradient Objective Function des PPO nicht mit der logarithmierten Policy $\mathbb{\hat{E}}_t[\log_{\pi_{\theta}}(a_t|s_t)A_t]$ arbeitet, wie es die normale Policy Gradient Methode vorsieht, sondern mit dem Surrogate der Probability Ratio $r_{t}(\theta)$ \ref{eq:Probability_Ratio} zwischen alter und neuer Policy.\\
 Intern beruht der PPO auf zwei sehr ähnlichen Objective Functions, wobei die erste $surr_1$ dieser beiden
 \begin{align}
-	\label{func:surrogate_1}
+	\label{eq:surrogate_1}
 	r_{t}(\theta) \hat{A}_{t}(s, a)
 \end{align}
 der normalem TRPO Objective-Function entspricht, ohne die, durch den TRPO vorgesehene, KL-Penalty. \cite[S. 3 f.]{PPO}
 Die alleinige Nutzung dieser Objective Function hätte jedoch destruktiv große Policy Updates zufolge. Aus diesem Grund haben John Schulman et al. eine zweite Surrogate Objective Function $surr_2$, dem PPO Verfahren hinzugefügt. 
 \begin{align}
+	\label{eq:surrogate_2}
 	\text{clip}(r_{t}(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_{t}(s, a)
 \end{align}
 Die einzige Veränderung im Vergleich zur ersten Objective Function \ref{func:surrogate_1} ist, dass eine Abgrenzung durch die Clip-Funktion eintritt. Sollte sich die Probability Ratio zu weit von 1 entfernen, so wird $r_{t}(\theta)$ entsprechende auf $1 - \epsilon \text{ bzw. } 1 + \epsilon$ begrenzt. Das hat zufolge, dass der Loss $L^{\text{CLIP}}_{t}(\theta)$ ebenfalls begrenzt wird, sodass es zu keinen großen Policy Updates kommen kann. Es wird sich daher in einer Trust Region bewegt, da man sich nie allzu weit von der ursprünglichen Policy entfernt \cite{TRPO, PPO}.
@@ -261,7 +262,7 @@ Der Fehler ist die Differenz aus dem Aktionswerts $Q(s,a; \theta_{i})$, welcher 
 Da $Q(s,a)$ rekursiv definiert werden kann, ergibt sich in vereinfachter Form \cite[S.126]{DRL_Lapan}:
 \begin{align}
 	\label{eq:Q-Value_rekursive_def}
-	Q(s,a) = r + \gamma \max_{a \in A}Q(s',a') = \mathbb{E}_{s' \sim \mathcal{E}} \bigl\lbrack r+\gamma \max_{a'}Q(s',a';\theta_{i-1})|s,a \bigr\rbrack = y_i
+	Q(s,a) = r + \gamma \max_{a \in A}Q(s',a') = \mathbb{E}_{s' \sim \mathcal{S}} \bigl\lbrack r+\gamma \max_{a'}Q(s',a';\theta_{i-1})|s,a \bigr\rbrack = y_i
 \end{align}
 Es wird erkenntlich, dass $Q(s,a;\theta)$ dem Q-target $Q(s,a;\theta) \longrightarrow y_i$ entsprechen soll, darum wird die Differenz zwischen beiden bestimmt und als Loss deklariert. Dieser wird noch quadriert, damit der Loss positiv ist und damit er für den MSE (Mean Squared Error) anwendbar ist.
 

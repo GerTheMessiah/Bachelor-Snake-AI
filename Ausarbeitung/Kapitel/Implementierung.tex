@@ -69,7 +69,6 @@ Ist die Snake jedoch nicht gewachsen, so wird das letzte Schwanzglied aus Matrix
 Zum jetzigen Zeitpunkt besteht immer noch die Möglichkeit, dass die Snake in sich selber gelaufen ist. Um dies festzustellen, wird tail auf Duplikate überprüft. Sollten sich Duplikate in tail befinden, wird die Abbruchprozedur aufgerufen.\\
 Ansonsten wird zum Schluss noch über tail iteriert und die korrespondierenden Einträge der Matrix (ground) werden mit den Positionen von tail aktualisiert, wobei der Kopf und das letzte Schwanzglied mittels eines anderen Zahlenwert dargestellt werden.
 
-
 \subsection{Graphische Oberfläche} \label{sec:Impl_GUI}
 Im gui File wird eine Klasse GUI definiert, welche das Spiel mit Hilfe des Frameworks pygame (\url{https://www.pygame.org/}) darstellt. Dazu wird in der GUI-Klasse ein Oberfläche (screen) erzeugt, welche die Matrix ground darstellt, siehe \ref{fig:Game_of_Snake}. 
 Die Methode update\_GUI, welche von der SnakeGame Methode view aufgerufen wird, überschreibt dazu jeden einzelnen Eintrag des pygame-Spielfelds mit dem korrespondierenden Wert von ground. 
@@ -78,50 +77,14 @@ Die Fenstergröße der Spieloberfläche wird dynamisch berechnet und kann über 
 Die draw Methode ist für das Generieren der einzelnen Spielfeld-Rechtecke zuständig und reset\_GUI versetzt das Spielfeld zurück in den Ursprungszustand.
 
 
-
 \section{Agenten}
 Dieser Teil der Implementierung soll sich mit den Agenten befassen. Dabei wird näher auf die Netzstruktur, den Aktionsauswahlprozess die Lern-Methode, den Speicher (Replay Buffer) und die Hauptausführungsmethode (main Methode) eingegangen.
-
-\subsection{Netzstruktur} \label{sec:Impl_Netzstruktur}
-Zu Beginn soll die Netzstruktur erklärt werden, wobei dies unabhängig von den Agenten geschehen kann, da sowohl DQN als auch PPO Agenten das annähernd gleiche Netz nutzen.
-\begin{figure}[H]
-	\centering
-	\def\svgscale{0.85}
-	\input{Abbildungen/BaseNet.pdf_tex}
-	\caption[BaseNet]{Darstellung des NN, welches als Standard für den weiteren Vergleich dient.}
-	\label{fig:Netzsturktur}
-\end{figure}
-Das Netz findet sich in den Files actor und critic der PPO Package und im q\_net des DQN Package. 
-Diese Klassen besitzen eine forward Methode, welche die Obs (AV, SO), nach dem umwandelt in Tensoren, durch das NN propagiert und einen Output bestimmt. Dieser Prozess geschieht dabei folgendermaßen:\\
-Zuerst wird die AV durch zwei Convolutional Layer mit einer ReLU Aktivierungsfunktion durch propagiert. Dabei erhöht sich die Channel-Anzahl auf acht, da die AV bereits sehr stark optimiert wurde und ein Anstieg auf 16 oder 32 Channeln nicht nötig ist. Die Feature Map wird während dieses Prozesses nicht minimiert, aufgrund eines Paddings. Dies soll den Informationsverlust an den Rändern minimieren.  
-Danach werden allen Feature Maps eine Null-Zeile und Spalte hinzugefügt (Padding), damit beim Max-Pooling unter der Filtergröße und dem Stride von 2x2, auch die letzten Zeile und Spalte verarbeitet wird. Der Tensor besitzt nun die Form (8x14x14) 
-Nach dem max-pooling besitzt der Tensor Feature Maps der Größe 7x7. Nach der Einebnung (Flatten) des Tensoren zu einem eindimensionalen Tensor-Vektor wird dieser durch zwei weitere Fully Connected Layer (FC) mit einer ReLU Aktivierungsfunktion durch propagiert. Der resultierende Tensor besitzt die Größe 1x128 und ist ein zwischen Ergebnis, da dieser nun mit der SO verbunden wird (Join).\\
-Da das NN in beide Algorithmus-Arten verwendet wird, müssen drei unterschiedliche Netzwerkköpfe definiert werden, siehe \ref{fig:Netzsturktur} rechts. Alle unterscheiden sich jedoch nur in ihrer Ausgabe. Nachdem der Joined Tensor (1x128) durch zwei weitere FC Layer mit ReLU Aktivierungsfunktion propagiert wurde, benötigt der Actor des PPO-Agenten eine Wahrscheinlichkeitsverteilung über alle Actions. Daher auch die Ausgabe von einem Tensor der Größe drei, auf welchen zur Erstellung der Wahrscheinlichkeitsverteilung SoftMax angewendet wird, siehe \ref{fig:Netzsturktur} rechts oben.\\
-Die Critics der PPOs und die DQNs verwendet den rechts unten dargestellten Netzwerkkopf (ValueNet-Head) \ref{fig:Netzsturktur}. Beim den Critics werden Tensoren mit einem einzigen Zahlenwert zurückgegeben, wohingegen bei den DQNs Tensoren mit drei Q-Values entsprechende der Aktionsanzahl zurückgegeben werden.
-
-\subsection{Testung der Agenten}
-Aufgrund der Tatsache, dass die Agenten zu einem großen Teil auf dem Zufall basieren, stellt sich eine Testung mittels Testmethoden als nicht durchführbar heraus. Dennoch wurden beide Agenten mit Debug-Methoden manuell getestet. Dabei stellten sie sich als funktionsfähig heraus. Als beleg für diese Behauptung dienen die Evaluationsresultate, welche ohne funktionsfähige Agenten nicht zu erbringen seien.
 
 \subsection{DQN} \label{sec:Impl:DQN}
 Der DQN Algorithmus ist einer der beiden Algorithmus-Arten, welche im Rahmen dieser Ausarbeitung, implementiert wurden. Diese Implementierung findet hauptsächlich in vier Files statt, welche im dqn Package liegen, dass wiederum zum agents Package gehört.
 Im dqn File wird die Agentenklasse definiert, welche die Aktionsbestimmungsmethode act und die lern Methode enthält. 
 Im memoryDQN File wird die Memory-Klasse definiert, welche den Replay-Buffer darstellt \ref{sec:Q-Learning}. 
 Die Files dqn\_train und dqn\_play beinhalten die eigentlichen main-Methoden, welche Agenten und Env. erstellen und den Trainings- bzw. Spielprozess umsetzt.
-
-\subsubsection{Aktionsauswahlprozess} \label{sec:Impl_DQN_Aktionsauswahlprozess}
-Zur Bestimmung der nächsten Action wird der act Methode die momentane Obs übergeben.
-Die Bestimmung der Actions durch den DQN Agenten ist maßgeblich vom $\epsilon$ Wertes abhängig \ref{alg:DQN}, welcher das Verhältnis zwischen der Wahl einer zufälligen und einer NN-basierten Action bestimmt. Dabei wird folgendermaßen vorgegangen \ref{alg:DQN}.
-Zuerst wird ein Zufallswert $rand$ zwischen null und eins generiert, welcher mit $\epsilon$ verglichen wird. Wenn $rand < \epsilon$ so wird die Action mittels des NN bestimmt. Anderenfalls wird eine zufällige Action gewählt.
-Zur NN-basierten Bestimmung der Action werden aus der Obs zwei Tensoren generiert, welche zum vordefinierten Device (CPU oder GPU) geschickt werden. Danach folge die Prozedur, welche in \ref{sec:Impl_Netzstruktur} dargestellt ist.
-
-\subsubsection{Trainingsprozess} \label{sub:Trainingsprozess}
-Der Trainingsprozess wird über die learn Methode ausgeführt und stellt sich dabei wie folge dar:\\
-Zuerst wird überprüft, ob im Memory genügend Experiences (Exp) gespeichert sind, um einen Mini-Batch mit der zuvor definierten batch\_size, zu extrahieren. Sollte dies nicht der Fall sein, wird die Methode terminiert. Anderenfalls wird ein Mini-Batch aus zufälligen Exp. ohne Duplikate gebildet.\\
-\\Das Memory (Replay Buffer) wird durch Tensoren dargestellt, welche die Erfahrungen in einer zusätzlichen Dimension speichern. So besitzt der Tensor der AV die Form (max\_mem\_size, 6, 13, 13). Die Tensoren werden dabei wie eine Überlaufliste verwaltet, sodass wenn die Anzahl an Exp die max\_mem\_size überschreitet, die ältesten Einträge durch die neuen ersetzt werden.\\
-\\Danach folgt die Bestimmung aller Q-Values der States (s) des Mini-Batch, wobei der Q-Value der zum State (s) gespeicherten Action entnommen und als q\_eval, gespeichert wird. 
-Anschließend werden alle Q-Values der Nachfolge-States (s\_next) bestimmt und als q\_next gespeichert. Die Q-Values terminaler States werden anschließend auf null gesetzt, da die Discounted Sums of Rewards bis zum Ende der Spielepisode null entspricht, siehe \ref{sec:Q-Learning}.\\
-Um nun q-target zu bestimmen, werden die maximalen Q-Values der s\_next bestimmt, diskontiert und mit dem, im Mini-Batch gespeicherten, Reward addiert, siehe \ref{eq:DQN_Loss}.
-Nachfolgend wird der MSE (Mean Squared Error) zwischen q\_eval und q\_target bestimmt. Zuletzt wird der Fehler Mit Hilfe des PyTorch Frameworks mit Hilfe von Backpropagation und Gradient Descent \ref{Backprop_GD} zurück propagiert und entsprechend die Parameter des NN angepasst.
 
 \subsubsection{Main-Methode} \label{sec:Impl:Main_Methode}
 Die Hauptmethode oder auch main Methode genannt implementiert den eigentlichen Spiel und Trainingsablauf. Die main Methde des DQN ist im dqn Package im File dqn\_train und dqn\_play zu finden. Letzteres wird für das reine visuelle Spielen genutzt und wird daher nicht weiter betrachtet.\\

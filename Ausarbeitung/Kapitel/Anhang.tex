@@ -11,7 +11,7 @@ Tensoren beschreiben die grundlegenden Einheiten eines jeden DL-Frameworks. Aus 
 Genauer gesagt lassen sich Tensoren als, Anordnung von Zahlen in einem regelmäßigen Raster mit variabler Anzahl von Achsen. \cite[S. 35]{DL}\\
 Ein DL-Framework kann aus z.B. einem Numpy Array \url{https://numpy.org/} einen Tensor konstruieren, welche dann über für die Verwendung in einem NN nutzbar ist. Dieser könnte Daten oder die gewichte eines NN beinhalten. Der entstandene Tensor dient dabei als eine Wrapper, welcher die Informationen des Arrays teilt oder kopiert hat. Neben vielen Zusatzfunktionen ist keine so wichtig wie das Aufbauen eines Backward Graphs. Ein DL-Framework ist mit diesem Graph in der Lage, jede Veränderung des Tensors einzusehen, um darauf aufbauend Backpropagation durchzuführen. \cite[S. 72 ff.]{DRL_Lapan}
 
-\section{Convolution Neural Networks}
+\section{Convolution Neural Networks} \label{sec:Anhang_CNN}
 Convolutional Neural Networks (CNNs) sind eine Form neuronaler Netzwerke, die besonders für das Verarbeiten von rasterähnlichen Daten geeignet sind. Sie bestehen meist aus verschiedenen Layers, wie z.B. Convolutional, Pooling und FC Layers.
 
 \subsection{Convolutional Layer} \label{sec:Anhang_Conv_Layer}
@@ -48,5 +48,14 @@ Die Gewichte des FC sind als Tensor mit der Form (Anzahl der Output Features, An
 	y = xA^T + b
 \end{align}
 wobei $y$ das Ergebnis, $x$ der Input Tensor, $A^T$ die Gewichte und $b$ das Bias, darstellt. \url{https://pytorch.org/docs/stable/generated/torch.nn.Linear.html}
+
+\section{Optimierte Netzwerke}
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=1.0]{Abbildungen/Anhang/NetzstrukturOptimized.png}
+	\caption[Optimierte Netzstruktur]{Optimierte Netzstruktu}
+	\label{fig:ConvNetOptimized}
+\end{figure}
+
 
 
