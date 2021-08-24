@@ -1,4 +1,4 @@
-\chapter{Konzept}
+\chapter{Konzept} \label{chap:Konzept}
 In diesem Kapitel soll das Konzept dieser Ausarbeitung vorgestellt werden. Dieses besteht aus vier Teilen. Zuerst soll das Vorgehen erklärt werden, gefolgt von der Darstellung des Environments und der Agenten. Danach soll im weiteren auf die Datenerhebung eingegangen werden.\\
 Ziel dieses Abschnittes ist es das Vorgehen und alle weiteren dazu benötigten Elemente unabhängig von der Implementierung darzustellen, sodass die Ergebnisse mit jeder Implementierung reproduzierbar sind.
 
@@ -7,7 +7,7 @@ Das Vorgehen lässt sich am besten mit Hilfe eines Flussdiagramms darstellen, in
 Zu Beginn sei erwähnt, dass davon ausgegangen wird, dass alle für den Verglich benötigten Komponenten, wie z.B. Environment, Agenten und statistische Analysekomponenten entsprechende der Anforderungen \ref{chap:Anforderungen} implementiert sind.\\
 Als erstes werden die Agenten erstellt \ref{fig:Vorgehen}. Für diese Initialisierung werden die Hyperparameter aus \ref{sec:Konzept_Agenten} verwendet.
 Mit diesem Baseline Agenten Bestand werden nun die weiteren Vergleich durchgeführt.\\
-Für jedes Evaluationskriterien werden aus dem gegebenen Agenten-Bestand die zwei optimalen Baseline Agenten ausgewählt. Die Algorithmus-Art besitzt dabei der Auswahl der Agenten keinen Einfluss. Genauere Details zur Durchführung der Baseline Vergleiche finden sich in \ref{sec:Konzept_Vergleich}.\\
+Für jedes Evaluationskriterien werden aus dem gegebenen Agenten-Bestand die zwei optimalen Baseline Agenten ausgewählt. Die Algorithmus-Art besitzt dabei der Auswahl der Agenten keinen Einfluss. Genauere Details zur Durchführung der Baseline Vergleiche finden sich in \ref{sec:Konzept_Datenerhebung}.\\
 Basierend auf den beiden Sieger Agenten (Agent-01 und Agent-02) \ref{fig:Vorgehen}, werden nun die Optimierungen auf das Env. und die Agenten angewendet. Mit diesen optimierten Agenten (Agent-01 Optimierung A bis Agent-02 Optimierung C) werden nun die Vergleiche bezüglich jedes einzelnen Evaluationskriteriums \ref{tab:Kriterien} wiederholt.\\
 Im letzten Schritt soll in der gesamt Evaluation der optimale Agent für jedes Evaluationskriterium ermittelt werden. Dabei können dies auch Baseline Agenten sein.
 \begin{figure}[H]
@@ -38,12 +38,12 @@ Die has\_won und has\_ended Methodiken geben Statusinformationen über den Momen
 
 \subsection{Spiellogik} \label{sec:Konzept_Spiellogik}
 Die Spiellogik besteht aus den fünf Unterkomponenten, welche in \ref{sec:Konzept_Environment} bereits benannt wurden.\\
-Die Game-Komponente ist die wichtigste Komponente von allen, da sie die eigentliche Aktionsdurchführung implementiert. Sie beinhaltet jeweils eine Instanzen der Reward-, Observation-, GUI- und Player-Komponente. Letztere ist eine Datenhaltungskomponente, welche die Daten der Snake, wie z.B. Position oder Ausrichtung (Direction) beinhaltet.\\
-\\Die Reward-Komponente bestimmt den auszugebenden Reward nach jeder Aktionsabfertigung. Dieser berechnet sich wie in  \ref{sec:Konzept_Reward} angegeben. Zuzüglich wird im Rahmen eine der Optimierungen, siehe \ref{sec:Konzept_Vorgehen}, eine weitere Reward Funktion implementiert. Diese berechnet sich wie in \ref{sec:Konzept_Optimierung02} angegeben.\\
+Die Game-Komponente ist die wichtigste Komponente von allen, da sie die eigentliche Aktionsdurchführung implementiert. Sie beinhaltet jeweils Instanzen der Reward-, Observation-, GUI- und Player-Komponenten. Letztere ist eine Datenhaltungskomponente, welche die Daten der Snake, wie z.B. Position oder Ausrichtung (Direction) beinhaltet.\\
+\\Die Reward-Komponente bestimmt den auszugebenden Reward nach jeder Aktionsabfertigung. Dieser berechnet sich wie in \ref{sec:Konzept_Reward} angegeben. Zuzüglich wird im Rahmen eine der Optimierungen, siehe \ref{sec:Konzept_Vorgehen}, eine weitere Reward Funktion implementiert. Diese berechnet sich wie in \ref{sec:Konzept_Optimierung02} angegeben.\\
 \\In der Game-Komponente werden wichtige Spielbezogene Daten verwaltet. Zu diesen gehören das Spielfeld (ground), sowie die Form des Spielfeldes (shape) und die Position des Apfels auf dem Spielfeld. Sie beinhaltet viele Methoden, wie z.B. die action, observe, evaluate, reset, view, make\_apple.
 \\In der Player-Komponente, welche zur Datenverwaltung dient, werden Spielerbezogene Daten verwaltet. Zu diesen zählen die Position des Kopfes der Snake, sowie ihrer Schwanzglieder, ihre Ausrichtung (Direction), ihre gelaufenen Schritte seit dem letzten Fressen eines Apfels (inter\_apple\_steps), ihr Lebensstatus (done), daher ob sie tot oder lebendig ist und weitere Farbkonstanten für die GUI.\\
 \\Die Observation-Komponente beinhaltet viele einzelne Funktionen zur schrittweisen Erstellung der Observation, wie sie in \ref{sec:Konzept_Observation} erklärt wird.
-\\Zur Erstellung der graphischen Oberfläche implementiert die GUI-Komponente die Funktionalität ein Fenster zu öffnen, welches das Spielgeschehen, daher das Spielfeld (ground) anzeigt und stetig an den neusten Stand anpasst.
+\\Zur Erzeugung der grafischen Oberfläche implementiert die GUI-Komponente die Funktionalität ein Fenster zu öffnen, welches das Spielgeschehen, daher das Spielfeld (ground) anzeigt und stetig an den neusten Stand anpasst.
 \begin{figure}[H]
 	\centering
 	\def\svgscale{0.17}
@@ -52,7 +52,7 @@ Die Game-Komponente ist die wichtigste Komponente von allen, da sie die eigentli
 	\label{fig:Spiellogik}
 \end{figure}
 
-\subsubsection{Spielablauf}
+\subsubsection{Spielablauf} \label{sec:Konzept_Spielablauf}
 Die eigentliche Aktionsabarbeitung wird durch das Aufrufen der step Funktionalität im Wrapper \ref{sec:Konzept_Wrapper} bewirkt. Diese ruft die evaluate und observe Methoden auf, welche in der Game-Komponente implementiert sind \ref{fig:Spiellogik}.
 Um jedoch zuerst die Abarbeitung einer Aktion durchzuführen, muss die action Methode als aller erste aufgerufen werden, welche die von Agenten bestimmte Aktion (action) übergeben bekommt. 
 \begin{figure}[H]
@@ -197,7 +197,7 @@ Die Memory-Komponente speichert die gesammelten Erfahrungen des DQN-Agenten in e
 Die gespeicherten Erfahrungen werden im weiteren Verlauf von der learn Methode abgerufen, um mit ihnen den Lernprozess durchzuführen. Abzuspeichernde Werte, für jeden Schritt, sind dabei die around\_view (AV), die scalar\_obs (SO) die Aktion (action), der Reward (reward), die Information, ob man sich in einem terminalen Zustand befindet (terminal) und die around\_view (AV\_) und scalar\_obs (SO\_) des Nachfolgezustandes. \\
 Die Q-Network-Komponente verwaltet das NN (Q-Network). Dieses wird von der act Methode dazu genutzt, um die Aktionen für das Env zu bestimmen. Des Weiteren wird das Q-Network durch die learn Methode aktualisiert, sodass eine höhere Performance erreicht werden kann.
 
-\subsubsection{Aktionsauswahlprozess}
+\subsubsection{Aktionsauswahlprozess} \label{sec:Konzept_Aktionsauswahlprozess_DQN}
 Zur Bestimmung der nächsten Action wird der act Methode die momentane Obs übergeben.
 Diese generiert einen Zufallswert zwischen null und eins, was den Wahrscheinlichkeiten von 0\% bis 100\% entspricht.
 Ist der Zufallswert größer als den momentane Epsilon-Wert, so wird die Aktion durch das Q-Network bestimmt. Anderenfalls wird eine zufällige Aktion ausgewählt. Die Bestimmung der Aktion durch das Q-Network geschieht dabei wie folgt.\\
@@ -213,7 +213,7 @@ Zum Schluss wir die Aktion zurückgegeben und die Methode terminiert.
 	\label{fig:DQN-Aktionsbestimmung}
 \end{figure}
 
-\subsubsection{Lernprozess}
+\subsubsection{Lernprozess} \label{sec:Konzept_Lernprozess_DQN}
 Der Lernprozess wird über die learn Methode ausgeführt und stellt sich dabei wie folge dar:\\
 Zuerst wird überprüft, ob im Memory genügend Experiences (Exp) gespeichert sind, um einen Mini-Batch mit der zuvor definierten batch\_size, zu extrahieren. Sollte dies nicht der Fall sein, wird die Methode terminiert. Anderenfalls wird ein Mini-Batch aus zufälligen Exp ohne Duplikate gebildet.\\
 Danach wird der Q-Value bestimmt, welcher zu der abgespeicherten Aktion gehört. Es wird daher $Q(s_i,a_i;\theta_i)$ bestimmt \ref{eq:DQN_Loss}, wobei $s_i$ die Observation (AV und SO), $a_i$ die gewählte Aktion im State $s_i$ und $\theta$ die Netzwerkparameter des Q-Network, darstellten. Dieser wird als Q-Eval definiert.
@@ -235,12 +235,12 @@ Die Memory-Komponente speichert die gesammelten Erfahrungen des PPO-Agenten. Die
 Die Actor-Komponente verwaltet das Actor-NN. Dieses wird von der act Methode dazu genutzt, um die Aktionen für das Env zu bestimmen. Des Weiteren wird das Actor-NN durch die learn Methode aktualisiert, sodass eine höhere Performance erreicht werden kann.\\
 Die Critic-Komponente verwaltet das Critic-NN. Dieses wird einzig von der learn Methode verwendet, um die erwartete Discounted Sum of Rewards zu bestimmen. mit dieser wird im Trainingsverlauf der Value-Loss bestimmt \ref{eq:Value_Loss}.
 
-\subsubsection{Aktionsauswahlprozess}
+\subsubsection{Aktionsauswahlprozess} \label{sec:Konzept_Aktionsauswahlprozess_PPO}
 Der Aktionsauswahlprozess wird durch die act Methode in der PPO-Komponente angestoßen, welche die around\_view und die scalar\_obs übergeben bekommt. Dieser werden sogleich durch das Actor-NN, welches sich in der Actor-Komponente befindet, propagiert. Der vom Actor-NN ausgegebene Tensor der Größe drei, beinhaltet eine Wahrscheinlichkeitsverteilung. Auf Basis dieser Verteilung wird die nächste Aktion bestimmt.\\
 Sei (0.05, 0.05, 0.9) die Wahrscheinlichkeitsverteilung über alle Aktionen. bestimmte man 100 Aktionen unter dieser Verteilung, so würde durchschnittlich 90-mal die Aktion zwei gewählt werden. Aktion null und eins nur rund fünfmal.\\
 Zum Schluss wird die Aktion zurückgegeben und die act Methode wird terminiert.
 
-\subsubsection{Lernprozess}
+\subsubsection{Lernprozess} \label{sec:Konzept_Lernprozess_PPO}
 Der Lernprozess des PPO wird durch die learn Methode angestoßen. Dabei wird wie folgt verfahren.\\
 Zu Beginn werden die Erfahrungen, aus den gespielten Spielen, aus dem Memory (Replay-Buffer) extrahiert. Der Memory bzw. Replay Buffer befindet sich in der Memory-Komponente.\\
 Um den Return \ref{sec:Return} zu erhalten, werden die einzelnen Rewards aus dem Memory, welche extrahiert worden sind, diskontiert. Sollte der Reward dabei aus einem terminalen Zustand entstanden sein, so wird dieser auf null gesetzt, da der Return der diskontierten Summe aller Rewards bis zum Ende der Spielepisode entspricht. Nach einem terminalen Zustand werden keine weiteren zustände besucht, sodass keine neuen Rewards gesammelt werden können und daher der Return gleich null ist.\\
@@ -307,4 +307,26 @@ Die Lernrate wird immer dann mit 0.95 multipliziert und als neue LR gesetzt, sob
 \subsection{Optimierung D - Parameteraddition zu den Netzwerken} \label{sec:Konzept_Optimierung04}
 Die vierte Optimierung versucht durch das Hinzufügen von Parametern zu den Netzwerken des Actors, Critics und des Q-Networks die Performance zu steigern. Konkret sollen die Parameter der Netzwerke ansatzweise verdoppelt werden. Natürlich bietet sich dies nicht an jeder Stelle der Netzstruktur an, daher werden nur bestimmte Layer des NN von der Optimierung betroffen sein. An der Struktur des NN wird jedoch nichts verändert. Die optimierte Netzstruktur ist im Anhang \ref{fig:ConvNetOptimized} dargestellt. 
 
-\section{Datenerhebung} \label{sec:Konzept_Datenerhebung}
+
+\section{Datenerhebung und Verarbeitung} \label{sec:Konzept_Datenerhebung_Verarbeitung}
+In diesem Abschnitt soll die Datenerhebung näher thematisiert werden. Zu diesem Zweck wird soll zuerst die Hauptmethode näher erklärt werden, welche Agenten und Env mit einander interagieren lässt. Danach wird die Statistik-Komponente mit ihren Methoden vorgestellt.
+
+\subsection{Datenerhebung} \label{sec:Konzept_Datenerhebung}
+Die Hauptmethode oder auch main Methode genannt, implementiert den eigentlichen Spiel und Trainingsablauf. Die main Methde der Agenten ist außerhalb der der Komponenten der Agenten zu finden, da beide Algorithmus-Arten und ihren Agenten, die gleiche Standardisierte Schnittstelle verwenden. \ref{sec:Anforderungen_Schnittstelle}. 
+Um den Spiel- und Trainingsablauf durchzuführen, wird die train Methode der DQN bzw PPO Agenten aufgerufen, welche wichtige Hyperparameter des Ablaufs, wie z.B. die zu absolvierenden Trainingsspiele (N\_ITERATIONS), die Spielfeldgröße (BOARD\_SIZE) und weitere Agenten spezifische Hyperparameter, übergeben bekommt.\\
+Um einen angemessenen Zeitraum für das Lernen zu schaffen soll 30.000 Spiele (N\_ITERATIONS) für einen Trainingslauf gespielt werden. DieSpielfeldgröße soll dabei standardmäßig bei (8x8) liegen.\\
+Bei der Datenerhebung ist streng zwischen Spiel- und Trainingsdaten zu unterscheiden, wobei die Spieldaten aus einfachen Spielabläufen und die Trainingsdaten aus den Trainingsabläufen stammen. Die Trainingsdaten werden wie folgt erhoben.\\
+Zu Beginn werden die Datenhaltungsobjekt apples, wins, time, (eps für DQN), steps initialisiert, welche für jedes absolvierte Training die, dem Namen des Objektes entsprechenden, Werte speichert. Nach der weiteren Erstellung des Agenten und Environments startet der Spielverlauf.\\
+Dabei wird wie in \ref{sec:Funktionsweise} vorgegangen. Der Agent erhält eine Obs, bestimmt seine Action und diese wird sogleich im Env ausgeführt. Danach werden die neue Obs sowie Reward und weitere Statusinformationen, wie z.B. der Lebensstatus (done bzw. terminal) usw., ausgegeben. Diese Daten werden im Memory des jeweiligen Agenten für das sich anschließende Training gespeichert. Dieses wird wie in DQN-Lernprozess \ref{sec:Konzept_Lernprozess_DQN} bzw. PPO-Lernprozess \ref{sec:Konzept_Lernprozess_PPO} durchgeführt. Danach werden die oben genannten Datenhaltungslisten aktualisiert und die Prozedur beginnt von neuem. Wenn diese N\_ITERATIONS Spiele alle absolviert wurden werden die Erhobenen Daten weiter in der Statistik-Komponente verarbeitet \ref{sec:Konzept_Datenverarbeitung}.\\
+Die Datenerhebung für Spieldaten findet annähernd auf die gleiche Weise statt. Jedoch werden die Daten in nicht nach jedem Trainingslauf entnommen, sondern nach jeder Spielepisode. Bei den Daten handelt es sich um die gleichen wie in der oben erwähnten Datenerhebung für Trainingsdaten. Diese werden dann ebenfalls der Statistik-Komponente übergeben \ref{sec:Konzept_Datenverarbeitung}.
+
+\subsection{Datenverarbeitung und Erzeugung von Statistiken} \label{sec:Konzept_Datenverarbeitung}
+Nach der Erstellung der Trainings- und Spieldaten für jeden Agenten, wenden diese Daten entsprechend der Evaluationskriterien verarbeitet \ref{tab:Kriterien}. Diese Verarbeitung sieht wie folgt aus.\\
+Die Performance wird anhand der gefressenen Äpfel gemessen. Das Datenobjekt apples besitzt diese Daten für jeden Trainingsdurchlauf.\\
+Die Effizienz errechnet sich aus der Anzahl der gefressenen Äpfel (apples) dividiert durch die gegangenen Schritten (steps). Es entsteht daher die Apfel pro Schritt Rate.\\
+Die Robustheit wird mit Hilfe von Spieldaten bestimmt. Dabei wird ein trainierter Agent auf einem Spielfeld mit variabler Größe spielen. Die Robustheit wird danach gleich der Performance gemessen. Es werden daher die gefressenen Äpfel (apples) in der neuen Umgebung gemessen. Die Spielfeldgröße soll dabei zwischen (6x6) bis zu (12x12) liegen. Für die Erhebung werden wie beim Trainingsprozess 30.000 Spiele gespielt.\\
+Die Siegrate wird mit Hilfe der Wins bestimmt. Dabei werden die Siege der jeweils zehn letzten Spiele zusammenaddiert und durch die Trainingsspiel dividiert, sodass die Rate Siege der letzten zehn Spiele pro Spiel entsteht.\\
+Die Spielzeit berechnet sich aus der vergangenen Zeit für ein Trainingsspiel pro Trainingsspiel.\\
+\\Da bei 30.000 gespielten Spielen für jedes Evaluationskriterien gleich viele Werte entstehen, jedoch die Statistik nur eine gewisse Bildgröße besitzen kann, sollen jeweils 10 dieser errechneten Werte zu einem, mit Hilfe der Durchschnitts-, Max- und Min-Funktion, zusammen gefasst werden. Dies soll die Lesbarkeit der Grafiken verbessern und Schwankungen minimieren. Die Statistiken besitzen daher 3.000 (30.000 / 10 = 3.000) Datenpunkte.\\
+Diese Datenpunkte werden für alle Agenten eines Vergleiches pro Funktion (Durchschnitts-, Max- und Min-Funktion) aufgetragen. Es entstehen daher pro Datensatz aller Agenten drei Grafiken welche die Minima, Maxima und den Durchschnitt der letzten 10 Datenpunkte der Evaluationskriterien wiedergibt.\\
+Eine nähere Darstellung wird im Kapitel Implementierung geliefert \ref{chap:Implementierung}.

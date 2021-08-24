@@ -1,111 +1,158 @@
-\chapter{Implementierung}
-Für eine Umsetzung eines solchen Vergleichs, wie er in dem Kapitel \ref{chap:Vorgehen} beschrieben worden ist, ist es nötig eine Implementierung des Spiels Snake und der beiden Agenten, inklusive der Ablaufroutine, durchzuführen. Als Programmiersprache wurde Python (3.7) gewählt.\\
-Python bietet im Bereich des DRL eine Vielzahl an Frameworks, welche nicht nur bei der Implementierung des Envs. helfen, sondern auch welche, die Funktionalität der Neuronalen Netzwerke bereitstellen.
+\chapter{Implementierung} \label{chap:Implementierung}
+\graphicspath{{Abbildungen/Implementierung/}}
+Für eine Umsetzung eines solchen Konzepts, wie es in dem Kapitel \ref{chap:Konzept}erwähnt worden ist, wird es nötig eine Implementierung des Spiels Snake, der beiden Algorithmus-Arten, Ablaufroutine sowie der Statistik-Erzeugung durchzuführen. Als Programmiersprache wurde Python (3.7) gewählt.\\
+Python bietet im Bereich des Maschine Learning eine Vielzahl an Frameworks, welche nicht nur bei der Implementierung des Envs. helfen, sondern auch welche, die Funktionalität der Neuronalen Netzwerke bereitstellen.\\
+Das in dieser Implementierung wurde sich für das Maschine Learning Framework PyTorch (\url{https://pytorch.org/}) entschieden. Dieses erlaubt auf einfacher Weise das Konzipieren der in \ref{sec:Konzept_Netzstruktur} vorgestellten NNs.
+
+\section{Package Struktur}
+Für eine bessere Abtrennung der einzelnen Komponenten wurde sich für die folgende Projektstruktur entschieden. 
+\\Alle Ordner werden in src aufbewahrt. Dieser besitzt die drei Unterordner resources, snakeAI und statistic.\\
+In dem Ordner resources werden alle erzeugten Daten der Trainingsläufe und Testläufe sowie einige weitere images führ die Projektpräsentation aufbewahrt.\\
+Der Ordner statistic beinhaltet die Files, in welche die Klasse zur Auswertung der Trainings- und Testdaten, aus welchen Statistiken generiert werden, aufbewahrt wird.\\
+Der SnakeAI Ordner beinhalte dient als Sammelordner zur Lagerung der gym\_games, zu welches auch das, im Rahmen dieser Ausarbeitung, implementierte Spiel Snake gehört. Auch die Agenten sind in dem Ordner agent, in Unterordnern, aufbewahrt. Jeder Algorithmus erhält dabei seinen eigenen Unterordner.
+\begin{figure}[H]
+	\centering
+	\def\svgscale{0.1}
+	\input{Abbildungen/Implementierung/Package_Struktur.pdf_tex}
+	\caption[Package Struktur]{Darstellung der Package Struktur.}
+	\label{fig:Package_Struktur}
+\end{figure}
+
 
 \section{Snake Environment}
-Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt (\url{https://gym.openai.com/}). Dieses bietet viele Methoden und Vorgaben in der Projektstruktur, welche das Implementieren erleichtern. So besteht das Snake Environment Package (snake\_env), aus den wesentlichen Files:
-
+Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt (\url{https://gym.openai.com/}). Dieses bietet viele Methoden und Vorgaben in der Projektstruktur, welche das Implementieren erleichtern. So besteht das Snake Environment, welches im snake\_env Package liegt (siehe \ref{fig:Package_Struktur}), aus den wesentlichen Files:
 \begin{itemize}
 	\item gui
 	\item observation
+	\item reward
 	\item snake\_env
 	\item snake\_game
 \end{itemize}
 
-\subsection{Schnittstelle} \label{sec:Impl_Schnittstelle}
-Die grundlegende Schnittstelle des Snake Env. wird in dem File snake\_env bereitgestellt. In diesem wird die Klasse SnakeEnv definiert, welche durch die Vererbung der Oberklasse gym.Env zentrale Methoden übernimmt. Zu diesen gehören die step, reset, render und close Methode.\\
-Weiterhin bietet die selbst definierte Methode post\_init die Möglichkeit zentrale Einstellungen, wie z.B. die Spielfeldgröße und GUI-Aktivierung, zu editieren. 
-Die step-Methode startet den Ausführungsprozess der vom Agenten ausgewählten Action, durch Aufrufen weiterer Methoden \ref{sec:Impl_Spiellogik}. Nach der Abarbeitung wird die neue Obs, der Reward, das done-flag und das has\_won-flag übermittelt, wobei letzteres zur Bestimmung des Sieges dient.
-Die reset-Methode startet das Spiel von neuem. Zum Schluss wird dann noch die Obs. zurückgegeben.
-Die render-Methode ruft die Methoden für die visuelle Darstellung auf.
-Die close-Methode terminiert das Programm.\\
-Auf Basis der oben genannten Methoden wird ersichtlich, dass es sich bei der Klasse SnakeEnv um eine Wrapper-Klasse handelt, die als Schnittstelle dient.
+\subsection{Spiellogik}
+Die Spiellogik ist ist hauptsächlich im snake\_game File implementiert. Anders als im Konzept, existiert keine Spiellogik-Klasse. Viel mehr wird die gesamte Verwaltung von der SnakeGame Klasse übernommen, welche der Game-Komponente gleichkommt. Die Gesamtheit aller Komponenten spannt dabei die Spiellogik auf. Diese Abweichung des Konzepts hat sich angeboten, da so die Implementierung einer weiteren Klasse verhindert werden konnte. Dies minimiert den Implementierungsaufwand.\\
+\\Die Game-Komponente, welche der SnakeGame Klasse entspricht, befindet sich im snake\_game File.
+\begin{lstlisting}[label=alg:SnakeGame_Konstruktor]
+\end{lstlisting}
+\begin{python} 
+	def __init__(self, shape, has_gui):
+		self.ground = np.zeros((shape[0], shape[1]), dtype=np.int8)
+		pos = np.array((randint(0, shape[0] - 1), randint(0, shape[1] - 1)))
+		self.p = Player(pos=pos, tail=[(pos[0], pos[1])], direction=randint(0, 3), id=1, c_s=1, c_h=2,
+		inter_apple_steps=0, done=False)
+		self.reward = Reward(self)
+		self.shape = shape
+		self.has_gui = has_gui
+		self.step_counter = 0
+		self.ground[pos[0], pos[1]] = self.p.c_h
+		self.apple = self.make_apple()
+		if has_gui:
+		self.gui = GUI(self.shape)
+\end{python}
 
-\subsection{Spiellogik} \label{sec:Impl_Spiellogik}
-Die Spiellogik, welche durch die step-Methode \ref{sec:Impl_Schnittstelle} angestoßen wird, befindet sich im snake\_game File, welches eine Klasse namens SnakeGame definiert. Neben einigen Methoden werden im SnakeGame-Objekt auch viele spielbezogene Daten, wie z.B. das Spielfeld (ground), ein Player-Objekt (p),
-ein GUI-Objekt (gui) und die Spielfeldgröße (shape), den Schrittzähler (step\_counter) und eine Hilfsvariable (has\_grown), die für die Bestimmung des Reward benötigt wird.\\
-Der Weiteren werden die folgenden Methoden implementiert:
-\begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
-	\caption{Methoden der SnakeGame Klasse}
-	\label{tab:methods_of_SnakeGame} 
-	\endfirsthead
-	\endhead
-	\hline
-	Methode & Erklärung \\
-	\hline
-	action & action ist für die Ausführung der Aktionen verantwortlich.\\
-	\hline
-	evaluate & evaluate bestimmt den, durch die Ausführung der Action, zu erhaltenden Reward.\\
-	\hline
-	observe & observe stößt den Generierungsprozess der Obs an, welcher ausgelagert im observation File liegt. \\
-	\hline
-	make\_apple & make\_apple erzeugt einen neuen Apfel auf dem Spielfeld. \\
-	\hline
-	reset\_snake\_game & reset\_snake\_game setzt den Spielfortschritt zurück und startet es von neuem. \\
-	\hline
-	max\_snake\_length (getter) & Gibt die maximale Länge der Snake zurück. \\
-	\hline
-	is\_done (getter) & Liefert den Lebensstatus (player.done). \\
-	\hline
-\end{longtable}
+Zur Erstellung der SnakeGame-Klasse werden die Spielfeldmaße (shape) und has\_gui übertragen und in der Klasse gespeichert. Letzteres ist ein Boolean, welche die GUI ein oder ausschaltet. Als nächstes wird die Spieloberfläche (ground) generiert, welche durch ein Numpy Array (\url{https://numpy.org/}) implementiert wird. Die Position des Spieles (pos) wird daraufhin als nächstes zufallsbasiert bestimmt. Mit dieser Information kann die Datenhaltungsklasse des Players erzeugt werden (siehe \ref{sec:Implementierung_Player}). Der step\_counter dient zur Bestimmung der gegangenen Schritte der Snake. Zum Schluss wird das Spielfeld mit der Position der Snake aktualisiert, ein Apfel wird mit der make\_apple() Methode generiert, welche sogleich das Spielfeld anpasst und je nach dem has\_gui Boolean wird ein GUI-Objekt (siehe \ref{sec:Implementierung_GUI}) instanziiert.\\
+\\Die SnakeGame-Klasse implementiert nach dem Konzept (siehe \ref{sec:Konzept_Spiellogik}) die folgenden Methoden: action, observe, evaluate, reset, view und make\_apple.
 
-Zum Erhalt eines tieferen Verständnisses über die Spiellogik, soll diese exemplarisch erläutert werden. Bevor dies jedoch geschehen kann muss noch die Datenhaltungsklasse Player erwähnt werden, die ebenfalls im Snake\_game File definiert ist.
-Diese speichert spielerbezogen Daten, wie z.B. die Position aller Schwanzglieder inkl. des Kopfes (pos, tail), Blickrichtung (direction), die Anzahl der Schritte seit dem letzten Fressen (inter\_apple\_steps), den Lebensstatus (done) und einige Konstanten, welche für die Visualisierung benötigt werden (id, c\_s und c\_h). Zuzüglich besitzt die Player Klasse noch eine player\_reset Methode und einige getter Methoden.\\
+\subsubsection{Action}
+Die action Methode implementiert die Spiellogik und damit die Aktionsabarbeitung. Aus diesem Grund wird ihr die, vom Agenten bestimmte, Aktion in Form eines Integers übergeben. Daraufhin wird überprüft, ob die Snake bereits die maximale Schrittanzahl überschnitten hat. Danach werden step\_counter und p.inter\_apple\_steps inkrementiert und die Aktion wird umgesetzt. Um dies umzusetzen wird die direction im Player Objekt angepasst, entsprechend der Beschreibung im Konzept (siehe \ref{sec:Konzept_Spielablauf}). Die directions und die actions sind dabei mit den Zahlen von eins bis vier bzw. von ein bis drei codiert.
+\begin{python}
+	def action(self, action):
+		if self.p.inter_apple_steps >= self.max_snake_length:
+			self.p.done = True
+			return
+		self.p.inter_apple_steps += 1
+		self.step_counter += 1
+		if action == 0:
+			self.p.direction = (self.p.direction + 1) % 4
+		elif action == 1:
+			self.p.direction = (self.p.direction - 1) % 4
+		else:
+			pass
+\end{python}
+Nach der Manipulation der Snake direction wird ein Schritt gegangen. Dazu wird die p.pos entsprechende der neuen direction angepasst. Da zwar p.pos angepasst ist jedoch noch nicht die Liste p.tail, welche alle Snake-Glieder beinhaltet und das Spielfeld (ground) kann nun überprüft werden, ob die Aktion zum sofortigen Tod führt. Dabei werden noch nicht alle Todesmöglichkeiten berücksichtigt. Einzig die Tode, welche durch das Verlassen des Spielfeldes auftreten, da diese zu Exception führen würden.\\ 
+Ein Beispiel dafür wäre, der Versuch das Spielfeld (ground) zu aktualisieren mit einer Position die außerhalb lägt.\\
+Sollte dieser Fall eintreten, so wird p.done auf True gesetzt, was deinen terminalen Zustand ankündigt und die Methode würde beendet. Sollte diese Aktion nicht zum Tod führen, so wird der neue Snake-Kopf in die p.tail an vorderster Stelle eingefügt.
+\begin{python}
+	self.p.pos[self.p.direction % 2] += -1 if self.p.direction % 3 == 0 else 1
+	if not all(0 <= self.p.pos[i] < self.ground.shape[i] for i in range(2)):
+		self.p.done = True
+		return
+	self.p.tail.insert(0, (self.p.pos[0], self.p.pos[1]))
+\end{python}
+Danach wird überprüft ob die Snake alle möglichen Äpfel gegessen hat, ob sie daher gewonnen hat. Sollte dies der Fall sein, so wird wieder p.done auf True gesetzt und die Methode terminiert.
+\begin{python}
+	 if len(self.p.tail) == self.max_snake_length:
+		self.p.done = True
+		return
+\end{python}
+Hat die Snake nicht gewonnen haben, so wird eine Fallunterscheidung zwischen zwei Situationen durchgeführt. Der erste Fall tritt ein sofern die Snake einen Apfel gefressen hat, dann sind die Positionen des neuen Snake-Kopfes und des Apfels gleich. Daher wird die Matrix mit dem neuen Snake-Kopf aktualisiert und ein neuer Apfel wird mit der Methode make\_apple generiert. Dieser wird gleich in das Spielfeld (ground) eingepflegt. Zum Schluss wird noch der p.inter\_apple\_steps, welcher die Schritte seit dem letzten Fressen aufaddiert auf null gesetzt, da ein Apfel gefressen wurde und reward.has\_grown wird auf True gesetzt, da die Snake gewachsen ist. reward.has\_grown dient dabei nur zur Bestimmung des Reward und st daher in der Reward-Klasse definiert.
+\begin{python}
+	if self.p.tail[0] == self.apple:
+		self.ground[self.p.tail[0][0], self.p.tail[0][1]] = self.p.c_h
+		self.apple = self.make_apple()
+		self.p.inter_apple_steps = 0
+		self.reward.has_grown = True
+\end{python}
+Ist die Snake jedoch nicht gewachsen, so triff der zweite Fall ein. Um die Illusion von Bewegung zu erzeugen, muss das letzte Schwanzstück der Snake entfernt werden, da ansonsten die Snake um ein Glied gewachsen wäre. Dieses wird sowohl vom Spielfeld als auch aus p.tail entfernt. Danach wird noch reward.has\_grown auf False gesetzt, da die Snake nicht gewachsen ist.
+\begin{python}
+	else:
+		self.ground[self.p.tail[-1][0], self.p.tail[-1][1]] = 0
+		del self.p.tail[-1]
+		self.reward.has_grown = False
+\end{python}
+Nach dieser Fallunterscheidung muss überprüft werden, ob die Snake nicht in sich selber gelaufen ist.
+\begin{python}
+	if len(self.p.tail) != len(set(self.p.tail)):
+		self.p.done = True
+		return
+\end{python}
+Zum Schluss der action Methode wir, sofern die Snake bis zu diesem Punkte nicht gewonnen oder verloren hat, über die p.tail List, welche alle die Positionen alles Schwanzglieder gespeichert hat, iteriert. Dabei wird das Spielfeld mit allen Gliedern erneut aktualisiert. Dabei wird jedem normalen Schwanzglied die Zahl eins in der Matrix zugeordnet. Ausnahmen stellen der Kopf und das letzte Schwanzstück der Snake dar. Diese werden in der Matrix mit zwei bzw. -1 dargestellt. Die Werte für die Schwanzglieder sind in der Player-Klasse definiert (siehe \ref{sec:Implementierung_Player}).
+\begin{python}
+	if not self.p.done:
+		for s in self.p.tail:
+			self.ground[s[0], s[1]] = self.p.c_s
+		self.ground[self.p.tail[-1][0], self.p.tail[-1][1]] = -1
+		self.ground[self.p.tail[0][0], self.p.tail[0][1]] = self.p.c_h
+\end{python}
 
-Da Snake ein zweidimensionales Spiels ist, wird eine gleich dimensionale Matrix (ground) zur Spieldarstellung verwendet.
-So kann mit dn Zeilen- und Spaltenindexen der Matrix die Position der Snake deutlich gemacht werden. So wird der Schwanz mit der Konstante c\_s, der Kopf mit c\_h, der Apfel mit -2 und das Ende der Snake mit -1, in der Matrix (ground) deutlich gemacht.
-Der Einfachheit halber werden die Zeilen- und Spaltenindexe, daher die Position, ebenfalls noch in einer List (tail) festgehalten. Dieser erleichtert später die Feststellung des Lebensstatus (done).\\
-\\Mit dem folgenden Aktivitätsdiagramm soll der Fokus weiter auf die action-Methode gelegt werden. Diese wird wie folgt abgearbeitet.
-Als erstes wird der inter\_apple\_steps erhöht. Sollte dieser Zähler größer als, die vorher definierte, Obergrenze sein, so wird der Lebensstatus auf tot gesetzt (p.done = True) und die Methode wird terminiert. Im weiteren Verlauf wird diese Unterprozedur Abbruchprozedur genannt.\\
-Anderenfalls wird als nächstes überprüft, um welche action es sich handelt, wobei die actions mit den Zahlen von null - zwei kodiert sind.\\
-\\Entsprechende der Action wird die direction des Players angepasst. Die vier Himmelsrichtungen werden dabei mit den Zahlen von 0 - 3 dargestellt, wobei null Norden entspricht eins Osten usw.\\
-Nach der Manipulation der direction des Players, wird pos, also die vorläufige neue Position, im Player-Objekt angepasst. 
-Diese Änderung wird jedoch noch nicht sofort in die Matrix übertrage, da das Eintragen on Positionen außerhalb des Spielfeldes zu Fehlern führen würde. Es muss daher erst überprüft werden, ob die neue Position des Players im Spielfeld liegt. Sollte dies nicht der Fall sein, so wird die Abbruchprozedur aufgerufen.\\
-Anderenfalls wird die neue Position in tail eingefügt.\\
-Zu diesem Stand der Abarbeitung ist es möglich, dass das Spiel bereits gewonnen ist. Um dies zu überprüfen, wird die Länge der Snake mit der maximal möglichen Länge, welche sich durch die Spielfeldgröße ergibt, verglichen. Entspricht die Länge Snake der maximal mögliche, so wird die Abbruchprozedur aufgerufen.
-Ansonsten muss als nächster Schritt die Matrix aktualisiert werden. Jedoch muss vorher festgestellt werden, ob die Snake einen Apfel gefressen hat.\\
-Sollte sie dies getan haben, so wird die neue Position des Kopfes in die Matrix eingepflegt, ein neuer Apfel wird auf einer zufälligen freien Stelle generiert, inter\_apple\_steps wird auf null und die Hilfsvariable has\_grown wird auf True gesetzt. Letztere wird von der evaluate Methode verwendet, um di Höhe des rewards zu bestimmen, siehe \ref{sec:Impl_Reward_Function}.\\
-Ist die Snake jedoch nicht gewachsen, so wird das letzte Schwanzglied aus Matrix und Liste gelöscht, um den Anschein von Bewegung zu erwecken. Zuzüglich wird  die Hilfsvariable has\_grown auf False gesetzt.\\
-Zum jetzigen Zeitpunkt besteht immer noch die Möglichkeit, dass die Snake in sich selber gelaufen ist. Um dies festzustellen, wird tail auf Duplikate überprüft. Sollten sich Duplikate in tail befinden, wird die Abbruchprozedur aufgerufen.\\
-Ansonsten wird zum Schluss noch über tail iteriert und die korrespondierenden Einträge der Matrix (ground) werden mit den Positionen von tail aktualisiert, wobei der Kopf und das letzte Schwanzglied mittels eines anderen Zahlenwert dargestellt werden.
+\subsubsection{Observe}
+Die Observe Methode ruft die make\_obs Funktion im observation File auf. Zu diesem Zweck werden der Funktion die für die Obs benötigten Inforamtionen als Argumente übergeben. Näheres zur Obs in \ref{sec:Implementierung_Observation}.
+\begin{python}
+    def observe(self):
+			return make_obs(self.p.id, self.p.pos, self.p.tail_pos, self.p.direction, self.ground, self.apple, self.p.inter_apple_steps)
+\end{python}
 
-\subsection{Graphische Oberfläche} \label{sec:Impl_GUI}
-Im gui File wird eine Klasse GUI definiert, welche das Spiel mit Hilfe des Frameworks pygame (\url{https://www.pygame.org/}) darstellt. Dazu wird in der GUI-Klasse ein Oberfläche (screen) erzeugt, welche die Matrix ground darstellt, siehe \ref{fig:Game_of_Snake}. 
-Die Methode update\_GUI, welche von der SnakeGame Methode view aufgerufen wird, überschreibt dazu jeden einzelnen Eintrag des pygame-Spielfelds mit dem korrespondierenden Wert von ground. 
-Spielfeld (GUI) und Matrix sind daher nicht direkt gekoppelt sondern müssen über update\_GUI angeglichen werden.\\
-Die Fenstergröße der Spieloberfläche wird dynamisch berechnet und kann über das Attribut Particle verändert werden, welches die Feldgröße eines einzelnen Matrixeintrags darstellt. 
-Die draw Methode ist für das Generieren der einzelnen Spielfeld-Rechtecke zuständig und reset\_GUI versetzt das Spielfeld zurück in den Ursprungszustand.
+\subsubsection{Evaluate}
+Der evaluate Methode wird ein String übergeben, welche zur Auswahl der Reward-Funktion dient. Dies ist nötig, da im Rahmen der Optimierung B eine neue Reward-Funktion definiert wurde. Ansonsten ruft evaluate die entsprechende Reward-Funkion auf, welche in der Reward-Klasse definiert wurde (siehe \ref{label}).
+\begin{python}
+	def evaluate(self, reward_function="standard"):
+		if reward_function == "standard":
+			return self.reward.standard_reward
+		elif reward_function == "optimized":
+			return self.reward.optimized_reward
+		else:
+			raise ValueError("Wrong reward function.")
+\end{python}
 
+\subsubsection{Reset}
+In der Reset Methode wird der bisherige Spielfortschritt zurückgesetzt. Dafür wird das Spielfeld mit Nullen überschrieben und die Player eigene reset Methode wird aufgerufen, welchedas Player-Objekt in seinen Ursprungszustand zurückversetzt. Danach verläuft die Methode analog zur Erstellung des SnakeGame-Objektes (siehe \ref{alg:SnakeGame_Konstruktor})
+\begin{python}
+	def reset_snake_game(self):
+		self.ground.fill(0)
+		pos = np.array((randint(0, self.shape[0] - 1), randint(0, self.shape[1] - 1)))
+		self.p.player_reset(pos)
+		self.step_counter = 0
+		self.reward.has_grown = False
+		self.ground[pos[0], pos[1]] = self.p.c_h
+		self.apple = self.make_apple()
+		if self.has_gui:
+			self.gui.reset_GUI()
+\end{python}
 
-\section{Agenten}
-Dieser Teil der Implementierung soll sich mit den Agenten befassen. Dabei wird näher auf die Netzstruktur, den Aktionsauswahlprozess die Lern-Methode, den Speicher (Replay Buffer) und die Hauptausführungsmethode (main Methode) eingegangen.
+\subsection{Player} \label{sec:Implementierung_Player}
 
-\subsection{DQN} \label{sec:Impl:DQN}
-Der DQN Algorithmus ist einer der beiden Algorithmus-Arten, welche im Rahmen dieser Ausarbeitung, implementiert wurden. Diese Implementierung findet hauptsächlich in vier Files statt, welche im dqn Package liegen, dass wiederum zum agents Package gehört.
-Im dqn File wird die Agentenklasse definiert, welche die Aktionsbestimmungsmethode act und die lern Methode enthält. 
-Im memoryDQN File wird die Memory-Klasse definiert, welche den Replay-Buffer darstellt \ref{sec:Q-Learning}. 
-Die Files dqn\_train und dqn\_play beinhalten die eigentlichen main-Methoden, welche Agenten und Env. erstellen und den Trainings- bzw. Spielprozess umsetzt.
+\subsection{Observation} \label{sec:Implementierung_Observation}
 
-\subsubsection{Main-Methode} \label{sec:Impl:Main_Methode}
-Die Hauptmethode oder auch main Methode genannt implementiert den eigentlichen Spiel und Trainingsablauf. Die main Methde des DQN ist im dqn Package im File dqn\_train und dqn\_play zu finden. Letzteres wird für das reine visuelle Spielen genutzt und wird daher nicht weiter betrachtet.\\
-Um den Spiel- und Trainingsablauf durchzuführen, wird in dem File dqn\_train eine Methode train\_dqn definiert, welche wichtige Hyperparameter des Ablaufen, wie z.B. die Anzahl der zum Training zu absolvierenden Spiele (N\_ITERATIONS), die Lernrate (LR) und die Spielfeldgröße (BOARD\_SIZE), die Batch Size (BATCH\_SIZE), die Maximale Größe des Speichers (MAX\_MEM\_SIZE), Epsilon Decrement (EPS\_DEC) und Epsilon End (EPS\_END) übergeben bekommt.\\
-Zu Beginn werden Datenhaltungslisten apples, wins, dtime, eps, steps\_list initialisiert, welche für jedes absolvierte Spiel die, dem Namen der List entsprechenden, Werte speichert. Nach der Erstellung des Agenten und Environments startet der Spielverlauf.\\
-Dabei wird wie in \ref{sec:Funktionsweise} vorgegangen. Der Agent erhält eine Obs, bestimmt seine Action und diese wird sogleich im Env ausgeführt. Danach werden die neue Obs sowie Reward und weitere Statusinformationen, wei z.B. das done-Flag usw., ausgegeben. Diese Daten werden im Memory für das sich anschließende Training gespeichert. Dieses wird wie in \ref{sub:Trainingsprozess} durchgeführt. Danach werden die oben genannten Datenhaltungslisten aktualisiert und die Prozedur beginnt von neuem. Wenn diese N\_ITERATIONS Spiele alle absolviert wurden werden die Erhobenen Daten aus den Listen in einem CSV-File gespeichert und die Methode wird terminiert. 
+\subsection{Reward} \label{sec:Implementierung_Reward}
 
-\subsection{PPO}
-Der PPO Algorithmus stellt die zweite Algorithmus-Art dar. Seine Implementierung findet im ppo Package, welches die Files actor, actor\_critic, critic, memoryPPO, ppo, ppo\_play und ppo\_train beinhaltet. actor und critic implementieren die entsprechenden NN, actor\_critic stellt eine Verwaltungs-Klasse dar, welche den Optimizer und die act (choose\_action) und die evaluate Methode beinhaltet, wobei letztere für den Trainingsprozess benötigt wird. MemoryPPO definiert das Memory (Replay Buffer), welches Erfahrungen speichert und im ppo File wird die Agentenklasse mit der learn Methode erstellt. ppo\_train und ppo\_play besitzen analoge Funktionalitäten wie in \ref{sec:Impl:DQN} eingangs erwähnt.
-
-\subsubsection{Aktionsauswahlprozess} \label{sec:Impl_PPO_Aktionsauswahlprozess}
-Der Aktionsauswahlprozess wird im actor\_critc File implementiert. Von diesem existieren zwei Instanzen, welche die alte und neue Policies darstellen. Der act Methode der alten Policy wird die momentane Obs, welche aus AV (around\_view) und SO (scalar\_obs) besteht, übergeben und zu PyTorch Tensoren umgewandelt. Danach wird diese durch das Actor-NN (Policy-NN) durch propagiert, sodass eine Policy übergeben wird. Auf dieser Wahrscheinlichkeitsverteilung wird dann die nächste Action bestimmt, welche sogleich mit der logarithmierten Wahrscheinlichkeiten der ausgewählten Action und der zu Tensoren umgewandelten Obs, ausgegeben wird.
-
-\subsubsection{Trainingsprozess}
-Der Trainingsprozess ist in der Agentenklasse implementiert, welche sich im ppo Package befindet. Zu Beginn wird aus dem Memory ein oder mehrere Mini-Batch/es generiert. Um den Return \ref{sec:Return} zu erhalten, werden die einzelnen in Rewards diskontiert. Sollte ein terminalen Zustand vorhanden sein, werden die discounted Rewards auf null gesetzt, da diese dem zu erwarteten Reward bis zum Ende der Spielepisode entsprechen. Da die Episode terminiert, können keine weiteren Rewards mehr gesammelt werden.\\
-Um ein gleichmäßigeres Lernen zu unterstützen, werden die Rewards nach dem sie zu einem Tensoren umgewandelt worden sind, normalisiert. Danach wird die folgende Prozedur (K\_epochs) mal ausgeführt, um das NN zu trainieren. Danach terminiert die learn Methode\\
-Zuerst wird die evaluate Methde der ActorCritic-Klasse aufgerufen welche sich im actor\_critic File befindet. Dieser werden die Obs aus dem Mini-Batch bzw. Mini-Batches übergeben. Zusätzlich werden noch die alten korrespondierenden Actions übergeben, welche zur Bestimmung von $\pi_{\theta}(a_{t}|s_{t})$ \ref{sec:Probability_Ratio} dient. Evaluate gibt neben $\pi_{\theta}(a_{t}|s_{t})$ auch noch die State Values \ref{sec:Baseline_Estimate} und die Entropie der neuen Policy $\pi_{\theta}$ aus, siehe \ref{sec:PPO_Training_Objective_Function}.\\
-\ref{sec:Probability_Ratio} entsprechend werden als nächstes die Probability Ratios über alle Erfahrungen des Mini-Batch/es bestimmt. Daraufhin folgt die Bestimmung der Advantages, welches entsprechend zu \ref{sec:Advantages} geschieht. Nach der Berechnung beider Surrogates Loss wird die Surrogate Objective Loss gebildet \ref{sec:Surrogate_Objectives}.\\
-Als nächstes erfolgt die Bestimmung des Value Loss \ref{eq:Value_Loss} und die des Entropy Loss, wobei letzterer durch die evaluate Methode bereits bestimmt wurde.\\
-Zum Schluss werden alle Losses entsprechend \ref{sec:PPO_Training_Objective_Function} zusammengefügt. Die NN's werden daraufhin durch mit Hilfe des PyTorch Frameworks durch Backpropagation und Gradient Desent \ref{Backprop_GD} angepasst.\\
-Da der PPO mit unterschiedlichen Policy arbeitet, wird vor der Terminierung der Trainingsmethode die alte Policy $\pi_{\theta_{\text{old}}}$ durch die neu erzeugte $\pi_{\theta}$ ersetzt. Trainiert wird immer auf der neuen Policy $\pi_{\theta}$ und die Daten werden stets auf der alten $\pi_{\theta_{\text{old}}}$ erhoben.
-
-\subsubsection{Main-Methode}
-Die main Methode des PPO ist bis auf kleinere Unterschiede analog zu der des DQN Algorithmus, siehe \ref{sec:Impl:Main_Methode}. Sie befindet sich einzig im ppo\_train File, in ihr werden keine DQN spezifischen Daten, wie z.B. epsilon, abgespeichert und es existieren zwei Lernraten für Actor und Critic. 
+\subsection{GUI} \label{sec:Implementierung_GUI}

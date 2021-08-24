@@ -8,7 +8,7 @@ In diesem Abschnitt werden die Anforderungen an das Env dargestellt. Neben der H
 \subsection{Standardisierte Schnittstelle} \label{sec:Anforderungen_Schnittstelle}
 Das Env soll eine standardisierte Schnittstelle besitzen, sodass nach \ref{sec:Environment} drei Kommunikationskanäle implementiert werden. Das Env soll in der Lage sein, Actions zu empfangen. Des Weiteren soll es Observation und Rewards an den Agenten übergeben können.
 
-\subsection{Funktionalitäten} \label{sec:funktionalität_Env}
+\subsection{Funktionalitäten} \label{sec:Anforderungen_funktionalität_Env}
 Das Env soll die folgenden Funktionalitäten implementieren.
 
 \subsubsection{Aktionsausführung}
@@ -90,8 +90,8 @@ Die einzelnen Kriterien lauten:
 	\hline
 	Robustheit & Welcher Agent ist in der Lage in einer modifizierten Umgebung das Spielziel am besten zu erreichen? In Bezug auf Snake bedeutet dies: Welcher Agent ist in der Lage auf einem größeren oder kleineren Spielfeld die meisten Äpfel zu fressen? \\
 	\hline
-	Trainingszeit & Welcher Agent schafft es ein festes Ziel in der geringstmöglichen Zeit zu erreichen bzw. welcher Agent ist als erstes in der Lage durchschnittlich $x$ Äpfel zu fressen. \\
+	Siegrate & Welcher Agent schafft die Spiele mit einem Sieg zu beenden. \\
 	\hline
-	Spielzeit & Welcher Agent schafft es im Durchschnitt am längsten einen terminalen Zustand zu vermeiden? Auf Snake bezogen: Welcher Agent schafft es am längsten nicht zu sterben. \\
+	Spielzeit & Welcher Agent schafft es am längsten einen terminalen Zustand zu vermeiden? Auf Snake bezogen: Welcher Agent schafft es am längsten nicht zu sterben. \\
 	\hline
 \end{longtable}

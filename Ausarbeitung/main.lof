@@ -1,4 +1,4 @@
-\babel@toc {ngerman}{}
+\babel@toc {ngerman}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
@@ -20,9 +20,11 @@
 \contentsline {figure}{\numberline {5.11}{\ignorespaces PPO-Agent}}{43}{figure.5.11}%
 \contentsline {figure}{\numberline {5.12}{\ignorespaces Agenten}}{46}{figure.5.12}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Package Struktur}}{53}{figure.6.1}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{56}{figure.A.1}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{56}{figure.A.2}%
-\contentsline {figure}{\numberline {A.3}{\ignorespaces Optimierte Netzstruktur}}{58}{figure.A.3}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{64}{figure.A.1}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{65}{figure.A.2}%
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Optimierte Netzstruktur}}{66}{figure.A.3}%
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
