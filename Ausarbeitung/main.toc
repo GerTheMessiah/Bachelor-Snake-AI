@@ -93,22 +93,27 @@
 \contentsline {subsubsection}{\nonumberline Observe}{57}{subsubsection*.70}%
 \contentsline {subsubsection}{\nonumberline Evaluate}{57}{subsubsection*.72}%
 \contentsline {subsubsection}{\nonumberline Reset}{57}{subsubsection*.74}%
+\contentsline {subsubsection}{\nonumberline View}{58}{subsubsection*.76}%
 \contentsline {subsection}{\numberline {6.2.2}Player}{58}{subsection.6.2.2}%
 \contentsline {subsection}{\numberline {6.2.3}Observation}{58}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {6.2.4}Reward}{58}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {6.2.5}GUI}{58}{subsection.6.2.5}%
-\contentsline {chapter}{\numberline {7}Evaluation}{59}{chapter.7}%
-\contentsline {chapter}{Literaturverzeichnis}{60}{section*.75}%
-\contentsline {chapter}{\numberline {A}Anhang}{62}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{62}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Tensoren}{63}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Convolution Neural Networks}{63}{section.A.3}%
-\contentsline {subsection}{\numberline {A.3.1}Convolutional Layer}{63}{subsection.A.3.1}%
-\contentsline {subsection}{\numberline {A.3.2}Pooling Layer}{65}{subsection.A.3.2}%
-\contentsline {subsection}{\numberline {A.3.3}Fully Connected Layer}{65}{subsection.A.3.3}%
-\contentsline {section}{\numberline {A.4}Optimierte Netzwerke}{66}{section.A.4}%
-\contentsline {chapter}{\numberline {B}Anleitung}{67}{appendix.B}%
-\contentsline {section}{\numberline {B.1}PPO Train Startargumente}{67}{section.B.1}%
-\contentsline {section}{\numberline {B.2}DQN Train Startargumente}{68}{section.B.2}%
-\contentsline {section}{\numberline {B.3}Play Startargumente}{69}{section.B.3}%
+\contentsline {subsection}{\numberline {6.2.4}Reward}{60}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {6.2.5}GUI}{61}{subsection.6.2.5}%
+\contentsline {subsection}{\numberline {6.2.6}Wrapper}{62}{subsection.6.2.6}%
+\contentsline {chapter}{\numberline {7}Evaluation}{64}{chapter.7}%
+\contentsline {chapter}{Literaturverzeichnis}{65}{section*.77}%
+\contentsline {chapter}{\numberline {A}Anhang}{67}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{67}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Tensoren}{68}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Convolution Neural Networks}{68}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}Convolutional Layer}{68}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Pooling Layer}{70}{subsection.A.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Fully Connected Layer}{70}{subsection.A.3.3}%
+\contentsline {section}{\numberline {A.4}Optimierte Netzwerke}{71}{section.A.4}%
+\contentsline {chapter}{\numberline {B}Anhang zur Implementierung}{72}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Around-View}{72}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Distanzbestimmung}{73}{section.B.2}%
+\contentsline {chapter}{\numberline {C}Anleitung}{75}{appendix.C}%
+\contentsline {section}{\numberline {C.1}PPO Train Startargumente}{75}{section.C.1}%
+\contentsline {section}{\numberline {C.2}DQN Train Startargumente}{76}{section.C.2}%
+\contentsline {section}{\numberline {C.3}Test Startargumente}{77}{section.C.3}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

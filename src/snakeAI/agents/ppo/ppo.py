@@ -7,7 +7,7 @@ from src.snakeAI.agents.ppo.memoryPPO import Memory
 
 
 class Agent:
-    def __init__(self, LR_ACTOR=1.0e-3, LR_CRITIC=1.5e-3, GAMMA=0.99, K_EPOCHS=10, EPS_CLIP=0.2, GPU=False):
+    def __init__(self, LR_ACTOR=1.5e-4, LR_CRITIC=3.0e-4, GAMMA=0.95, K_EPOCHS=10, EPS_CLIP=0.2, GPU=False):
         self.gamma = GAMMA
         self.eps_clip = EPS_CLIP
         self.K_epochs = K_EPOCHS
@@ -73,15 +73,16 @@ class Agent:
             rewards.insert(0, discounted_reward)
         return rewards
 
-    def load_model(self, state_dict):
+    def load_model(self, MODEL_PATH):
         try:
+            state_dict = T.load(MODEL_PATH)
             self.old_policy.load_state_dict(state_dict=state_dict)
             self.policy.load_state_dict(state_dict=state_dict)
         except IOError:
-            print("Error while loading model.")
+            print("\nError while loading model.")
 
     def store_model(self, path):
-        path_model = path + "\\model"
+        path_model = path
         T.save(self.policy.state_dict(), path_model)
         save_worked = False
         while not save_worked:
@@ -90,4 +91,4 @@ class Agent:
                 save_worked = True
             except FileNotFoundError:
                 T.save(self.policy.state_dict(), path_model)
-        print("model saved.")
+        print("\nmodel saved.")

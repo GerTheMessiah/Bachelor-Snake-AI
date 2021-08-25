@@ -36,6 +36,13 @@ class Agent:
             action = np.random.choice(self.action_space)
         return av, scalar_obs, action
 
+    @T.no_grad()
+    def act_test(self, av, scalar_obs):
+        av = T.from_numpy(av).to(self.Q_eval.device)
+        scalar_obs = T.from_numpy(scalar_obs).to(self.Q_eval.device)
+        q_values = self.Q_eval(av, scalar_obs)
+        return av, scalar_obs, T.argmax(q_values).item()
+
     def learn(self):
         if self.mem.mem_counter < self.batch_size:
             return
@@ -75,8 +82,9 @@ class Agent:
                 T.save(self.Q_eval.state_dict(), path_model)
         print("model saved.")
 
-    def load_model(self, state_dict):
+    def load_model(self, MODEL_PATH):
         try:
+            state_dict = T.load(MODEL_PATH)
             self.Q_eval.load_state_dict(state_dict=state_dict)
         except IOError:
             print("Error while loading model.")

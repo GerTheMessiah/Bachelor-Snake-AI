@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from random import randint
 from src.snakeAI.gym_game.snake_env.gui import GUI
 from src.snakeAI.gym_game.snake_env.observation import make_obs
+from src.snakeAI.gym_game.snake_env.reward import Reward
 
 
 @dataclass()
@@ -29,8 +30,12 @@ class Player:
         return len(self.tail) - 1
 
     @property
-    def tail_pos(self):
+    def last_tail_pos(self):
         return np.array(self.tail[-1]) if not np.equal(np.array(self.tail[-1]), self.pos).all() else None
+
+    @property
+    def snake_len(self):
+        return len(self.tail)
 
 
 class SnakeGame:
@@ -39,21 +44,22 @@ class SnakeGame:
         pos = np.array((randint(0, shape[0] - 1), randint(0, shape[1] - 1)))
         self.p = Player(pos=pos, tail=[(pos[0], pos[1])], direction=randint(0, 3), id=1, c_s=1, c_h=2,
                         inter_apple_steps=0, done=False)
+        self.reward = Reward(self)
         self.shape = shape
         self.has_gui = has_gui
         self.step_counter = 0
-        self.has_grown = False
         self.ground[pos[0], pos[1]] = self.p.c_h
         self.apple = self.make_apple()
         if has_gui:
             self.gui = GUI(self.shape)
 
     def action(self, action):
-        self.p.inter_apple_steps += 1
         if self.p.inter_apple_steps >= self.max_snake_length:
             self.p.done = True
             return
 
+        self.p.inter_apple_steps += 1
+        self.step_counter += 1
         if action == 0:
             self.p.direction = (self.p.direction + 1) % 4
 
@@ -76,16 +82,16 @@ class SnakeGame:
             self.p.done = True
             return
 
-        # if has snake eaten remove apple
+        # if snake has eaten remove apple
         if self.p.tail[0] == self.apple:
             self.ground[self.p.tail[0][0], self.p.tail[0][1]] = self.p.c_h
             self.apple = self.make_apple()
             self.p.inter_apple_steps = 0
-            self.has_grown = True
+            self.reward.has_grown = True
         else:
             self.ground[self.p.tail[-1][0], self.p.tail[-1][1]] = 0
             del self.p.tail[-1]
-            self.has_grown = False
+            self.reward.has_grown = False
         # prof lost
         if len(self.p.tail) != len(set(self.p.tail)):
             self.p.done = True
@@ -97,22 +103,20 @@ class SnakeGame:
             self.ground[self.p.tail[-1][0], self.p.tail[-1][1]] = -1
             self.ground[self.p.tail[0][0], self.p.tail[0][1]] = self.p.c_h
 
-    def evaluate(self):
-        if len(self.p.tail) == self.max_snake_length and self.p.done:
-            return 100
-        elif len(self.p.tail) != self.max_snake_length and self.p.done:
-            return -10
-        elif self.has_grown:
-            return 2.5
+    def evaluate(self, reward_function="standard"):
+        if reward_function == "standard":
+            return self.reward.standard_reward
+        elif reward_function == "optimized":
+            return self.reward.optimized_reward
         else:
-            return -0.01
+            raise ValueError("Wrong reward function.")
 
     def view(self):
         if self.has_gui:
             self.gui.update_GUI(self.ground)
 
     def observe(self):
-        return make_obs(self.p.id, self.p.pos, self.p.tail_pos, self.p.direction, self.ground, self.apple,
+        return make_obs(self.p.id, self.p.pos, self.p.last_tail_pos, self.p.direction, self.ground, self.apple,
                         self.p.inter_apple_steps)
 
     def make_apple(self):
@@ -130,7 +134,7 @@ class SnakeGame:
         pos = np.array((randint(0, self.shape[0] - 1), randint(0, self.shape[1] - 1)))
         self.p.player_reset(pos)
         self.step_counter = 0
-        self.has_grown = False
+        self.reward.has_grown = False
         self.ground[pos[0], pos[1]] = self.p.c_h
         self.apple = self.make_apple()
         if self.has_gui:

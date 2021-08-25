@@ -6,10 +6,11 @@ Das in dieser Implementierung wurde sich für das Maschine Learning Framework Py
 
 \section{Package Struktur}
 Für eine bessere Abtrennung der einzelnen Komponenten wurde sich für die folgende Projektstruktur entschieden. 
-\\Alle Ordner werden in src aufbewahrt. Dieser besitzt die drei Unterordner resources, snakeAI und statistic.\\
+\\Alle Ordner werden in src aufbewahrt. Dieser besitzt die vier Unterordner resources, snakeAI, statistic common.\\
 In dem Ordner resources werden alle erzeugten Daten der Trainingsläufe und Testläufe sowie einige weitere images führ die Projektpräsentation aufbewahrt.\\
 Der Ordner statistic beinhaltet die Files, in welche die Klasse zur Auswertung der Trainings- und Testdaten, aus welchen Statistiken generiert werden, aufbewahrt wird.\\
-Der SnakeAI Ordner beinhalte dient als Sammelordner zur Lagerung der gym\_games, zu welches auch das, im Rahmen dieser Ausarbeitung, implementierte Spiel Snake gehört. Auch die Agenten sind in dem Ordner agent, in Unterordnern, aufbewahrt. Jeder Algorithmus erhält dabei seinen eigenen Unterordner.
+Der common Ordner enthält Elemente, welche sowohl von den Agenten als auch vom Snake-Environment benutzt werden.\\
+Der snakeAI Ordner beinhalte dient als Sammelordner zur Lagerung der gym\_games, zu welches auch das, im Rahmen dieser Ausarbeitung, implementierte Spiel Snake gehört. Auch die Agenten sind in dem Ordner agent, in Unterordnern, aufbewahrt. Jeder Algorithmus erhält dabei seinen eigenen Unterordner.
 \begin{figure}[H]
 	\centering
 	\def\svgscale{0.1}
@@ -29,7 +30,7 @@ Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt 
 	\item snake\_game
 \end{itemize}
 
-\subsection{Spiellogik}
+\subsection{Spiellogik} \label{sec:Implementierung-Spiellogik}
 Die Spiellogik ist ist hauptsächlich im snake\_game File implementiert. Anders als im Konzept, existiert keine Spiellogik-Klasse. Viel mehr wird die gesamte Verwaltung von der SnakeGame Klasse übernommen, welche der Game-Komponente gleichkommt. Die Gesamtheit aller Komponenten spannt dabei die Spiellogik auf. Diese Abweichung des Konzepts hat sich angeboten, da so die Implementierung einer weiteren Klasse verhindert werden konnte. Dies minimiert den Implementierungsaufwand.\\
 \\Die Game-Komponente, welche der SnakeGame Klasse entspricht, befindet sich im snake\_game File.
 \begin{lstlisting}[label=alg:SnakeGame_Konstruktor]
@@ -51,9 +52,9 @@ Die Spiellogik ist ist hauptsächlich im snake\_game File implementiert. Anders 
 \end{python}
 
 Zur Erstellung der SnakeGame-Klasse werden die Spielfeldmaße (shape) und has\_gui übertragen und in der Klasse gespeichert. Letzteres ist ein Boolean, welche die GUI ein oder ausschaltet. Als nächstes wird die Spieloberfläche (ground) generiert, welche durch ein Numpy Array (\url{https://numpy.org/}) implementiert wird. Die Position des Spieles (pos) wird daraufhin als nächstes zufallsbasiert bestimmt. Mit dieser Information kann die Datenhaltungsklasse des Players erzeugt werden (siehe \ref{sec:Implementierung_Player}). Der step\_counter dient zur Bestimmung der gegangenen Schritte der Snake. Zum Schluss wird das Spielfeld mit der Position der Snake aktualisiert, ein Apfel wird mit der make\_apple() Methode generiert, welche sogleich das Spielfeld anpasst und je nach dem has\_gui Boolean wird ein GUI-Objekt (siehe \ref{sec:Implementierung_GUI}) instanziiert.\\
-\\Die SnakeGame-Klasse implementiert nach dem Konzept (siehe \ref{sec:Konzept_Spiellogik}) die folgenden Methoden: action, observe, evaluate, reset, view und make\_apple.
+\\Die SnakeGame-Klasse implementiert nach dem Konzept (siehe \ref{sec:Konzept_Spiellogik}) die folgenden Methoden: action, observe, evaluate, reset, view.
 
-\subsubsection{Action}
+\subsubsection{Action} \label{sec:Implementierung-Action}
 Die action Methode implementiert die Spiellogik und damit die Aktionsabarbeitung. Aus diesem Grund wird ihr die, vom Agenten bestimmte, Aktion in Form eines Integers übergeben. Daraufhin wird überprüft, ob die Snake bereits die maximale Schrittanzahl überschnitten hat. Danach werden step\_counter und p.inter\_apple\_steps inkrementiert und die Aktion wird umgesetzt. Um dies umzusetzen wird die direction im Player Objekt angepasst, entsprechend der Beschreibung im Konzept (siehe \ref{sec:Konzept_Spielablauf}). Die directions und die actions sind dabei mit den Zahlen von eins bis vier bzw. von ein bis drei codiert.
 \begin{python}
 	def action(self, action):
@@ -115,15 +116,15 @@ Zum Schluss der action Methode wir, sofern die Snake bis zu diesem Punkte nicht 
 		self.ground[self.p.tail[0][0], self.p.tail[0][1]] = self.p.c_h
 \end{python}
 
-\subsubsection{Observe}
+\subsubsection{Observe} \label{sec:Implementierung-Observe}
 Die Observe Methode ruft die make\_obs Funktion im observation File auf. Zu diesem Zweck werden der Funktion die für die Obs benötigten Inforamtionen als Argumente übergeben. Näheres zur Obs in \ref{sec:Implementierung_Observation}.
 \begin{python}
     def observe(self):
 			return make_obs(self.p.id, self.p.pos, self.p.tail_pos, self.p.direction, self.ground, self.apple, self.p.inter_apple_steps)
 \end{python}
 
-\subsubsection{Evaluate}
-Der evaluate Methode wird ein String übergeben, welche zur Auswahl der Reward-Funktion dient. Dies ist nötig, da im Rahmen der Optimierung B eine neue Reward-Funktion definiert wurde. Ansonsten ruft evaluate die entsprechende Reward-Funkion auf, welche in der Reward-Klasse definiert wurde (siehe \ref{label}).
+\subsubsection{Evaluate} \label{sec:Implementierung-Evaluate}
+Der evaluate Methode wird ein String übergeben, welche zur Auswahl der Reward-Funktion dient. Dies ist nötig, da im Rahmen der Optimierung B eine neue Reward-Funktion definiert wurde. Ansonsten ruft evaluate die entsprechende Reward-Funkion auf, welche in der Reward-Klasse definiert wurde (siehe \ref{sec:Implementierung_Reward}).
 \begin{python}
 	def evaluate(self, reward_function="standard"):
 		if reward_function == "standard":
@@ -134,7 +135,7 @@ Der evaluate Methode wird ein String übergeben, welche zur Auswahl der Reward-F
 			raise ValueError("Wrong reward function.")
 \end{python}
 
-\subsubsection{Reset}
+\subsubsection{Reset} \label{sec:Implementierung-Reset}
 In der Reset Methode wird der bisherige Spielfortschritt zurückgesetzt. Dafür wird das Spielfeld mit Nullen überschrieben und die Player eigene reset Methode wird aufgerufen, welchedas Player-Objekt in seinen Ursprungszustand zurückversetzt. Danach verläuft die Methode analog zur Erstellung des SnakeGame-Objektes (siehe \ref{alg:SnakeGame_Konstruktor})
 \begin{python}
 	def reset_snake_game(self):
@@ -149,10 +150,166 @@ In der Reset Methode wird der bisherige Spielfortschritt zurückgesetzt. Dafür 
 			self.gui.reset_GUI()
 \end{python}
 
+\subsubsection{View} \label{sec:Implementierung-View}
+Die view Methode ruft ihrerseits die update\_GUI Methode. Sie dient daher als Wrapper-Methode.
+\begin{python}
+	def view(self):
+		if self.has_gui:
+			self.gui.update_GUI(self.ground)
+\end{python}
+
+
 \subsection{Player} \label{sec:Implementierung_Player}
+Die Player-Klasse dient als Datenhaltungsklasse. Sie beinhaltet Informationen, wie z.B. die Position des Kopfes der Snake, die List tail, welche die Positionen der Schwanzglieder enthält, die direction der Snake, daher die Blickrichtung, die inter\_apple\_steps, also die Schritte aufaddierten Schritte sein dem letzten Fressen eines Apfels und der done Boolean, welcher angibt ob ein terminaler Zustand erreicht wurde. Neben diesen Informationen werden zusätzlich noch eine id und die Farbkonstanten c\_s und c\_h für color\_snake und color\_head.\\
+Neben den Getter Methoden apple\_count, last\_tail\_pos und snake\_len, wurde noch eine Methode player\_reset definiert, welche die oben aufgelisteten Informationen pos, tail, direction, inter\_apple\_steps und done zum Ursprungszustand zurücksetzt.
 
 \subsection{Observation} \label{sec:Implementierung_Observation}
+Die Obs wird im observation File erstellt, wobei für ihrer Erstellung keine Klasse verwendet wird. Vielmehr ruft die Hauptfunktion make\_obs verschiedene Unterfunktionen auf, welche ebenfalls im observation File definiert sind.\\
+Die Erklärung für die around\_view (AV) und die Distanzbestimmung, für die scalar\_obs (SO), befindet sich im Anhang der Implementierung (siehe \ref{sec:Anhang-Implementierung-Around-View} und \ref{sec:Anhang-Implementierung-Distanzen}).
+Neben den Distanzen existieren noch drei weitere Arten an Observations, welche für die SO benötigt werden. Zu diesen gehören die direction\_obs, die compass\_obs und die hunger\_obs.\\
+Die direction\_obs wird mit Hilfe des One-Hot-Encodings wie folgt generiert:
+\begin{python}
+	def direction_obs(direction):
+		obs = np.zeros(4, dtype=np.float64)
+		obs[0 + direction] = 1
+		return obs
+\end{python}
+Die Implementierung der compass\_obs geschieht dabei wie im Konzept beschrieben (siehe \ref{sec:Konzept_Observation}). der compass\_obs Unterfunktion wird die Position des Snake-Kopfes und eines Objektes übergeben. Für jede Zeile und Spalte wird dann überprüft, ob sich das Objekt im Vergleich zum Snake-Kopf höher, niedriger oder in der selben Zeile bzw. Spalte befindet. Die Information wird dann in ein Array eingepflegt.
+\begin{python}
+	def compass_obs(pos, obj):
+		obs = np.zeros(6, dtype=np.float64)
+		if obj is None:
+			return obs
+		obs[0] = 1 if pos[0] < obj[0] else 0
+		obs[1] = 1 if pos[1] > obj[1] else 0
+		obs[2] = 1 if pos[0] > obj[0] else 0
+		obs[3] = 1 if pos[1] < obj[1] else 0
+		obs[4] = 1 if pos[0] == obj[0] else 0
+		obs[5] = 1 if pos[1] == obj[1] else 0
+		return obs
+\end{python}
+Die hunger\_obs wird ebenfalls wie im Konzept erwähnt berechnet und dann in einen array der Länge eins (Skalar) ausgegeben. Der scalare Wert wird in ein Array gebunden, damit er später besser in die scalar\_obs (SO) eingebunden werden kann.
+\begin{python}
+	def hunger_obs(inter_apple_steps, size):
+		obs = np.zeros(1, dtype=np.float64)
+		obs[0] = 1 / (size - inter_apple_steps) if inter_apple_steps != size else 2
+		return obs
+\end{python}
+Zum Schluss werden alle Observations der SO zusammengefügt. Zu diesen gehören die distance\_obs (distances) (siehe \ref{sec:Anhang-Implementierung-Distanzen}), direction\_obs (direction), apple\_obs, tail\_obs und die hunger\_obs (hunger). Die apple\_obs und tail\_obs sind dabei compass\_obs mit den Objeten Apfel und letztes Schwanzglied der Snake. Die SO besitzt damit eine Länge von 41.
+\begin{python}
+	def make_obs(p_id, pos, tail_pos, direction, ground, food, iter_apple_counter):
+		around_view = create_around_view(pos, p_id, ground)
+		distances = create_distances(pos, ground)
+		direction = direction_obs(direction)
+		apple_obs = compass_obs(pos, food)
+		tail_obs = compass_obs(pos, tail_pos)
+		hunger = hunger_obs(iter_apple_counter, ground.size)
+		scalar_obs = np.concatenate((distances, direction, apple_obs, hunger, tail_obs))
+		return around_view, np.expand_dims(scalar_obs, axis=0)
+\end{python}
+
 
 \subsection{Reward} \label{sec:Implementierung_Reward}
+Die Reward-Klasse, welche sich gleichnamigen File befindet, ist für die Bestimmung des Rewards zuständig. Zu diesem Zweck wird ihr die SnakeGame Instanz übergeben, damit sie über alle nötigen Spielinformationen besitzt. Sie verfügt über zwei Methoden, welche die Rewards bestimmen. Reward-Funktion eins (standard\_reward) wird in Abschnitt Reward des Konzepts (siehe \ref{sec:Konzept_Reward}) näher erläutert.
+\begin{python}
+	@property
+	def standard_reward(self):
+		if len(self.snakeGame.p.tail) == self.snakeGame.max_snake_length and self.snakeGame.p.done:
+			return 100
+		elif len(self.snakeGame.p.tail) != self.snakeGame.max_snake_length and self.snakeGame.p.done:
+			return -10
+		elif self.has_grown:
+			return 2.5
+		else:
+			return -0.01
+\end{python}
+Reward-Funktion zwei (optimized\_reward) wird im Abschnitt der Optimierungen (siehe \ref{sec:Konzept_Optimierung02}) näher erläutert.
+\begin{python}
+	@property
+	def optimized_reward(self):
+		len = self.snakeGame.max_snake_length
+		r_distance = 10 / np.linalg.norm(self.snakeGame.p.pos - np.array(self.snakeGame.apple)) * (self.snakeGame.p.snake_len / len)
+		
+		r_timeout = (1 / len) * (self.snakeGame.p.inter_apple_steps / self.snakeGame.p.snake_len)
+		return r_distance - r_timeout
+\end{python}
+
 
 \subsection{GUI} \label{sec:Implementierung_GUI}
+Die GUI-Komponente befindet sich im gui File, in welchem die Klasse GUI definiert wird. Da die GUI unabhängig von der Spiellogik programmiert wurde, lässt sich diese je nach Wunsch ein oder ausschalten. Dies geschieht durch das Erzeugen oder nicht Erzeugen einer Instanz dieser Klasse.\\
+Das GUI-Objekt bekommt bei der Initialisierung die Größe der Spieloberfläche übergeben. Die graphische Oberfläche wird dabei mit dem Framework Pygame \url{https://www.pygame.org/} implementiert. Damit dieses eine Spieloberfläche generiert, wird das Framework initialisiert und es wird ein display-Objekt generiert. Diesem wird die Länge und Breite der Spieloberfläche multipliziert mit der Kästchengröße, bei Initialisierung, übergeben. Dieses display-Objekt besteht aus einzelnen Vierecken in der Anzahl und Anordnung der Spielfeldgröße, welche zu Beginn schwarz eingefärbt (RGB = (0, 0, 0)) werden. Das Fenster besitzt daher die Form der Spieloberfläche (ground). Zum Schluss der Erzeugung des GUI-Objektes werden noch einige Einstellungen am Framework getätigt.
+\begin{python}
+	def __init__(self, size):
+		self.Particle = 60
+		self.size = size
+		pygame.init()
+		self.screen = pygame.display.set_mode((self.Particle * self.size[0], self.Particle * self.size[1]))
+		self.screen.fill((0, 0, 0))
+		pygame.display.set_caption('Snake')
+		pygame.PYGAME_HIDE_SUPPORT_PROMPT = 1
+\end{python}
+Die update\_GUI methode ist die Hauptmethode dieser Klasse. Sie aktualisiert die GUI bei aufruft. Um dies zu tun, wird ihr das momentane Spielfeld übergeben. Danach wird das bisherige Fenster zurückgesetzt (schwarz eingefärbt) und überprüft, ob sich die Spielfeldgröße verändert hat. Sollte dies der Fall sein, so wird das display-Objekt mit der neuen Größe neue generiert. Ansonsten passiert nicht.
+\begin{python}
+	def update_GUI(self, ground):
+		self.reset_GUI()
+		if self.size != ground.shape:
+			self.size = ground.shape
+			del self.screen
+			self.screen = pygame.display.set_mode((self.Particle * self.size[1], self.Particle * self.size[0]))
+\end{python}
+Daraufhin wird die Funktionalität des Verschiebens und Schließens des Fensters implementiert. Sollte die GUI ordnungsgemäß geschlossen werden, so terminiert das Programm.
+\begin{python}
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			pygame.quit()
+			raise StopGameException()
+\end{python}
+Hiernach wird über jeden Eintrag des Spielfeldes iteriert und die entsprechenden Kästchen der GUI mit den neuen Werten angepasst. Dies geschieht mit der draw Methode. Sollten alle Kästchen der GUI aktualisiert sein, wird die update Methode von Pygame aufgerufen, welche die aktualisierte GUI nun darstellt.\\
+\\Die draw Methode erzeugt die Vierecke und fügt diese an die für sie zugeordneten Positionen.
+\begin{python}
+	def draw(self, pos, color):
+		Cords = [pos[0] * self.Particle, pos[1] * self.Particle]
+		pygame.draw.rect(self.screen, color, (Cords[0], Cords[1], self.Particle, self.Particle), 0)
+\end{python}
+Des Weiteren existiert noch eine reset\_GUI Methode, welche alle Vierecks des Fensters schwarz einfärbt.
+\begin{python}
+	def reset_GUI(self):
+		self.screen.fill((0, 0, 0))
+\end{python}
+
+\subsection{Wrapper}
+Die SnakeEnv Klasse erbt von der gym.Env Klasse und stellt damit einen Wrapper dar. Dadurch wird eine feste Methodenstruktur vorgegeben, welche eine standardisierte Schnittstelle erzeugt. Die SnakeEnv Klasse befindet sich im snake\_env File und bekommt bei Erzeugung einer Instanz die Spielfeldgröße und den has\_gui Boolean übergeben, welche die GUI entweder ein- oder ausschaltet. Diese Inforationen werden gespeichert und mit diesen die SnakeGame Instanz erzeugt (siehe \ref{sec:Implementierung-Spiellogik}).
+\begin{python}
+	def __init__(self, shape=(8, 8), has_gui=False):
+		self.shape = shape
+		self.has_gui = has_gui
+		self.game = SnakeGame(self.shape, self.has_gui)
+\end{python}
+Die SnakeEnv Klasse implementiert die Methoden step, reset, render, close.\\
+\\ Die step Methode bekommt die action als Integer und die reward\_function als String übergeben. Sie ruft daraufhin die action Methode der SnakeGame Klasse auf. Sobald diese terminiert ist wird die observe und evaluate Methode (siehe \ref{sec:Implementierung-Observe} und \ref{sec:Implementierung-Evaluate}) der SnakeGame Klasse aufgerufen, sowie der is\_done Getter, welcher ebenfalls in der SnakeGame Klasse definiert wurde. Die step Methode returned die von den Methoden zurückgegebenen Daten, inklusive des win Boolean, welche bei einem Sieg True und bei Verlust False zurückgibt.
+\begin{python}
+	def step(self, action, reward_function="standard"):
+		self.game.action(action=action)
+		around_view, scalar_obs = self.game.observe()
+		reward = self.game.evaluate(reward_function=reward_function)
+		done = self.game.is_done
+		return around_view, scalar_obs, reward, done, self.game.max_snake_length == self.game.p.apple_count + 1
+\end{python}
+Die reset Methode ruft die reset\_snake\_game und observe Methoden der SnakeGame Klasse auf (siehe \ref{sec:Implementierung-Reset} und \ref{sec:Implementierung-Observe}) und gibt die neue initiale Obs zurück.
+\begin{python}
+	def reset(self):
+		self.game.reset_snake_game()
+		around_view, scalar_obs = self.game.observe()
+		return around_view, scalar_obs
+\end{python}
+Die render Methode ruft nur die view Methode der SnakeGame Klasse auf (siehe \ref{sec:Implementierung-View})
+\begin{python}
+	def render(self, close=False):
+		self.game.view()
+\end{python}
+Die close Methode terminiert das Programm.
+\begin{python}
+	def close(self):
+		raise StopGameException()
+\end{python}
+

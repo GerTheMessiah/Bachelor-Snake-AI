@@ -1,41 +1,44 @@
 import os
-import re
 import sys
-from os import listdir
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
-from scipy.stats import linregress
+from pandas import DataFrame
 
 
 def plot_learning_curve(x: list, apples: list, scores: list, figure_file: str):
     plt.figure()
     fig, axs = plt.subplots(2, 1, figsize=(16, 11))
     axs[0].plot(x, apples, color='red')
-    m, b, _, _, _ = linregress(x, apples)
-    axs[0].plot(x, [m * y + b for y in x], color='blue')
     axs[0].grid(True)
     axs[0].set_xlabel('Number of Games')
     axs[0].set_ylabel("Sum of Apples per Game")
 
     axs[1].plot(x, scores, color='green')
-    m2, b2, _, _, _ = linregress(x, scores)
-    axs[1].plot(x, [m2 * y + b2 for y in x], color='orange')
     axs[1].set_xlabel('Number of Games')
     axs[1].set_ylabel(r"Sum of Scores per Game")
     axs[1].grid(True)
     fig.tight_layout()
 
     red_patch = mlines.Line2D([], [], color='red', markersize=30, label=f'Apple_max: {max(apples)}')
-    blue_patch = mlines.Line2D([], [], color='blue', markersize=30, label=f'Apple_reg m: {round(m, 4)}, b: {round(b, 4)}')
+    blue_patch = mlines.Line2D([], [], color='blue', markersize=30,
+                               label=f'Apple_reg m: {round(m, 4)}, b: {round(b, 4)}')
     red2_patch = mlines.Line2D([], [], color='green', markersize=30, label=f'Score_max: {round(max(scores), 2)}')
-    blue2_patch = mlines.Line2D([], [], color='orange', markersize=30, label=f'Score_reg m: {round(m2, 4)}, b: {round(b2, 4)}')
+    blue2_patch = mlines.Line2D([], [], color='orange', markersize=30,
+                                label=f'Score_reg m: {round(m2, 4)}, b: {round(b2, 4)}')
     fig.legend(handles=[red_patch, blue_patch, red2_patch, blue2_patch], loc="lower center", ncol=4)
     fig.subplots_adjust(bottom=0.1)
 
     fig.show()
     fig.savefig(figure_file)
+
+
+"""
+Source of the Method:
+https://www.programcreek.com/python/
+?code=Azure%2Fazure-diskinspect-service%2Fazure-diskinspect-service-master%2FpyServer%2FAzureDiskInspectService.py
+"""
 
 
 def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_length=50):
@@ -61,26 +64,20 @@ def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_lengt
     sys.stdout.flush()
 
 
-def file_path(dir: str, new_save: bool, file_name: str = "model"):
-    MODEL_DIR_PATH = str(Path(__file__).parent.parent.parent.parent) + fr"\resources\{dir}"
-    try:
-        MODEL_ID = max([int(re.sub(r'\D', '', item)) for item in listdir(MODEL_DIR_PATH)])
-    except Exception:
-        print("Loading model failed")
-        return rf"{MODEL_DIR_PATH}\{file_name}_0"
-    return rf"{MODEL_DIR_PATH}\{file_name}_{MODEL_ID + 1 if new_save else MODEL_ID}"
+def save_path(statistic_run_number: int, alg_type: str, agent_number: int, use_case: str) -> str:
+    MODEL_DIR_PATH = str(
+        Path(__file__).parent.parent.parent.parent) + f"\\resources\\statistic-run-0{statistic_run_number}"
+    if not os.path.isdir(MODEL_DIR_PATH):
+        os.mkdir(MODEL_DIR_PATH)
+    return MODEL_DIR_PATH + f"\\{alg_type}-0{agent_number}-{use_case}"
 
 
-def save_file(path, **kwargs) -> str:
+def save(alg_type, agent_number, statistic_run_number, use_case, agent, dtime, steps_list, apples, scores, wins):
+    path_ = save_path(statistic_run_number=statistic_run_number, alg_type=alg_type, agent_number=agent_number,
+                      use_case=use_case)
+    if use_case == "train":
+        agent.store_model(path=path_ + ".model")
+    df = DataFrame({"time": dtime, "steps": steps_list, "apples": apples, "scores": scores, "wins": wins})
+    df.to_csv(path_ + ".csv")
 
-    MODEL_DIR_PATH = str(Path(__file__).parent.parent.parent.parent) + "\\resources\\" if not path else path
-    DIR_NAME = "Save-"
-    for parameter, value in kwargs.items():
 
-        DIR_NAME += (str(parameter).lower() + "_" + str(value) + "-")
-
-    DIR_NAME = DIR_NAME[:-1]
-
-    os.mkdir(MODEL_DIR_PATH + DIR_NAME)
-
-    return MODEL_DIR_PATH + DIR_NAME

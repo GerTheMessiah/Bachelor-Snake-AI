@@ -8,7 +8,7 @@ from src.snakeAI.agents.ppo.critic import CriticNetwork
 
 
 class ActorCritic(nn.Module):
-    def __init__(self, n_actions=3, lr_actor=1.0e-3, lr_critic=1.5e-3, device="cpu"):
+    def __init__(self, n_actions=3, lr_actor=1.5e-4, lr_critic=3.0e-4, device="cpu"):
         super(ActorCritic, self).__init__()
         T.set_default_dtype(T.float64)
         T.manual_seed(10)
@@ -29,10 +29,16 @@ class ActorCritic(nn.Module):
         av = T.from_numpy(av).to(self.device)
         scalar_obs = T.from_numpy(scalar_obs).to(self.device)
         policy = self.actor(av, scalar_obs)
-
         dist = Categorical(policy)
         action = dist.sample()
         return av, scalar_obs, action.item(), dist.log_prob(action)
+
+    @T.no_grad()
+    def act_test(self, av, scalar_obs):
+        av = T.from_numpy(av).to(self.device)
+        scalar_obs = T.from_numpy(scalar_obs).to(self.device)
+        policy = self.actor(av, scalar_obs)
+        return av, scalar_obs, T.argmax(policy).item()
 
     def evaluate(self, av, scalar_obs, action):
         policy, value = self.forward(av, scalar_obs)

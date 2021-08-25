@@ -1,5 +1,6 @@
-import sys
 import pygame
+
+from src.common import StopGameException
 
 
 class GUI:
@@ -25,7 +26,7 @@ class GUI:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()
+                raise StopGameException()
         for row in range(self.size[0]):
             for column in range(self.size[1]):
                 # last part of the tail - red

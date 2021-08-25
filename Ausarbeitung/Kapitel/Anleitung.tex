@@ -11,14 +11,14 @@ Zum Start des Trainings muss  main\_train mit den folgenden Parametern gestartet
 	\item GAMMA (Float) $\longrightarrow$ Abzinsungsfaktor \ref{sign:Gamma}
 	\item K\_EPOCHS (Int) $\longrightarrow$ Gibt die Anzahl der  Lernzyklen eines Batches bzw. Spieles an. Siehe \ref{sec:PPO_Algorithmus}
 	\item EPS\_CLIP (Float) $\longrightarrow$ Clip Faktor, welcher St Standard bei 0.2. Siehe \ref{sec:PPO_Training_Objective_Function}
-	\item BOARD\_SIZE (Tuple of Ints) $\longrightarrow$ Spielfeldgröße bzw. Spielfeldform. Z.B. "(8, 8)"
-	\item PATH (String) $\longrightarrow$ Path an dessen Stelle ein neuer Ordner erstellt wird mit dem erlernten Modell sowie der Trainingsstatistik und den Trainingsdaten. Wenn der Standard Path verwendet werden soll: "" übergeben.
-	\item DO\_TOTAL\_RUN (Boolean) $\longrightarrow$ Wenn False, wird nur bis zu dem Zeitpunkt gelernt, an dem der Agent unter den zehn letzten Spielen sechs Siege erreichen hat. Ansonsten wird ein kompletter Trainingsrun durchgeführt.
+	\item BOARD\_SIZE (Tuple of Integers) $\longrightarrow$ Spielfeldgröße bzw. Spielfeldform. Z.B. "(8, 8)"
+	\item STATISTIC\_RUN\_NUMBER (Int) $\longrightarrow$ Die Trainingsdaten und as NN-Model werden unter "./src/resources/statistic-run-0" + STATISTIC\_RUN\_NUMBER gespeichert.
+	\item AGENT\_NUMBER (int) $\longrightarrow$ Nummer des zu untersuchenden Agenten. Die zu speichernden Daten werden in den Dateien "./statistic-run-01/PPO-0" + AGENT\_NUMBER + "train.csv" bzw. "./statistic-run-01/PPO-0" + AGENT\_NUMBER + "train.model" gespeichert.
 	\item GPU (Boolean) $\longrightarrow$ Wenn True und eine CUDA-fähige Grafikkarte vorhanden ist, wird der Trainingsprozess auf der Grafikkarte ausgeführt.
 \end{enumerate}
 So könnte ein Start mittels Kommandozeile aussehen:
 \begin{center}
-	Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash python main\_train.py "PPO"{} 30000 0.0001 0.0004 0.95 10 0.2 "(8, 8)"{} ""{} False True
+	Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash python main\_train.py "PPO"{} 30000 0.0001 0.0004 0.95 10 0.2 "(8, 8)"{} 1 1 True
 \end{center}
 
 \section{DQN Train Startargumente}
@@ -32,27 +32,27 @@ So könnte ein Start mittels Kommandozeile aussehen:
 	\item EPS\_DEC (Float) $\longrightarrow$ Der Absenkungsfaktor von Epsilon \ref{alg:DQN}
 	\item EPS\_END (Float) $\longrightarrow$ Der Endwert von Epsilon \ref{alg:DQN}
 	\item BOARD\_SIZE (Tuple of Ints) $\longrightarrow$ Spielfeldgröße bzw. Spielfeldform. Z.B. "(8, 8)"
-	\item PATH (String) $\longrightarrow$ Path an dessen Stelle ein neuer Ordner erstellt wird mit dem erlernten Modell sowie der Trainingsstatistik und den Trainingsdaten. Wenn der Standard Path verwendet werden soll: "" übergeben.
-	\item DO\_TOTAL\_RUN (Boolean) $\longrightarrow$ Wenn False, wird nur bis zu dem Zeitpunkt gelernt, an dem der Agent unter den zehn letzten Spielen sechs Siege erreichen hat. Ansonsten wird ein kompletter Trainingsrun durchgeführt.
+	\item STATISTIC\_RUN\_NUMBER (Int) $\longrightarrow$ Die Trainingsdaten und as NN-Model werden unter "./src/resources/statistic-run-0" + STATISTIC\_RUN\_NUMBER gespeichert.
+	\item AGENT\_NUMBER (int) $\longrightarrow$ Nummer des zu untersuchenden Agenten. Die zu speichernden Daten werden in den Dateien "./statistic-run-01/DQN-0" + AGENT\_NUMBER + "train.csv" bzw. "./statistic-run-01/DQN-0" + AGENT\_NUMBER + "train.model" gespeichert.
 	\item GPU (Boolean) $\longrightarrow$ Wenn True und eine CUDA-fähige Grafikkarte vorhanden ist, wird der Trainingsprozess auf der Grafikkarte ausgeführt.
 \end{enumerate}
 So könnte ein Start mittels Kommandozeile aussehen:
 \begin{center}
-	Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash python main\_train.py "DQN"{} 30000 0.0001 0.99 64 2048 0.00007 0.01 "(8, 8)"{} ""{} False True
+	python Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash main\_train.py "DQN"{} 30000 0.0001 0.99 64 2048 0.00007 0.01 "(8, 8)"{} 1 2 True
 \end{center}
 
-\section{Play Startargumente}
-Da die Play Methoden der beiden Algorithmus-Arten nahe zu identisch sind, teilen sie alle Startargumente bis auf die Algorithmus-Art. Daher können die Startparameter beider Methoden zusammen erklärt werden.
+\section{Test Startargumente}
+Da die Test Methoden der beiden Algorithmus-Arten nahe zu identisch sind, teilen sie alle Startargumente bis auf die Algorithmus-Art. Daher können die Startparameter beider Methoden zusammen erklärt werden.
 \begin{enumerate}
 	\item "DQN" / "PPO" $\longrightarrow$ Algorithmus-Art	
-	\item PATH (String) $\longrightarrow$ Path der Model Datei.
+	\item MODEL\_PATH (String) $\longrightarrow$ Path der Model Datei für das NN des Agenten.
 	\item N\_ITERATIONS (Int) $\longrightarrow$ Anzahl l der zu spielenden Spiele.
 	\item BOARD\_SIZE (Tuple of Ints) $\longrightarrow$ Spielfeldgröße bzw. Spielfeldform. Z.B. "(8, 8)"
-	\item PRINT\_STATS (Boolean) $\longrightarrow$ Wenn True, werden Informationen über den abgeschlossen Spielverlauf auf der Konsole erscheinen.
-	\item HAS\_GUI (Boolean) $\longrightarrow$ WENN True wird die GUI \ref{sec:Impl_GUI} dargestellt.
+	\item STATISTIC\_RUN\_NUMBER (Int) $\longrightarrow$ Die Testdaten werden unter "./src/resources/statistic-run-0" + STATISTIC\_RUN\_NUMBER gespeichert.
+	\item AGENT\_NUMBER (int) $\longrightarrow$ Nummer des zu untersuchenden Agenten. Die zu speichernden Daten werden in der Datei "./statistic-run-01/(DQN bzw. PPO)-0" + AGENT\_NUMBER + "-test.csv" gespeichert.
 	\item GPU (Boolean) $\longrightarrow$ Wenn True und eine CUDA-fähige Grafikkarte vorhanden ist, wird der Spielprozess auf der Grafikkarte ausgeführt.
 \end{enumerate}
 So könnte ein Start mittels Kommandozeile aussehen:
 \begin{center}
-	Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash python main\_play.py "PPO"{} "Path\_to\_Model"{} 300 "(8, 8)"{} True True True
+	python Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash main\_test.py "PPO"{} "Path\_to\_Model"{} 30000 "(8, 8)"{} 1 2 True
 \end{center}
