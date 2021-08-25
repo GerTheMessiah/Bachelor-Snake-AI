@@ -1,6 +1,6 @@
 import pygame
 
-from src.common import StopGameException
+from src.common.stop_game_exception import StopGameException
 
 
 class GUI:

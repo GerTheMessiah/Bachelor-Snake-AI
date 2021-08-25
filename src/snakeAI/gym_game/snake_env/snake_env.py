@@ -1,6 +1,6 @@
 import gym
 from src.snakeAI.gym_game.snake_env.snake_game import SnakeGame
-from src.common import StopGameException
+from src.common.stop_game_exception import StopGameException
 
 
 class SnakeEnv(gym.Env):
