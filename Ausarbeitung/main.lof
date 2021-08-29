@@ -7,25 +7,24 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Flussdiagramm des Vorgehens}}{31}{figure.5.1}%
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Wrapper}}{32}{figure.5.2}%
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Spiellogik}}{33}{figure.5.3}%
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Spielablauf}}{34}{figure.5.4}%
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Observation}}{37}{figure.5.5}%
-\contentsline {figure}{\numberline {5.6}{\ignorespaces ConvNet}}{39}{figure.5.6}%
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Actor-Head}}{40}{figure.5.7}%
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Critic- und Q-Net-Head}}{40}{figure.5.8}%
-\contentsline {figure}{\numberline {5.9}{\ignorespaces DQN-Agent}}{41}{figure.5.9}%
-\contentsline {figure}{\numberline {5.10}{\ignorespaces DQN-Aktionsbestimmung}}{42}{figure.5.10}%
-\contentsline {figure}{\numberline {5.11}{\ignorespaces PPO-Agent}}{43}{figure.5.11}%
-\contentsline {figure}{\numberline {5.12}{\ignorespaces Agenten}}{46}{figure.5.12}%
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Flussdiagramm des Vorgehens}}{32}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Spiellogik}}{34}{figure.5.2}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Spielablauf}}{34}{figure.5.3}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Observation}}{38}{figure.5.4}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Schnittstelle}}{39}{figure.5.5}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces AV-Network}}{41}{figure.5.6}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Actor-Head}}{42}{figure.5.7}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Critic- und Q-Net-Tail}}{43}{figure.5.8}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces DQN-Agent}}{43}{figure.5.9}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces DQN-Aktionsbestimmung}}{45}{figure.5.10}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces PPO-Agent}}{46}{figure.5.11}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Agenten}}{48}{figure.5.12}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Package Struktur}}{53}{figure.6.1}%
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Package Struktur}}{55}{figure.6.1}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{69}{figure.A.1}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{70}{figure.A.2}%
-\contentsline {figure}{\numberline {A.3}{\ignorespaces Optimierte Netzstruktur}}{71}{figure.A.3}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{89}{figure.A.1}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{90}{figure.A.2}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

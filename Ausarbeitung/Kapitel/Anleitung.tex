@@ -2,7 +2,7 @@
 Zur besseren Anwendbarkeit der Software, wurden die Files main\_train und main\_play erstellt. Mit diesen kann ein Benutzer die Trainings- und Spielroutine starten. Alternativ lässt sich dies auch durch die Verwendung von Python spezifischen Entwicklungsumgebungen durchführen.\\
 Zum Start des Trainings muss  main\_train mit den folgenden Parametern gestartet werden. Dabei ist jedoch zu beachten, dass je nach Algorithmus-Art unterschiedliche Parameter übergeben werden müssen. Die Algorithmus-Art wird zu diesem Zweck als erstes Startargument übergeben.
 
-\section{PPO Train Startargumente} 
+\section{PPO Train Startargumente} \label{sec:Anleitung_PPO_Train_Startargumente}
 \begin{enumerate}
 	\item "PPO" $\longrightarrow$ Algorithmus-Art
 	\item N\_ITERATIONS (Int) $\longrightarrow$ Anzahl l der zu spielenden Spiele
@@ -12,16 +12,19 @@ Zum Start des Trainings muss  main\_train mit den folgenden Parametern gestartet
 	\item K\_EPOCHS (Int) $\longrightarrow$ Gibt die Anzahl der  Lernzyklen eines Batches bzw. Spieles an. Siehe \ref{sec:PPO_Algorithmus}
 	\item EPS\_CLIP (Float) $\longrightarrow$ Clip Faktor, welcher St Standard bei 0.2. Siehe \ref{sec:PPO_Training_Objective_Function}
 	\item BOARD\_SIZE (Tuple of Integers) $\longrightarrow$ Spielfeldgröße bzw. Spielfeldform. Z.B. "(8, 8)"
-	\item STATISTIC\_RUN\_NUMBER (Int) $\longrightarrow$ Die Trainingsdaten und as NN-Model werden unter "./src/resources/statistic-run-0" + STATISTIC\_RUN\_NUMBER gespeichert.
-	\item AGENT\_NUMBER (int) $\longrightarrow$ Nummer des zu untersuchenden Agenten. Die zu speichernden Daten werden in den Dateien "./statistic-run-01/PPO-0" + AGENT\_NUMBER + "train.csv" bzw. "./statistic-run-01/PPO-0" + AGENT\_NUMBER + "train.model" gespeichert.
+	\item STATISTIC\_RUN\_NUMBER (Int) $\longrightarrow$ Nummer des Statistik-Runs.
+	\item AGENT\_NUMBER (int) $\longrightarrow$ Nummer des zu untersuchenden Agenten.
+	\item RUN\_TYPE (String) $\longrightarrow$ "baseline" oder "optimized"-Run. Wichtig für die Speicherung.
+	\item RAND\_GAME\_SIZE (Boolean) $\longrightarrow$ Wenn True wird auf einem sich dynamisch pro Spielepisode ändernden Spielfeld zwischen (6, 6) bis zu (10, 10) gespielt.
+	\item SCHEDULED\_LR (Boolean) $\longrightarrow$ Wenn True, dann wird die Lernrate heruntergesetzt, falls die Steigung der Performance in den letzten 100 Epochs nicht größer null war.
 	\item GPU (Boolean) $\longrightarrow$ Wenn True und eine CUDA-fähige Grafikkarte vorhanden ist, wird der Trainingsprozess auf der Grafikkarte ausgeführt.
 \end{enumerate}
 So könnte ein Start mittels Kommandozeile aussehen:
 \begin{center}
-	Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash python main\_train.py "PPO"{} 30000 0.0001 0.0004 0.95 10 0.2 "(8, 8)"{} 1 1 True
+	Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash python main\_train.py "PPO"{} 30000 0.0001 0.0004 0.95 10 0.2 "(8, 8)"{} 1 2 "baseline"{} False False True
 \end{center}
 
-\section{DQN Train Startargumente}
+\section{DQN Train Startargumente} \label{sec:Anleitung_DQN_Train_Startargumente}
 \begin{enumerate}
 	\item "DQN" $\longrightarrow$ Algorithmus-Art
 	\item N\_ITERATIONS (Int) $\longrightarrow$ Anzahl l der zu spielenden Spiele
@@ -32,27 +35,32 @@ So könnte ein Start mittels Kommandozeile aussehen:
 	\item EPS\_DEC (Float) $\longrightarrow$ Der Absenkungsfaktor von Epsilon \ref{alg:DQN}
 	\item EPS\_END (Float) $\longrightarrow$ Der Endwert von Epsilon \ref{alg:DQN}
 	\item BOARD\_SIZE (Tuple of Ints) $\longrightarrow$ Spielfeldgröße bzw. Spielfeldform. Z.B. "(8, 8)"
-	\item STATISTIC\_RUN\_NUMBER (Int) $\longrightarrow$ Die Trainingsdaten und as NN-Model werden unter "./src/resources/statistic-run-0" + STATISTIC\_RUN\_NUMBER gespeichert.
-	\item AGENT\_NUMBER (int) $\longrightarrow$ Nummer des zu untersuchenden Agenten. Die zu speichernden Daten werden in den Dateien "./statistic-run-01/DQN-0" + AGENT\_NUMBER + "train.csv" bzw. "./statistic-run-01/DQN-0" + AGENT\_NUMBER + "train.model" gespeichert.
+	\item STATISTIC\_RUN\_NUMBER (Int) $\longrightarrow$ Nummer des Statistik-Runs.
+	\item AGENT\_NUMBER (int) $\longrightarrow$ Nummer des zu untersuchenden Agenten.
+	\item RUN\_TYPE (String) $\longrightarrow$ "baseline" oder "optimized"-Run. Wichtig für die Speicherung.
+	\item RAND\_GAME\_SIZE (Boolean) $\longrightarrow$ Wenn True wird auf einem sich dynamisch pro Spielepisode ändernden Spielfeld zwischen (6, 6) bis zu (10, 10) gespielt.
+	\item OPTIMIZATION (String) $\longrightarrow$ "A", "B", oder None. Wählt die Optimierung A (siehe \ref{sec:Konzept_Optimierung01}), B (siehe \ref{sec:Konzept_Optimierung02}) oder keine aus.
 	\item GPU (Boolean) $\longrightarrow$ Wenn True und eine CUDA-fähige Grafikkarte vorhanden ist, wird der Trainingsprozess auf der Grafikkarte ausgeführt.
 \end{enumerate}
 So könnte ein Start mittels Kommandozeile aussehen:
 \begin{center}
-	python Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash main\_train.py "DQN"{} 30000 0.0001 0.99 64 2048 0.00007 0.01 "(8, 8)"{} 1 2 True
+	python Path\_to\_Directory\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash main\_train.py "DQN"{} 30000 0.0001 0.99 64 2048 0.00007 0.01 "(8, 8)"{} 1 2 "baseline"{} False False True
 \end{center}
 
-\section{Test Startargumente}
-Da die Test Methoden der beiden Algorithmus-Arten nahe zu identisch sind, teilen sie alle Startargumente bis auf die Algorithmus-Art. Daher können die Startparameter beider Methoden zusammen erklärt werden.
+\section{Test Startargumente} \label{sec:Anleitung_Test_Startargumente}
+Da die Testmethoden der beiden Algorithmus-Arten nahe zu identisch sind, teilen sie alle Startargumente bis auf die Algorithmus-Art. Daher können die Startparameter beider Methoden zusammen erklärt werden.
 \begin{enumerate}
 	\item "DQN" / "PPO" $\longrightarrow$ Algorithmus-Art	
 	\item MODEL\_PATH (String) $\longrightarrow$ Path der Model Datei für das NN des Agenten.
-	\item N\_ITERATIONS (Int) $\longrightarrow$ Anzahl l der zu spielenden Spiele.
-	\item BOARD\_SIZE (Tuple of Ints) $\longrightarrow$ Spielfeldgröße bzw. Spielfeldform. Z.B. "(8, 8)"
-	\item STATISTIC\_RUN\_NUMBER (Int) $\longrightarrow$ Die Testdaten werden unter "./src/resources/statistic-run-0" + STATISTIC\_RUN\_NUMBER gespeichert.
-	\item AGENT\_NUMBER (int) $\longrightarrow$ Nummer des zu untersuchenden Agenten. Die zu speichernden Daten werden in der Datei "./statistic-run-01/(DQN bzw. PPO)-0" + AGENT\_NUMBER + "-test.csv" gespeichert.
+	\item N\_ITERATIONS (Integer) $\longrightarrow$ Anzahl l der zu spielenden Spiele.
+	\item BOARD\_SIZE (Tuple of Integers) $\longrightarrow$ Spielfeldgröße bzw. Spielfeldform. Z.B. "(8, 8)"
+	\item STATISTIC\_RUN\_NUMBER (Integer) $\longrightarrow$ Nummer des Statistik-Runs.
+	\item AGENT\_NUMBER (Integer) $\longrightarrow$ Nummer des zu untersuchenden Agenten.
+	\item RUN\_TYPE (String) $\longrightarrow$ "baseline" oder "optimized"-Run. Wichtig für die Speicherung.
+	\item RAND\_GAME\_SIZE (Boolean) $\longrightarrow$ Wenn True wird auf einem sich dynamisch pro Spielepisode ändernden Spielfeld zwischen (6, 6) bis zu (10, 10) gespielt.
 	\item GPU (Boolean) $\longrightarrow$ Wenn True und eine CUDA-fähige Grafikkarte vorhanden ist, wird der Spielprozess auf der Grafikkarte ausgeführt.
 \end{enumerate}
 So könnte ein Start mittels Kommandozeile aussehen:
 \begin{center}
-	python Path\_to\_File\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash main\_test.py "PPO"{} "Path\_to\_Model"{} 30000 "(8, 8)"{} 1 2 True
+	python Path\_to\_Directory\textbackslash Bachelor-Snake-AI\textbackslash src\textbackslash main\_test.py "PPO"{} "Path\_to\_Model"{} 30000 "(8, 8)"{} 1 2 "baseline"{} False True
 \end{center}

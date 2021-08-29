@@ -210,7 +210,7 @@ Die alleinige Nutzung dieser Objective Function hätte jedoch destruktiv große 
 	\label{eq:surrogate_2}
 	\text{clip}(r_{t}(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_{t}(s, a)
 \end{align}
-Die einzige Veränderung im Vergleich zur ersten Objective Function \ref{func:surrogate_1} ist, dass eine Abgrenzung durch die Clip-Funktion eintritt. Sollte sich die Probability Ratio zu weit von 1 entfernen, so wird $r_{t}(\theta)$ entsprechende auf $1 - \epsilon \text{ bzw. } 1 + \epsilon$ begrenzt. Das hat zufolge, dass der Loss $L^{\text{CLIP}}_{t}(\theta)$ ebenfalls begrenzt wird, sodass es zu keinen großen Policy Updates kommen kann. Es wird sich daher in einer Trust Region bewegt, da man sich nie allzu weit von der ursprünglichen Policy entfernt \cite{TRPO, PPO}.
+Die einzige Veränderung im Vergleich zur ersten Objective Function \ref{eq:surrogate_1} ist, dass eine Abgrenzung durch die Clip-Funktion eintritt. Sollte sich die Probability Ratio zu weit von 1 entfernen, so wird $r_{t}(\theta)$ entsprechende auf $1 - \epsilon \text{ bzw. } 1 + \epsilon$ begrenzt. Das hat zufolge, dass der Loss $L^{\text{CLIP}}_{t}(\theta)$ ebenfalls begrenzt wird, sodass es zu keinen großen Policy Updates kommen kann. Es wird sich daher in einer Trust Region bewegt, da man sich nie allzu weit von der ursprünglichen Policy entfernt \cite{TRPO, PPO}.
 
 \subsubsection{Zusammenfassung der PPO Training Objective Function} \label{sec:PPO_Training_Objective_Function}
 Insgesamt ist der Actor-Loss \ref{clip_loss_ppo} ein Erwartungswert, welcher sich empirisch über eine Menge an gesammelten Daten ergibt. Dies wird durch $\mathbb{\hat{E}}_{t}$ impliziert. Dieser setzt sich aus vielen einzelnen Losses zusammen. Diese sind das Minimum der beiden Surrogate Objective Functions zusammen. Dies sorgt dafür, dass keine zu großen Losses die Policy zu weit von dem Entstehungspunkt der Daten wegführen (Trust Region). \cite[S. 3f.]{PPO}\\
@@ -272,7 +272,7 @@ Zur besseren Anwendbarkeit haben Volodymyr Mnhi et al. einen Algorithmus entworf
 	\item Initialisiere alle Hyperparameter. Initialisiere die Gewichte für das Q-NN zufallsbasiert. Setzte Epsilon $\epsilon = 1.00$ und Erzeuge leeren Replay-Buffer $RB$.
 	\item Wähle mit der Wahrscheinlichkeit $\epsilon$  eine zufällige Action $a$ oder nutze $a = \arg\max_{a} Q(s,a)$
 	\item Führt Action $a$ aus und ermittle den Reward $r$ und den Folgezustand $s'$.
-	\item Speichern von State $s$, Action $a$, Reward $r$ und Folgestate $s'$. $(s,a,r,s') \longrightarrow \text{Replay-Buffer}$
+	\item Speichern von State $s$, Action $a$, Reward $r$ und Folgezustand $s'$. $(s,a,r,s') \longrightarrow \text{Replay-Buffer}$
 	\item Senkt $\epsilon$, sodass die Wahrscheinlichkeit eine zufällige Action zu wählen minimiert wird. Gewöhnlich existiert eine untere Grenze für $\epsilon$, sodass immer noch einige wenige Actions zufällig gewählt werden, je nach Grenze.
 	\item Entnehme auf zufallsbasiert Mini-Batches aus dem Replay Buffer.
 	\item Berechne für alle sich im Mini-Batch befindliche Übergänge den Zielwert $y = r$ wenn die Episode in diesem Übergang endet. Ansonsten soll $y = r + \gamma \max_{a \in A}\hat{Q}(s',a')$.
