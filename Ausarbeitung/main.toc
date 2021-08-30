@@ -96,8 +96,8 @@
 \contentsline {subsection}{\numberline {6.2.3}Observation}{60}{subsection.6.2.3}%
 \contentsline {subsection}{\numberline {6.2.4}Reward}{62}{subsection.6.2.4}%
 \contentsline {subsection}{\numberline {6.2.5}GUI}{63}{subsection.6.2.5}%
-\contentsline {subsection}{\numberline {6.2.6}Wrapper}{64}{subsection.6.2.6}%
-\contentsline {section}{\numberline {6.3}Agenten}{65}{section.6.3}%
+\contentsline {subsection}{\numberline {6.2.6}Schnittstelle}{65}{subsection.6.2.6}%
+\contentsline {section}{\numberline {6.3}Agenten}{66}{section.6.3}%
 \contentsline {subsection}{\numberline {6.3.1}AV-Network}{66}{subsection.6.3.1}%
 \contentsline {subsection}{\numberline {6.3.2}DQN}{66}{subsection.6.3.2}%
 \contentsline {subsubsection}{\nonumberline Q-Network}{66}{subsubsection*.78}%
@@ -109,27 +109,27 @@
 \contentsline {subsubsection}{\nonumberline ActorCritic}{72}{subsubsection*.88}%
 \contentsline {subsubsection}{\nonumberline Memory}{73}{subsubsection*.90}%
 \contentsline {subsubsection}{\nonumberline PPO}{74}{subsubsection*.92}%
-\contentsline {section}{\numberline {6.4}Main Methoden}{76}{section.6.4}%
+\contentsline {section}{\numberline {6.4}Main Methoden}{77}{section.6.4}%
 \contentsline {subsection}{\numberline {6.4.1}Train Methode}{77}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}Test Methoden}{79}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.2}Test Methoden}{80}{subsection.6.4.2}%
 \contentsline {section}{\numberline {6.5}Speicherung}{80}{section.6.5}%
 \contentsline {section}{\numberline {6.6}Statistik}{81}{section.6.6}%
-\contentsline {chapter}{\numberline {7}Evaluation}{84}{chapter.7}%
-\contentsline {chapter}{Literaturverzeichnis}{85}{section*.93}%
-\contentsline {chapter}{\numberline {A}Anhang}{87}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{87}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Tensoren}{88}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Convolution Neural Networks}{88}{section.A.3}%
-\contentsline {subsection}{\numberline {A.3.1}Convolutional Layer}{88}{subsection.A.3.1}%
-\contentsline {subsection}{\numberline {A.3.2}Pooling Layer}{90}{subsection.A.3.2}%
-\contentsline {subsection}{\numberline {A.3.3}Fully Connected Layer}{90}{subsection.A.3.3}%
-\contentsline {chapter}{\numberline {B}Anhang zur Implementierung}{91}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Around-View}{91}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Distanzbestimmung}{92}{section.B.2}%
-\contentsline {section}{\numberline {B.3}AV-Network}{93}{section.B.3}%
-\contentsline {section}{\numberline {B.4}DQN-Memory}{94}{section.B.4}%
-\contentsline {chapter}{\numberline {C}Anleitung}{95}{appendix.C}%
-\contentsline {section}{\numberline {C.1}PPO Train Startargumente}{95}{section.C.1}%
-\contentsline {section}{\numberline {C.2}DQN Train Startargumente}{96}{section.C.2}%
-\contentsline {section}{\numberline {C.3}Test Startargumente}{97}{section.C.3}%
+\contentsline {chapter}{\numberline {7}Evaluation}{85}{chapter.7}%
+\contentsline {chapter}{Literaturverzeichnis}{86}{section*.93}%
+\contentsline {chapter}{\numberline {A}Anhang}{88}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{88}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Tensoren}{89}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Convolution Neural Networks}{89}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}Convolutional Layer}{89}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Pooling Layer}{91}{subsection.A.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Fully Connected Layer}{91}{subsection.A.3.3}%
+\contentsline {chapter}{\numberline {B}Anhang zur Implementierung}{92}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Around-View}{92}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Distanzbestimmung}{93}{section.B.2}%
+\contentsline {section}{\numberline {B.3}AV-Network}{94}{section.B.3}%
+\contentsline {section}{\numberline {B.4}DQN-Memory}{95}{section.B.4}%
+\contentsline {chapter}{\numberline {C}Anleitung}{96}{appendix.C}%
+\contentsline {section}{\numberline {C.1}PPO Train Startargumente}{96}{section.C.1}%
+\contentsline {section}{\numberline {C.2}DQN Train Startargumente}{97}{section.C.2}%
+\contentsline {section}{\numberline {C.3}Test Startargumente}{98}{section.C.3}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

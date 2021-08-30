@@ -26,7 +26,7 @@ $\Delta r$ ist dabei wie folgt definiert:
 \begin{align}
 	\Delta r(L_t, D_t,D_{t+1}) = \log_{L_t}\frac{L_t + D_t}{L_t + D_{t + 1}}
 \end{align}
-Wobei $t$ den vorherigen, $t+1$ den aktuellen Zeitpunkt darstellt. $L_t$ ist die Läge der Snake zum vorherigen Zeitpunkt und $D_t$ und $D_{t+1}$ stellen die Distanzen zwischen Snake und Apfel zum vorherigen und aktuellen Zeitpunkt dar.\\
+Wobei $t$ dem vorherigen, $t+1$ dem aktuellen Zeitpunkt darstellt. $L_t$ ist die Läge der Snake zum vorherigen Zeitpunkt und $D_t$ und $D_{t+1}$ stellen die Distanzen zwischen Snake und Apfel zum vorherigen und aktuellen Zeitpunkt dar.\\
 Sollte die Timeout Strategy auslösen, so werden die letzten $P$ Erfahrungen entsprechend angepasst und in Mem2 verschoben.\\
 Als maßgebliches Kriterien zur Evaluation der Leistung des DQN wurde die Performance, gemessen im Score und die steps survived, also die überlebten Schritte herangezogen.
 
