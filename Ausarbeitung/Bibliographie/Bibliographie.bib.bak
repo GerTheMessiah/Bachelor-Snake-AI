@@ -182,14 +182,13 @@
   url       = {https://www.ebook.de/de/product/31366940/ian_goodfellow_yoshua_bengio_aaron_courville_deep_learning_das_umfassende_handbuch.html},
 }
 
-@Electronic{Deep_RL_Bootcamp,
+@Misc{Deep_RL_Bootcamp,
   author       = {John Schulman},
-  howpublished = {Video},
-  language     = {Englisch},
-  month        = aug,
-  title        = {{Deep RL Bootcamp Lecture 5: Natural Policy Gradients}},
-  url          = {https://www.youtube.com/watch?v=xvRrgxcpaHY&},
+  howpublished = {\url{https://www.youtube.com/watch?v=xvRrgxcpaHY}},
+  month        = oct,
+  title        = {Deep RL Bootcamp Lecture 5: Natural Policy Gradients, TRPO, PPO},
   year         = {2017},
+  day          = {06},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}

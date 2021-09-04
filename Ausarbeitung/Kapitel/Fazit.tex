@@ -1,0 +1,25 @@
+\chapter{Fazit}
+Im Fazit sollen die Ergebnisse der Vergleiche (siehe \ref{sec:Evaluation_Ergebnisevaluation}) zusammengefasst und komprimiert dargestellt werden. Des Weiteren wird beurteilt, ob die Forschungsfrage (siehe \ref{sec:Einleitung_Forschungsfrage}) durch die Ausarbeitung erfüllt wurde.
+Anschließend wird ein Ausblick auf weitere Schritte in diesem Forschungsgebiet gegeben.
+
+\section{Bewertung der Forschungsfrage}
+In diesem Abschnitt soll die Beantwortung der eingangs gestellte Forschungsfrage:\\
+"`Wie kann an einem Beispiel des Spiels Snake für eine nicht-triviale gering-dimensionale Umgebung ein möglichst optimaler RL Agent ermittelt werden?"' behandelt werden.\\
+Da das Wort "`optimal"' einen großen Interpretationsspielraum zulässt, wurde sich auf vier Evaluationskriterien konzentriert. Zu diesen zählen die Performance, Effizienz, Siegrate und die Robustheit. Für jedes dieser Kriterien wurde der optimale Agent bestimmt (siehe \ref{sec:Evaluation_Ergebnisevaluation}).
+Die Forschungsfrage wurde dabei mithilfe einer, im Rahmen dieser Ausarbeitung erarbeiteten, Methodik beantwortet (siehe \ref{sec:Konzept_Vorgehen}).
+In dieser wurden die vordefinierte Agenten erst mehreren Baseline Vergleichen unterzogen. Bei diesen wurden den Agenten keine weiteren Parameter wie z.B. eine neue Reward Funktion beim Lernen oder ein Lernraten Scheduling hinzugefügt.\\
+\\Zu diesem Zweck wurde ein Konzept erarbeitet (siehe \ref{chap:Konzept}), welches als Grundlage zur Beantwortung der Forschungsfrage dienen. Dieses wurde im weiteren Verlauf, unter anderem in der Implementierung (siehe \ref{chap:Implementierung}) umgesetzt.\\
+\\Die Baseline Agenten wurden auf Basis der Evaluationskriterien verglichen und die zwei besten (Baseline Winner Agenten) wurden ausgewählt. Für die Baseline Vergleiche waren dies der PPO-03 und PPO-01 für die Performance, der DQN-01 und DQN-02 für die Effizienz, der PPO-01 und PPO-03 für die Siegrate und der PPO-03 und PPO-01 für die Robustheit.\\
+Im Folgenden traten die Agenten gegen ihrer optimierten Varianten an, entsprechend des Vorgehens (siehe \ref{sec:Konzept_Vorgehen}).
+Aus diesen Optimized Vergleichen ergaben sich die folgenden Sieger: Der PPO-03 ist der optimale Agent für das Kriterium der Performance, der (kommt noch) ist der optimale Agent für die Effizienz, der PPO-03-opt-b ist der optimale Agent für die Siegrate und der PPO-01-opt-b ist der optimale Agent für die Robustheit.\\
+Aufgrund dieser konkreten Ergebnisse kann die Forschungsfrage, für die aufgestellten Evaluationskriterien, als beantwortet angesehen werden.
+
+\section{Ausblick}
+Nach der Durchführung der Vergleiche, welche zur Bestimmung des optimalen Agenten für jedes Evaluationskriterium geführt haben, ergeben sich weiterführende Fragestellungen.\\
+Die DQN Agenten konnten, wie in der Evaluation dargestellt, keine guten Ergebnisse, mit Ausnahme in der Evaluation der Effizienz, erzielen. Die Vermutung, das die Wahl von Zufallsaktionen dazu führt, könnte in einer Anschließenden Ausarbeitung weiter untersucht werden.\\
+Aber auch bezüglich der Methodik lassen sich noch weitere Untersuchungen durchführen. 
+So würde zusätzliche Vergleich von weiteren Agenten, die eventuell auch auf andere Algorithmen basieren, eine gute Erweiterung darstellen.\\
+Möglicherweise könnten auch eine Änderung der Untersuchungsparameter zu veränderten Resultaten führen. Zu diesen Veränderungen könnten die Spielregeln des Spiel Snake, die Evaluationskriterien, die Optimierungen für die Agenten usw. gehören.\\
+\\Denkbar wäre auch ein praktischer Einsatz der Methodik in RL-Anwendungen. Eingangs wurde die Quelle \cite{UAV} erwähnt, da sie unbemannte Drohnen mit RL-Agenten fliegen lassen will. Die hier erhobenen Ergebnisse legen nahe, dass die Wahl eines PPO, was die Performance betrifft, die bessere Wahl wäre, um Drohnen zu steuern.\\
+Denkbar wäre auch die Anwendung des Verfahrens auf Probleme, welche nicht in thematischen Zusammenhang mit dem Spiel Snake stehen, wie z.B. Finanzapplikationen oder Steuerungsprogramme für Roboter.\\
+\\Abschließend lässt sich behaupten, dass die Möglichkeiten für weiterführende Forschung auf dem Gebiet der Auswahl von RL-Agenten, viele Möglichkeiten bietet und das diese Arbeit einen kleinen Beitrag zu diesem Forschungszweig beiträgt.

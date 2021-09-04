@@ -39,7 +39,7 @@ Danach wird über jeden Eintrag, welcher im Ausschnitt der AV liegt, iteriert. D
 		return np.expand_dims(tmp_arr, axis=0)
 \end{python}
 
-\section{Distanzbestimmung} \label{sec:Anhang-Implementierung-Distanzen}
+\section{Raytracing Distanzbestimmung} \label{sec:Anhang-Implementierung-Distanzen}
 Ein wesentlicher Teil der scalar\_obs (SO) besteht aus den Distanzen, welche von der create\_distances Funktion generiert werden. Zu Beginn wird ein Null-Array der Länge 24 (3 * 8 = 24), in welches die Distanzen eingetragen werden und eine List namens grad\_list erstellt. In dieser werden Faktoren gehalten, welche den Grad der Sucherlinie (siehe \ref{fig:Observation}) angeben. Dabei entsprechen die Faktoren den Himmels- bzw. Nebenhimmelsrichtungen in der folgenden Reihenfolge (0° = N, 45° = NO, 90° = O, 135° = SO, 180° = S, 225° = SW und 270° = W, 315° = NW).\\
 Danach wird über die drei zu suchenden Objekte (Wände, Snake-Glieder, Apfel) iteriert, wobei für jedes dieser Objekt die dist Unterfunktion aufgerufen wird. Die Rückgaben werden in das Array eingepflegt und dieses ,sobald alle Distanzen bestimmt worden sind, zurückgegeben.
 \begin{python}
@@ -74,8 +74,8 @@ Diese Prozedur endet entweder mit der Rückgabe einer Distanz zum Objekt, falls 
 \end{python} 
 
 \section{AV-Network} \label{sec:Anhang_AV_Network}
-Mit Hilfe der PyTroch Oberklasse Module, kann eine neue NN-Element erstellt werden.
-Es wurde daher die Klasse AV\_NET definiert, welche zugleich als NN-Schicht benutzt werden kann.
+Mit Hilfe der PyTroch Oberklasse Module, kann eine neues NN-Element erstellt werden.
+Es wurde daher die Klasse AV\_NET definiert, welche zugleich als NN-Element benutzt werden kann.
 \begin{python}
 	class AV_NET(nn.Module):
 		def __init__(self):
@@ -96,8 +96,9 @@ Es wurde daher die Klasse AV\_NET definiert, welche zugleich als NN-Schicht benu
 		def forward(self, av):
 			return self.AV_NET(av)
 \end{python}
-Diese besitzt eine forward Methode, welche die AV (around\_view) durch die dargestellten NN-Schichten und Funktionen propagiert. Das Ergebnis wird zurückgegeben.
-
-\section{DQN-Memory}
-
+\begin{lstlisting}[caption=PyTorch Implementierung des AV-NET]
+\end{lstlisting}
+Diese besteht aus zwei Convolutional (Conv2d), einem Max-Pooling und zwei Fully Connected Layers (Linear). 
+Zwischen den Layers finden weitere Transformationen statt, welche in Abschnitt \ref{sec:Konzept_Netzstruktur} erklärt wurden.
+Jedes NN-Element muss zwingend eine forward Methode implementieren, um die Propagierung der Input-Daten durch das Netzwerk zu steuern. Aus diesem Grund existiert eine forward Methode für diese Klasse, welche die AV (around\_view) durch die dargestellten NN-Schichten und Funktionen propagiert. Das Ergebnis wird zurückgegeben.
 

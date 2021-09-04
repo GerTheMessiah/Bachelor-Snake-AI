@@ -27,8 +27,8 @@
 \usepackage[ngerman]{babel} %neue deutsche Rechtschreibung
 \usepackage[utf8]{inputenc} %alternativ: ansinew (windows), latin1, latin9 (Linux/UNIX/Mac)
 
-%\usepackage[T1]{fontenc} %einkommentieren, wenn Buchstaben/Schriftbild schief aussehen!
-%\usepackage{lmodern} %andere Schrift, sieht evtl. besser aus
+\usepackage[T1]{fontenc} %einkommentieren, wenn Buchstaben/Schriftbild schief aussehen!
+\usepackage{lmodern} %andere Schrift, sieht evtl. besser aus
 
 %------------
 %---Layout---
@@ -66,7 +66,8 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-
+\usepackage{pythonhighlight}
+\usepackage{listings}
 %---------------
 %---Sonstiges---
 %---------------
@@ -82,49 +83,10 @@
 \usepackage{enumerate}
 \usepackage{longtable}
 \usepackage{wrapfig}
-\usepackage{listings}
 \usepackage{float}
 %\usepackage[inkscape={C:/Program Files/Inkscape/bin/inkscape -z -C}]{svg}
 \restylefloat{figure}
 \graphicspath{{./Abbildungen/}, {./Abbildungen/Implementierung/}}
-
-\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
-\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
-
-\definecolor{deepblue}{rgb}{0,0,0.5}
-\definecolor{deepred}{rgb}{0.8,0,0}
-\definecolor{deepgreen}{rgb}{0,0.5,0}
-\definecolor{grey1}{rgb}{0.5,0.5,0.5}
-
-
-% Python style for highlighting
-\newcommand\pythonstyle{\lstset{
-		language=Python,
-		basicstyle=\small\ttm,
-		otherkeywords={self},             % Add keywords here
-		keywordstyle=\small\ttb\color{deepblue},
-		emph={},          % Custom highlighting
-		emphstyle=\small\color{deepred},    % Custom highlighting style
-		stringstyle=\small\color{deepgreen},
-		commentstyle=\small\color{grey1}\ttm,
-		frame=tb,                         % Any extra options here
-		showstringspaces=false,            % 
-		breaklines=true,
-		tabsize=2
-}}
-% Python environment
-\lstnewenvironment{python}[1][] {
-	\pythonstyle
-	\lstset{#1}
-}{}
-
-% Python for external files
-\newcommand\pythonexternal[2][]{{
-		\pythonstyle
-		\lstinputlisting[#1]{#2}}}
-
-% Python for inline
-\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
 
 \usepackage[
 	textsize=tiny, %kleinere Schrift als die default-Größe in den Notizen, damit mehr reinpasst
@@ -254,6 +216,7 @@
 \input{Kapitel/Konzept.tex}
 \input{Kapitel/Implementierung.tex}
 \input{Kapitel/Evaluation.tex}
+\input{Kapitel/Fazit.tex}
 
 %--------------------------
 %---Literaturverzeichnis---

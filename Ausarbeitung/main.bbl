@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{14}
 % this bibliography was produced with the style dinat.bst v2.5
 \makeatletter
 \newcommand{\dinatlabel}[1]%
@@ -6,16 +6,6 @@
 \makeatother
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax\def\url#1{\texttt{#1}}\fi
-
-\bibitem[Baker u.\,a.(2019)Baker, Kanitscheider, Markov, Wu, Powell, McGrew und
-  Mordatch]{DBLP:journals/corr/abs-1909-07528}
-\dinatlabel{Baker u.\,a. 2019} \textsc{Baker}, Bowen~; \textsc{Kanitscheider},
-  Ingmar~; \textsc{Markov}, Todor~M.~; \textsc{Wu}, Yi~; \textsc{Powell},
-  Glenn~; \textsc{McGrew}, Bob~; \textsc{Mordatch}, Igor:
-\newblock Emergent Tool Use From Multi-Agent Autocurricula.
-\newblock In: \emph{CoRR}
-\newblock abs/1909.07528 (2019). --
-\newblock URL \url{http://arxiv.org/abs/1909.07528}
 
 \bibitem[Bowei~Ma(2016)]{Exploration_of_Reinforcement_Learning_to_SNAKE}
 \dinatlabel{Bowei~Ma 2016} \textsc{Bowei~Ma}, Jun~Z.:
@@ -33,6 +23,12 @@
 \newblock In: \emph{IEEE Access}
 \newblock PP (2019), 08, S.~1--1. --
 \newblock URL \url{https://ieeexplore.ieee.org/abstract/document/8787847}
+
+\bibitem[Glassner(1989)]{Glassner1989}
+\dinatlabel{Glassner 1989} \textsc{Glassner}, Andrew~S. (Hrsg.):
+\newblock \emph{{An Introduction to Ray Tracing}}.
+\newblock GBR~: Academic Press Ltd., 1989. --
+\newblock ISBN 0122861604
 
 \bibitem[Goodfellow u.\,a.(2018)Goodfellow, Bengio und Courville]{DL}
 \dinatlabel{Goodfellow u.\,a. 2018} \textsc{Goodfellow}, Ian~; \textsc{Bengio},
@@ -73,6 +69,16 @@
 \newblock In: \emph{CoRR}
 \newblock abs/1602.01783 (2016). --
 \newblock URL \url{http://arxiv.org/abs/1602.01783}
+
+\bibitem[Mnih u.\,a.(2013)Mnih, Kavukcuoglu, Silver, Graves, Antonoglou,
+  Wierstra und Riedmiller]{DBLP:journals/corr/MnihKSGAWR13}
+\dinatlabel{Mnih u.\,a. 2013} \textsc{Mnih}, Volodymyr~; \textsc{Kavukcuoglu},
+  Koray~; \textsc{Silver}, David~; \textsc{Graves}, Alex~; \textsc{Antonoglou},
+  Ioannis~; \textsc{Wierstra}, Daan~; \textsc{Riedmiller}, Martin~A.:
+\newblock Playing Atari with Deep Reinforcement Learning.
+\newblock In: \emph{CoRR}
+\newblock abs/1312.5602 (2013). --
+\newblock URL \url{http://arxiv.org/abs/1312.5602}
 
 \bibitem[Mnih u.\,a.(2015)Mnih, Kavukcuoglu, Silver, Rusu, Veness, Bellemare,
   Graves, Riedmiller, Fidjeland, Ostrovski, Petersen, Beattie, Sadik,

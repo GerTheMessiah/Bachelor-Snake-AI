@@ -11,7 +11,7 @@ Das Env soll eine standardisierte Schnittstelle besitzen, sodass drei Kommunikat
 \subsection{Funktionalitäten} \label{sec:Anforderungen_funktionalität_Env}
 Das Env soll die folgenden Funktionalitäten implementieren.
 
-\subsubsection{Aktionsausführung}
+\subsubsection{Aktionsausführung} \label{sec:Anforderungen_Aktionsausführung}
 Das Env muss eine Funktionalität beinhalten, die eine Aktion ausführen kann. Diese Aktionsausführung muss sich nach den Regeln des Spiels Snake richten (siehe \ref{sec:Snake}).
 
 \subsubsection{Reset} \label{sec:Anforderung_Reset}
@@ -20,32 +20,32 @@ Das Env muss eine Reset Methode implementieren, um einen erbrachten Spielfortsch
 \subsubsection{Render} \label{sec:visualisierung_Env}
 Das Env muss eine Render Funktionalität implementieren, um eine Visualisierung des Spiels Snake zu ermöglichen. Diese dient der besseren Evaluation und Demonstration.
 
-\section{Anforderungen an die Agenten}
+\section{Anforderungen an die Agenten} \label{sec:Anforderungen_Agenten}
 In diesem Abschnitt werden die Anforderungen an die Agenten, welche auf dem PPO bzw. DQN Algorithmus basieren, dargestellt.
 
 \subsection{Funktionalitäten} \label{sec:Agent_Funktionalitäten}
 Die Agenten müssen folgende Funktionalitäten implementieren.
 
-\subsubsection{Aktionsbestimmung}
+\subsubsection{Aktionsbestimmung} \label{sec:Anforderungen_Aktionsbestimmung}
 Die Agenten müssen in der Lage sein, aus einer Observation eine Aktion zu bestimmen, welche wiederum dem Env übergeben werden muss, um einen Spielfortschritt erzielen zu können.
 
-\subsubsection{Lernen}
+\subsubsection{Lernen} \label{sec:Anforderungen_Lernen}
 Die Agenten müssen fähig sein, auf Grundlage vergangener Spielepisoden zu lernen und damit ihre Spielergebnisse zu verbessern.
 
 \subsection{Parametrisierung} \label{sec:Anforderungen_Parametrisierung}
 Das System muss die Möglichkeit besitzen, mehrere Agenten des gleichen Algorithmus zu erstellen, welche sich jedoch durch die verwendeten Hyperparameter unterscheiden. Diese Definition von Agenten ist in der Evaluation zu berücksichtigen und dient damit einer besseren Vergleichbarkeit.
 
-\subsection{Diversität der RL Algorithmen}
+\subsection{Diversität der RL Algorithmen} \label{sec:Anforderungen_Diversität}
 Um nicht nur Agenten eines Algorithmus untereinander zu vergleichen, sondern auch den Vergleich zu anderen Algorithmen zu erbringen, sollen ein DQN- und PPO-Algorithmus miteinander verglichen werden. 
 Diese bieten sich, wie in den Abschnitten \ref{sec:PPO} und \ref{sec:Q-Learning} beschrieben, für den Vergleich an.
 
 \section{Anforderungen an die Datenerhebung} \label{sec:Anforderungen_an_die_Datenerhebung}
 In diesem Teil sollen Anforderungen an die statistische Datenerhebung und an die damit verbundenen Analysekomponenten gestellt werden.
 
-\subsection{Mehrfache Datenerhebung}
-Die Datenermittlung muss für jeden einzelnen Agenten mehrfach durchgeführt werden, um die Validität der Messung zu gewährleisten.
+\subsection{Mehrfache Datenerhebung} \label{sec:Anforderungen_mehrfache_Datenerhebung}
+Die Datenermittlung muss für jeden einzelnen Agenten mehrfach durchgeführt werden, um die Validität der Messung zu gewährleisten. (\cite[S. 135]{DL})
 
-\subsection{Datenspeicherung}
+\subsection{Datenspeicherung} \label{sec:Anforderungen_Datenspeicherung}
 Damit aus den erzeugten Test- und Trainingsdaten statistische Schlüsse gezogen werden können ist es wichtig, dass diese gespeichert werden. Da jedoch die Menge an Daten schnell riesige Dimensionen annehmen würde, sollen stellvertretend nur die Daten ganzer Spiele gespeichert werden. Diese Strategie stellt einen Kompromiss zwischen Vollständigkeit und effizientem Speicherplatzmanagement dar.\\
 Das System soll folgende Daten speichern:
 \begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
@@ -64,12 +64,12 @@ Das System soll folgende Daten speichern:
 	\hline
 \end{longtable}
 
-\section{Anforderungen an die Statistiken}
+\section{Anforderungen an die Statistiken} \label{sec:Anforderungen_Statistik}
 Das System muss in der Lage sein, Statistiken generieren und speichern zu können. Diese sollen für die Evaluation verwendet werden. Zu jedem Evaluationskriterium (siehe \ref{tab:Kriterien}) soll eine Statistik erstellt werden. 
 
 \section{Anforderungen an die Evaluation} \label{sec:Anforderungen_an_die_Evaluation}
-Bei der Evaluation soll der optimalste Agent für jedes Evaluationskriterium ermittelt werden.
-Einige dieser Kriterien stammen aus der verwendeten Literatur \cite{Autonomous_Agents_in_Snake_Game_via_DRL} und \cite{UAV} wie z.B. die Performance, anderen ergeben sich aus den zu speichernden Daten.
+Bei der Evaluation soll der optimale Agent für jedes Evaluationskriterium ermittelt werden.
+Das Kriterien der Performance wurde von verwendeten Literatur \cite{Autonomous_Agents_in_Snake_Game_via_DRL} und \cite{UAV} übernommen, anderen ergeben sich aus den zu speichernden Daten.
 Die einzelnen Kriterien lauten:
 \begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
 	\caption{Evaluationskriterien}
@@ -85,6 +85,7 @@ Die einzelnen Kriterien lauten:
 	\hline
 	Robustheit & Welcher Agent kann in einer modifizierten Umgebung das größte Performance erreichen? In Bezug auf Snake bedeutet dies: Welcher Agent ist in der Lage, auf einem größeren bzw. kleineren Spielfeld die meisten Äpfel zu fressen? Auch die Robustheit ist bei Real-World-Applikationen ein wichtiger Faktor, da sich unbemannte Drohne auch in unbekannten Umgebungen zurechtfinden müssen.\\
 	\hline
-	Siegrate & Welcher Agent schafft die Spiele mit einem Sieg zu beenden? Die Siegrate gibt Aufschluss darüber, ob die angelernte Aufgabe vollständig gelöst werden kann. Sie ist weiterhin ein wichtiger Faktor für das Beenden des Trainings.\\
+	Siegrate & Welcher Agent schafft die Spiele mit einem Sieg zu beenden? Die Siegrate gibt Aufschluss darüber, ob die angelernte Aufgabe vollständig gelöst werden kann (siehe \ref{sec:Snake}). Im Gegensatz zur Performance gibt die Siegrate die Fähigkeit zur Konvergenz an.
+	Sie ist weiterhin ein wichtiger Faktor für das Beenden des Trainings.\\
 	\hline
 \end{longtable}
