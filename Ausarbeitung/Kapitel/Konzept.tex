@@ -207,12 +207,11 @@ Eine genaue Darstellung der Aktionsbestimmung befindet sich in Abbildung \ref{fi
 	\caption[DQN-Aktionsbestimmung]{Darstellung der Aktionsbestimmung des DQN-Agent.}
 	\label{fig:DQN-Aktionsbestimmung}
 \end{figure}
-
 Ist der Zufallswert größer als den momentane Epsilon-Wert, so wird die Aktion durch das Q-Network bestimmt. Anderenfalls wird eine zufällige Aktion ausgewählt. Die Bestimmung der Aktion durch das Q-Network geschieht dabei wie folgt:\\
 Die around\_view (AV) und die scalar\_obs (SO) werden durch das Q-Network, entsprechende der Ausführungen in Abschnitt \ref{sec:Konzept_Netzstruktur}, geleitet. Dieses gibt einen Tensor der Größe drei wieder, welcher die Q-Values der Aktionen turn left (0), turn right (1) und do nothing (2) beinhaltet.
 Es wird daraufhin die Aktion gewählt, welche dem Index des größten Q-Values entspricht.\\
 Sei (0.32, -0.11, 0.45) ein Tensor, welcher vom Q-Network zurückgegeben wurde, dann würde no nothing (2) gewählt werden, da 0.45 der größte Q-Value ist und dieser an Stelle 2 steht.\\
-Die oben beschriebene Prozedur stellt den Aktionsauswahlprozess während des Trainings dar. Während Testläufen, wird die Aktion immer durch das Q-Network bestimmt.
+Die oben beschriebene Prozedur stellt den Aktionsauswahlprozess während des Trainings dar. Während Testläufen, wird die Aktion immer durch das Q-Network bestimmt (siehe Abschnitt \ref{sec:Implementierung_act_DQN}).
 
 \subsubsection{Lernprozess} \label{sec:Konzept_Lernprozess_DQN}
 Der Lernprozess stellt sich wie folgt dar:\\

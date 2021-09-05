@@ -19,7 +19,8 @@
 \contentsline {figure}{\numberline {5.10}{\ignorespaces PPO-Agent}}{43}{figure.5.10}%
 \contentsline {figure}{\numberline {5.11}{\ignorespaces Agenten}}{45}{figure.5.11}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Package Struktur}}{50}{figure.6.1}%
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Sequenzdiagram}}{51}{figure.6.1}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Ablaufdiagramm der action Methode}}{52}{figure.6.2}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {7.1}{\ignorespaces Baseline Vergleich Performance}}{65}{figure.7.1}%
 \contentsline {figure}{\numberline {7.2}{\ignorespaces Baseline Vergleich Siegrate}}{67}{figure.7.2}%
