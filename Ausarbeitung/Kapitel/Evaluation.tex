@@ -15,27 +15,26 @@ Eine vermutliche Erklärung warum die Agenten des DQN Algorithmus keine guten Le
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.4517]{Abbildungen/Evaluation/performance-rate_baseline_01.png}
-	\includegraphics[scale=0.4515]{Abbildungen/Evaluation/performance-rate_baseline_02.png}
-	\caption[Baseline Vergleich Performance]{Baseline Vergleich eins (oben) und zwei (unten) der Performance}
+	\caption[Baseline Vergleich Performance]{Baseline Vergleich der gemittelten Performance.}
 	\label{fig:Baseline_01_performance}
 \end{figure}
 Besonders die Leistungen der PPO Agenten PPO-03 und PPO-01 konnten, in den Vergleichen, überzeugen. Diese beiden Agenten waren ebenfalls die einzigen, welche es geschafft haben den Trainingsverlauf vorzeitig, mit einer Siegrate von 60\%, abzubrechen. 
 Der PPO-03 kann dabei besonders mit seinem schnellen Lernerfolg punkten, wohingegen der PPO-01 mit seiner Stetigkeit überzeugen kann.
-\begin{longtable}[h]{|p{2.7cm}|p{3cm}|p{3cm}|p{2cm}|p{2cm}|}
+\begin{longtable}[h]{|p{2.7cm}|p{4.5cm}|p{4cm}|}
 	\hline
-	Agent & Apfel-durchschnitt-BV-1 & Apfel-durchschnitt-BV-2 & Varianz-BV-1 & Varianz-BV-2 \\
+	Agent & Apfel-durchschnitt & Standardabweichung \\
 	\hline
-	DQN-01 & 18.493 & 17.069 & 15.817 & 19.526 \\
+	DQN-01 & 17.7812 & 2.9577 \\
 	\hline
-	DQN-02 & 27.876 & 24.969 & 44.968 & 30.306 \\
+	DQN-02 & 26.4226 & 4.3482 \\
 	\hline
-	DQN-03 & 25.410 & 25.490 & 45.609 & 46.872 \\
+	DQN-03 & 25.4506 & 4.8280 \\
 	\hline
-	PPO-01 & 49.854 & 42.201 & 614.484 & 794.192 \\
+	PPO-01 & 44.4544 & 19.6957 \\
 	\hline
-	PPO-02 & 41.002 & 36.463 & 171.257 & 369.649 \\
+	PPO-02 & 38.7325 & 11.5756 \\
 	\hline
-	PPO-03 & 53.975 & 49.084 & 302.203 & 565.363\\
+	PPO-03 & 46.4268 & 14.0280 \\
 	\hline
 \caption{Testdatenauswertung der Performance}
 \label{tab:Evaluation_Testdaten_Performance} 
@@ -48,15 +47,15 @@ Aufgrund der erzielten Performance dieser PPO Agenten ist daher festzustellen, d
 Die PPO Agenten PPO-03 und PPO-01 besitzen die besten Siegraten während des Trainings (siehe Abbildung \ref{fig:Baseline_winrate}). 
 Die DQN Agenten sind nicht in der Lage gewesen, Siege zu erreichen und fallen daher aus der Betrachtung heraus.\\
 Der PPO-02 zeigt eine geringe Siegrate, trotz ähnlicher Performances zu den Agenten PPO-01 und PPO-03 (siehe Abbildung \ref{fig:Baseline_01_performance}).
-\begin{longtable}[h]{|p{3.7cm}|p{4cm}|p{4cm}|}
+\begin{longtable}[h]{|p{3.7cm}|p{4.5cm}|p{4.5cm}|}
 	\hline
-	Agent & Siegraten-durchschnitt-BV-1 & Siegraten-durchschnitt-BV-2 \\
+	Agent & Siegraten-durchschnitt & Standardabweichung \\
 	\hline
-	PPO-01 & 0.7654 & 0.626 \\
+	PPO-01 & 0.6759 & 0.33306 \\
 	\hline
-	PPO-02 & 0.099 & 0.086  \\
+	PPO-02 & 0.0926 & 0.20478 \\
 	\hline
-	PPO-03 & 0.668 & 0.662  \\
+	PPO-03 & 0.3316 & 0.32751 \\
 	\hline
 	\caption{Testdatenauswertung der Baseline Siegrate}
 	\label{tab:Evaluation_Testdaten_Winrate} 
@@ -65,27 +64,26 @@ Auch die Testdaten in der Tabelle \ref{tab:Evaluation_Testdaten_Winrate}, zeigt,
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.4517]{Abbildungen/Evaluation/win-rate_baseline_01.png}
-	\includegraphics[scale=0.4515]{Abbildungen/Evaluation/win-rate_baseline_02.png}
-	\caption[Baseline Vergleich Siegrate]{Baseline Vergleich eins (oben) und zwei (unten) der Siegrate}
+	\caption[Baseline Vergleich Siegrate]{Baseline der gemittelten Siegrate}
 	\label{fig:Baseline_winrate}
 \end{figure}
 
 \subsubsection{Effizienz}
-\begin{longtable}[h]{|p{3.5cm}|p{3.0cm}|p{3.0cm}|}
+\begin{longtable}[h]{|p{3.5cm}|p{4.0cm}|}
 	\hline
-	Agent & Effizienz-durchschnitt-BV-1 & Effizienz-durchschnitt-BV-2  \\
+	Agent & Effizienz-durchschnitt \\
 	\hline
-	DQN-01 & 0.144 & 0.154  \\
+	DQN-01 & 0.14647 \\
 	\hline
-	DQN-02 & 0.132 & 0.138  \\
+	DQN-02 & 0.13269 \\
 	\hline
-	DQN-03 & 0.129 & 0.133  \\
+	DQN-03 & 0.12834 \\
 	\hline
-	PPO-01 & 0.077 & 0.069 \\
+	PPO-01 & 0.08786 \\
 	\hline
-	PPO-02 & 0.114 & 0.090 \\
+	PPO-02 & 0.10438 \\
 	\hline
-	PPO-03 & 0.097 & 0.075 \\
+	PPO-03 & 0.09661 \\
 	\hline
 	\caption{Testdatenauswertung der Baseline Effizienz}
 	\label{tab:Evaluation_Testdaten_Effizienz} 
@@ -98,8 +96,7 @@ Die Tabelle \ref{tab:Evaluation_Testdaten_Effizienz} unterstützt die Trainingse
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.4517]{Abbildungen/Evaluation/effizienz-rate_baseline_01.png}
-	\includegraphics[scale=0.4515]{Abbildungen/Evaluation/effizienz-rate_baseline_02.png}
-	\caption[Baseline Vergleich Effizienz]{Baseline Vergleich eins (oben) und zwei (unten) der Effizienz}
+	\caption[Baseline Vergleich Effizienz]{Baseline Vergleich der gemittelten Effizienz}
 	\label{fig:Baseline_Effizienz}
 \end{figure}
 

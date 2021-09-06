@@ -89,56 +89,55 @@
 \contentsline {section}{\numberline {6.3}DQN}{52}{section.6.3}%
 \contentsline {subsection}{\numberline {6.3.1}Q-Network}{53}{subsection.6.3.1}%
 \contentsline {subsection}{\numberline {6.3.2}Memory}{53}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}DQN-Agent}{53}{subsection.6.3.3}%
-\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{53}{subsubsection*.68}%
+\contentsline {subsection}{\numberline {6.3.3}Agent}{53}{subsection.6.3.3}%
+\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{54}{subsubsection*.68}%
 \contentsline {subsubsection}{\nonumberline Trainingsroutine}{54}{subsubsection*.70}%
 \contentsline {section}{\numberline {6.4}PPO}{55}{section.6.4}%
 \contentsline {subsection}{\numberline {6.4.1}Actor und Critic}{55}{subsection.6.4.1}%
 \contentsline {subsection}{\numberline {6.4.2}ActorCritic}{56}{subsection.6.4.2}%
 \contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{56}{subsubsection*.72}%
-\contentsline {subsubsection}{\nonumberline Evaluate Methode}{56}{subsubsection*.74}%
+\contentsline {subsubsection}{\nonumberline Evaluate Methode}{57}{subsubsection*.74}%
 \contentsline {subsection}{\numberline {6.4.3}Memory}{57}{subsection.6.4.3}%
-\contentsline {subsection}{\numberline {6.4.4}Agent}{57}{subsection.6.4.4}%
-\contentsline {subsubsection}{\nonumberline Learn Methode}{57}{subsubsection*.76}%
-\contentsline {section}{\numberline {6.5}Train Methoden}{59}{section.6.5}%
+\contentsline {subsection}{\numberline {6.4.4}Agent}{58}{subsection.6.4.4}%
+\contentsline {subsubsection}{\nonumberline Learn Methode}{58}{subsubsection*.76}%
+\contentsline {section}{\numberline {6.5}Train Methoden}{60}{section.6.5}%
 \contentsline {subsection}{\numberline {6.5.1}Test Methoden}{61}{subsection.6.5.1}%
-\contentsline {section}{\numberline {6.6}Speicherung}{61}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Statistik}{62}{section.6.7}%
-\contentsline {chapter}{\numberline {7}Evaluation}{64}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Ergebnisevaluation der Vergleiche}{64}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}Evaluation der Baseline Vergleiche}{64}{subsection.7.1.1}%
-\contentsline {subsubsection}{\nonumberline Performance}{64}{subsubsection*.78}%
-\contentsline {subsubsection}{\nonumberline Siegrate}{66}{subsubsection*.80}%
-\contentsline {subsubsection}{\nonumberline Effizienz}{67}{subsubsection*.82}%
-\contentsline {subsubsection}{\nonumberline Robustheit}{68}{subsubsection*.84}%
-\contentsline {subsection}{\numberline {7.1.2}Evaluation der Optimized Vergleiche}{70}{subsection.7.1.2}%
-\contentsline {subsubsection}{\nonumberline Performance}{70}{subsubsection*.86}%
-\contentsline {subsubsection}{\nonumberline Siegrate}{71}{subsubsection*.88}%
-\contentsline {subsubsection}{\nonumberline Effizienz}{72}{subsubsection*.90}%
-\contentsline {subsubsection}{\nonumberline Robustheit}{72}{subsubsection*.92}%
-\contentsline {section}{\numberline {7.2}Anforderungsevaluation}{73}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Anforderungsevaluation der Environment}{73}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}Anforderungsevaluation der Agenten}{74}{subsection.7.2.2}%
-\contentsline {subsection}{\numberline {7.2.3}Anforderungsevaluation an die Datenerhebung}{74}{subsection.7.2.3}%
-\contentsline {subsection}{\numberline {7.2.4}Anforderungen an die Statistiken}{75}{subsection.7.2.4}%
-\contentsline {subsection}{\numberline {7.2.5}Anforderungen an die Evaluation}{75}{subsection.7.2.5}%
-\contentsline {chapter}{\numberline {8}Fazit}{76}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Bewertung der Forschungsfrage}{76}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Ausblick}{77}{section.8.2}%
-\contentsline {chapter}{Literaturverzeichnis}{78}{section*.93}%
-\contentsline {chapter}{\numberline {A}Anhang}{80}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{80}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Tensoren}{81}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Convolution Neural Networks}{81}{section.A.3}%
-\contentsline {subsection}{\numberline {A.3.1}Convolutional Layer}{81}{subsection.A.3.1}%
-\contentsline {subsection}{\numberline {A.3.2}Pooling Layer}{83}{subsection.A.3.2}%
-\contentsline {subsection}{\numberline {A.3.3}Fully Connected Layer}{83}{subsection.A.3.3}%
-\contentsline {chapter}{\numberline {B}Anhang zur Implementierung}{84}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Around-View}{84}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Raytracing Distanzbestimmung}{85}{section.B.2}%
-\contentsline {section}{\numberline {B.3}AV-Network}{86}{section.B.3}%
-\contentsline {chapter}{\numberline {C}Anleitung}{88}{appendix.C}%
-\contentsline {section}{\numberline {C.1}PPO Train Startargumente}{88}{section.C.1}%
-\contentsline {section}{\numberline {C.2}DQN Train Startargumente}{89}{section.C.2}%
-\contentsline {section}{\numberline {C.3}Test Startargumente}{90}{section.C.3}%
+\contentsline {section}{\numberline {6.6}Statistik}{61}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Evaluation}{63}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Ergebnisevaluation der Vergleiche}{63}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Evaluation der Baseline Vergleiche}{63}{subsection.7.1.1}%
+\contentsline {subsubsection}{\nonumberline Performance}{63}{subsubsection*.78}%
+\contentsline {subsubsection}{\nonumberline Siegrate}{65}{subsubsection*.80}%
+\contentsline {subsubsection}{\nonumberline Effizienz}{65}{subsubsection*.82}%
+\contentsline {subsubsection}{\nonumberline Robustheit}{66}{subsubsection*.84}%
+\contentsline {subsection}{\numberline {7.1.2}Evaluation der Optimized Vergleiche}{68}{subsection.7.1.2}%
+\contentsline {subsubsection}{\nonumberline Performance}{68}{subsubsection*.86}%
+\contentsline {subsubsection}{\nonumberline Siegrate}{69}{subsubsection*.88}%
+\contentsline {subsubsection}{\nonumberline Effizienz}{70}{subsubsection*.90}%
+\contentsline {subsubsection}{\nonumberline Robustheit}{70}{subsubsection*.92}%
+\contentsline {section}{\numberline {7.2}Anforderungsevaluation}{71}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Anforderungsevaluation der Environment}{71}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}Anforderungsevaluation der Agenten}{72}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.2.3}Anforderungsevaluation an die Datenerhebung}{72}{subsection.7.2.3}%
+\contentsline {subsection}{\numberline {7.2.4}Anforderungen an die Statistiken}{73}{subsection.7.2.4}%
+\contentsline {subsection}{\numberline {7.2.5}Anforderungen an die Evaluation}{73}{subsection.7.2.5}%
+\contentsline {chapter}{\numberline {8}Fazit}{74}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Bewertung der Forschungsfrage}{74}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Ausblick}{75}{section.8.2}%
+\contentsline {chapter}{Literaturverzeichnis}{76}{section*.93}%
+\contentsline {chapter}{\numberline {A}Anhang}{78}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{78}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Tensoren}{79}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Convolution Neural Networks}{79}{section.A.3}%
+\contentsline {subsection}{\numberline {A.3.1}Convolutional Layer}{79}{subsection.A.3.1}%
+\contentsline {subsection}{\numberline {A.3.2}Pooling Layer}{81}{subsection.A.3.2}%
+\contentsline {subsection}{\numberline {A.3.3}Fully Connected Layer}{81}{subsection.A.3.3}%
+\contentsline {chapter}{\numberline {B}Anhang zur Implementierung}{82}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Around-View}{82}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Raytracing Distanzbestimmung}{83}{section.B.2}%
+\contentsline {section}{\numberline {B.3}AV-Network}{84}{section.B.3}%
+\contentsline {chapter}{\numberline {C}Anleitung}{86}{appendix.C}%
+\contentsline {section}{\numberline {C.1}PPO Train Startargumente}{86}{section.C.1}%
+\contentsline {section}{\numberline {C.2}DQN Train Startargumente}{87}{section.C.2}%
+\contentsline {section}{\numberline {C.3}Test Startargumente}{88}{section.C.3}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

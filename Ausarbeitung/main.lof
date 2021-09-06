@@ -21,16 +21,17 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {6.1}{\ignorespaces Sequenzdiagram}}{51}{figure.6.1}%
 \contentsline {figure}{\numberline {6.2}{\ignorespaces Ablaufdiagramm der action Methode}}{52}{figure.6.2}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Ablaufdiagramm der Train Methode}}{60}{figure.6.3}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Baseline Vergleich Performance}}{65}{figure.7.1}%
-\contentsline {figure}{\numberline {7.2}{\ignorespaces Baseline Vergleich Siegrate}}{67}{figure.7.2}%
-\contentsline {figure}{\numberline {7.3}{\ignorespaces Baseline Vergleich Effizienz}}{68}{figure.7.3}%
-\contentsline {figure}{\numberline {7.4}{\ignorespaces Optimized Vergleich Performance}}{70}{figure.7.4}%
-\contentsline {figure}{\numberline {7.5}{\ignorespaces Optimized Vergleich Siegrate}}{72}{figure.7.5}%
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Baseline Vergleich Performance}}{64}{figure.7.1}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Baseline Vergleich Siegrate}}{65}{figure.7.2}%
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Baseline Vergleich Effizienz}}{66}{figure.7.3}%
+\contentsline {figure}{\numberline {7.4}{\ignorespaces Optimized Vergleich Performance}}{68}{figure.7.4}%
+\contentsline {figure}{\numberline {7.5}{\ignorespaces Optimized Vergleich Siegrate}}{70}{figure.7.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{82}{figure.A.1}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{83}{figure.A.2}%
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{80}{figure.A.1}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{81}{figure.A.2}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
