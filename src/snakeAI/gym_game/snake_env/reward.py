@@ -1,16 +1,19 @@
 import numpy as np
+import math
 
 
 class Reward:
     def __init__(self, snake_game):
         self.has_grown = False
         self.snakeGame = snake_game
+        self.snake_dist_old = 0
+        self.snake_len_old = 1
 
     @property
     def standard_reward(self):
-        if len(self.snakeGame.p.tail) == self.snakeGame.max_snake_length and self.snakeGame.p.done:
+        if len(self.snakeGame.p.tail) == self.snakeGame.max_snake_length and self.snakeGame.p.is_terminal:
             return 100
-        elif len(self.snakeGame.p.tail) != self.snakeGame.max_snake_length and self.snakeGame.p.done:
+        elif len(self.snakeGame.p.tail) != self.snakeGame.max_snake_length and self.snakeGame.p.is_terminal:
             return -10
         elif self.has_grown:
             return 2.5
@@ -19,8 +22,20 @@ class Reward:
 
     @property
     def optimized_reward(self):
-        len = self.snakeGame.max_snake_length
-        r_distance = 10 / np.linalg.norm(self.snakeGame.p.pos - np.array(self.snakeGame.apple)) * (self.snakeGame.p.snake_len / len)
-
-        r_timeout = (1 / len) * (self.snakeGame.p.inter_apple_steps / self.snakeGame.p.snake_len)
-        return r_distance - r_timeout
+        if len(self.snakeGame.p.tail) == self.snakeGame.max_snake_length and self.snakeGame.p.is_terminal:
+            return 100
+        elif len(self.snakeGame.p.tail) != self.snakeGame.max_snake_length and self.snakeGame.p.is_terminal:
+            return -10
+        elif self.has_grown:
+            return 2.5 * ((1 / 63) * self.snakeGame.p.snake_len + 1)
+        else:
+            delta_reward = 0
+            reward = -0.01
+            len_ = self.snakeGame.p.snake_len
+            dist = np.linalg.norm(self.snakeGame.p.pos - np.array(self.snakeGame.apple))
+            if self.snake_len_old > 1:
+                delta_reward = math.log((self.snake_len_old + self.snake_dist_old) /
+                                        (self.snake_len_old + dist), self.snake_len_old)
+            self.snake_dist_old = dist
+            self.snake_len_old = len_
+            return min(-0.001, max(reward + delta_reward, -0.02))

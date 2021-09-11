@@ -1,31 +1,22 @@
 import torch.nn as nn
 import torch as T
 
+from src.snakeAI.agents.common.av_net import AV_NET
+
 
 class CriticNetwork(nn.Module):
-    def __init__(self, scalar_in=41):
+    def __init__(self, SCALAR_IN=41):
         super(CriticNetwork, self).__init__()
-        self.av_net = nn.Sequential(
-            nn.Conv2d(in_channels=6, out_channels=8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-            nn.ReLU(),
-            nn.Conv2d(in_channels=8, out_channels=8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-            nn.ReLU(),
-            nn.ZeroPad2d((0, 1, 0, 1)),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Flatten(),
-            nn.Linear(392, 256),
-            nn.ReLU(),
-            nn.Linear(256, 128)
-        )
+        self.AV_NET = AV_NET()
 
-        self.critic_head = nn.Sequential(
-            nn.Linear(128 + scalar_in, 64),
+        self.CRITIC_TAIL = nn.Sequential(
+            nn.Linear(128 + SCALAR_IN, 64),
             nn.ReLU(),
             nn.Linear(64, 1),
         )
 
     def forward(self, av, scalar_obs):
-        av_out = self.av_net(av)
+        av_out = self.AV_NET(av)
         cat = T.cat((av_out, scalar_obs), dim=-1)
-        critic_out = self.critic_head(cat)
+        critic_out = self.CRITIC_TAIL(cat)
         return critic_out

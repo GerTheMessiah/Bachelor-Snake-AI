@@ -15,7 +15,7 @@ class Player:
     c_s: int
     c_h: int
     inter_apple_steps: int
-    done: bool
+    is_terminal: bool
 
     def player_reset(self, pos: np.ndarray):
         self.pos = pos
@@ -23,7 +23,7 @@ class Player:
         self.tail.append((pos[0], pos[1]))
         self.direction = randint(0, 3)
         self.inter_apple_steps = 0
-        self.done = False
+        self.is_terminal = False
 
     @property
     def apple_count(self):
@@ -40,12 +40,13 @@ class Player:
 
 class SnakeGame:
     def __init__(self, shape, has_gui):
-        self.ground = np.zeros((shape[0], shape[1]), dtype=np.int8)
-        pos = np.array((randint(0, shape[0] - 1), randint(0, shape[1] - 1)))
-        self.p = Player(pos=pos, tail=[(pos[0], pos[1])], direction=randint(0, 3), id=1, c_s=1, c_h=2,
-                        inter_apple_steps=0, done=False)
-        self.reward = Reward(self)
         self.shape = shape
+        self.ground = np.zeros((self.shape[0], self.shape[1]), dtype=np.int8)
+        pos = np.array((randint(0, self.shape[0] - 1), randint(0, self.shape[1] - 1)))
+        self.p = Player(pos=pos, tail=[(pos[0], pos[1])], direction=randint(0, 3), id=1, c_s=1, c_h=2,
+                        inter_apple_steps=0, is_terminal=False)
+        self.reward = Reward(self)
+
         self.has_gui = has_gui
         self.step_counter = 0
         self.ground[pos[0], pos[1]] = self.p.c_h
@@ -55,7 +56,7 @@ class SnakeGame:
 
     def action(self, action):
         if self.p.inter_apple_steps >= self.max_snake_length:
-            self.p.done = True
+            self.p.is_terminal = True
             return
 
         self.p.inter_apple_steps += 1
@@ -72,14 +73,14 @@ class SnakeGame:
         ########################## step ##########################
         self.p.pos[self.p.direction % 2] += -1 if self.p.direction % 3 == 0 else 1
         if not all(0 <= self.p.pos[i] < self.ground.shape[i] for i in range(2)):
-            self.p.done = True
+            self.p.is_terminal = True
             return
         self.p.tail.insert(0, (self.p.pos[0], self.p.pos[1]))
 
 
         # if has won return method
         if len(self.p.tail) == self.max_snake_length:
-            self.p.done = True
+            self.p.is_terminal = True
             return
 
         # if snake has eaten remove apple
@@ -94,22 +95,20 @@ class SnakeGame:
             self.reward.has_grown = False
         # prof lost
         if len(self.p.tail) != len(set(self.p.tail)):
-            self.p.done = True
+            self.p.is_terminal = True
             return
 
-        if not self.p.done:
+        if not self.p.is_terminal:
             for s in self.p.tail:
                 self.ground[s[0], s[1]] = self.p.c_s
             self.ground[self.p.tail[-1][0], self.p.tail[-1][1]] = -1
             self.ground[self.p.tail[0][0], self.p.tail[0][1]] = self.p.c_h
 
-    def evaluate(self, reward_function="standard"):
-        if reward_function == "standard":
-            return self.reward.standard_reward
-        elif reward_function == "optimized":
+    def evaluate(self, reward_function=None):
+        if reward_function is "A":
             return self.reward.optimized_reward
         else:
-            raise ValueError("Wrong reward function.")
+            return self.reward.standard_reward
 
     def view(self):
         if self.has_gui:
@@ -129,8 +128,13 @@ class SnakeGame:
             return None
         return apple
 
-    def reset_snake_game(self):
-        self.ground.fill(0)
+    def reset_snake_game(self, new_shape=None):
+        if new_shape is not None:
+            self.shape = new_shape
+            del self.ground
+            self.ground = np.zeros((self.shape[0], self.shape[1]), dtype=np.int8)
+        else:
+            self.ground.fill(0)
         pos = np.array((randint(0, self.shape[0] - 1), randint(0, self.shape[1] - 1)))
         self.p.player_reset(pos)
         self.step_counter = 0
@@ -145,5 +149,5 @@ class SnakeGame:
         return self.ground.size
 
     @property
-    def is_done(self):
-        return self.p.done
+    def is_terminal(self):
+        return self.p.is_terminal

@@ -9,15 +9,15 @@ class SnakeEnv(gym.Env):
         self.has_gui = has_gui
         self.game = SnakeGame(self.shape, self.has_gui)
 
-    def step(self, action, reward_function="standard"):
+    def step(self, action, reward_function=None):
         self.game.action(action=action)
         around_view, scalar_obs = self.game.observe()
         reward = self.game.evaluate(reward_function=reward_function)
-        done = self.game.is_done
-        return around_view, scalar_obs, reward, done, self.game.max_snake_length == self.game.p.apple_count + 1  # has won
+        is_terminal = self.game.is_terminal
+        return around_view, scalar_obs, reward, is_terminal, self.game.max_snake_length == self.game.p.apple_count + 1  # has won
 
-    def reset(self):
-        self.game.reset_snake_game()
+    def reset(self, new_shape=None):
+        self.game.reset_snake_game(new_shape=new_shape)
         around_view, scalar_obs = self.game.observe()
         return around_view, scalar_obs
 
@@ -29,7 +29,7 @@ class SnakeEnv(gym.Env):
 
     @property
     def has_ended(self):
-        return self.game.p.done
+        return self.game.p.is_terminal
 
     @property
     def apple_count(self):

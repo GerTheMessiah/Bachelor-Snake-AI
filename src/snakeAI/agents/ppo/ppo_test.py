@@ -4,10 +4,9 @@ from os import environ
 from pathlib import Path
 from statistics import median, mean
 from time import time_ns
-import torch as T
 
 from src.common.stop_game_exception import StopGameException
-from src.common.utils import print_progress, save
+from src.common.utils import print_progress, save, get_random_game_size
 
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 
@@ -15,34 +14,36 @@ from src.snakeAI.agents.ppo.ppo import Agent
 from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 
-def test_ppo(MODEL_PATH, N_ITERATIONS, BOARD_SIZE=(8, 8), HAS_GUI=False, STATISTIC_RUN_NUMBER=1, ALG_TYPE="PPO",
-             AGENT_NUMBER=1, GPU=True):
+def test_ppo(MODEL_PATH, N_ITERATIONS, BOARD_SIZE=(8, 8), HAS_GUI=False, STATISTIC_RUN_NUMBER=1, AGENT_NUMBER=1,
+             RUN_TYPE="baseline", RAND_GAME_SIZE=False, OPTIMIZATION=None, GPU=True):
     try:
+        print(fr"{RUN_TYPE}-run-0{STATISTIC_RUN_NUMBER}\PPO-0{AGENT_NUMBER}-rgs{RAND_GAME_SIZE}-opt-{OPTIMIZATION}")
         start_time = time_ns()
         agent = Agent(GPU=GPU)
         agent.load_model(MODEL_PATH=MODEL_PATH)
         game = SnakeEnv(BOARD_SIZE, HAS_GUI)
-        scores, apples, wins, dtime, steps_list, dq = [], [], [], [], [], deque(maxlen=100)
+        scores, apples, wins, dtime, steps_list, play_ground_size, dq = [], [], [], [], [], [], deque(maxlen=100)
         iter_time = time_ns()
         for i in range(1, N_ITERATIONS + 1):
-            around_view, cat_obs = game.reset()
             score = 0
+            av, scalar_obs = game.reset(new_shape=get_random_game_size(i - 1) if RAND_GAME_SIZE else None)
             while not game.has_ended:
-                around_view, cat_obs, action = agent.old_policy.act_test(around_view, cat_obs)
-                around_view_new, cat_obs_new, reward, done, won = game.step(action)
+                av, scalar_obs, action = agent.OLD_POLICY.act_test(av, scalar_obs)
+                av_, scalar_obs_, reward, done, won = game.step(action)
                 score += reward
 
                 if game.has_gui:
                     game.render()
 
-                around_view = around_view_new
-                cat_obs = cat_obs_new
+                av = av_
+                scalar_obs = scalar_obs_
 
             scores.append(score)
             wins.append(won)
             apples.append(game.apple_count)
             dtime.append(datetime.now().strftime("%H:%M:%S"))
             steps_list.append(game.game.step_counter)
+            play_ground_size.append(game.game.shape)
 
             t = time_ns()
 
@@ -54,15 +55,17 @@ def test_ppo(MODEL_PATH, N_ITERATIONS, BOARD_SIZE=(8, 8), HAS_GUI=False, STATIST
             suffix_2 = f" | A_avg: {round(mean(apples[-5:]), 2)} | S_avg: {round(mean(scores[-5:]), 2)}"
             print_progress(i, N_ITERATIONS, suffix=suffix_1 + suffix_2)
 
-        save(ALG_TYPE, AGENT_NUMBER, STATISTIC_RUN_NUMBER, "test", agent, dtime, steps_list, apples, scores, wins)
+        save("PPO", AGENT_NUMBER, STATISTIC_RUN_NUMBER, "test", RUN_TYPE, RAND_GAME_SIZE, agent, dtime, steps_list,
+             apples, scores, wins, play_ground_size=play_ground_size, optimization=OPTIMIZATION)
 
     except (KeyboardInterrupt, StopGameException):
         repeat = True
-        MODEL_DIR_PATH = str(Path(__file__).parent.parent.parent.parent) + f"\\resources\\statistic-run-0{STATISTIC_RUN_NUMBER}"
+        MODEL_DIR_PATH = str(Path(__file__).parent.parent.parent.parent) + f"\\resources\\{RUN_TYPE}-run-0{STATISTIC_RUN_NUMBER}"
         while repeat:
             answer = input(f"\nDo you want to save the files in a new Folder at {MODEL_DIR_PATH}? y/n \n")
             if answer == 'y':
-                save(ALG_TYPE, AGENT_NUMBER, STATISTIC_RUN_NUMBER, "test", agent, dtime, steps_list, apples, scores, wins)
+                save("PPO", AGENT_NUMBER, STATISTIC_RUN_NUMBER, "test", RUN_TYPE, RAND_GAME_SIZE, agent, dtime,
+                     steps_list, apples, scores, wins, play_ground_size=play_ground_size, optimization=OPTIMIZATION)
                 repeat = False
             elif answer == 'n':
                 repeat = False
@@ -71,6 +74,7 @@ def test_ppo(MODEL_PATH, N_ITERATIONS, BOARD_SIZE=(8, 8), HAS_GUI=False, STATIST
 
 
 if __name__ == '__main__':
-    MODEL_PATH = r"C:\Users\Lorenz Mumm\PycharmProjects\Bachelor-Snake-AI\src\resources\statistic-run-01\PPO-03-train.model"
-    test_ppo(MODEL_PATH=MODEL_PATH, N_ITERATIONS=30000, BOARD_SIZE=(8, 8), HAS_GUI=True, STATISTIC_RUN_NUMBER=1,
-             ALG_TYPE="PPO", AGENT_NUMBER=3, GPU=True)
+    MODEL_PATH = r"C:\Users\Lorenz Mumm\PycharmProjects\Bachelor-Snake-AI\src\resources\optimized-run-02\PPO-02-opt-b-train.model"
+    print(MODEL_PATH)
+    test_ppo(MODEL_PATH=MODEL_PATH, N_ITERATIONS=5_000, BOARD_SIZE=(8, 8), HAS_GUI=False, STATISTIC_RUN_NUMBER=2,
+             AGENT_NUMBER=2, RUN_TYPE="optimized", RAND_GAME_SIZE=True, OPTIMIZATION="B", GPU=True)

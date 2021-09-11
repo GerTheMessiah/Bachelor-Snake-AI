@@ -1,8 +1,10 @@
-import os
-from pathlib import Path
+import sys
 
+from src.statistic.statisticTool import load_agents
 
 if __name__ == '__main__':
-    dir_path = str(Path(__file__).parent.parent.parent.parent) + "\\statistics\\"
-    number_of_dir = len(next(os.walk(dir_path))[1])
-    os.mkdir(dir_path + f"statistic-run-{number_of_dir}")
+    args = sys.argv
+    params = {"STATISTIC_RUN_NUMBER": int(args[1]), "RUN_TYPE": str(args[2]), "USE_CASE": str(args[3]),
+              "AGENT_LIST": list(args[4])}
+    load_agents(**params)
+
