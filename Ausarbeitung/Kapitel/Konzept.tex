@@ -4,10 +4,8 @@ Ziel dieses Abschnittes ist es, das Vorgehen und alle weiteren dazu benötigten 
 
 \section{Vorgehen} \label{sec:Konzept_Vorgehen}
 Das Vorgehen lässt sich am besten mithilfe eines Flussdiagramms darstellen, in welchem die einzelnen Schritte des Vergleichs visuell dargestellt werden.\\
-Zu Beginn sei erwähnt, dass die Annahme getroffen wird, dass alle für die Vergleiche benötigten Komponenten, wie z.B. Environment, Agenten und statistische Analysekomponenten, entsprechende der Anforderungen implementiert sind (siehe Abschnitt \ref{chap:Anforderungen}).\\
-Als erstes werden die Agenten erstellt (siehe Abbildung \ref{fig:Vorgehen}). Für diese diesen Zweck werden mehrere Klassen mit verschiedenen Hyperparametern generiert bzw. ausgewählt.
-Mit dieser Baseline-Agenten-Menge werden nun die weiteren Vergleiche durchgeführt.\\
-Zu Beginn werden mithilfe der Evaluationskriterien die zwei optimalen Baseline Agenten bestimmt. Auf diese sollen die Optimierungen angewendet werden. 
+Als Erstes werden die Agenten erstellt (siehe Abbildung \ref{fig:Vorgehen}), indem mehrere Instanzen der Agent Klasse von DQN und PPO mit verschiedenen Hyperparametern generiert werden.\\
+Mit dieser Baseline-Agenten-Menge werden nun die weiteren Baseline Vergleiche durchgeführt. Dazu wird, für jedes Evaluationskriterium, der jeweils beste Baseline Agenten bestimmt. Die Baseline Winner Agenten treten daraufhin -------------
 Aufgrund der Tatsache, dass das Anwenden der Optimierungen viel Zeit und Ressourcen bindet, sollen diese nur auf die vielversprechendsten Agenten angewendet werden.\\
 Der verwendete Algorithmus besitzt dabei keinen Einfluss auf die Auswahl der Agenten, sodass auch zwei DQN oder PPO Agenten optimiert werden können. Genauere Details zur Durchführung der Baseline Vergleiche finden sich im Abschnitt \ref{sec:Konzept_Datenerhebung}.
 \begin{figure}[H]
@@ -17,7 +15,7 @@ Der verwendete Algorithmus besitzt dabei keinen Einfluss auf die Auswahl der Age
 	\label{fig:Vorgehen}
 \end{figure}
 Basierend auf den beiden Sieger Agenten (Baseline Winner Agent-01 und Baseline Winner Agent-02) der Baseline Vergleiche (siehe Abbildung \ref{fig:Vorgehen}), werden nun die Optimierungen angewendet. 
-Mit diesen optimierten Agenten (Agent-01 Optimierung A bis Agent-02 Optimierung B) werden nun die Vergleiche bezüglich jedes einzelnen Evaluationskriteriums (siehe Tabelle \ref{tab:Kriterien}) erneut wiederholt.\\
+Mit diesen optimierten Agenten (Agent-01 Optimierung A bis Agent-02 Optimierung B) werden nun die Vergleiche bezüglich jedes einzelnen Evaluationskriteriums (siehe Tabelle \ref{tab:Kriterien}) erneut wiederholt.
 Im letzten Schritt soll in der gesamt Evaluation der optimale Agent für jedes Evaluationskriterium ermittelt werden. Dabei können dies auch Baseline Agenten sein. Es ist nicht zwingend zugesichert das optimierte Agenten die optimalsten dies.
 
 \section{Environment} \label{sec:Konzept_Environment}
