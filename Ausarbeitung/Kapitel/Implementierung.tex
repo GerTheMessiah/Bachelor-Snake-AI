@@ -108,7 +108,7 @@ Des Weiteren verbindet die ActorCritic Klasse das Actor-NN und Critic-NN miteina
 \subsection{Actor und Critic} \label{sec:Implementierung_Actor_and_Critic}
 Der Actor bzw. Critic wird durch die Klasse ActorNetwork bzw. CriticNetwork aufgespannt, welche von der Module Klasse des PyTorch Frameworks erbt. Damit lassen sich ActorNetwork und CriticNetwork als NN-Baustein benutzen.
 Neben dem AV-Network (siehe Abschnitt \ref{sec:Implementierung_AV_Network} und \ref{sec:Konzept_Netzstruktur}) wird noch der Actor-Tail bzw. Critic-Tail definiert. Dabei handelt es sich um das NN, welches die Ausgabe vom AV-Network mit der SO verbindet und aus diesem Ergebnis eine Wahrscheinlichkeitsverteilung über alle Aktionen bzw. ein Value bestimmt. 
-Exemplarisch wird die Klasse ActorNetworks im Code Listing \ref{code:ActorNetwork} dargestellt. Analog verhält es sich beim Critic, mit der Ausnahme, dass dieser nicht Tensoren der Länge drei sondern der Länge eins ausgibt. Diese stellen die Baseline Estimates bzw. Value Werte (siehe \ref{sec:Baseline_Estimate}) dar.
+Exemplarisch wird die Klasse ActorNetworks im Code Listing \ref{code:ActorNetwork} dargestellt. Analog verhält es sich beim Critic, mit der Ausnahme, dass dieser nicht Tensoren der Länge drei sondern der Länge eins ausgibt. Diese stellen die Baseline Estimates bzw. Value Werte (siehe \ref{subsubsec:Grundlagen_Baseline_Estimate}) dar.
 \begin{python}
 class ActorNetwork(nn.Module):
 	def __init__(self, OUTPUT=3, SCALAR_IN=41):
@@ -176,7 +176,7 @@ Die Agent Klasse implementiert die Lernmethode und verwaltet das Memory und zwei
 Als erstes wird überprüft, ob das Memory mehr als 64 Erfahrungen besitzt. Sollte dies nicht der Fall sein, so wird die Methode terminiert. 
 Die bereits gespeicherten Erfahrungen bleiben erhalten.
 Ansonsten werden die Daten aus dem Memory mit der get\_data Methode entnommen.
-Danach werden die Rewards mit der generate\_rewards Methode diskontiert (abgezinst), (siehe Code Listing \ref{code:Diskontierung_Rewards} und Abschnitt \ref{sec:Konzept_Lernprozess_PPO}). Diese implementiert die Funktionalität, welche im Abschnitt \ref{sec:Return} dargestellt wird.
+Danach werden die Rewards mit der generate\_rewards Methode diskontiert (abgezinst), (siehe Code Listing \ref{code:Diskontierung_Rewards} und Abschnitt \ref{sec:Konzept_Lernprozess_PPO}). Diese implementiert die Funktionalität, welche im Abschnitt \ref{subsubsec:Grundlagen_Return} dargestellt wird.
 \begin{python}
 def generate_reward(self, rewards_in, terminals_in):
 	rewards = []

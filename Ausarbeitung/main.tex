@@ -19,7 +19,7 @@
 \newcommand*{\department}[1]{\def\department{#1}}
 \newcommand*{\ort}[1]{\def\ort{#1}}
 \newcommand*{\datum}[1]{\def\datum{#1}}
-
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{(siehe \autoref*{#1})}}
 %---------------------------------
 %---Sprache, Schrift & Encoding---
 %---------------------------------
@@ -78,19 +78,20 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{graphicx}
+\graphicspath{{./Abbildungen/}{./Abbildungen/Implementierung/}{./Abbildungen/Grundlangen/}}
 \usepackage{color}
 \usepackage{transparent}
 \usepackage{enumerate}
 \usepackage{longtable}
 \usepackage{wrapfig}
 \usepackage{float}
-%\usepackage[inkscape={C:/Program Files/Inkscape/bin/inkscape -z -C}]{svg}
+\usepackage[inkscape=true, inkscapelatex=true]{svg}
+\svgpath{{./Abbildungen/}{./Abbildungen/Grundlagen/}{./Abbildungen/Konzept/}}
+\svgsetup{inkscapeexe="C:/Program Files/Inkscape/bin/inkscape", inkscapepath={svgpath}}
 \restylefloat{figure}
-\graphicspath{{./Abbildungen/}, {./Abbildungen/Implementierung/}}
 
-\usepackage[
-	textsize=tiny, %kleinere Schrift als die default-Größe in den Notizen, damit mehr reinpasst
-]{todonotes} %Notizen im Text mit
+
+\usepackage[textsize=tiny]{todonotes} %Notizen im Text mit
 
 %------------------
 %---Links & URLs---

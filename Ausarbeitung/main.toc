@@ -8,123 +8,124 @@
 \contentsline {chapter}{\numberline {2}Grundlagen}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Game of Snake}{3}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Reinforcement Learning}{4}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Vokabular}{5}{subsection.2.2.1}%
-\contentsline {subsubsection}{\nonumberline Agent}{5}{subsubsection*.6}%
+\contentsline {subsection}{\numberline {2.2.1}Vokabular}{4}{subsection.2.2.1}%
+\contentsline {subsubsection}{\nonumberline Agent}{4}{subsubsection*.6}%
 \contentsline {subsubsection}{\nonumberline Environment}{5}{subsubsection*.8}%
 \contentsline {subsubsection}{\nonumberline Action}{5}{subsubsection*.10}%
-\contentsline {subsubsection}{\nonumberline Observation}{6}{subsubsection*.12}%
+\contentsline {subsubsection}{\nonumberline Observation}{5}{subsubsection*.12}%
 \contentsline {subsubsection}{\nonumberline Reward}{6}{subsubsection*.14}%
-\contentsline {subsubsection}{\nonumberline State}{7}{subsubsection*.16}%
-\contentsline {subsubsection}{\nonumberline Policy}{7}{subsubsection*.18}%
-\contentsline {subsubsection}{\nonumberline Value}{7}{subsubsection*.20}%
-\contentsline {subsection}{\numberline {2.2.2}Funktionsweise}{8}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Arten von RL-Verfahren}{8}{subsection.2.2.3}%
-\contentsline {subsubsection}{\nonumberline Model-free und Model-based}{9}{subsubsection*.22}%
-\contentsline {subsubsection}{\nonumberline Policy-Based und Value-Based Verfahren}{9}{subsubsection*.24}%
-\contentsline {subsubsection}{\nonumberline On-Policy und Off-Policy Verfahren}{10}{subsubsection*.26}%
-\contentsline {section}{\numberline {2.3}Proximal Policy Optimization}{10}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Actor-Critic Modell}{11}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}PPO Training Objective Function}{11}{subsection.2.3.2}%
-\contentsline {subsubsection}{\nonumberline Formelelemente}{12}{subsubsection*.28}%
-\contentsline {subsubsection}{\nonumberline Return}{13}{subsubsection*.30}%
-\contentsline {subsubsection}{\nonumberline Baseline Estimate}{13}{subsubsection*.32}%
-\contentsline {subsubsection}{\nonumberline Advantage}{13}{subsubsection*.34}%
-\contentsline {subsubsection}{\nonumberline Probability Ratio}{14}{subsubsection*.36}%
-\contentsline {subsubsection}{\nonumberline Surrogate Objectives}{14}{subsubsection*.38}%
-\contentsline {subsubsection}{\nonumberline Zusammenfassung der PPO Training Objective Function}{15}{subsubsection*.40}%
-\contentsline {subsection}{\numberline {2.3.3}PPO - Algorithmus}{16}{subsection.2.3.3}%
-\contentsline {section}{\numberline {2.4}Deep Q-Network}{16}{section.2.4}%
-\contentsline {subsection}{\numberline {2.4.1}DQN - Algorithmus}{18}{subsection.2.4.1}%
-\contentsline {chapter}{\numberline {3}Anforderungen}{19}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Anforderungen an das Environment}{19}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Standardisierte Schnittstelle}{19}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Funktionalitäten}{19}{subsection.3.1.2}%
-\contentsline {subsubsection}{\nonumberline Aktionsausführung}{20}{subsubsection*.42}%
-\contentsline {subsubsection}{\nonumberline Reset}{20}{subsubsection*.44}%
-\contentsline {subsubsection}{\nonumberline Render}{20}{subsubsection*.46}%
-\contentsline {section}{\numberline {3.2}Anforderungen an die Agenten}{20}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Funktionalitäten}{20}{subsection.3.2.1}%
-\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{20}{subsubsection*.48}%
-\contentsline {subsubsection}{\nonumberline Lernen}{20}{subsubsection*.50}%
-\contentsline {subsection}{\numberline {3.2.2}Parametrisierung}{20}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Diversität der RL Algorithmen}{21}{subsection.3.2.3}%
-\contentsline {section}{\numberline {3.3}Anforderungen an die Datenerhebung}{21}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Mehrfache Datenerhebung}{21}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Datenspeicherung}{21}{subsection.3.3.2}%
-\contentsline {section}{\numberline {3.4}Anforderungen an die Statistiken}{22}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Anforderungen an die Evaluation}{22}{section.3.5}%
-\contentsline {chapter}{\numberline {4}Verwandte Arbeiten}{24}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Autonomous Agents in Snake Game via Deep Reinforcement Learning}{24}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Diskussion}{26}{subsection.4.1.1}%
-\contentsline {section}{\numberline {4.2}UAV Autonomous Target Search Based on Deep Reinforcement Learning in Complex Disaster Scene}{27}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Diskussion}{28}{subsection.4.2.1}%
-\contentsline {section}{\numberline {4.3}Zusammenfassung}{29}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Konzept}{30}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Vorgehen}{30}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Environment}{32}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Spiellogik}{32}{subsection.5.2.1}%
-\contentsline {subsubsection}{\nonumberline Spielablauf}{33}{subsubsection*.52}%
-\contentsline {subsubsection}{\nonumberline Reward}{35}{subsubsection*.54}%
-\contentsline {subsubsection}{\nonumberline Observation}{35}{subsubsection*.56}%
-\contentsline {subsubsection}{\nonumberline GUI}{37}{subsubsection*.58}%
-\contentsline {subsection}{\numberline {5.2.2}Schnittstelle}{37}{subsection.5.2.2}%
-\contentsline {section}{\numberline {5.3}Agenten}{38}{section.5.3}%
-\contentsline {subsection}{\numberline {5.3.1}Netzstruktur}{38}{subsection.5.3.1}%
-\contentsline {subsection}{\numberline {5.3.2}DQN}{40}{subsection.5.3.2}%
-\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{41}{subsubsection*.60}%
-\contentsline {subsubsection}{\nonumberline Lernprozess}{42}{subsubsection*.62}%
-\contentsline {subsection}{\numberline {5.3.3}PPO}{43}{subsection.5.3.3}%
-\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{43}{subsubsection*.64}%
-\contentsline {subsubsection}{\nonumberline Lernprozess}{44}{subsubsection*.66}%
-\contentsline {subsection}{\numberline {5.3.4}Vorstellung der zu untersuchenden Agenten}{45}{subsection.5.3.4}%
-\contentsline {section}{\numberline {5.4}Optimierungen}{46}{section.5.4}%
-\contentsline {subsection}{\numberline {5.4.1}Optimierung A - Joined Reward Function}{46}{subsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.4.2}Optimierung B - Anpassung der Lernrate}{47}{subsection.5.4.2}%
-\contentsline {section}{\numberline {5.5}Datenerhebung und Verarbeitung}{48}{section.5.5}%
-\contentsline {subsection}{\numberline {5.5.1}Datenerhebung}{48}{subsection.5.5.1}%
-\contentsline {subsection}{\numberline {5.5.2}Datenverarbeitung und Erzeugung von Statistiken}{49}{subsection.5.5.2}%
-\contentsline {chapter}{\numberline {6}Implementierung}{50}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Snake Environment}{50}{section.6.1}%
-\contentsline {section}{\numberline {6.2}AV-Network}{52}{section.6.2}%
-\contentsline {section}{\numberline {6.3}DQN}{52}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Q-Network}{53}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Memory}{53}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}Agent}{53}{subsection.6.3.3}%
-\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{54}{subsubsection*.68}%
-\contentsline {subsubsection}{\nonumberline Trainingsroutine}{54}{subsubsection*.70}%
-\contentsline {section}{\numberline {6.4}PPO}{55}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Actor und Critic}{55}{subsection.6.4.1}%
-\contentsline {subsection}{\numberline {6.4.2}ActorCritic}{56}{subsection.6.4.2}%
-\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{56}{subsubsection*.72}%
-\contentsline {subsubsection}{\nonumberline Evaluate Methode}{57}{subsubsection*.74}%
-\contentsline {subsection}{\numberline {6.4.3}Memory}{57}{subsection.6.4.3}%
-\contentsline {subsection}{\numberline {6.4.4}Agent}{58}{subsection.6.4.4}%
-\contentsline {subsubsection}{\nonumberline Learn Methode}{58}{subsubsection*.76}%
-\contentsline {section}{\numberline {6.5}Train Methoden}{60}{section.6.5}%
-\contentsline {subsection}{\numberline {6.5.1}Test Methoden}{61}{subsection.6.5.1}%
-\contentsline {section}{\numberline {6.6}Statistik}{61}{section.6.6}%
-\contentsline {chapter}{\numberline {7}Evaluation}{63}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Ergebnisevaluation der Vergleiche}{63}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}Evaluation der Baseline Vergleiche}{63}{subsection.7.1.1}%
-\contentsline {subsubsection}{\nonumberline Performance}{63}{subsubsection*.78}%
-\contentsline {subsubsection}{\nonumberline Siegrate}{65}{subsubsection*.80}%
-\contentsline {subsubsection}{\nonumberline Effizienz}{66}{subsubsection*.82}%
-\contentsline {subsubsection}{\nonumberline Robustheit}{67}{subsubsection*.84}%
-\contentsline {subsection}{\numberline {7.1.2}Evaluation der Optimized Vergleiche}{68}{subsection.7.1.2}%
-\contentsline {subsubsection}{\nonumberline Performance}{68}{subsubsection*.86}%
-\contentsline {subsubsection}{\nonumberline Siegrate}{69}{subsubsection*.88}%
-\contentsline {subsubsection}{\nonumberline Effizienz}{70}{subsubsection*.90}%
-\contentsline {subsubsection}{\nonumberline Robustheit}{70}{subsubsection*.92}%
-\contentsline {section}{\numberline {7.2}Anforderungsevaluation}{71}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Anforderungsevaluation der Environment}{71}{subsection.7.2.1}%
-\contentsline {subsection}{\numberline {7.2.2}Anforderungsevaluation der Agenten}{72}{subsection.7.2.2}%
-\contentsline {subsection}{\numberline {7.2.3}Anforderungsevaluation an die Datenerhebung}{72}{subsection.7.2.3}%
-\contentsline {subsection}{\numberline {7.2.4}Anforderungen an die Statistiken}{73}{subsection.7.2.4}%
-\contentsline {subsection}{\numberline {7.2.5}Anforderungen an die Evaluation}{73}{subsection.7.2.5}%
-\contentsline {chapter}{\numberline {8}Fazit}{74}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Beantwortung der Forschungsfrage}{74}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Ausblick}{75}{section.8.2}%
-\contentsline {chapter}{Literaturverzeichnis}{76}{section*.93}%
+\contentsline {subsubsection}{\nonumberline State}{6}{subsubsection*.16}%
+\contentsline {subsubsection}{\nonumberline Policy}{6}{subsubsection*.18}%
+\contentsline {subsubsection}{\nonumberline Value}{6}{subsubsection*.20}%
+\contentsline {subsection}{\numberline {2.2.2}Funktionsweise}{7}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Arten von RL Verfahren}{7}{subsection.2.2.3}%
+\contentsline {subsubsection}{\nonumberline Policy-Based und Value-Based Verfahren}{7}{subsubsection*.22}%
+\contentsline {subsubsection}{\nonumberline On-Policy und Off-Policy Verfahren}{8}{subsubsection*.24}%
+\contentsline {section}{\numberline {2.3}Proximal Policy Optimization}{8}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Actor Critic Modell}{9}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}PPO Formelelemente}{9}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}PPO Fehlerfunktion}{10}{subsection.2.3.3}%
+\contentsline {subsubsection}{\nonumberline Return}{11}{subsubsection*.26}%
+\contentsline {subsubsection}{\nonumberline Baseline Estimate}{11}{subsubsection*.28}%
+\contentsline {subsubsection}{\nonumberline Advantage}{11}{subsubsection*.30}%
+\contentsline {subsubsection}{\nonumberline Probability Ratio}{12}{subsubsection*.32}%
+\contentsline {subsubsection}{\nonumberline Surrogate Fehlerfunktion}{12}{subsubsection*.34}%
+\contentsline {subsubsection}{\nonumberline Zusammenfassung der PPO Fehlerfunktion}{13}{subsubsection*.36}%
+\contentsline {subsubsection}{\nonumberline Zusammenfassung der PPO Fehlerfunktion}{13}{subsubsection*.38}%
+\contentsline {subsection}{\numberline {2.3.4}PPO - Algorithmus}{14}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Deep Q-Network}{15}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}DQN - Algorithmus}{16}{subsection.2.4.1}%
+\contentsline {chapter}{\numberline {3}Anforderungen}{18}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Anforderungen an das Environment}{18}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Standardisierte Schnittstelle}{18}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Funktionalitäten}{18}{subsection.3.1.2}%
+\contentsline {subsubsection}{\nonumberline Aktionsausführung}{19}{subsubsection*.40}%
+\contentsline {subsubsection}{\nonumberline Reset}{19}{subsubsection*.42}%
+\contentsline {subsubsection}{\nonumberline Render}{19}{subsubsection*.44}%
+\contentsline {section}{\numberline {3.2}Anforderungen an die Agenten}{19}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Funktionalitäten}{19}{subsection.3.2.1}%
+\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{19}{subsubsection*.46}%
+\contentsline {subsubsection}{\nonumberline Lernen}{19}{subsubsection*.48}%
+\contentsline {subsection}{\numberline {3.2.2}Parametrisierung}{19}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Diversität der RL Algorithmen}{20}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Anforderungen an die Datenerhebung}{20}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Mehrfache Datenerhebung}{20}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Datenspeicherung}{20}{subsection.3.3.2}%
+\contentsline {section}{\numberline {3.4}Anforderungen an die Statistiken}{21}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Anforderungen an die Evaluation}{21}{section.3.5}%
+\contentsline {chapter}{\numberline {4}Verwandte Arbeiten}{22}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Autonomous Agents in Snake Game via Deep Reinforcement Learning}{22}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Diskussion}{23}{subsection.4.1.1}%
+\contentsline {section}{\numberline {4.2}UAV Autonomous Target Search Based on Deep Reinforcement Learning in Complex Disaster Scene}{25}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Diskussion}{26}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}Zusammenfassung}{27}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Konzept}{28}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Vorgehen}{28}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Environment}{30}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Spiellogik}{30}{subsection.5.2.1}%
+\contentsline {subsubsection}{\nonumberline Spielablauf}{30}{subsubsection*.50}%
+\contentsline {subsubsection}{\nonumberline Reward}{32}{subsubsection*.52}%
+\contentsline {subsubsection}{\nonumberline Observation}{32}{subsubsection*.54}%
+\contentsline {subsubsection}{\nonumberline GUI}{35}{subsubsection*.56}%
+\contentsline {subsection}{\numberline {5.2.2}Schnittstelle}{35}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Agenten}{35}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Netzstruktur}{35}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}DQN}{37}{subsection.5.3.2}%
+\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{38}{subsubsection*.58}%
+\contentsline {subsubsection}{\nonumberline Lernprozess}{39}{subsubsection*.60}%
+\contentsline {subsection}{\numberline {5.3.3}PPO}{39}{subsection.5.3.3}%
+\contentsline {subsubsection}{\nonumberline Aktionsauswahlprozess}{40}{subsubsection*.62}%
+\contentsline {subsubsection}{\nonumberline Lernprozess}{40}{subsubsection*.64}%
+\contentsline {subsection}{\numberline {5.3.4}Vorstellung der zu untersuchenden Agenten}{41}{subsection.5.3.4}%
+\contentsline {section}{\numberline {5.4}Optimierungen}{43}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Optimierung A - Joined Reward Function}{43}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Optimierung B - Anpassung der Lernrate}{44}{subsection.5.4.2}%
+\contentsline {section}{\numberline {5.5}Datenerhebung und Verarbeitung}{44}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Datenerhebung}{44}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Datenverarbeitung und Erzeugung von Statistiken}{45}{subsection.5.5.2}%
+\contentsline {chapter}{\numberline {6}Implementierung}{47}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Snake Environment}{47}{section.6.1}%
+\contentsline {section}{\numberline {6.2}AV-Network}{49}{section.6.2}%
+\contentsline {section}{\numberline {6.3}DQN}{49}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Q-Network}{50}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Memory}{50}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Agent}{50}{subsection.6.3.3}%
+\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{51}{subsubsection*.66}%
+\contentsline {subsubsection}{\nonumberline Trainingsroutine}{51}{subsubsection*.68}%
+\contentsline {section}{\numberline {6.4}PPO}{52}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Actor und Critic}{52}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}ActorCritic}{53}{subsection.6.4.2}%
+\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{53}{subsubsection*.70}%
+\contentsline {subsubsection}{\nonumberline Evaluate Methode}{54}{subsubsection*.72}%
+\contentsline {subsection}{\numberline {6.4.3}Memory}{54}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.4}Agent}{55}{subsection.6.4.4}%
+\contentsline {subsubsection}{\nonumberline Learn Methode}{55}{subsubsection*.74}%
+\contentsline {section}{\numberline {6.5}Train Methoden}{57}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Test Methoden}{58}{subsection.6.5.1}%
+\contentsline {section}{\numberline {6.6}Statistik}{58}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Evaluation}{60}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Ergebnisevaluation der Vergleiche}{60}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Evaluation der Baseline Vergleiche}{60}{subsection.7.1.1}%
+\contentsline {subsubsection}{\nonumberline Performance}{60}{subsubsection*.76}%
+\contentsline {subsubsection}{\nonumberline Siegrate}{62}{subsubsection*.78}%
+\contentsline {subsubsection}{\nonumberline Robustheit}{63}{subsubsection*.80}%
+\contentsline {subsubsection}{\nonumberline Effizienz}{63}{subsubsection*.82}%
+\contentsline {subsection}{\numberline {7.1.2}Evaluation der Optimized Vergleiche}{65}{subsection.7.1.2}%
+\contentsline {subsubsection}{\nonumberline Performance}{65}{subsubsection*.84}%
+\contentsline {subsubsection}{\nonumberline Siegrate}{67}{subsubsection*.86}%
+\contentsline {subsubsection}{\nonumberline Robustheit}{68}{subsubsection*.88}%
+\contentsline {subsubsection}{\nonumberline Effizienz}{68}{subsubsection*.90}%
+\contentsline {subsection}{\numberline {7.1.3}Bestimmung des optimalen Agenten}{69}{subsection.7.1.3}%
+\contentsline {section}{\numberline {7.2}Anforderungsevaluation}{70}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Anforderungsevaluation der Environment}{70}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}Anforderungsevaluation der Agenten}{70}{subsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.2.3}Anforderungsevaluation an die Datenerhebung}{71}{subsection.7.2.3}%
+\contentsline {subsection}{\numberline {7.2.4}Anforderungen an die Statistiken}{71}{subsection.7.2.4}%
+\contentsline {subsection}{\numberline {7.2.5}Anforderungen an die Evaluation}{72}{subsection.7.2.5}%
+\contentsline {chapter}{\numberline {8}Fazit}{73}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Beantwortung der Forschungsfrage}{73}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Ausblick}{74}{section.8.2}%
+\contentsline {chapter}{Literaturverzeichnis}{76}{section*.91}%
 \contentsline {chapter}{\numberline {A}Anhang}{78}{appendix.A}%
 \contentsline {section}{\numberline {A.1}Backpropagation und das Gradientenverfahren}{78}{section.A.1}%
 \contentsline {section}{\numberline {A.2}Tensoren}{79}{section.A.2}%

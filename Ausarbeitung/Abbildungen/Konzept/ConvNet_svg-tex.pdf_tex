@@ -1,0 +1,81 @@
+%% Creator: Inkscape 1.0.2-2 (e86c870879, 2021-01-15), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'ConvNet_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{280.30607098bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,5.37442694)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0.74855229,5.21138641){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}6x13x13\end{tabular}}}}%
+    \put(0.74855229,4.12178818){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}8x13x13\end{tabular}}}}%
+    \put(0.75361996,2.9985865){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}8x13x13\end{tabular}}}}%
+    \put(0.76231581,2.5493374){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}8x14x14\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{ConvNet_svg-tex.pdf}}%
+    \put(0.69521327,1.77326876){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}8x7x7\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{ConvNet_svg-tex.pdf}}%
+    \put(0.60058903,1.30061043){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}392\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{ConvNet_svg-tex.pdf}}%
+    \put(0.60058903,0.68810408){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}256\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{ConvNet_svg-tex.pdf}}%
+    \put(0.60058903,0.08546551){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}128\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{ConvNet_svg-tex.pdf}}%
+    \put(0.47353328,4.53218157){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}padding 1x1\end{tabular}}}}%
+    \put(0.43416115,4.67534467){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}stride 1x1\end{tabular}}}}%
+    \put(0.44087166,4.94769607){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Conv2d\end{tabular}}}}%
+    \put(0.44847853,4.80657714){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}filter 3x3\end{tabular}}}}%
+    \put(0.44543364,4.37146076){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}ReLU\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{ConvNet_svg-tex.pdf}}%
+    \put(0.47353328,3.43020047){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}padding 1x1\end{tabular}}}}%
+    \put(0.43416115,3.57336357){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}stride 1x1\end{tabular}}}}%
+    \put(0.44087166,3.84571497){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Conv2d\end{tabular}}}}%
+    \put(0.44847853,3.70459601){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}filter 3x3\end{tabular}}}}%
+    \put(0.44543364,3.26948498){\color[rgb]{1,1,1}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}ReLU\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

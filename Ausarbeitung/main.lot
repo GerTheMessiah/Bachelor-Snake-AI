@@ -2,21 +2,20 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Formelelemente\relax }}{12}{table.2.1}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Formelelemente des PPO Algorithmus\relax }}{10}{table.2.1}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Zu erhebende Daten\relax }}{21}{table.3.1}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Evaluationskriterien\relax }}{22}{table.3.2}%
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Kodierung der Aktionen\relax }}{34}{table.5.1}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Channel-Erklärung der Around\_View (AV)\relax }}{35}{table.5.2}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Zu erhebende Daten\relax }}{20}{table.3.1}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Evaluationskriterien\relax }}{21}{table.3.2}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces Testdatenauswertung der Performance\relax }}{64}{table.7.1}%
-\contentsline {table}{\numberline {7.2}{\ignorespaces Testdatenauswertung der Baseline Siegrate\relax }}{66}{table.7.2}%
-\contentsline {table}{\numberline {7.3}{\ignorespaces Testdatenauswertung der Baseline Effizienz\relax }}{67}{table.7.3}%
-\contentsline {table}{\numberline {7.4}{\ignorespaces Testdatenauswertung der Performance\relax }}{68}{table.7.4}%
-\contentsline {table}{\numberline {7.5}{\ignorespaces Testdatenauswertung der Optimized Sieg-Raten\relax }}{70}{table.7.5}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Kodierung der Aktionen\relax }}{31}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Channel-Erklärung der Around\_View (AV)\relax }}{33}{table.5.2}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {7.1}{\ignorespaces Testdatenauswertung der Performance\relax }}{61}{table.7.1}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces Testdatenauswertung der Baseline Siegrate\relax }}{63}{table.7.2}%
+\contentsline {table}{\numberline {7.3}{\ignorespaces Testdatenauswertung der Performance\relax }}{66}{table.7.3}%
+\contentsline {table}{\numberline {7.4}{\ignorespaces Testdatenauswertung der Optimized Sieg-Raten\relax }}{67}{table.7.4}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
