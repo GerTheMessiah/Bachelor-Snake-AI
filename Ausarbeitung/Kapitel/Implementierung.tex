@@ -1,268 +1,249 @@
 \chapter{Implementierung} \label{chap:Implementierung}
-In diesem Kapitel soll die Implementierung des Spiels Snake, der beiden Algorithmen, der Ablaufroutinen sowie der Statistik-Erzeugung thematisiert werden. Als Programmiersprache wurde Python (3.7) gewählt, da es über viele Frameworks im Bereich Machine Learning verfügt.
+In diesem Kapitel soll die Implementierung des Spiels Snake, der beiden Algorithmen, der Ablaufroutinen sowie der Statistik Erzeugung thematisiert werden. Als Programmiersprache wurde Python (3.7) gewählt, da diese über viele Frameworks im Bereich Machine Learning verfügt.
 In dieser Implementierung wird das Machine Learning Framework PyTorch (\url{https://pytorch.org/}) verwendet.
 
 \section{Snake Environment} \label{sec:Implementierung_Environment}
-Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt (siehe \url{https://gym.openai.com/}). Das Snake Environment, implementiert, entsprechend der Anforderung \ref{sec:Anforderungen_Schnittstelle}, drei zentrale Methoden, welche für Informationsaustausch mit dem Agenten sorgen. Diese sind im Konzept (siehe Abschnitt \ref{sec:Konzept_Schnittstelle}) aufgeführt. 
-Die step Methode wird in der Ablaufprozedur (Trainings- bzw. Testmethode) aufgerufen. Um die ihr übergebene Aktion auszuführen, ruft diese die action Methode in SnakeGame auf (siehe Abbildung \ref{fig:Implementierung_Sequenzdiagram}). Diese führt die Aktion aus und manipuliert damit das SnakeGame. Da die action Methode die eigentliche Aktionsausführung (siehe Abschnitt \ref{sec:Konzept_Spielablauf}) implementiert, wird diese noch näher erläutert.\\
-Nach dem Aufrufen von action ist die Aktion ausgeführt und es wird die nächste Observation, mithilfe der make\_obs Methode, bestimmt, welche dem Agenten übergeben wird, damit dieser die nächste Aktion bestimmen kann. Im Anschluss wird ebenfalls noch der Reward gebildet sowie die Statusinformation, ob sich das Spiel in einen terminalen Zustand befindet und damit zurückgesetzt werden muss.\\
-Die reset Methode (siehe Abschnitt \ref{sec:Konzept_Schnittstelle}) wird zu Beginn des Spielablaufs aufgerufen, um eine initiale Obs zu erhalten. Sie setzt den momentanen Spielfortschritt zurück, (siehe Abschnitt \ref{sec:Konzept_Spielablauf}). Dazu wird die reset\_snake\_game Methode aufgerufen, welche SnakeGame und Player zurücksetzt. Anschließend wird eine neue Obs, mithilfe der make\_obs Methode (siehe Abschnitt \ref{sec:Konzept_Observation}), erstellt und zurückgegeben.\\
-Die render Methode aktualisiert die GUI, in dem diese die updateGUI aufruft, siehe \ref{fig:Implementierung_Sequenzdiagram}. Sie wird nur in Testmethoden aufgerufen (siehe Abschnitt \ref{sec:Implementierung_test_Methode}).
+Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt (siehe \url{https://gym.openai.com/}). Das Snake Environment implementiert entsprechend der Anforderung \ref{subsec:Anforderungen_Schnittstelle} drei zentrale Methoden, welche für den Informationsaustausch mit dem Agenten sorgen. Diese sind im Konzept \ref{subsec:Konzept_Schnittstelle} aufgeführt. 
+Die step Methode \fullref{fig:Implementierung_Sequenzdiagram} wird in der Ablaufprozedur (Test- bzw. Trainingsmethode) aufgerufen. Um die übergebene Aktion auszuführen, ruft diese die action Methode in der SnakeGame Instanz auf. Diese führt die Aktion aus und manipuliert damit das SnakeGame.\\
+Nach dem Aufruf von der action Methode ist die Aktion ausgeführt und es wird die nächste Observation mithilfe der make\_obs Methode bestimmt, welche dem Agenten übergeben wird. Im Anschluss wird zudem noch der Reward gebildet sowie die Statusinformation, ob sich das Spiel in einen terminalen Zustand befindet \fullref{fig:Implementierung_Sequenzdiagram}.\\
+Die reset Methode \fullref{fig:Implementierung_Sequenzdiagram} wird zu Beginn des Spielablaufs aufgerufen, um eine initiale Obs zu erhalten. Sie setzt den momentanen Spielfortschritt zurück \fullref{subsubsec:Konzept_Spielablauf}. Dazu wird die reset\_snake\_game Methode aufgerufen, welche SnakeGame und Player zurücksetzt. Anschließend wird eine neue Obs mithilfe der make\_obs Methode erstellt und zurückgegeben.\\
+Die render Methode \fullref{fig:Implementierung_Sequenzdiagram} aktualisiert die GUI, indem diese die updateGUI aufruft. Sie wird nur in Testmethoden aufgerufen \fullref{sec:Implementierung_test_Methode}.
 \begin{figure}[H]
 	\centering
-	\def\svgscale{0.110}
-	\input{Abbildungen/Implementierung/Sequenzdiagramm.pdf_tex}
-	\caption[Sequenzdiagram]{Sequenzdiagramm der Schnittstellenmethoden step, reset und render}
+	\includesvg[scale=0.110]{Sequenzdiagramm}
+	\caption[Sequenzdiagramm]{Darstellung der Schnittstellenmethoden step, reset und render in einem Sequenzdiagramm.}
 	\label{fig:Implementierung_Sequenzdiagram}
 \end{figure}
-Die Spiellogik ist hauptsächlich in der action Methode implementiert. Sie basiert auf den Beschreibungen des Konzepts (siehe Abschnitt \ref{sec:Konzept_Spielablauf}). Ein schematischer Ablauf der action Methode ist in Abbildung \ref{fig:Implementierung_action_method} dargestellt. 
-Zu Beginn wird geprüft, ob die maximale Anzahl an Schritten ohne einen Apfel gefressen zu haben überschritten ist. Sollte dies der Fall sein, so wird is\_terminal gesetzt und die Methode terminiert. Anderenfalls, wird die Aktion umgesetzt, indem die Player.direction angepasst wird. Diese gibt die Laufrichtung an und bestimmt im nächsten Schritt, in welcher neuen Position sich der Kopf der Snake befindet. Daraufhin wird überprüft, ob der neue Kopf außerhalb des Spielfelds liegt. Wenn dies zutrifft, wird das Spiel terminiert.
-Ansonsten wird der neue Kopf in die Liste alle Snake-Glieder (Player.tail), an erster Stelle, eingefügt. Sollte die Snake zu diesem Zeitpunkt das gesamte Spielfeld ausfüllen, so hat sie gewonnen und action terminiert. Sonst wird geprüft, ob die Snake im momentanen Schritt einen Apfel gefressen hat oder nicht. Sollte sie einen Apfel gefressen haben, so wird der Apfel entfernt und ein neuer generiert. Zudem wird der inter\_apple\_steps Zähler zurückgesetzt. Hat die Snake keinen Apfel gefressen wird das letzte Schwanzstück entfernt, um die Illusion von Bewegung zu erzeugen und der inter\_apple\_steps Zäher wird inkrementiert.\\
-Zu diesem Zeitpunkt ist es noch möglich, dass sich Duplikate in der Player.tail List befinden. Sollte dies der Fall sein, so ist die Snake in sich selbst gelaufen und action terminiert. Anderenfalls wird das Spielfeld (Playground) mit den Elementen der Snake aktualisiert.
+Da die action Methode die eigentliche Aktionsausführung \fullref{subsubsec:Konzept_Spielablauf} implementiert, wird diese noch näher erläutert.
+Die Spiellogik ist hauptsächlich in der action Methode implementiert. Sie basiert auf den Beschreibungen des Konzepts \fullref{subsubsec:Konzept_Spielablauf}. Ein schematischer Ablauf der action Methode ist in \autoref{fig:Implementierung_action_method} dargestellt.\\
+Zu Beginn wird geprüft, ob die maximale Anzahl an Schritten ohne einen Apfel gefressen zu haben überschritten ist. Sollte dies der Fall sein, so wird is\_terminal gesetzt und die Methode terminiert. Anderenfalls wird die Aktion umgesetzt, indem die Player.direction angepasst wird. Diese gibt die Laufrichtung an und bestimmt im nächsten Schritt, in welcher neuen Position sich der Kopf der Snake befindet. Daraufhin wird überprüft, ob der neue Kopf außerhalb des Spielfelds liegt. Wenn dies zutrifft, wird das Spiel terminiert.
+Ansonsten wird der neue Kopf in die Liste aller Snake-Glieder (Player.tail), an erster Stelle, eingefügt. Sollte die Snake zu diesem Zeitpunkt das gesamte Spielfeld ausfüllen, so hat sie gewonnen und die Methode terminiert. Ansonsten wird geprüft, ob die Snake im momentanen Schritt einen Apfel gefressen hat oder nicht. Sollte sie einen Apfel gefressen haben, so wird der Apfel entfernt und ein Neuer generiert. Zudem wird der inter\_apple\_steps Zähler zurückgesetzt. Hat die Snake keinen Apfel gefressen, wird das letzte Schwanzstück entfernt, um die Illusion von Bewegung zu erzeugen und der inter\_apple\_steps Zäher wird inkrementiert.\\
+Zu diesem Zeitpunkt ist es noch möglich, dass sich Duplikate in der Player.tail List befinden. Sollte dies der Fall sein, so ist die Snake in sich selbst gelaufen und die Methode terminiert. Anderenfalls wird das Spielfeld (Playground) mit den Elementen der Snake aktualisiert.
 \begin{figure}[H]
 	\centering
-	\def\svgscale{0.095}
-	\input{Abbildungen/Implementierung/action_method.pdf_tex}
-	\caption[Ablaufdiagramm der action Methode]{Ablaufdiagramm der action Methode}
+	\includesvg[scale=0.095]{action_method}
+	\caption[Ablaufdiagramm der action Methode]{Darstellung des Ablaufs der action Methode in einem Ablaufdiagramm.}
 	\label{fig:Implementierung_action_method}
 \end{figure}
 
 \section{AV-Network} \label{sec:Implementierung_AV_Network}
-Das AV-Network stellt die Netzstruktur dar, welche die AV (around\_view) verarbeitet. Um dies bewerkstelligen zu können, wird das Netz mithilfe des PyTorch Frameworks erstellt. Dabei wird so verfahren, wie es im Konzept (siehe \ref{sec:Konzept_Netzstruktur}) gefordert ist. Eine genauere Darstellung der Implementierung des AV-Networks findet sich im Anhang (siehe Abschnitt \ref{sec:Anhang_AV_Network}). Das AV-Network wird von allen Agenten genutzt, unter anderem auch vom DQN Algorithmus (siehe Abschnitt \ref{sec:Implementierung_DQN}).
+Das AV-Network stellt die Netzstruktur dar, welche die AV (around\_view) verarbeitet. Um dies bewerkstelligen zu können, wird das Netz mithilfe des PyTorch Frameworks erstellt. Dabei wird so verfahren, wie es im Konzept gefordert ist \fullref{subsec:Konzept_Netzstruktur}. Eine genauere Darstellung der Implementierung des AV-Networks findet sich im Anhang  \fullref{sec:Anhang_AV_Network}. Das AV-Network wird von allen Algorithmen und daher auch von den DQN Agenten genutzt, welcher als Nächstes thematisiert werden.
 
 \section{DQN} \label{sec:Implementierung_DQN}
-Der DQN Algorithmus, aus welchen die DQN Agenten hervorgehen, stellt einen der beiden zu implementierenden Algorithmen dar (siehe Anforderung \ref{sec:Anforderungen_Diversität}) und beinhaltet die folgenden Klassen:\\
-Die Agent Klasse implementiert die act und learn Methoden. Sie ist dabei als DQN-Komponente zu interpretieren (siehe Abschnitt \ref{sec:Konzept_DQN}).
-Die Memory Klasse speichert die Erfahrungen des Agenten für das spätere Lernen (siehe Abschnitt \ref{sec:Konzept_Lernprozess_DQN}). Die QNetwork Klasse beinhaltet das NN zur Aktionsbestimmung (siehe Abschnitt \ref{sec:Konzept_Netzstruktur}) und wird im Folgeabschnitt \ref{sec:Implementierung_Q-Network} thematisiert.
+Die Implementierung des DQN Algorithmus wurde von der Quelle \citep{Charles2013} inspiriert.\\
+Der DQN Algorithmus, aus welchen die DQN Agenten hervorgehen, stellt einen der beiden zu implementierenden Algorithmen dar und beinhaltet die folgenden Klassen:\\
+Die Agent Klasse implementiert die act \fullref{subsubsec:Konzept_Aktionsauswahlprozess_DQN} und learn \fullref{subsubsec:Konzept_Lernprozess_DQN} Methoden. Sie ist dabei als DQN-Komponente zu interpretieren.
+Die Memory Klasse entspricht der Memory-Komponente. Die QNetwork Klasse beinhaltet das NN zur Aktionsbestimmung \fullref{subsec:Konzept_Netzstruktur}) und wird in Folgenden näher thematisiert.
 
-\subsection{Q-Network} \label{sec:Implementierung_Q-Network}
-Das Q-Network stellt das Instrument zur Bestimmung der Q-Values dar und besteht aus dem AV-Network (AV\_NET) (siehe Abschnitt \ref{sec:Implementierung_AV_Network}) und dem Q-Network-Tail (Q-net)(siehe Abschnitt \ref{sec:Konzept_Netzstruktur}).
-Es wird durch das PyTorch Framework realisiert und besteht aus den in Abschnitt \ref{sec:Konzept_Netzstruktur} erwähnten Elementen.
-Das Q-net besteht dabei aus den, im Konzept erwähnten, Elementen (siehe Abschnitt \ref{sec:Konzept_Netzstruktur}).
-Die forward Methode leitet die AV (av) durch das AV\_NET (siehe Abschnitt \ref{sec:Anhang_AV_Network}). Danach wird der Output des AV\_Net mit der SO (scalar\_obs) verbunden und durch das Q\_net geleitet. Das Ergebnis wird zurückgeliefert. Um die zurückgelieferten Werte für das lernen nutzen zu können müssen sie jedoch im Memory gespeichert werden (siehe Folgeabschnitt \ref{sec:Implementierung_Memory}).
+\subsection{Q-Network} \label{subsec:Implementierung_Q-Network}
+Das Q-Network stellt das Instrument zur Bestimmung der Q-Values dar und besteht aus dem AV-Network (AV\_NET) \fullref{sec:Implementierung_AV_Network} und dem Q-Network-Tail (Q-net) \fullref{subsec:Konzept_Netzstruktur}.
+Es wird durch das PyTorch Framework realisiert und besteht aus den im \autoref{subsec:Konzept_Netzstruktur} erwähnten Elementen.
+Die forward Methode leitet die AV (around\_view) durch das AV\_NET \fullref{sec:Anhang_AV_Network}. Danach wird der Output des AV\_Net mit der SO (scalar\_obs) verbunden und durch das Q\_net geleitet. Das Ergebnis wird zurückgeliefert. Um die zurückgelieferten Werte für das lernen nutzen zu können, müssen sie jedoch im Memory gespeichert werden.
 
-\subsection{Memory} \label{sec:Implementierung_Memory}
-Die Klasse Memory besteht aus einer Reihe von Tensoren, welche die generierten Daten, mittels einer zusätzlichen Dimension, speichern.
-Sollte die AV die Form (6x13x13) besitzen, so besitzt der Speicher-Tensor (AV) die Form (MEM\_SIZEx6x13x13).
-Das Memory verfügt über eine get\_data Methode, welche einen zufallsbasierten Batch an Erfahrungen zurückliefert. Die im Konzept erwähnte Ring Buffer Funktionalität (siehe Abschnitt \ref{sec:Konzept_DQN}) wird durch einen Zähler realisiert, welcher die Position der neuen Erfahrung angibt. Sollte dieser die maximale Memory Größe überschreiten, so wird dieser wieder auf null gesetzt.\\
-Das Memory ist ein zentraler Bestandteil der Agent Klasse, welche im weiteren erläutert wird (siehe Folgeabschnitt \ref{sec:Implementierung_DQN_Agent}).
+\subsection{Memory} \label{subsec:Implementierung_Memory_DQN}
+Die Klasse Memory besteht aus einer Reihe von Tensoren, welche Daten mittels einer zusätzlichen Dimension speichern.
+Sollte die AV die Form (6x13x13) besitzen, so besitzt der Speicher-Tensor die Form (MEM\_SIZEx6x13x13).
+Das Memory verfügt über eine get\_data Methode, welche einen zufallsbasierten Batch an Erfahrungen zurückliefert. Die im Konzept erwähnte Ring Buffer Funktionalität \fullref{subsec:Konzept_DQN} wird durch einen Zähler realisiert, welcher die Position der neuen Erfahrung angibt. Sollte dieser die maximale Memory Größe überschreiten, so wird dieser wieder auf null gesetzt.\\
+Das Memory ist ein zentraler Bestandteil der Agent Klasse, welche im Weiteren erläutert wird.
 
-\subsection{Agent} \label{sec:Implementierung_DQN_Agent}
-Der DQN Agent besteht aus den act Methoden, welche die Aktionen bestimmen und aus der learn Methode, die für das Training zuständig ist. Zudem hält dieser jeweils eine Instanzen der Memory und QNetwork Klasse.\\
-Die Aktionsbestimmung wird dabei durch die act Methode durchgeführt, die im Weiteren erklärt wird (siehe Folgeabschnitt \ref{sec:Implementierung_act_DQN}).
+\subsection{Agent} \label{subsec:Implementierung_DQN_Agent}
+Der DQN Agent besteht aus den act Methoden, welche die Aktionen bestimmen und aus der learn Methode, die für das Training zuständig ist. Zudem hält der Agent jeweils eine Instanz der Memory und QNetwork Klasse.\\
+Die Aktionsbestimmung wird dabei durch die act Methode durchgeführt, die im Weiteren erklärt wird.
 
-\subsubsection{Aktionsbestimmung} \label{sec:Implementierung_act_DQN}
-In der Agent Klasse werden die zwei Methoden act und act\_test definiert. Die act Methode wird dabei analog zur Beschreibung im Konzept (siehe Abschnitt \ref{sec:Konzept_Aktionsauswahlprozess_DQN})) implementiert.
-Die act\_test Methode ist für die Aktionsbestimmung während der Testläufe zuständig und ermittelt seine Aktionen ausschließlich mittels des Q-Networks (siehe Code Listing \ref{code:Aktionsbestimmung}).
-\begin{python}
+\subsubsection{Aktionsbestimmung} \label{subsubsec:Implementierung_Aktionsbestimmung_DQN}
+In der Agent Klasse werden die zwei Methoden act und act\_test definiert. Die act Methode wird dabei analog zur Beschreibung im Konzept \fullref{subsubsec:Konzept_Aktionsauswahlprozess_DQN} implementiert.
+Die act\_test Methode ist für die Aktionsbestimmung während der Testläufe zuständig und ermittelt Aktionen ausschließlich mittels des Q-Networks \fullref{code:Aktionsbestimmung}.
+\begin{lstlisting}[caption=Aktionsbestimmung, label=code:Aktionsbestimmung, style=Python]
 @T.no_grad()
 def act_test(self, av, scalar_obs):
 	av = T.from_numpy(av).to(self.Q_NET.DEVICE)
 	scalar_obs = T.from_numpy(scalar_obs).to(self.Q_NET.DEVICE)
 	q_values = self.Q_NET(av, scalar_obs)
 	return av, scalar_obs, T.argmax(q_values).item()
-\end{python}
-\begin{lstlisting}[caption=Aktionsbestimmung, label=code:Aktionsbestimmung]
 \end{lstlisting}
-Damit die Performance des Agenten verbessert wird eine Trainingsroutine implementiert (siehe \ref{sec:Implementierung_learn_DQN}).
+Damit eine Verbesserung der Performance eintritt, wird im Weiteren eine Trainingsroutine implementiert.
 
-\subsubsection{Trainingsroutine} \label{sec:Implementierung_learn_DQN}
-Die learn Methode stellt die Trainingsroutine und damit das Herzstück eines Agenten dar. Sie wird entsprechend der Grundlagen (siehe Abschnitt \ref{sec:Q-Learning}) und der Ausführungen in Abschnitt \ref{sec:Konzept_Lernprozess_DQN} implementiert.\\
-Die learn Methode überprüft als erstes, ob sich aus dem Memory genügend Daten für einen Mini-Batch entnehmen kann. Sollte dies nicht der Fall sein, so terminiert die Methode.
-Danach wird die get\_data Methode des Memory aufgerufen, welche einen Mini-Batch liefert. Danach werden die Schritt, entsprechend der Beschreibung im Konzept (siehe \ref{sec:Konzept_Lernprozess_DQN}), durchgeführt.\\
-Zu Beginn werden daher die Q-Values der gespeicherten Aktion für die gegenwärtigen Zustände bestimmt. Danach folgen Q-Values aller Aktionen der Nachfolgezustände (siehe Code Listing \ref{code:Bestimmung_Q-Values}).
-\begin{python}
-av, scalar_obs, actions, rewards, is_terminal, av_, scalar_obs_, batch_index = self.MEM.get_data()
+\subsubsection{Trainingsroutine} \label{subsubsec:Implementierung_Trainingsroutine_DQN}
+Die learn Methode stellt die Trainingsroutine und damit das Herzstück eines Agenten dar. Sie wird entsprechend der Darstellungen im \autoref{subsubsec:Konzept_Lernprozess_DQN} implementiert.\\
+Die learn Methode überprüft als Erstes, ob sich aus dem Memory genügend Daten für einen Mini-Batch entnehmen kann. Sollte dies nicht der Fall sein, so terminiert die Methode.
+Danach wird die get\_data Methode des Memorys aufgerufen, welche einen Mini-Batch liefert. Danach werden die Schritte entsprechend der Beschreibung im Konzept \fullref{subsubsec:Konzept_Lernprozess_DQN} durchgeführt.\\
+Zu Beginn werden daher die Q-Values der gespeicherten Aktion für die gegenwärtigen Zustände bestimmt. Danach folgen Q-Values aller Aktionen der Nachfolgezustände \fullref{code:Bestimmung_Q-Values}.
+\newpage
+\begin{lstlisting}[caption=Bestimmung der Q-Values, label=code:Bestimmung_Q-Values, style=Python]
+av, scalar_obs, actions, rewards, is_terminal, av_, scalar_obs_, \
+	batch_index = self.MEM.get_data()
 q_eval = self.Q_NET(av, scalar_obs)[batch_index, actions]
 q_next = self.Q_NET(av_, scalar_obs_)
-\end{python}
-\begin{lstlisting}[caption=Bestimmung der Q-Values, label=code:Bestimmung_Q-Values]
 \end{lstlisting}
-Daraufhin wird, wie in Gleichung \ref{eq:DQN_Loss} und Abschnitt \ref{sec:Konzept_Lernprozess_DQN} dargestellt, Q-Target ($r(s,a) +\gamma \max_{a'}Q(s',a';\theta_{i-1})$) bestimmt, siehe auch Code Listing \ref{code:Bestimmung_Q-Target}.
-\begin{python}
+Daraufhin wird, wie in Gleichung \ref{eq:DQN_Loss} und \autoref{subsubsec:Konzept_Lernprozess_DQN} dargestellt, Q-Target ($r(s,a) +\gamma \max_{a'}Q(s',a';\theta_{i-1})$) bestimmt \fullref{code:Bestimmung_Q-Target}.
+\begin{lstlisting}[caption=Bestimmung von Q-Target, label=code:Bestimmung_Q-Target, style=Python]
 q_next[is_terminal] = 0.0
 q_target = rewards + self.GAMMA * T.max(q_next, dim=1)[0]
-\end{python}
-\begin{lstlisting}[caption=Bestimmung von Q-Target, label=code:Bestimmung_Q-Target]
 \end{lstlisting}
-Zum Schluss wird der Loss des DQN bestimmt mit dem MSE (Mean Squared Error) und das Q-Net aktualisiert.
-\begin{python}
+Zum Schluss wird der Fehler des DQN mit dem MSE (Mean Squared Error) bestimmt und das Q-Net aktualisiert \fullref{code:Bestimmung_DQN-Loss}.
+\begin{lstlisting}[caption=Bestimmung des DQN Loss \& Update des Q-Networks, label=code:Bestimmung_DQN-Loss, style=Python]
 loss = self.LOSS(q_target, q_eval)
 self.Q_NET.OPTIMIZER.zero_grad()
 loss.backward()
 self.Q_NET.OPTIMIZER.step()
-\end{python}
-\begin{lstlisting}[caption=Bestimmung des DQN Loss \& Update des Q-Networks, label=code:Bestimmung_DQN-Loss]
 \end{lstlisting}
-Zusätzlich wird noch Epsilon verringert, um die Anzahl an Zufallsaktionen während des nächsten Trainingslauf zu senken.\\
-Neben dem DQN Agenten wurde jedoch noch gefordert (siehe Anforderung \ref{sec:Anforderungen_Diversität}), dass ein PPO Agent implementiert wird. Dies geschieht im Folgenden Abschnitt \ref{sec:Implementierung_PPO}.
+Zusätzlich wird noch Epsilon verringert, um die Anzahl an Zufallsaktionen während des nächsten Trainingslaufs zu senken.\\
+Neben dem DQN Agenten wurde jedoch noch gefordert \fullref{subsec:Anforderungen_Diversität}, dass ein PPO Agent implementiert wird. Dies geschieht im Folgenden.
 
 \section{PPO} \label{sec:Implementierung_PPO}
+Die Implementierung des PPO wurde inspiriert durch die Quellen \citep{pytorch_minimal_ppo} und \citep{Charles2013}.\\
 Der PPO Algorithmus, aus welchen die PPO Agenten hervorgehen, beinhaltet die folgenden Klassen:\\
-Die Agent Klasse definiert, die learn Methode.  Sie ist dabei als PPO-Komponente zu interpretieren (siehe Abschnitt \ref{sec:Konzept_PPO}).
+Die Agent Klasse definiert die learn Methode und ist dabei als PPO-Komponente zu interpretieren \fullref{subsec:Konzept_PPO}.
 Die Memory Klasse speichert die gesammelten Erfahrungen.
-Die ActorNetwork bzw. CriticNetwork Klassen beinhaltet die NN des Actors bzw. Critics.
-In der ActorCritic Klasse befindet sich zentrale Methoden zur Durchführung des Lernens, wie z.B. evaluate. 
-Des Weiteren verbindet die ActorCritic Klasse das Actor-NN und Critic-NN miteinander, welche im nächsten Abschnitt näher betrachtet erden (siehe Abschnitt \ref{sec:Implementierung_Actor_and_Critic}).
+Die ActorNetwork bzw. CriticNetwork Klassen beinhaltet das NN des Actors bzw. Critics.
+In der ActorCritic Klasse befinden sich zentrale Methoden zur Durchführung des Lernens, wie z.B. evaluate. 
+Des Weiteren verbindet die ActorCritic Klasse das Actor- und Critic-Network miteinander, welche im nächsten Abschnitt näher betrachtet werden.
 
-\subsection{Actor und Critic} \label{sec:Implementierung_Actor_and_Critic}
-Der Actor bzw. Critic wird durch die Klasse ActorNetwork bzw. CriticNetwork aufgespannt, welche von der Module Klasse des PyTorch Frameworks erbt. Damit lassen sich ActorNetwork und CriticNetwork als NN-Baustein benutzen.
-Neben dem AV-Network (siehe Abschnitt \ref{sec:Implementierung_AV_Network} und \ref{sec:Konzept_Netzstruktur}) wird noch der Actor-Tail bzw. Critic-Tail definiert. Dabei handelt es sich um das NN, welches die Ausgabe vom AV-Network mit der SO verbindet und aus diesem Ergebnis eine Wahrscheinlichkeitsverteilung über alle Aktionen bzw. ein Value bestimmt. 
-Exemplarisch wird die Klasse ActorNetworks im Code Listing \ref{code:ActorNetwork} dargestellt. Analog verhält es sich beim Critic, mit der Ausnahme, dass dieser nicht Tensoren der Länge drei sondern der Länge eins ausgibt. Diese stellen die Baseline Estimates bzw. Value Werte (siehe \ref{subsubsec:Grundlagen_Baseline_Estimate}) dar.
-\begin{python}
+\subsection{Actor und Critic} \label{subsec:Implementierung_Actor_und_Critic}
+Der Actor bzw. Critic wird durch die ActorNetwork bzw. CriticNetwork Klasse aufgespannt, welche von der Module Klasse des PyTorch Frameworks erbt. Damit lassen sich ActorNetwork und CriticNetwork als NN-Bausteine benutzen.
+Neben dem AV-Network (siehe \autoref{sec:Implementierung_AV_Network} und \autoref{subsec:Konzept_Netzstruktur}) wird noch der Actor-Tail bzw. Critic-Tail definiert. Dabei handelt es sich um das NN, welches die Ausgabe vom AV-Network mit der SO verbindet und aus diesem Ergebnis eine Wahrscheinlichkeitsverteilung über alle Aktionen bzw. einen Value bestimmt. 
+Exemplarisch wird die Klasse ActorNetworks im \autoref{code:ActorNetwork} dargestellt. Analog verhält es sich beim Critic mit der Ausnahme, dass dieser nicht Tensoren der Länge drei, sondern eins ausgibt. Diese stellen die Baseline Estimate Werte \fullref{subsubsec:Grundlagen_Baseline_Estimate} dar.
+\begin{lstlisting}[caption=ActorNetwork, label=code:ActorNetwork, style=Python]
 class ActorNetwork(nn.Module):
 	def __init__(self, OUTPUT=3, SCALAR_IN=41):
 		super(ActorNetwork, self).__init__()
 		self.AV_NET = AV_NET()
-			
+		
 		self.ACTOR_TAIL = nn.Sequential(
-			nn.Linear(128 + SCALAR_IN, 64),
-			nn.ReLU(),
-			nn.Linear(64, OUTPUT),
-			nn.Softmax(dim=-1)
+		nn.Linear(128 + SCALAR_IN, 64),
+		nn.ReLU(),
+		nn.Linear(64, OUTPUT),
+		nn.Softmax(dim=-1)
 		)
-\end{python}
-\begin{lstlisting}[caption=ActorNetwork, label=code:ActorNetwork]
 \end{lstlisting}
-Die forward Methoden von Actor und Critic sind dabei analog zu der, welche im Abschnitt \ref{sec:Implementierung_Q-Network} vorgestellt wurde. 
-Sowohl ActorNetwork als auch CriticNetwork findet man jedoch nur gekapselt in der ActorCritic Klasse vor (siehe Abschnitt \ref{sec:Implementierung_ActorCritic}).
+Die forward Methoden von Actor und Critic sind dabei analog zu der, welche im Abschnitt \autoref{subsec:Implementierung_Q-Network} vorgestellt wurde. 
+Sowohl ActorNetwork als auch CriticNetwork findet man jedoch nur gekapselt in der ActorCritic Klasse vor \fullref{subsec:Implementierung_ActorCritic}.
 
-\subsection{ActorCritic} \label{sec:Implementierung_ActorCritic}
+\subsection{ActorCritic} \label{subsec:Implementierung_ActorCritic}
 Die ActorCritic Klasse verbindet Actor und Critic miteinander. Sie dient daher als eine NN Schnittstelle, welche die drei Methoden act, act\_test und  evaluate definiert.
-Wie die ActorNetwork und CriticNetwork Klassen, erbt die ActorCritc Klasse von Module. Sie kann daher aus ActorNetwork und CriticNetwork ein gesamt Network aufspannen, welches alle Parameter der beiden NNs hält. Des Weiteren wird auch die Aktionsdurchführung durchgeführt.
+Wie die ActorNetwork und CriticNetwork Klassen erbt die ActorCritic Klasse von Module. Sie kann daher aus ActorNetwork und CriticNetwork ein gesamt Network aufspannen, welches alle Parameter der beiden Networks hält. Eine der wichtigsten Aufgaben der ActorCritic Klasse ist das Bestimmen von Aktionen. Dieser Prozess wird im Folgenden erklärt.
 
-\subsubsection{Aktionsbestimmung} \label{sec:Implementierung_act_PPO}
-Die PPO Agenten verfügen, wie die DQN Agenten, über zwei act Methoden. Die erste leitet die AV und SO durch das ActorNetwork und erhält eine Wahrscheinlichkeitsverteilung über alle Aktionen. Diese wird auch als Policy bezeichnet.
+\subsubsection{Aktionsbestimmung} \label{subsubsec:Implementierung_Aktionsbestimmung_PPO}
+Die PPO Agenten verfügen wie die DQN Agenten über zwei act Methoden. Die erste leitet die AV und SO durch das ActorNetwork und erhält eine Wahrscheinlichkeitsverteilung über alle Aktionen. Diese wird auch als Policy bezeichnet.
 Daraufhin wird eine Aktion entsprechend der Wahrscheinlichkeitsverteilung bestimmt und zusammen mit ihrer logarithmierten Wahrscheinlichkeit und den Tensor AV und SO zurückgegeben.
-Die act Methode wird dabei analog zum Konzept (siehe Abschnitt \ref{sec:Konzept_Aktionsauswahlprozess_PPO}) implementiert.\\
-Die act\_test Methode verzichtet, wie beim DQN (siehe Abschnitt \ref{sec:Implementierung_act_DQN}), wieder auf Zufallselemente.
-Am Ende der act\_test Methode (siehe Code Listing \ref{code:act_test_Methode}) wird jedoch lediglich die Aktion ausgewählt, welche die größte Wahrscheinlichkeit vorweist.
-\begin{python}
+Die act Methode wird dabei analog zum Konzept \fullref{subsubsec:Konzept_Aktionsauswahlprozess_PPO} implementiert.\\
+Die act\_test Methode verzichtet, wie beim DQN \fullref{subsubsec:Implementierung_Aktionsbestimmung_DQN}, wieder auf Zufallselemente.
+Am Ende der act\_test Methode \fullref{code:act_test_Methode} wird die Aktion ausgewählt, welche die größte Wahrscheinlichkeit vorweist.
+
+\begin{lstlisting}[caption=Darstellung der act\_test Methode, label=code:act_test_Methode, style=Python]
 @T.no_grad()
 def act_test(self, av, scalar_obs):
 	av = T.from_numpy(av).to(self.DEVICE)
 	scalar_obs = T.from_numpy(scalar_obs).to(self.DEVICE)
 	policy = self.ACTOR(av, scalar_obs)
 	return av, scalar_obs, T.argmax(policy).item()
-\end{python}
-\begin{lstlisting}[caption=Darstellung der act\_test Methode, label=code:act_test_Methode]
 \end{lstlisting}
-Neben der Aktionsbestimmung implementiert die ActorCritic Klasse auch noch die evaluate Methode, welche für den Lernablauf unerlässlich ist.
+Neben der Aktionsbestimmung implementiert die ActorCritic Klasse auch noch die evaluate Methode, welche für den Trainingsablauf unerlässlich ist.
 
-\subsubsection{Evaluate Methode} \label{sec:Implementierung_Evaluate}
-Die evaluate Methode, bestimmt die logarithmierte Wahrscheinlichkeit einer Aktion unter einer anderen bzw. älteren Policy (Wahrscheinlichkeitsverteilung) (siehe \ref{sec:Konzept_Lernprozess_PPO}). 
-Neben dieser, bestimmt sie auch noch den Value-Wert des Critics und ermittelt die Entropy der Policy (siehe Code Listing \ref{code:evaluate_Methode}).
-\begin{python}
+\subsubsection{Evaluate Methode} \label{subsubsec:Implementierung_Evaluate}
+Die evaluate Methode bestimmt die logarithmierten Wahrscheinlichkeiten von Aktion unter einer anderen bzw. älteren Policy (Wahrscheinlichkeitsverteilung) \fullref{subsubsec:Konzept_Lernprozess_PPO}. 
+Neben dieser, bestimmt sie auch noch die Values des Critics und ermittelt die Entropies der Policy \fullref{code:evaluate_Methode}.
+
+\begin{lstlisting}[caption=Darstellung der evaluate Methode, label=code:evaluate_Methode, style=Python]
 def evaluate(self, av, scalar_obs, action):
 	policy, value = self.forward(av, scalar_obs)
 	dist = Categorical(policy)
 	action_probs = dist.log_prob(action)
 	dist_entropy = dist.entropy()
 	return action_probs, T.squeeze(value), dist_entropy
-\end{python}
-\begin{lstlisting}[caption=Darstellung der evaluate Methode, label=code:evaluate_Methode]
 \end{lstlisting}
-Diese Werte werden im Weiteren für die Bestimmung des PPO Loss benötigt. Damit dieser bestimmt werden kann, bedarf es jedoch Erfahrungen, welche sich im Memory befinden.
+Diese Werte werden im Weiteren für die Bestimmung des PPO Fehlers benötigt. Damit dieser bestimmt werden kann, bedarf es jedoch Erfahrungen, welche sich im Memory befinden.
 
-\subsection{Memory}
-Das Memory oder auch Replay Buffer genannt, besteht aus einer Reihe von Tensoren, welche die generierten Daten mittels einer zusätzlichen Dimension speichert (siehe Abschnitt \ref{sec:Implementierung_Memory}). Die Rewards und Terminals (is\_terminal) werden jedoch in Listen eingepflegt, da dies das spätere Diskontieren (Abzinsen) erleichtert.\\
-Mit der get\_data Methode werden die gesamten Erfahrungen der letzten Spielepisode zurückgegeben. 
+\subsection{Memory} \label{subsec:Implementierung_Memory_PPO}
+Das Memory oder auch Replay Buffer genannt, besteht aus einer Reihe von Tensoren, welche die generierten Daten mittels einer zusätzlichen Dimension speichern. Die Rewards und Terminals (is\_terminal) werden jedoch in Listen eingepflegt, da dies das spätere Diskontieren (Abzinsen) erleichtert.\\
+Mit der get\_data Methode werden die gesamten Erfahrungen der letzten Spielepisoden zurückgegeben. 
 Sobald diese zum Lernen herangezogen worden sind, werden diese gelöscht bzw. überschreiben. Dazu wird die Lernprozedur verwendet, welche sich in der Agent Klasse befindet. 
 
 \subsection{Agent} \label{sec:Implementierung_PPO_Agent}
-Die Agent Klasse implementiert die Lernmethode und verwaltet das Memory und zwei ActorCritic Networks. Diese stellen die alte und neue Policy dar. Während mit der alten Policy immer die Trainingsdaten generiert werden, wird mit der neuen Policy trainieren. Nach dem Lernen wird die alte Policy mit der neuen aktualisieren. Dieser Lernprozess geschieht dabei, wie im folgenden Abschnitt \ref{sec:Implementierung_learn_PPO}, dargestellt.
+Die Agent Klasse implementiert die Lernmethode und verwaltet das Memory und zwei ActorCritic Networks. Diese stellen die alte und neue Policy dar. Während mit der alten Policy immer die Trainingsdaten generiert werden, wird mit der neuen Policy trainieren. Nach dem Lernen wird die alte Policy mit der neuen aktualisieren. Dieser Lernprozess geschieht dabei wie im folgenden Abschnitt dargestellt.
 
-\subsubsection{Learn Methode} \label{sec:Implementierung_learn_PPO}
-Als erstes wird überprüft, ob das Memory mehr als 64 Erfahrungen besitzt. Sollte dies nicht der Fall sein, so wird die Methode terminiert. 
-Die bereits gespeicherten Erfahrungen bleiben erhalten.
+\subsubsection{Trainingsroutine} \label{subsubsec:Implementierung_Trainingsroutine_PPO}
+Als Erstes wird überprüft, ob das Memory mehr als 64 Erfahrungen besitzt. Sollte dies nicht der Fall sein, so wird die Methode terminiert. 
+Die bereits gespeicherten Erfahrungen bleiben dabei erhalten.
 Ansonsten werden die Daten aus dem Memory mit der get\_data Methode entnommen.
-Danach werden die Rewards mit der generate\_rewards Methode diskontiert (abgezinst), (siehe Code Listing \ref{code:Diskontierung_Rewards} und Abschnitt \ref{sec:Konzept_Lernprozess_PPO}). Diese implementiert die Funktionalität, welche im Abschnitt \ref{subsubsec:Grundlagen_Return} dargestellt wird.
-\begin{python}
+Danach werden die Rewards mit der generate\_rewards Methode diskontiert (abgezinst), (siehe \autoref{code:Diskontierung_Rewards} und \autoref{subsubsec:Konzept_Lernprozess_PPO}). Diese implementiert die Funktionalität, welche im \autoref{subsubsec:Grundlagen_Return} dargestellt wird.
+
+\begin{lstlisting}[caption=Diskontierung der Rewards, label=code:Diskontierung_Rewards, style=Python]
 def generate_reward(self, rewards_in, terminals_in):
 	rewards = []
 	discounted_reward = 0
-	for reward, is_terminal in zip(reversed(rewards_in), reversed(terminals_in)):
+	for reward, is_terminal in zip(reversed(rewards_in), \
+	reversed(terminals_in)):
 		if is_terminal:
 			discounted_reward = 0
-		discounted_reward = reward + self.GAMMA * discounted_reward
+		discounted_reward = reward + self.GAMMA * \
+		discounted_reward
 		rewards.insert(0, discounted_reward)
 	return rewards
-\end{python}
-\begin{lstlisting}[caption=Diskontierung der Rewards, label=code:Diskontierung_Rewards]
 \end{lstlisting}
 Die diskontierten Rewards (Return) werden im Anschluss noch normalisiert, um ein stetigeres Lernen zu ermöglichen.
-Danach wird die folgende Prozedur K\_Epochs mal wiederholt.\\
+Danach wird die folgende Prozedur $K\_Epochs$-mal wiederholt.\\
 Die Erfahrungen werden zufallsbasiert durchmischt, um ein stabileres Lernen zu ermöglichen. 
-Danach wird die evaluate Methode mit den Erfahrungen aufgerufen. Diese bestimmt die neuen logarithmierten Wahrscheinlichkeiten (log\_probs) aller Aktionen. Mit diesen und den gespeicherten alten (old\_log\_probs) werden daraufhin die ratios (siehe Abschnitt \ref{sec:Probability_Ratio}) gebildet.\\
-Zuzüglich wird mithilfe der Values, welche von evaluate stammten (siehe Abschnitt \ref{sec:Implementierung_Evaluate}), die Advantages aller Erfahrungen erstellt (siehe Abschnitt \ref{sec:Advantages}). Dies geschieht dabei wie im Abschnitt \ref{sec:Konzept_Lernprozess_PPO} beschrieben.
-\begin{python}		
-probs, state_values, dist_entropy = self.POLICY.evaluate(old_av_b, old_scalar_b, old_action_b)	
+Danach wird die evaluate Methode mit den Erfahrungen aufgerufen. Diese bestimmt die neuen logarithmierten Wahrscheinlichkeiten (log\_probs) aller gespeicherten Aktionen. Mit diesen und den gespeicherten alten (old\_log\_probs) werden daraufhin die ratios  gebildet \fullref{subsubsec:Grundlagen_Probability_Ratio}.\\
+Zuzüglich werden mithilfe der Values, welche von evaluate stammten, die Advantages aller Erfahrungen erstellt \fullref{subsubsec:Grundlagen_Advantage}. Dies geschieht dabei wie im \autoref{subsubsec:Konzept_Lernprozess_PPO} beschrieben.
+\begin{lstlisting}[caption=Bestimmung der Ratios und Advantages, label=code:Bestimmung_Ratio_Advantages, style=Python]
+probs, state_values, dist_entropy = self.POLICY. \
+evaluate(old_av_b, old_scalar_b, old_action_b)	
 ratios = T.exp(probs - probs_old_b)	
 advantages = rewards_b - state_values.detach()
-\end{python}
-\begin{lstlisting}[caption=Bestimmung der Ratios und Advantages, label=code:Bestimmung_Ratio_Advantages]
 \end{lstlisting}
-Mit diesen Werten ist es nun möglich, die Surrogate Losses (siehe Abschnitt \ref{sec:Surrogate_Objectives}) und anschließend den Actor-Loss bzw. Clip-PPO-Loss (siehe Gleichung \ref{eq:clip_loss_ppo}) zu bestimmen.
-\begin{python}
+Mit diesen Werten ist es nun möglich, die Surrogate Fehler \fullref{subsubsec:Grundlagen_Surrogate_Fehlerfunktion} und anschließend den Actor Fehler zu bestimmen \fullref{eq:Grundlagen_Actor_Loss}.
+
+\begin{lstlisting}[caption=Bestimmung der Surrogate Fehler, label=code:Bestimmung_Surrogate_Losses, style=Python]
 surr1 = ratios * advantages
-surr2 = T.clamp(ratios, 1 - self.EPS_CLIP, 1 + self.EPS_CLIP) * advantages
-loss_actor = -(T.min(surr1, surr2) + dist_entropy * self.ENT_COEFFICIENT).mean()
-\end{python}
-\begin{lstlisting}[caption=Bestimmung der Surrogate Losses, label=code:Bestimmung_Surrogate_Losses]
+surr2 = T.clamp(ratios, 1 - self.EPS_CLIP, 1 + self.EPS_CLIP) * \
+advantages
+loss_actor = -(T.min(surr1, surr2) + dist_entropy * \
+ self.ENT_COEFFICIENT).mean()
 \end{lstlisting}
-In dem Actor Loss befindet sich, zur einfacheren Handhabung, noch der Entropy-Loss mit integriert (siehe Abschnitt \ref{sec:PPO_Training_Objective_Function}).
-Zur Bestimmung des gesamt Loss fehlt noch der Critic-Loss, welcher mit dem MSE (Mean Squared Error) bestimmt wird. Dabei wird der Fehler zwischen den Returns und den Values des Critics ermittelt.
-Danach können Actor- und Critic-Loss zusammenaddiert und mit diesem entstandenen PPO-Loss dann das Actor\_Critic NN aktualisiert werden.
-\begin{python}
-loss_critic = self.CRITIC_COEFFICIENT * self.LOSS(rewards_b, state_values)
+In dem Actor Fehler befindet sich zur einfacheren Handhabung noch der Entropy Fehler bzw. Bonus mitintegriert \fullref{subsubsec:Grundlagen_PPO_Fehlerfunktion}.
+Zur Bestimmung des gesamten Fehlers fehlt noch der Critic Fehler, welcher mit dem MSE (Mean Squared Error) bestimmt wird. Dabei wird der Fehler zwischen den Returns und den Values des Critics ermittelt.
+Danach werden Actor und Critic Fehler zusammenaddiert, sodass der  PPO Fehler entsteht. Dieser wird dann dazu genutzt, um das Actor\_Critic NN zu aktualisieren \fullref{code:Bestimmung_Surrogate_Losses}.
+\begin{lstlisting}[caption=Bestimmung des PPO-Losses \& Update der Netze, label=code:Bestimmung_PPO_Losses_update_NN, style=Python]
+loss_critic = self.CRITIC_COEFFICIENT * \ 
+self.LOSS(rewards_b, state_values)
 loss = loss_actor + loss_critic 
 self.POLICY.OPTIMIZER.zero_grad()
 loss.backward()
 self.POLICY.OPTIMIZER.step()
-\end{python}
-\begin{lstlisting}[caption=Bestimmung des PPO-Losses \& Update der Netze, label=code:Bestimmung_PPO_Losses_update_NN]
 \end{lstlisting}
-Zu Schluss wird, nachdem die Prozedur K\_Epochs-mal durchgeführt wurde, die alte Policy mit der neuen aktualisiert. Zuzüglich wird das Memory geleert bzw. mit den nächsten Erfahrungen überschrieben.\\
-damit jedoch die Lernprozedur aufgerufen wird benötigt es eine zentrale Ablaufroutine, welche Agent und Env miteinander interagieren lässt. Diese wird in der train Methode implementiert (siehe folgenden Abschnitt\ref{sec:Implementierung_train_Methode}).
+Zu Schluss wird, nachdem die Prozedur $K\_Epochs$-mal durchgeführt wurde, die alte Policy mit der neuen aktualisiert. Zuzüglich wird das Memory geleert bzw. mit den nächsten Erfahrungen überschrieben.\\
+Damit jedoch die Lernprozedur aufgerufen wird, benötigt es eine zentrale Ablaufroutine, welche Agent und Env miteinander interagieren lässt. Diese wird in den train und test Methoden implementiert.
 
 \section{Train Methoden} \label{sec:Implementierung_train_Methode}
-Zu Beginn werden Agent und Env zusammen mit den Datenhaltungslisten (siehe \ref{sec:Konzept_Datenerhebung}) erstellt. Ein Scheduler wird, für die Optimierung B (siehe \ref{sec:Konzept_Optimierung02}), ebenfalls erzeugt. Danach wird die Lernprozedur durchgeführt (siehe Abbildung \ref{fig:Implementierung_Train_Method}).\\
-Zu Beginn dieser, wird eine Obs bestehend aus AV (around\_view) und SO (scalar\_obs), durch die reset Methode (siehe Abschnitt \ref{sec:Konzept_Schnittstelle}), generiert. 
-Diese Obs wird dem Agenten übergeben, welcher mithilfe der act Methode eine Aktion und weitere benötigte Daten für den jeweiligen Algorithmus zurückgibt.
-Stellvertretend für alle Algorithmen wird hier die Trainingsmethode des PPO für Beispiele herangezogen. Analog wird beim DQN verfahren.
-Danach wird diese bestimmte Aktion mit der step Methode (siehe Abschnitt \ref{sec:Konzept_Schnittstelle}) im Env ausgeführt. Dabei wird mit dem OPTIMIZATION Hyperparameter (siehe Abschnitt \ref{sec:Anleitung_PPO_Train_Startargumente}) gesteuert, welche Reward Funktion verwendet wird 
-(siehe Abschnitt \ref{sec:Konzept_Optimierung01}).
+Zu Beginn werden Agent und Env zusammen mit den Datenhaltungslisten \fullref{subsec:Konzept_Datenerhebung} erstellt. Ein Scheduler wird für die Optimierung B \fullref{subsec:Konzept_Optimierung02} ebenfalls erzeugt. Danach wird die Trainingsprozedur durchgeführt, welche in \autoref{fig:Implementierung_Train_Method} dargestellt ist.\\
+Zu Beginn wird eine Obs bestehend aus AV (around\_view) und SO (scalar\_obs) durch die reset Methode \fullref{subsec:Konzept_Schnittstelle} generiert. 
 \begin{figure}[H]
 	\centering
-	\def\svgscale{0.105}
-	\input{Abbildungen/Implementierung/Training_PPO.pdf_tex}
+	\includesvg[scale=0.105]{Training_PPO}
 	\caption[Ablaufdiagramm der Train Methode]{Ablaufdiagramm der Train Methode.}
 	\label{fig:Implementierung_Train_Method}
 \end{figure}
-Danach wird das Memory mit den entstandenen Erfahrungen aktualisiert und die alte Obs wird durch die neue Obs ersetzt.\\
-Sollte die Spielepisode terminieren, so wird die learn Methode des Agent aufgerufen (siehe Abschnitte \ref{sec:Implementierung_learn_PPO} und \ref{sec:Implementierung_learn_DQN}) und die generierten Episodendaten werden in die Datenhaltungslisten eingefügt (siehe \ref{sec:Konzept_Datenerhebung}). 
+Diese Obs wird dem Agenten übergeben, welcher mithilfe der act Methode eine Aktion und weitere benötigte Daten für den jeweiligen Algorithmus zurückgibt.\\
+Stellvertretend für alle Algorithmen wird hier die Trainingsmethode des PPO für Beispiele herangezogen. Analog wird beim DQN verfahren.
+Danach wird die bestimmte Aktion mit der step Methode \fullref{subsec:Konzept_Schnittstelle} im Env ausgeführt. Dabei kann mit dem OPTIMIZATION Hyperparameter gesteuert, welche Reward Funktion verwendet wird.
+Danach wird das Memory mit den entstandenen Erfahrungen aktualisiert und die alte Obs wird durch die neue ersetzt.\\
+Sollte die Spielepisode terminieren, so wird die learn Methode des Agent aufgerufen (siehe \autoref{subsubsec:Implementierung_Trainingsroutine_PPO} und \autoref{subsubsec:Implementierung_Trainingsroutine_DQN}) und die generierten Episodendaten werden in die Datenhaltungslisten eingefügt. 
 Beim DQN wird die learn Methode nach jedem fünften Schritt aufgerufen, um eine die Trainingsdatenmenge zu erhöhen und damit das Lernen zu stabilisieren. Ansonsten ist das Prozedere analog zum PPO.\\
-Wird die Optimierung B (siehe Abschnitt \ref{sec:Konzept_Optimierung02}) verwendet, so wird alle 100 Spielepisoden die Steigung der Performance der letzten 100 Trainingsspiele bzw. Epochs ermittelt. Sollte diese nicht größer als null sein, so wird die Lernrate mit 0.95 multipliziert und damit gesenkt. Dies soll jedoch erst in der Endphase des Lernen umgesetzt werden, um die Lernrate nicht zu Beginn zu stark zu senken. Daher wird diese erst bei dem Überschreiten von 15.000 Epochs (Trainingsspielen) angepasst.\\
-Sind alle 30.000 Epochs abgeschlossen, wird das NN und die Trainingsdaten gespeichert und die Methode terminiert.\\
-Neben der Train Methode wird jedoch auch eine Testmethode zur Erstellung von Testdaten benötigt.
+Wird die Optimierung B verwendet, so wird alle 100 Spielepisoden die Steigung der Performance der letzten 100 Trainingsspiele bzw. Epochs ermittelt. Sollte diese nicht größer als null sein, so wird die Lernrate mit 0.95 multipliziert und damit gesenkt. Dies soll jedoch erst in der Endphase des Lernens umgesetzt werden, um die Lernrate nicht zu Beginn zu stark zu senken. Daher wird diese erst bei dem Überschreiten von 15.000 Epochs (Trainingsspielen) angepasst.\\
+Sind alle 30.000 Epochs abgeschlossen, werden das NN und die Trainingsdaten gespeichert und die Methode terminiert.\\
+Neben der train Methode wird jedoch auch eine Testmethode zur Erstellung von Testdaten benötigt.
 
 \subsection{Test Methoden} \label{sec:Implementierung_test_Methode}
-Die Testmethoden sind bis auf wenige Ausnahmen mit den Train Methoden übereinstimmend. Es werden in diesem Abschnitt daher nur die Unterschiede aufgezeigt. Einer dieser besteht in dem Hyperparameter MODEL\_PATH, welche den Speicherort repräsentiert, unter dem sich das NN befindet. Mit diesem wird dann der Test durchgeführt. Alle Element des Lernens sind aus der test Methode entfernt, zu diesen gehören der Scheduler, das Aufrufen der learn Methode und das Speichern des NNs.
-Hinzukommt die Prozedur, um die Spielfeldgröße zu ändern, für die Bestimmung der Robustheit (siehe Abschnitte \ref{sec:Konzept_Datenverarbeitung} und \ref{sec:Anforderungen_an_die_Evaluation}).
-Des Weiteren wird für die Aktionsbestimmungen nun die act\_test Methoden verwendet und es kommt die Funktionalität der graphischen Umsetzung hinzu, indem die render Methode des Env aufgerufen wird, sofern die GUI in den Hyperparametern nicht ausgeschaltet worden ist (siehe Abschnitt \ref{sec:Konzept_Schnittstelle} und Abbildung \ref{fig:Implementierung_Sequenzdiagram}).
-Ansonsten treten keine unterschied zwischen den Train und der Test Methoden auf.
+Die Testmethoden sind bis auf wenige Ausnahmen mit den train Methoden übereinstimmend. Es werden in diesem Abschnitt daher nur die Unterschiede aufgezeigt. Einer dieser besteht in dem Hyperparameter MODEL\_PATH, welche den Speicherpfad repräsentiert, unter dem sich das NN befindet. Mit diesem wird dann der Test durchgeführt. Alle Element des Lernens sind aus der test Methode entfernt. Zu diesen gehören der Scheduler, das Aufrufen der learn Methode und das Speichern des NNs.
+Hinzukommt die Prozedur, um die Spielfeldgröße zu ändern, für die Bestimmung der Robustheit (siehe \autoref{subsec:Konzept_Datenverarbeitung} und \autoref{sec:Anforderungen_an_die_Evaluation}).
+Des Weiteren wird für die Aktionsbestimmungen nun die act\_test Methoden verwendet und es kommt die Funktionalität der grafischen Umsetzung hinzu, indem die render Methode des Env aufgerufen wird, sofern die GUI in den Hyperparametern nicht ausgeschaltet worden ist (siehe \autoref{subsec:Konzept_Schnittstelle} und \autoref{fig:Implementierung_Sequenzdiagram}).
+Ansonsten treten keine Unterschiede zwischen den train und test Methoden auf.
 
 \section{Statistik} \label{sec:Implementierung_Statistiken}
-Die Statistiken werden mit der generate\_statistic Funktion erstellt. Ihr wird die STATISTIC\_RUN\_NUMBER, der RUN\_TYPE die OPTIMIZATION und eine Agenten-Liste übergeben. Die STATISTIC\_RUN\_NUMBER gibt an, welcher Run ausgewertet werden soll. Der RUN\_TYPE differenziert zwischen der Auswertung von baseline und optimized Daten. Der USE\_CASE unterscheidet die Auswertung von Test- und Trainingsdaten. Mit der Agenten-Liste können gezielt Statistiken zu einzelnen Agenten angefertigt werden. Wird eine leere List übergeben, so wird jeder Agent, welcher über Daten im Run-Ordner verfügt, untersucht.\\
-Zuerst wird der, durch die übergebenen Parameter aufgespannte, Path bestimmt. Danach werden alle CSV-Datein, welche die Test- und Trainingsdaten enthalten, eingelesen und deren Daten gespeichert. Sollte die Agenten-Liste nicht leer sein, so werden die Daten, der Agenten, die sich nicht in der Liste befinden, gelöscht. Die CSV-Datei bleibt erhalten.
-Danach werden die Daten entsprechend der Darstellungen im Abschnitt \ref{sec:Konzept_Datenerhebung_Verarbeitung} bereitgestellt. Dazu werden Dataframes des Framework Pandas (siehe \url{https://pandas.pydata.org/}) genutzt. In diesen befinden sich die Anzahl der gefressenen Äpfel (apples), der gegangenen Schritte (steps) und der Siege (wins). Diese Werte werden mithilfe des Pandas Frameworks für die Statistik aufbereitet. In diesem Fall wird der Durchschnitt über die letzten 100 Werte pro Epoch (Spiel) gebildet. Dieser Vorgang wird für alle Agenten und Evaluationskriterien durchgeführt (siehe Code Listing \ref{code:Datenerstellung}).
-\begin{python}
-performance_lists = [value["apples"].rolling(100).mean().fillna(0) for value in agent_dict.values()]
-efficiency_lists = [(value["apples"] / value["steps"]).rolling(100).mean().fillna(0) for value in agent_dict.values()]
-robustness_lists = [(value["apples"]).rolling(100).mean().fillna(0) for value in agent_dict_rgs.values()]
-win_rate = [value["wins"].rolling(100).mean().fillna(0) for value in agent_dict.values()]
-\end{python}
-\begin{lstlisting}[caption=Erstellung der Daten entsprechende der Evaluationskriterien, label=code:Datenerstellung]
-\end{lstlisting}
-Danach werden die Statistiken mit der make\_statistics Unterfunktion erstellt.
-Diese generiert, mithilfe des Matplotlib Frameworks (siehe \url{https://matplotlib.org/}), die Graphiken.
+Die Statistiken werden mit der generate\_statistic Funktion erstellt.
+Zuerst werden alle CSV-Datein, welche die Test- und Trainingsdaten beinhalten, eingelesen. Dabei findet auch die Mittelung der Daten aus den verschiedenen Datenerhebungen \fullref{subsec:Anforderungen_mehrfache_Datenerhebung} statt.
+Diese werden danach entsprechend der Darstellung im \autoref{sec:Konzept_Datenerhebung_Verarbeitung} bereitgestellt. 
+Dazu wird pro Evaluationskriterium jedem Agenten ein Pandas Dataframe (siehe \url{https://pandas.pydata.org/}) zugeordnet, welcher die spezifischen Daten für dieses Kriterium besitzt.\\
+Sollten also sechs Agenten verglichen werden, so werden vier Python dicts erstellt (da vier Evaluationskriterien existieren), welche als Key den Agentennamen und als Value den jeweiligen Dataframe für das Evaluationskriterium beinhalten. Die dicts besitzen alle also die Größe sechs.\\
+Diese dicts werden dann jeweils der make\_statistics Methode übergeben, wo die eigentlichen Statistiken generiert und gespeichert werden. Dies wird mithilfe des Matplotlib Frameworks (siehe \url{https://matplotlib.org/}) umgesetzt.

@@ -86,30 +86,30 @@
 \contentsline {chapter}{\numberline {6}Implementierung}{47}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Snake Environment}{47}{section.6.1}%
 \contentsline {section}{\numberline {6.2}AV-Network}{49}{section.6.2}%
-\contentsline {section}{\numberline {6.3}DQN}{49}{section.6.3}%
+\contentsline {section}{\numberline {6.3}DQN}{50}{section.6.3}%
 \contentsline {subsection}{\numberline {6.3.1}Q-Network}{50}{subsection.6.3.1}%
 \contentsline {subsection}{\numberline {6.3.2}Memory}{50}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}Agent}{50}{subsection.6.3.3}%
+\contentsline {subsection}{\numberline {6.3.3}Agent}{51}{subsection.6.3.3}%
 \contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{51}{subsubsection*.66}%
 \contentsline {subsubsection}{\nonumberline Trainingsroutine}{51}{subsubsection*.68}%
 \contentsline {section}{\numberline {6.4}PPO}{52}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Actor und Critic}{52}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.1}Actor und Critic}{53}{subsection.6.4.1}%
 \contentsline {subsection}{\numberline {6.4.2}ActorCritic}{53}{subsection.6.4.2}%
-\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{53}{subsubsection*.70}%
+\contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{54}{subsubsection*.70}%
 \contentsline {subsubsection}{\nonumberline Evaluate Methode}{54}{subsubsection*.72}%
-\contentsline {subsection}{\numberline {6.4.3}Memory}{54}{subsection.6.4.3}%
+\contentsline {subsection}{\numberline {6.4.3}Memory}{55}{subsection.6.4.3}%
 \contentsline {subsection}{\numberline {6.4.4}Agent}{55}{subsection.6.4.4}%
-\contentsline {subsubsection}{\nonumberline Learn Methode}{55}{subsubsection*.74}%
+\contentsline {subsubsection}{\nonumberline Trainingsroutine}{55}{subsubsection*.74}%
 \contentsline {section}{\numberline {6.5}Train Methoden}{57}{section.6.5}%
 \contentsline {subsection}{\numberline {6.5.1}Test Methoden}{58}{subsection.6.5.1}%
-\contentsline {section}{\numberline {6.6}Statistik}{58}{section.6.6}%
+\contentsline {section}{\numberline {6.6}Statistik}{59}{section.6.6}%
 \contentsline {chapter}{\numberline {7}Evaluation}{60}{chapter.7}%
 \contentsline {section}{\numberline {7.1}Ergebnisevaluation der Vergleiche}{60}{section.7.1}%
 \contentsline {subsection}{\numberline {7.1.1}Evaluation der Baseline Vergleiche}{60}{subsection.7.1.1}%
 \contentsline {subsubsection}{\nonumberline Performance}{60}{subsubsection*.76}%
 \contentsline {subsubsection}{\nonumberline Siegrate}{62}{subsubsection*.78}%
 \contentsline {subsubsection}{\nonumberline Robustheit}{63}{subsubsection*.80}%
-\contentsline {subsubsection}{\nonumberline Effizienz}{63}{subsubsection*.82}%
+\contentsline {subsubsection}{\nonumberline Effizienz}{64}{subsubsection*.82}%
 \contentsline {subsection}{\numberline {7.1.2}Evaluation der Optimized Vergleiche}{65}{subsection.7.1.2}%
 \contentsline {subsubsection}{\nonumberline Performance}{65}{subsubsection*.84}%
 \contentsline {subsubsection}{\nonumberline Siegrate}{67}{subsubsection*.86}%

@@ -67,7 +67,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{pythonhighlight}
-\usepackage{listings}
+
 %---------------
 %---Sonstiges---
 %---------------
@@ -86,12 +86,9 @@
 \usepackage{wrapfig}
 \usepackage{float}
 \usepackage[inkscape=true, inkscapelatex=true]{svg}
-\svgpath{{./Abbildungen/}{./Abbildungen/Grundlagen/}{./Abbildungen/Konzept/}}
+\svgpath{{./Abbildungen/}{./Abbildungen/Grundlagen/}{./Abbildungen/Konzept/}{./Abbildungen/Implementierung/}{./Abbildungen/Evaluation/}}
 \svgsetup{inkscapeexe="C:/Program Files/Inkscape/bin/inkscape", inkscapepath={svgpath}}
 \restylefloat{figure}
-
-
-\usepackage[textsize=tiny]{todonotes} %Notizen im Text mit
 
 %------------------
 %---Links & URLs---
@@ -99,10 +96,21 @@
 
 %hyperref möglichst als letztes package laden (es gibt aber Ausnahmen)!
 
-\usepackage[
-	urlcolor=black, %Textfarbe von Links schwarz statt blau (default)
-]{hyperref} %für Referenzen, Verweise, Links, ...
+\usepackage[urlcolor=black]{hyperref} %für Referenzen, Verweise, Links, ...
+\usepackage{xcolor}
+\usepackage{listings}
 
+\lstdefinestyle{Python}{
+	language        = Python,
+	basicstyle      = \ttfamily\footnotesize,
+	%basicstyle      = \ttfamily\scriptsize,
+	keywordstyle    = \color{blue},
+	keywordstyle    = [2] \color{teal}, % just to check that it works
+	stringstyle     = \color{green},
+	commentstyle    = \color{red}\ttfamily,
+	captionpos		=b, 
+	numbers			=none
+}
 
 
 %-----------------------------
@@ -125,6 +133,12 @@
 %---Titelseite---
 %----------------
 \begin{document}
+	\lstset{
+		frame       		= single,
+		showspaces  		= false,
+		showstringspaces    = false,
+		caption     		= \lstname
+	}
 \frontmatter %römische Seitennummerierung für den Anfang
 
 

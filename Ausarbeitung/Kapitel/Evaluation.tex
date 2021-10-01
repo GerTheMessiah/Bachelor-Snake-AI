@@ -1,28 +1,28 @@
 \chapter{Evaluation} \label{chap:Evaluation}
-In dem Kapitel Evaluation sollen die Ergebnisse der angewendeten Methodik präsentiert werden. Des Weiteren wird eine Anforderungsanalyse durchgeführt, um zu beurteilen, welche Anforderungen umgesetzt wurden. Sollen einige nicht umsetzbar gewesen sein, so werden diese in diesem Abschnitt erläutert.
+In diesem Kapitel sollen die Ergebnisse der angewendeten Methodik präsentiert werden. Des Weiteren wird eine Anforderungsanalyse durchgeführt, um zu beurteilen, welche Anforderungen umgesetzt wurden. Sollen einige nicht umsetzbar gewesen sein, so werden diese erläutert.
 
 \section{Ergebnisevaluation der Vergleiche} \label{sec:Evaluation_Ergebnisevaluation}
-In der Evaluation sollen die Ergebnisse, welche aus den Vergleichen stammten präsentiert werden. Dabei wird sich am Vorgehen orientiert.
+In der Evaluation sollen die Ergebnisse, welche aus den Vergleichen stammten, präsentiert werden.
 
 \subsection{Evaluation der Baseline Vergleiche}
-Basierend auf dem Vorgehen (siehe Abschnitt \ref{sec:Konzept_Vorgehen}) wird mit den Baseline Vergleichen begonnen. Bei diesen handelt es sich um die Vergleiche, welche von  nicht optimierten (baseline) Agenten durchgeführt worden sind (siehe Abbildung \ref{fig:Konzept_Agenten}). Diese Agenten wurden in einem Trainingsverlauf, entsprechend der Beschreibung in Abschnitt \ref{sec:Konzept_Datenerhebung}, trainiert. 
-Während dieses Prozesses wurden die Trainingsdaten erhoben, die graphisch dargestellt wurden. 
-Als nächster Schritt wurden die Testdaten in Testläufen ermittelt, welche im Folgenden tabellarisch ausgewertet werden mit Ausnahme der Robustheit und Effizienz.
+Basierend auf dem Vorgehen \fullref{sec:Konzept_Vorgehen} wird mit den Baseline Vergleichen begonnen. Bei diesen handelt es sich um die Vergleiche, welche von  nicht optimierten Agenten (Baseline Agenten) durchgeführt worden sind \fullref{fig:Konzept_Agenten}). Diese Agenten wurden in einem Trainingsverlauf, entsprechend der Beschreibung im \autoref{subsec:Konzept_Datenerhebung}, trainiert. 
+Währenddessen wurden die Trainingsdaten erhoben, die grafisch dargestellt wurden. 
+Als nächster Schritt wurden die Testdaten ermittelt, welche im Folgenden tabellarisch ausgewertet werden mit Ausnahme der Robustheit und Effizienz. Bei diesen bietet sich eine grafische Auswertung der Testdaten an.
 
 \subsubsection{Performance}
-Einleitend in die Baseline Vergleichsauswertung soll mit der Performance gestartet werden. Dabei ist in der Abbildung \ref{fig:Baseline_01_performance} die Performance bzw. der Apfeldurchschnitt der letzten 100 Epochs pro Epoch des ersten Baseline Vergleiches abgebildet.\\
+Die Baseline Vergleichsauswertung soll mit der Performance beginnen. Dabei ist in der \autoref{fig:Evaluation_Baseline_01_performance} die durchschnittliche Performance bzw. Apfelanzahl der letzten 200 Epochs pro Epoch abgebildet.\\
 Die DQN Agenten waren in den Vergleichen nicht in der Lage, eine durchschnittliche Apfelsammelrate von 30 Äpfeln pro Spiel zu erreichen. 
-Eine vermutliche Erklärung warum die Agenten des DQN Algorithmus keine guten Leistungen erzielen konnte, liegt in der Wahl von Zufallsaktionen. Die Komplexität des Spiels Snake steigt gegen Ende immer mehr an, da die Snake, mit zunehmenden Spielfortschritt, keine nicht zielführenden Schritte mehr gehen darf. In einer beengten Spielsituation könnte jeder falsche Schritt zum Tod führen, wobei durch das zufällige Wählen von Aktionen falsche Schritte unternommen würden. Dadurch, dass das Spiel immer vorzeitig beendet würde, könnte der DQN Algorithmus auch seine Leistung nicht weiter steigern, weil ihm die Daten zum Lernen fehlten.
+Eine vermutliche Erklärung warum die Agenten des DQN Algorithmus keine guten Leistungen erzielen konnten, liegt in der Wahl von Zufallsaktionen. Die Komplexität des Spiels Snake steigt gegen Ende immer weiter an, da die Snake, mit zunehmenden Spielfortschritt, keine nicht zielführenden Schritte mehr gehen darf. In einer beengten Spielsituation könnte jeder falsche Schritt zum Tod führen, wobei durch zufällige Aktionen falsche Schritte durchgeführt werden könnten. Dadurch, dass das Spiel immer vorzeitig beendet würde, könnte der DQN Agent auch seine Leistung nicht weiter steigern, weil ihm die Daten zum Lernen fehlen würden.
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.4517]{Abbildungen/Evaluation/baseline-performance.png}
-	\caption[Baseline Vergleich Performance]{Baseline Vergleich der gemittelten Performance.}
-	\label{fig:Baseline_01_performance}
+	\includesvg[scale=0.4517]{baseline-performance}
+	\caption[Baseline Vergleich Performance]{Baseline Vergleich der Performance für die Trainingsdaten. Die Performance ist als Apfelanzahl pro Epoch definiert. Für einen besseren Kurvenverlauf wird die durchschn. Performance der letzten 200 Epochs abgebildet.}
+	\label{fig:Evaluation_Baseline_01_performance}
 \end{figure}
-Im Training konnten besonders die Leistungen der PPO Agenten PPO-03 und PPO-01, in den Vergleichen, überzeugen. 
+Im Training konnten besonders die Leistungen der PPO Agenten PPO-03 und PPO-01 überzeugen. 
 Der PPO-03 kann dabei besonders mit seinem schnellen Lernerfolg punkten, wohingegen der PPO-01 mit seiner annähernd linearen Stetigkeit überzeugen kann.
-PPO-02 könnte zwar ebenfalls ein fast lineare Steigerung seiner Performance erzielen, jedoch konvergierte dieser früher als der PPO-01.
-Dieses entsprechen den in Abschnitt \ref{sec:Konzept_Vorstellung_Agenten} angedachten.
+PPO-02 konnte zwar ebenfalls ein fast lineare Steigerung seiner Performance erzielen, jedoch konvergierte dieser früher als der PPO-01.
+Dieses Verhalten der Agenten entspricht den Darstellungen im \autoref{subsec:Konzept_Vorstellung_Agenten}.
 \begin{longtable}[h]{|p{2.7cm}|p{4.5cm}|p{4cm}|}
 	\hline
 	Agent & Gemittelte Performance & Standardabweichung \\
@@ -42,24 +42,24 @@ Dieses entsprechen den in Abschnitt \ref{sec:Konzept_Vorstellung_Agenten} angeda
 \caption{Testdatenauswertung der Performance}
 \label{tab:Evaluation_Testdaten_Performance} 
 \end{longtable}
-Auch die Auswertung der Testdaten (siege Tabelle \ref{tab:Evaluation_Testdaten_Performance}) zeigt den, sich in den Trainingsdaten abzeichnenden, Trend. So erbringt der PPO-03 die beste und der PPO-01 die zweitbeste Leistung. Die Standardabweichung der Agenten PPO-03 und PPO-01 zeigt jedoch, dass die Leistungen nicht konsistent sind. Besonders PPO-01 zeigte eine schwankende Performance, welche auch in den Trainingsdaten (siehe Abbildung \ref{fig:Baseline_01_performance}) zu beobachten ist.
-Aufgrund der erzielten Performance dieser PPO Agenten ist daher festzustellen, dass der PPO-03 und PPO-01 das Evaluationskriterium der Performance am besten erfüllt haben. Sie sind daher die Sieger im Evaluationskriterium der Performance.\\
-Stark mit der Performance korrelierend, stellt die Siegrate das nächste zu untersuchende Evaluationskriterium dar (siehe Abschnitt \ref{sec:Evaluation_Siegrate}).
+\newpage
+Auch die Auswertung der Testdaten \fullref{tab:Evaluation_Testdaten_Performance} zeigt den sich in den Trainingsdaten abzeichnenden Trend. So erbringt der PPO-03 die beste und der PPO-01 die zweitbeste Leistung. Die Standardabweichungen des PPO-03 und PPO-01 zeigen jedoch, dass die Leistungen nicht konsistent sind. Besonders PPO-01 zeigte eine schwankende Performance, welche auch in den Trainingsdaten \fullref{fig:Evaluation_Baseline_01_performance} zu beobachten ist.
+Daher bleibt der PPO-03 für das Evaluationskriterium der Performance der Sieger.\\
+Stark mit der Performance korrelierend, stellt die Siegrate das nächste zu untersuchende Evaluationskriterium dar.
 
 \subsubsection{Siegrate} \label{sec:Evaluation_Siegrate}
-Ähnlich, wie bei der Performance, verhält es auch mit dem Evaluationskriterium der Siegrate (siehe Abbildung \ref{fig:Baseline_winrate}).
-Die PPO Agenten PPO-03 und PPO-01 besitzen die besten Siegraten während des Trainings (siehe Abbildung \ref{fig:Baseline_winrate}). 
-Die DQN Agenten sind nicht in der Lage gewesen, Siege zu erreichen und fallen daher aus der Betrachtung heraus.
-Der PPO-02 zeigt eine geringe Siegrate, trotz ähnlicher Performances zu den Agenten PPO-01 und PPO-03 (siehe Abbildung \ref{fig:Baseline_01_performance}).
-Bemerkenswert ist des Weiteren, dass der PPO-03 zwar ähnliche Leistungen wie der PPO-01 erreicht (siehe Abbildung \ref{fig:Baseline_01_performance}), jedoch der PPO-01 deutlich bessere Siegraten erzielen konnte. Dies ist möglicherweise auf den stetigen Lerncharakter des Agenten zurückzuführen (siehe Abschnitt \ref{sec:Konzept_Vorstellung_Agenten}).
+Ähnlich wie bei der Performance verhält es auch mit dem Evaluationskriterium der Siegrate. PPO-03 und PPO-01 besitzen die besten Siegraten während des Trainings \fullref{fig:Baseline_winrate}.
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.4517]{Abbildungen/Evaluation/baseline-winrate.png}
-	\caption[Baseline Vergleich Siegrate]{Baseline der gemittelten Siegrate}
+	\includesvg[scale=0.4517]{baseline-siegrate}
+	\caption[Baseline Vergleich Siegrate]{Baseline Vergleich der durchschn. Siegrate. Für den besseren Kurvenverlauf wird die durchschn. Siegrate der letzten 200 Epochs abgebildet.}
 	\label{fig:Baseline_winrate}
 \end{figure}
-Auch die Testdaten in der Tabelle \ref{tab:Evaluation_Testdaten_Winrate}, zeigt, dass die PPO Agenten PPO-01 und PPO-03 die Sieger sind, wobei sich der eben beschriebene Trend, aus den Trainingsdaten, auch in den Testdaten widerspiegelt. Es ist daher festzuhalten, dass der PPO-01 und PPO-03 die Sieger im Evaluationskriterium der Siegrate sind.
-
+Die DQN Agenten sind nicht in der Lage gewesen Siege zu erreichen und fallen daher aus der Betrachtung heraus.
+Der PPO-02 zeigt eine deutlich geringe Siegrate, trotz ähnlicher Performances zu den anderen PPO Agenten.
+Bemerkenswert ist des Weiteren, dass der PPO-03 zwar ähnliche Leistungen wie der PPO-01 erreicht \fullref{fig:Evaluation_Baseline_01_performance}, jedoch der PPO-01 eine deutlich bessere Siegraten erzielt. Dies ist möglicherweise auf den stetigen Lerncharakter des Agenten zurückzuführen \fullref{subsec:Konzept_Vorstellung_Agenten}.
+Auch die Testdaten in \autoref{tab:Evaluation_Testdaten_Winrate} zeigen, dass PPO-01 der Sieger ist, wobei sich der eben beschriebene Trend aus den Trainingsdaten in den Testdaten widerspiegelt. Daher ist der PPO-01 der Sieger für das Evaluationskriterium der Siegrate.
+\newpage
 \begin{longtable}[h]{|p{3.7cm}|p{4.5cm}|p{4.5cm}|}
 	\hline
 	Agent & Gemittelte Siegraten & Standardabweichung \\
@@ -74,40 +74,41 @@ Auch die Testdaten in der Tabelle \ref{tab:Evaluation_Testdaten_Winrate}, zeigt,
 	\label{tab:Evaluation_Testdaten_Winrate} 
 \end{longtable}
 \subsubsection{Robustheit}
-Die Robustheit stellt ein besonderes Evaluationskriterium dar, denn sie wird ausschließlich aus Testdaten bestimmt. Diese werden zur besseren Übersicht in eine Grafik überführt. Die Robustheit ist definiert als die durchschnittliche Performance pro Spielfeldgröße.
+Die Robustheit stellt ein besonderes Evaluationskriterium dar, denn sie wird ausschließlich aus Testdaten bestimmt. Diese werden zur besseren Übersicht in eine Grafik überführt. Die Robustheit ist als durchschn. Apfelanzahl dividiert durch die Spielfeldgröße pro Quadratwurzel aus der Spielfeldgröße definiert. 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.4517]{Abbildungen/Evaluation/baseline-robustheit.png}
-	\caption[Baseline Vergleich Robustheit]{Baseline Vergleich der gemittelten Robustheit}
+	\includesvg[scale=0.4517]{baseline-robustheit}
+	\caption[Baseline Vergleich Robustheit]{Baseline Vergleich der durchschn. Robustheit. Diese wird als durchschn. Apfelanzahl dividiert durch die Spielfeldgröße pro Quadratwurzel aus der Spielfeldgröße dargestellt.}
 	\label{fig:Evaluation_Baseline_Robustheit}
 \end{figure}
-Wie in Abbildung \ref{fig:Evaluation_Baseline_Robustheit} zu erkennen ist, zeigen die DQN Agenten 
-Die DQN-Agenten erreichen auf kleineren Spielfeldgrößen bessere Ergebnisse als auf der Standard Spielfeldgröße von 8x8. Sollte sich jedoch das Spielfeld vergrößern, so stagnieren ihre Leistungen.
-Bei den PPOs zeigt sich ein ähnliches Bild. Ihre Leistungen steigen ebenfalls nicht mit dem sich vergrößernden Spielfeld an. Jedoch waren der PPO-03 und der PPO-01 in der Lage die besten Ergebnisse in der unbekannten Gebieten zu erzielen. Im Baseline Run 2 war es dem PPO-03 sogar möglich, ein deutlich besseres Ergebnis zu erzielen, als mit der Standard Spielfeldgröße (8, 8).\\
-Daher sind die Agenten PPO-03 und PPO-01 die Gewinner Agenten was das Evaluationskriterium der Robustheit betrifft.
+Wie in \autoref{fig:Evaluation_Baseline_Robustheit} zu erkennen ist, zeigen die DQN Agenten keine guten Resultate.
+Sie erreichen auf kleineren Spielfeldgrößen bessere Ergebnisse als auf der Standard Spielfeldgröße von 8x8. Sollte sich jedoch das Spielfeld vergrößern, so stagnieren ihre Leistungen.
+Bei den PPO Agenten zeigt sich ein ähnliches Bild. Ihre Leistungen steigen ebenfalls nicht mit dem sich vergrößernden Spielfeld an. Jedoch ist der PPO-03 in der Lage, die besten Ergebnisse in den unbekannten Gebieten zu erzielen.\\
+Bemerkenswert ist des Weiteren, dass sich ein Trend abzeichnet, nachdem Agenten auf geraden Spielfeldgrößen (z.B. (6x6), (8x8) und (10x10)) bessere Leistungen erzielen können als auf ungeraden (z.B. (7x7) und (9x9)).\\
+Aus diesem Vergleich geht dennoch der PPO-03 Agent als Sieger für das Evaluationskriterium der Robustheit hervor.
 
 \subsubsection{Effizienz} \label{sec:Evaluation_Effizienz_Baseline}
-Bei der Effizienz treten nun interessante Effekte auf. Diese ist nämlich als Schritte pro Apfelanzahl definiert (siehe \ref{fig:Evaluation_Baseline_Effizienz}). Mit dieser Berechnungsweise lässt sich ein Zusammenhang zwischen Effizienz und der Performance herstellen. 
-Wie in der Abbildung \ref{fig:Evaluation_Baseline_Effizienz} zu erkennen ist, sind die DQN Agenten DQN-01 und DQN-02 diejenigen, welche die beste Effizienz-Leistung erbringen. Dies gilt jedoch nur bis zu einer Apfelanzahl von 43. Denkbar wären daher die DQN Agenten in Einsatzgebieten mit wenigen Zielen aber großen Distanzen einzusetzen, sodass der Effizienzcharakter des Agenten hilft Kraftstoff bzw. Energie, am Beispiel der unbemannter Drohnen, zu sparen. 
+Die Effizienz stellt zusammen mit der Robustheit ein besonderes Evaluationskriterium dar. Sie ist als durchschn. Schrittanzahl pro Apfelanzahl definiert.\\
+Wie in der \autoref{fig:Evaluation_Baseline_Effizienz} zu erkennen ist, sind DQN-01 und DQN-02 diejenigen, welche die niedrigste Schrittanzahl für die jeweilige Apfelanzahl besitzt. Dies gilt jedoch nicht kontinuierlich. Denkbar wären daher die DQN Agenten in Einsatzgebieten mit wenigen Zielen aber großen Distanzen einzusetzen, sodass der Effizienzcharakter der Agenten hilft Kraftstoff bzw. Energie, am Beispiel der unbemannten Drohnen, zu sparen. 
 \begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.4517]{Abbildungen/Evaluation/baseline-effizienz.png}
-	\caption[Baseline Vergleich Effizienz]{Baseline Vergleich der Effizienz - Trainingsdaten}
+	\includesvg[scale=0.4517]{baseline-effizienz}
+	\caption[Baseline Vergleich der Effizienz für die Trainingsdaten]{Baseline Vergleich der Effizienz für die Trainingsdaten. Die Effizienz ist als durchschn. Schrittanzahl pro Apfelanzahl dargestellt.}
 	\label{fig:Evaluation_Baseline_Effizienz}
 \end{figure}
 Eine weitere Betrachtung der DQN Agenten unter dem Kriterium der Effizienz wird jedoch aufgrund der fehlenden Daten nicht durchgeführt.
-Da die DQN Agenten ausgeschieden sind, bleiben nur noch die PPO Agenten. Diese verfügen über den gesamten Trainingslauf eine solide Effizienz. 
-\begin{figure}[H]
-	\centering
-	\includegraphics[scale=0.4517]{Abbildungen/Evaluation/baseline-effizienz2.png}
-	\caption[Baseline Vergleich Effizienz]{Baseline Vergleich der Effizienz - Testdaten}
-	\label{fig:Evaluation_Effizienz2_Baseline}
-\end{figure}
+Da die DQN Agenten ausgeschieden sind, bleiben nur noch die PPO Agenten. Diese verfügen über den gesamten Trainingslauf eine solide Effizienz.
 Der PPO-02 konnte bei der Auswertung der Trainingsdaten die besten Ergebnisse erzielen, gefolgt von PPO-03.
 Erwähnenswert ist ebenfalls, dass das die Effizient-Differenz zwischen den Agenten PPO-01 bis PPO-03 gegeben Ende deutlich abnimmt, da durch die Gesetzmäßigkeiten des Spiels Snake, kaum effizientere Routen zum Apfel zu finden sind.
 Auch bei der Auswertung der Testdaten in Abbildung \ref{fig:Evaluation_Effizienz2_Baseline}, wird dieser Trend deutlich.\\
 Einzelnen Graphen in Abbildung \ref{fig:Evaluation_Effizienz2_Baseline} besitzen immer wieder Abschnitte, in welchen der Graph abbricht. Dies bedeutet, dass der Agent eine solche Anzahl an Äpfeln nie erreicht hat. Dies muss nicht negativ ausgewertet werde.\\
 Die gute Effizienz des PPO-02 kann dabei unter anderen auf den niedrigen Gamma Wert von 0.93 zurückgeführt werden, welcher den Agenten dazu anhält, schnell viele gute Rewards zu erzielen (siehe Abschnitt \ref{sec:Konzept_Vorstellung_Agenten}).
+\begin{figure}[H]
+	\centering
+	\includesvg[scale=0.4517]{baseline-effizienz2}
+	\caption[Baseline Vergleich der Effizienz für die Testdaten]{Baseline Vergleich der Effizienz - Testdaten}
+	\label{fig:Evaluation_Effizienz2_Baseline}
+\end{figure}
 
 \subsection{Evaluation der Optimized Vergleiche}
 Nach der Durchführung der Baseline Vergleiche werden nun, entsprechend des Vorgehens (siehe Abschnitt \ref{sec:Konzept_Vorgehen}), die Baseline Gewinner Agenten (siehe Abbildung \ref{fig:Vorgehen}) optimiert und dann untereinander verglichen.

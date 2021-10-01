@@ -191,4 +191,32 @@
   day          = {06},
 }
 
+@Book{Glassner1989,
+  editor    = {Glassner, Andrew S.},
+  publisher = {Academic Press Ltd.},
+  title     = {{An Introduction to Ray Tracing}},
+  year      = {1989},
+  address   = {GBR},
+  isbn      = {0122861604},
+}
+
+@Misc{pytorch_minimal_ppo,
+  author       = {Barhate, Nikhil},
+  howpublished = {\url{https://github.com/nikhilbarhate99/PPO-PyTorch}},
+  title        = {Minimal PyTorch Implementation of Proximal Policy Optimization},
+  year         = {2021},
+  journal      = {GitHub repository},
+  publisher    = {GitHub},
+}
+
+@Misc{Charles2013,
+  author       = {Phil Tabor},
+  howpublished = {\url{https://github.com/philtabor/Youtube-Code-Repository/tree/master/ReinforcementLearning/PolicyGradient/PPO/torch}},
+  month        = dec,
+  title        = {{PPO/torch}},
+  year         = {2020},
+  journal      = {GitHub repository},
+  publisher    = {GitHub},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
