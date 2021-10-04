@@ -32,7 +32,7 @@ Die Agenten müssen in der Lage sein, aus einer Observation eine Aktion zu besti
 \subsubsection{Lernen} \label{subsubsec:Anforderungen_Lernen}
 Die Agenten müssen fähig sein, auf Grundlage vergangener Spielepisoden zu lernen und damit ihre Spielergebnisse zu verbessern.
 
-\subsection{Parametrisierung} \label{subsec:Anforderungen_Parametrisierung}
+\subsubsection{Parametrisierung} \label{subsubsec:Anforderungen_Parametrisierung}
 Das System muss die Möglichkeit besitzen, mehrere Agenten des gleichen Algorithmus zu erstellen, welche sich jedoch durch ihre verwendeten Hyperparameter unterscheiden. Diese Definition von Agenten ist in der Evaluation zu berücksichtigen und dient damit einer besseren Vergleichbarkeit.
 
 \subsection{Diversität der RL Algorithmen} \label{subsec:Anforderungen_Diversität}
@@ -49,10 +49,6 @@ Die Datenermittlung muss für jeden einzelnen Agenten mehrfach durchgeführt wer
 Damit aus den erzeugten Test- und Trainingsdaten statistische Schlüsse gezogen werden können, ist es wichtig, dass diese gespeichert werden. Da jedoch die Menge an Daten schnell riesige Dimensionen annehmen würde, sollen stellvertretend nur die Daten ganzer Spiele gespeichert werden. Diese Strategie stellt einen Kompromiss zwischen Vollständigkeit und effizientem Speicherplatzmanagement dar.\\
 Das System soll folgende Daten speichern:
 \begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
-	\caption{Zu erhebende Daten}
-	\label{tab:Anforderungen_Datenerhebung} 
-	\endfirsthead
-	\endhead
 	\hline
 	Daten & Erklärung \\
 	\hline
@@ -62,24 +58,19 @@ Das System soll folgende Daten speichern:
 	\hline
 	wins & Hat der Agent das Spiel gewonnen? Dieser Wert stellt die Endkontrolle des Agenten dar. Er gibt Aufschluss über das Konvergenzverhalten.\\
 	\hline
+	\caption[Darstellung der zu erhebende Daten]{Darstellung der zu erhebenden Daten für die statistische Auswertung.}
+	\label{tab:Anforderungen_Datenerhebung} 
 \end{longtable}
 
-\section{Anforderungen an die Statistiken} \label{sec:Anforderungen_Statistik}
-Das System muss in der Lage sein, Statistiken generieren und speichern zu können. Diese sollen für die Evaluation verwendet werden. Zu jedem Evaluationskriterium \fullref{tab:Anforderungen_Kriterien} soll eine Statistik erstellt werden. 
-
 \section{Anforderungen an die Evaluation} \label{sec:Anforderungen_an_die_Evaluation}
-Bei der Evaluation soll der optimale Agent für jedes Evaluationskriterium ermittelt werden.
+Bei der Evaluation soll der optimale Agent für jedes Evaluationskriterium ermittelt und durch aussagekräftige Statistiken untermauert werden.
 Das Kriterium der Performance wurde von verwendeten Literatur \cite{Autonomous_Agents_in_Snake_Game_via_DRL} und \cite{UAV} übernommen, die anderen ergeben sich aus den zu speichernden Daten.
 Die einzelnen Kriterien lauten:
 \begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
-	\caption{Evaluationskriterien}
-	\label{tab:Anforderungen_Kriterien} 
-	\endfirsthead
-	\endhead
 	\hline
 	Kriterium & Erläuterung \\
 	\hline
-	Performance & Welcher Agent erreicht das beste Ergebnis? Im Sachzusammenhang mit dem Spiel Snake bedeutet dies: Welcher Agent frisst die meisten Äpfel, nach dem er trainiert wurde?\\
+	Performance & Welcher Agent erreicht das beste Ergebnis? Im Sachzusammenhang mit dem Spiel Snake bedeutet dies: Welcher Agent frisst die meisten Äpfel, nachdem er trainiert wurde?\\
 	\hline
 	Siegrate & Welcher Agent schafft die Spiele mit einem Sieg zu beenden? Im Gegensatz zur Performance, gibt die Siegrate Aufschluss über das Konvergenzverhalten.\\
 	\hline
@@ -87,4 +78,6 @@ Die einzelnen Kriterien lauten:
 	\hline
 	Effizienz & Welcher Agent löst das Spiel mit der größten Effizienz? Bezogen auf das Spiel Snake bedeutet dies: Welcher Agent ist in der Lage, die Äpfel mit möglichst wenig Schritten zu fressen? Dieser Wert ist besonders in Real World Applikationen von Interesse, da beispielsweise selbstfahrende Autos ihrer Ziele in einer möglichst geringen Strecke erreichen sollen, um Energie und Zeit zu sparen.\\
 	\hline
+	\caption{Auflistung der Evaluationskriterien}
+	\label{tab:Anforderungen_Kriterien} 
 \end{longtable}

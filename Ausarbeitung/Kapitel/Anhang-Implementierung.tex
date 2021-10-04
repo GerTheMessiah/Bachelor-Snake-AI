@@ -1,104 +1,30 @@
 \chapter{Anhang zur Implementierung}
 
-\section{Around-View} \label{sec:Anhang-Implementierung-Around-View}
-Zu Erstellung der around\_view (AV) werden zunächst einige Konstanten gesetzt bzw. berechnet, wie z.B. die width oder c\_s und c\_h erstellt. Erstere entspricht dem Radius des Ausschnittes um den Kopf. Die letzteren sind Farbkonstanten, welche im Player definiert wurden (siehe \ref{sec:Implementierung_Player}).\\
-Danach wird über jeden Eintrag, welcher im Ausschnitt der AV liegt, iteriert. Dieser Ausschnitt besitzt die Form eines Vierecks in dessen Mittelpunkt sich der Kopf der Snake befindet. Für jeden dieser Einträge wird überprüft, ob er einem der Merkmalen aus \ref{tab:around_view} entspricht. Sollte ein Merkmal erkannt worden sein, wie z.B. die Position des Apfels, so wird diese in den dazugehörigen Channel eingepflegt.
-\begin{python}
-	def create_around_view(pos, id, g):
-		width = 6
-		c_h = id * 2
-		c_s = id
-		tmp_arr = np.zeros((6, width * 2 + 1, width * 2 + 1), dtype=np.float64)
-	
-		for row in range(-width, width + 1):
-			for column in range(-width, width + 1):
-				if on_playground(pos[0] + row, pos[1] + column, g.shape):
-					a, b = pos[0] + row, pos[1] + column
-					if g[a, b] == c_s:
-						tmp_arr[1, row + width, column + width] = 1
-						continue
-	
-					elif g[a, b] == c_h:
-						tmp_arr[2, row + width, column + width] = 1
-						continue
-	
-					elif g[a, b] == 0:
-						tmp_arr[3, row + width, column + width] = 1
-						continue
-	
-					elif g[a, b] == -1:  # End of snake tail.
-						tmp_arr[4, row + width, column + width] = 1
-						continue
-	
-					elif g[a, b] == -2:
-						tmp_arr[5, row + width, column + width] = 1
-	
-				else:
-				tmp_arr[0, row + width, column + width] = 1
-	
-		return np.expand_dims(tmp_arr, axis=0)
-\end{python}
-
-\section{Raytracing Distanzbestimmung} \label{sec:Anhang-Implementierung-Distanzen}
-Ein wesentlicher Teil der scalar\_obs (SO) besteht aus den Distanzen, welche von der create\_distances Funktion generiert werden. Zu Beginn wird ein Null-Array der Länge 24 (3 * 8 = 24), in welches die Distanzen eingetragen werden und eine List namens grad\_list erstellt. In dieser werden Faktoren gehalten, welche den Grad der Sucherlinie (siehe \ref{fig:Observation}) angeben. Dabei entsprechen die Faktoren den Himmels- bzw. Nebenhimmelsrichtungen in der folgenden Reihenfolge (0° = N, 45° = NO, 90° = O, 135° = SO, 180° = S, 225° = SW und 270° = W, 315° = NW).\\
-Danach wird über die drei zu suchenden Objekte (Wände, Snake-Glieder, Apfel) iteriert, wobei für jedes dieser Objekt die dist Unterfunktion aufgerufen wird. Die Rückgaben werden in das Array eingepflegt und dieses ,sobald alle Distanzen bestimmt worden sind, zurückgegeben.
-\begin{python}
-	def create_distances(pos, ground):
-		obs = np.zeros(24, dtype=np.float64)
-		a = 0
-		grad_list = [(-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)]
-		for wanted in [[], [-1, 1, 2], [-2]]:
-			for grad in grad_list:
-				obs[a] = dist(ground, pos, wanted, *grad)
-				a += 1
-		return obs
-\end{python}
-Der dist Unterfunktion werden das Spielfeld (ground), die Position des Snake-Kopfes (p\_pos) die zu suchenden Werte (wanted) und fac\_0 und fac\_1 übergeben. Diese stellen die oben genannten Faktoren dar, welcher die Ausrichtung der Suchlinien definiert.
-Nach der Initialisierung weiterer Hilfsvariablen und der Distanz (dist\_), wird der erste Index generiert, welcher dem ersten Feld auf dem Weg der Linie entspricht. Sollte der Eintrag an dieser Stelle dem gesuchtem Objekt entsprechen, so wird die Zahl zwei zurückgegeben. Anderenfalls wird dist\_ inkrementiert und der nächste höhere Index der auf dem Weg der Linie liegt generiert. Dann wird wieder so verfahren wie oben bereits erwähnt.\\
-Sollte einer der Indexe jedoch das Spielfeld verlassen, so wird eine Distanz von null zurückgegeben.\\
-Diese Prozedur endet entweder mit der Rückgabe einer Distanz zum Objekt, falls dieses gefunden wird, oder durch Rückgabe von null falls das Objekt nicht im Pfad der Linie liegt. 
-\begin{python}
-	def dist(ground, p_pos, wanted_hit, fac_0, fac_1):
-		dist_, i_0, i_1 = 0, 1, 1
-		p_0 = p_pos[0] + fac_0 * i_0
-		p_1 = p_pos[1] + fac_1 * i_1
-		while on_playground(p_0, p_1, ground.shape) and ground[p_0, p_1] not in wanted_hit:
-			i_0 += 1
-			i_1 += 1
-			dist_ += 1
-			p_0 = p_pos[0] + fac_0 * i_0
-			p_1 = p_pos[1] + fac_1 * i_1
-		if not on_playground(p_0, p_1, ground.shape) and bool(wanted_hit):
-			return 0
-		return 1 / dist_ if dist_ != 0 else 2
-\end{python} 
-
 \section{AV-Network} \label{sec:Anhang_AV_Network}
-Mit Hilfe der PyTroch Oberklasse Module, kann eine neues NN-Element erstellt werden.
+Mithilfe der Module, kann eine neues NN-Element erstellt werden.
 Es wurde daher die Klasse AV\_NET definiert, welche zugleich als NN-Element benutzt werden kann.
-\begin{python}
-	class AV_NET(nn.Module):
-		def __init__(self):
-			super(AV_NET, self).__init__()
-			self.AV_NET = nn.Sequential(
-			nn.Conv2d(in_channels=6, out_channels=8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-			nn.ReLU(),
-			nn.Conv2d(in_channels=8, out_channels=8, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
-			nn.ReLU(),
-			nn.ZeroPad2d((0, 1, 0, 1)),
-			nn.MaxPool2d(kernel_size=2, stride=2),
-			nn.Flatten(),
-			nn.Linear(392, 256),
-			nn.ReLU(),
-			nn.Linear(256, 128)
-			)
-	
-		def forward(self, av):
-			return self.AV_NET(av)
-\end{python}
-\begin{lstlisting}[caption=PyTorch Implementierung des AV-NET]
+\begin{lstlisting}[caption=Implementierung des AV-NET, style=Python]
+class AV_NET(nn.Module):
+	def __init__(self):
+		super(AV_NET, self).__init__()
+		self.AV_NET = nn.Sequential(
+		nn.Conv2d(in_channels=6, out_channels=8, \
+		kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
+		nn.ReLU(),
+		nn.Conv2d(in_channels=8, out_channels=8, \
+		 kernel_size=(3, 3), stride=(1, 1), padding=(1, 1)),
+		nn.ReLU(),
+		nn.ZeroPad2d((0, 1, 0, 1)),
+		nn.MaxPool2d(kernel_size=2, stride=2),
+		nn.Flatten(),
+		nn.Linear(392, 256),
+		nn.ReLU(),
+		nn.Linear(256, 128)
+		)
+	def forward(self, av):
+		return self.AV_NET(av)
 \end{lstlisting}
 Diese besteht aus zwei Convolutional (Conv2d), einem Max-Pooling und zwei Fully Connected Layers (Linear). 
-Zwischen den Layers finden weitere Transformationen statt, welche in Abschnitt \ref{sec:Konzept_Netzstruktur} erklärt wurden.
+Zwischen den Layers finden weitere Transformationen statt, welche in \autoref{subsec:Konzept_Netzstruktur} erklärt wurden.
 Jedes NN-Element muss zwingend eine forward Methode implementieren, um die Propagierung der Input-Daten durch das Netzwerk zu steuern. Aus diesem Grund existiert eine forward Methode für diese Klasse, welche die AV (around\_view) durch die dargestellten NN-Schichten und Funktionen propagiert. Das Ergebnis wird zurückgegeben.
 

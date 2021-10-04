@@ -1,6 +1,6 @@
 
 \chapter{Grundlagen}\label{chap:Grundlagen}
-Im folgenden Kapitel soll das, zu benötigende, Wissen vermittelt werden. Dazu sollen verschiedene RL Algorithmen, wie auch grundlegende Informationen des RL selbst, thematisiert werden. Zuerst wird sich jedoch dem Spiel Snake beschäftigt. 
+Im folgenden Kapitel soll das grundlegende Wissen, welches zur Untersuchung der Forschungsfrage benötigt wird, vermittelt werden. Dazu sollen verschiedene RL Algorithmen, wie auch die grundlegende Verfahrensweise des RL selbst, thematisiert werden. Zuerst wird sich jedoch dem Spiel Snake beschäftigt. 
 
 \section{Game of Snake} \label{sec:Grundlagen_Game_of_Snake}
 \begin{figure}[H]
@@ -13,12 +13,11 @@ Snake zählt zu den bekanntesten Computerspielen unserer Zeit. Es zeichnet sich 
 Das komplette Spielfeld wird durch eine zweidimensionale Ebene beschreibe, in welcher sich die Snake bewegt. Häufig wird diese als einfacher grüner Punkt (Quadrat) dargestellt. Dieser stellt den Kopf der Snake dar. Neben diesem befindet sich auf dem Spielfeld auch noch der Apfel. Dieser wird häufig als roter Punkt (Quadrat) dargestellt \fullref{fig:Grundlagen_Game_of_Snake}.
 Ziel der Snake ist es Äpfel zu fressen, indem der Kopf der Snake auf das Feld des Apfels läuft. Danach verschwindet der Apfel und ein neuer erscheint in einem zufälligen freien Feld. Außerdem wächst, durch das Essen des Apfels, die Snake um ein Schwanzglied. Diese Glieder folgen dabei, in ihren Bewegungen, den vorangegangenen Schwanzglied bis hin zum Kopf. Dem Spieler ist es nur möglich den Kopf der Snake zu steuern.
 Dieser ist es nicht erlaubt die Wände oder sich selbst zu berühren. Geschieht dies jedoch im Laufe des Spiels, so wird dieses sofort beendet. Diese Einschränkung führt zu einem Anstieg der Komplexität gegen Ende des Spiels. 
-Ein Spiel gilt als gewonnen, wenn es der Snake gelungen ist das komplette Spielfeld auszufüllen.\\
-Nach der Beleuchtung des Spiels Snake, folgen im Weiteren die Grundlagen des Reinforcement Learnings.
+Ein Spiel gilt als gewonnen, wenn es der Snake gelungen ist das komplette Spielfeld auszufüllen.
 
 \section{Reinforcement Learning} \label{sec:Grundlagen_RL}
 Das Reinforcement Learning (RL) ist einer der drei großen Teilbereiche, des Machine Learnings.
-Auf Menschen wirkt das RL, im Vergleich zu den anderen Disziplinen des Machine Learnings, am nachvollziehbarsten.
+Das RL wirkt, im Vergleich zu den anderen Disziplinen des Machine Learnings, am nachvollziehbarsten.
 Dies liegt an der Lernstrategie, welche Anwendung findet. 
 Beim RL wird mithilfe eines "`trial-and-error"' Verfahrens gelernt. Ein gutes Beispiel für eine solche Art des Lernens ist die Erziehung eines Kindes. Wenn das Kind etwas Gutes tut, dann wird es belohnt. Angetrieben von der Belohnung, versucht dieses das Verhalten fortzusetzen. 
 Entsprechend wird das Kind bestraft, wenn es etwas Schlechtes tut, sodass schlechtere Verhaltensweisen weniger häufig zum Vorschein kommen, um Bestrafungen zu entgehen. \citep[S.1 ff.]{Sutton1998}\\
@@ -26,7 +25,7 @@ Beim RL funktioniert es ganz ähnlich, was auch der Grund dafür ist, dass viele
 Deshalb findet das RL auch immer mehr Anwendung, im Finanzhandel, in der Robotik, im autonomen Fahren usw. \citep[Kapitel 18]{DRL_Lapan}
 
 \subsection{Vokabular} \label{subsec:Grundlagen_Vokabular}
-Um ein tiefer gehendes Verständnis für das RL zu erhalten, müssen zuerst die Begrifflichkeiten erlernt und deren Bedeutung verstanden werden.
+Um ein tiefergehendes Verständnis für das RL zu erhalten, müssen zuerst die Begrifflichkeiten erklärt werden.
 
 \subsubsection{Agent} \label{subsubsec:Grundlagen_Agent}
 Im Zusammenhang mit dem RL, ist häufig die Rede von Agenten. Sie sind zentrale Instanzen, welche die RL Algorithmen in ein festes Objekt einbinden. Dabei werden Methoden, Hyperparameter und das NN in die Agenten eingebunden. \citep[S. 31]{DRL_Lapan}
@@ -37,7 +36,7 @@ Das Environment (Env) bzw. die  Umgebung ist vollständig außerhalb des Agenten
 
 \subsubsection{Action} \label{subsubsec:Grundlagen_Action}
 Die Actions bzw. Aktionen sind einer der drei Datenübermittlungswege. Bei ihnen handelt es sich um Handlungen, welche im Env ausgeführt werden. Aktionen können z.B. Züge in Spielen, das Abbiegen im autonomen Fahren oder das Ausfüllen eines Antrages sein. Es wird ersichtlich, dass die Aktionen, welche ein RL Agent ausführen kann, prinzipiell nicht in der Komplexität beschränkt sind. 
-Dennoch ist es gängige Praxis geworden, dass diese möglichst einfach seinen sollen.\\
+Dennoch ist es gängige Praxis geworden, dass diese möglichst einfach gestaltet werden sollen.\\
 Im Environment wird zwischen diskreten und stetigen Aktionsraum unterschieden. Der diskrete Aktionsraum umfasst eine endliche Menge an sich gegenseitig ausschließenden Aktionen. Ein Beispiel dafür wäre das Gehen an einer T-Kreuzung. Der Agent kann entweder Links, Rechts oder zurück gehen.
 Anders verhält es sich bei einem stetigen Aktionsraum. Dieser zeichnet sich durch stetige Werte aus. Das Steuern eines Autos wäre hierfür beispielhaft. Es stellen sich Fragen, wie z.B. um wie viel Grad muss der Agent das Steuer drehen und um wie viel Prozent muss er bremsen, damit das Fahrzeug in der Spur bleibt? \citep[S. 31 f.]{DRL_Lapan}
 
@@ -77,20 +76,20 @@ Das manipulierte Env befindet sich nun im neuen State $S_{t+1}$, welcher an den 
 Mit dem neuen State $S_{t+1}$, kann der Agent wieder eine Aktion $A_{t+1}$ bestimmen, welche ausgeführt wird. Daraufhin werden wieder der neue State $S_{t+2}$ und Reward $R_{t+2}$ ermittelt und übertragen usw. \citep[S. 37 ff.]{Sutton1998}
 
 \subsection{Arten von RL Verfahren} \label{subsec:Grundlagen_Arten_RL_Verfahren}
-Nachdem das Basisvokabular erklärt wurde, soll nun ein tieferer Blick in die verschiedenen Arten der RL geworfen werden.\\
-Alle RL Verfahren lassen sich, in Klassen einordnen, welche Aufschluss über verschiedene Details des Algorithmus geben. Es existieren natürlich viele Möglichkeiten, RL Verfahren zu klassifizieren, aber vorerst soll sich auf die folgenden zwei beschränkt werden.
+Nachdem das Basisvokabular erklärt wurde, soll nun ein tieferer Blick in die verschiedenen Arten des RL geworfen werden.\\
+Alle RL Verfahren lassen sich, in Klassen einordnen, welche Aufschluss über verschiedene Details des Algorithmus geben. Es existieren natürlich viele Möglichkeiten RL Verfahren zu klassifizieren, aber vorerst soll sich auf die folgenden zwei beschränkt werden. Diese bieten sich an, da sie zum einen gängiger Standard sind und zum anderen die verwendeten Agenten ideal klassifizieren.
 
 \subsubsection{Policy-Based und Value-Based Verfahren} \label{subsubsec:Grundlagen_policy_value_based}
 Die Einordnung in policy-based und value-based Verfahren gibt Aufschluss über den Entscheidungsfindungsprozess des RL Verfahrens.
 Policy-Based Agenten versuchen unmittelbar die Policy zu berechnen, umzusetzen und sie zu optimieren. Sie besitzen dafür meist ein eigenes NN, welches die Policy $\pi$ für einen State $s$ bestimmt.
 Gewöhnlich wird diese als eine Wahrscheinlichkeitsverteilung über alle Aktionen angegeben \fullref{subsubsec:Grundlagen_Policy}. Jede Aktion erhält damit einen Wert zwischen null und eins, welcher Aufschluss über die Qualität der Aktion im momentanen Zustand des Env liefert. \citep[S. 100]{DRL_Lapan} \\
 Basierend auf dieser Wahrscheinlichkeitsverteilung $\pi$ wird die nächste Aktion $a$ bestimmt. Dabei wird nicht immer die optimale Aktion gewählt, um die Exploration voranzutreiben.\\
-Die value-based Verfahren bestimmen ihre Aktionen nicht mit einer Wahrscheinlichkeitsverteilung. Die Policy wird indirekt durch das Bestimmen aller Values, \fullref{subsubsec:Grundlagen_Value} für alle Aktionen, ermittelt. Es wird daher immer die Aktion $a$ gewählt, welche zu dem State $s$ führt, der über den größten Value verfügt. \citep[S. 100]{DRL_Lapan}
+Die value-based Verfahren bestimmen ihre Aktionen nicht mit einer Wahrscheinlichkeitsverteilung. Die Policy wird indirekt durch das Bestimmen aller Values, \fullref{subsubsec:Grundlagen_Value} für alle Aktionen, ermittelt. Es wird daher immer die Aktion $a$ gewählt, welche zu dem State $s*$ führt, der über den größten Value verfügt. \citep[S. 100]{DRL_Lapan}
 
 \subsubsection{On-Policy und Off-Policy Verfahren} \label{subsubsec:Grundlagen_on_off_policy}
 Eine Klassifikation in on-policy und off-policy Verfahren gibt Aufschluss über den Zustand der Daten.\\ 
 Off-Policy RL Verfahren sind in der Lage, von Daten zu lernen, welcher nicht unter der momentanen Policy \fullref{subsubsec:Grundlagen_Policy} generiert wurden. Die Aktualität der Daten spielt daher keine Rolle für dieses RL Verfahren.\\
-On-Policy RL Verfahren sind dagegen sehr wohl abhängig von der Aktualität der Daten, da sie versuchen die Policy indirekt oder direkt zu optimieren. Sollte ein on-policy Agent mit veralteten Daten trainiert werden, so würde dies die Policy des Agenten zerstören. \citep[S. 210 f.]{DRL_Lapan}\\
+On-Policy RL Verfahren sind dagegen sehr wohl abhängig von der Aktualität der Daten, da sie versuchen die Policy indirekt oder direkt zu optimieren. Sollte ein on-policy Agent mit veralteten Daten trainiert werden, so würde dies die Policy des Agenten in negativer Weise beeinflussen. \citep[S. 210 f.]{DRL_Lapan}\\
 Nach diesen Einordnungen sollen nun die ausgewählten Algorithmen näher erklärt werden. Begonnen wird mit dem Proximal Policy Optimization Algorithmus (PPO).
 
 \section{Proximal Policy Optimization} \label{sec:Grundlagen_PPO}
@@ -108,7 +107,7 @@ Neben der Architektur, ist die Aktualisierungsprozedur ein weiterer wichtiger Be
 \subsection{PPO Formelelemente}
 Das Herzstück eines jeden RL Verfahrens wird durch seine Aktualisierungsprozedur dargestellt, in welcher der Fehler (Loss) des Algorithmus bestimmt wird. Um die dem PPO zugrunde liegende Aktualisierungsprozedur besser zu verstehen, folge eine Erklärung ihrer einzelnen mathematischen Bestandteile. 
 Diese basieren auf den PPO Paper \citep{PPO}.
-\begin{longtable}[h]{|p{1.5cm}|p{\linewidth - 2.5cm}|}
+\begin{longtable}[H]{|p{1.5cm}|p{\linewidth - 2.5cm}|}
 	\hline
 	Symbol & Erklärung \\
 	\hline
@@ -130,14 +129,14 @@ Diese basieren auf den PPO Paper \citep{PPO}.
 	\hline
 	$\epsilon$ & Epsilon ist ein Hyperparameter, welcher die Ober- und Untergrenze der Clip Funktion festlegt. Gewöhnlich wird für $\epsilon$ ein Wert zwischen $0.1$ und $0.2$ gewählt. \\
 	\hline
-	$\gamma$ \label{sign:Gamma} & Der Gamma-Wert bzw. Abzinsungsfaktor ist ein Hyperparameter, welcher die Zeitpräferenz des Agenten kontrolliert. Gewöhnlich liegt Gamma $\gamma$ zwischen 0.9 bis 0.99. Große Werte sorgen für ein weitsichtiges Lernen des Agenten, wohingegen kleine Werte zu einem kurzfristigen Lernen führen \citep[S. 43 bzw. Summary of Notation S. xv]{Sutton1998}. \\
+	$\gamma$ & Der Gamma-Wert bzw. Abzinsungsfaktor ist ein Hyperparameter, welcher die Zeitpräferenz des Agenten kontrolliert. Gewöhnlich liegt Gamma $\gamma$ zwischen 0.9 bis 0.99. Große Werte sorgen für ein weitsichtiges Lernen des Agenten, wohingegen kleine Werte zu einem kurzfristigen Lernen führen \citep[S. 43 bzw. Summary of Notation S. xv]{Sutton1998}. \\
 	\hline
-	\caption{Formelelemente des PPO Algorithmus}
+	\caption{Formelelemente des PPO Algorithmus.}
 	\label{tab:Grundlagen_Formelelemente_PPO} 
 \end{longtable}
 
 \subsection{PPO Fehlerfunktion} \label{subsec:Grundlagen_PPO_Fehlerfunktion}
-Nun, da die Grundlagen näher beleuchtet worden sind, ist das nächste Ziel, die Fehlerfunktion des PPO zu verstehen, damit diese im weiteren Verlauf angewendet werden kann. Der PPO Fehler wird durch folgende Funktion definiert \citep[S. 5]{PPO}:
+Da die Grundlagen näher beleuchtet worden sind, ist das nächste Ziel die Fehlerfunktion des PPO zu verstehen, damit diese angewendet werden kann. Der PPO Fehler wird durch folgende Funktion definiert \citep[S. 5]{PPO}:
 \begin{align}
 	\label{eq:PPO_Training_Loss}
 	L^\text{PPO}_{t} (\theta) = L^\text{CLIP + VF + S}_{t} (\theta) = \mathbb{\hat{E}}_{t} [L^{\text{CLIP}}_{t}(\theta) - c_{1}L^{\text{VF}}_{t} + c_{2}S[\pi_{\theta}](s_{t})]
@@ -179,21 +178,21 @@ Bei der Fehlerfunktion des A2C Algorithmus \fullref{eq:Grundlagen_A2C_Loss} wird
 	\mathbb{\hat{E}}_t[\log_{\pi_{\theta}}(a_t|s_t)A_t]
 \end{align}
 dass die Daten für die Fehlerbestimmung nur unter der aktuellen Policy $\pi_{\theta}$ generiert wurden (on-policy) \citep[S. 591]{DRL_Lapan}.\\
-Schulman et al. ist es jedoch gelungen, diesen Ausdruck durch einen mathematisch äquivalenten zu ersetzen, welcher auf zwei Policies basieren kann. Eine davon stellt die aktuelle $\pi_{\theta}$ und die andere eine ältere $\pi_{\theta_{\text{old}}}$ dar.
+Schulman et al. ist es jedoch gelungen, diesen Ausdruck durch einen approximalen Ersatzausdruck zu ersetzen, welcher auf zwei Policies basieren kann. Eine davon stellt die aktuelle $\pi_{\theta}$ und die andere eine ältere $\pi_{\theta_{\text{old}}}$ dar.
 \begin{align}
 	\label{eq:Grundlagen_Probability_Ratio}
 	r_{t}(\theta) = \frac{\pi_{\theta}(a_{t}|s_{t})}{\pi_{\theta_{\text{old}}}(a_{t}|s_{t})}
 \end{align}
-Die Daten können nun mittels $\pi_{\theta_{\text{old}}}$, effizienter genutzt werden, da sie nun nicht mehr aus der aktuellen Policy stammen müssen. Dies erlaubt ein häufigeres Nutzen der Daten, ohne eine Zerstörung der Policy zu riskieren. \citep[Zeitpunkt: 9:25]{Deep_RL_Bootcamp}
+Die Daten können nun mittels $\pi_{\theta_{\text{old}}}$, effizienter genutzt werden, da sie nun nicht mehr aus der aktuellen Policy stammen müssen. Dies erlaubt ein häufigeres Nutzen der Daten, ohne einen negativen Einfluss auf die Policy zu riskieren. \citep[Zeitpunkt: 9:25]{Deep_RL_Bootcamp}
 
 \subsubsection{Surrogate Fehlerfunktion} \label{subsubsec:Grundlagen_Surrogate_Fehlerfunktion}
 Die Surrogate Fehlerfunktionen ergeben sich aus der Tatsache, dass die Fehlerfunktion des PPO nicht mit der gewöhnlich verwendeten logarithmierten Policy $\mathbb{\hat{E}}_t[\log_{\pi_{\theta}}(a_t|s_t)A_t]$ arbeitet, sondern mit dem Surrogate (Ersatz) der Probability Ratio $r_{t}(\theta)$ \fullref{subsubsec:Grundlagen_Probability_Ratio} zwischen alter und neuer Policy. \citep{TRPO}\\
 \\Der Actor Fehler wird mithilfe zweier Surrogate Fehlerfunktionen bestimmt. Die erste Fehlerfunktion $surr_1$ \fullref{eq:Grundlagen_surrogate_1}
 \begin{align}
-	\label{eq:Grundlagen_surrogate_1}
 	r_{t}(\theta) \hat{A}_{t}(s, a)
+	\label{eq:Grundlagen_surrogate_1}
 \end{align}
-stellt die normale TRPO Fehlerfunktion dar, ohne die durch den TRPO Algorithmus vorgesehene KL-Penalty. \citep[S. 3 f.]{PPO}
+stellt die normale TRPO Fehlerfunktion dar, ohne die durch den TRPO Algorithmus vorgesehene KL-Penalty. Diese sorgt dafür, dass sich die Policy des TRPO nicht zu weit von der ursprünglichen entfernt. Die erste Fehlerfunktion $surr_1$ kann sich daher weit von der ursprünglichen Policy entfernen.\citep[S. 3 f.]{PPO}
 Die alleinige Nutzung dieser Funktion hätte jedoch destruktiv große Policy Aktualisierungen zufolge. Aus diesem Grund haben John Schulman et al. eine zweite Surrogate Fehlerfunktion $surr_2$ \fullref{eq:Grundlagen_surrogate_2}, dem PPO Algorithmus hinzugefügt. 
 \begin{align}
 	\label{eq:Grundlagen_surrogate_2}
@@ -201,7 +200,7 @@ Die alleinige Nutzung dieser Funktion hätte jedoch destruktiv große Policy Akt
 \end{align}
 Die einzige Veränderung dieser Funktion im Vergleich zur Ersten ist, dass der berechnete Fehler geclipped (abgegrenzt) wird. Sollte sich die Probability Ratio zu weit von eins entfernen, so wird $r_{t}(\theta)$ entsprechende auf $1 - \epsilon \text{ bzw. } 1 + \epsilon$ begrenzt. Es wird sich daher in einer Trust Region bewegt, da man sich nie allzu weit von der ursprünglichen Policy entfernt. \citep{TRPO, PPO}
 
-\subsubsection{Zusammenfassung der PPO Fehlerfunktion} \label{subsubsec:Grundlagen_PPO_Actor_Loss}
+\subsubsection{Zusammenfassung der Actor Fehlerfunktion} \label{subsubsec:Grundlagen_PPO_Actor_Loss}
 Der Actor Fehler lässt sich nun für jede Erfahrung, welche gesammelt wurde, bestimmen. Dabei wird das Minimum der beiden Surrogate Fehlerfunktionen ausgewählt und als Fehler zurückgegeben \fullref{eq:Grundlagen_Actor_Loss_Single}.
 \begin{align}
 	\min(r_{t}(\theta) \hat{A}_{t}(s, a), \text{clip}(r_{t}(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_{t}(s, a))
@@ -215,12 +214,16 @@ Zum Schluss wird die PPO Fehlerfunktion definiert. Damit dies jedoch geschehen k
 	L^{\text{VF}}_{t} = (V_{\theta}(s_{t})-V_{t}^{targ})^2 \text{ wobei } V_{t}^{targ} = r_{t}(\theta)
 	\label{eq:Grundlagen_Critic_Loss}
 \end{align} 
-Der letzte Teil, welcher für die Bestimmung der PPO Fehlerfunktion benötigt wird, ist der Entropy Fehler bzw. Bonus. Dabei handelt es sich um die Entropie der Policy (Wahrscheinlichkeitsverteilung \fullref{subsubsec:Grundlagen_Policy}).\\
-Es ergibt sich damit der bereits oben erwähnte PPO Training Loss \fullref{eq:PPO_Training_Loss}:
+Der letzte Teil, welcher für die Bestimmung der PPO Fehlerfunktion benötigt wird, ist der Entropy Fehler bzw. Bonus. Dabei handelt es sich um die Entropie der Policy (Wahrscheinlichkeitsverteilung \fullref{subsubsec:Grundlagen_Policy}), welche mit der Shannon Entropie bestimmt wird. Diese ist wie folgt definiert \citep{shannon}:
+\begin{align}
+	H(X) = -\sum_{i = 0}^{n} P(x_i) \log_{b}P(x_i)
+\end{align}
+Dabei ist $-\log_{b} P(x_i)$ als der Informationsgehalt mit $b$ als Basis des Logarithmus und $P_i$ ist als Wahrscheinlichkeit definiert. Als Basis wird häufig zwei oder zehn verwendet. Sollte beispielsweise die Policy definiert sein als p = (0.95, 0.05, 0.05) dann lässt sich eine Entropie von $- (0.95 \times \log_{2}(0.95) + 0.05 \times \log_{2}(0.05) + 0.05 \times \log_{2}(0.05) \approx 0.5025$ berechnen.\\
+Es ergibt sich damit der bereits oben erwähnte PPO Training Loss \fullref{eq:PPO_Training_Loss}, wobei
 \begin{center}
 	$L^\text{PPO}_{t} (\theta) = L^\text{CLIP + VF + S}_{t} (\theta) = \mathbb{\hat{E}}_{t} [L^{\text{CLIP}}_{t}(\theta) - c_{1}L^{\text{VF}}_{t} + c_{2}S[\pi_{\theta}](s_{t})]$
 \end{center}
-$c_1 \text{ und } c_2$ sind in dieser Steuerungsfaktoren zur Regulierung der Fehlerhöhe.\\
+$c_1 \text{ und } c_2$ Steuerungsfaktoren zur Regulierung der Fehlerhöhe sind.\\
 Um den PPO Algorithmus mit seiner Fehlerfunktion richtig anwenden zu können, wird im Weiteren noch der Algorithmus näher erklärt.
 
 \subsection{PPO - Algorithmus} \label{subsec:Grundlagen_PPO_Algorithmus}
@@ -233,12 +236,12 @@ Diese Darstellung basiert dabei auf der Quelle \citep{PPO} und einigen weiteren 
 	\item Speichere Zustand, Aktion, Policy der Aktion, Reward und is\_terminal in $EB$.
 	\item Ersetze den Zustand mit dem Folgezustand $s' \longrightarrow s$.
 	\item Wiederhole alle Schritte ab Schritt 2, bis die Spielepisode endet.
-	\item Entnehme einen Batch aus dem Buffer.
+	\item Entnehme einen Batch aus dem EB.
 	\item Bestimmt die Ratios $r_t(\theta)$. \fullref{subsubsec:Grundlagen_Probability_Ratio}.
 	\item Berechne die Advantages $\hat{A}_{t}(s, a)$. \fullref{subsubsec:Grundlagen_Advantage}.
 	\item Berechne die Surrogate Fehler $surr_1$ und $surr_2$. \fullref{subsubsec:Grundlagen_Surrogate_Fehlerfunktion}.
 	\item Bestimmt den PPO Fehler. \fullref{subsubsec:Grundlagen_PPO_Fehlerfunktion}
-	\item Aktualisiere die Gewichte des Actors und Critics. $\theta_{\text{old}} \longleftarrow \theta$ und $w_{\text{old}} \longleftarrow w$.
+	\item Aktualisiere die Gewichte des Actors und Critics mit Adam Optimizer \citep{PPO}. $\theta_{\text{old}} \longleftarrow \theta$ und $w_{\text{old}} \longleftarrow w$.
 	\item Wiederhole alle Schritte ab Schritt 7 $K$-mal. $K$ stellt ein Hyperparameter dar.
 	\item Wiederhole alle Schritte ab Schritt 2 erneut, bis das Verfahren konvergiert.
 \end{enumerate}
@@ -273,7 +276,7 @@ Da $Q(s,a)$ rekursiv definiert werden kann, ergibt sich in vereinfachter Form \c
 Es wird erkenntlich, dass $Q(s,a;\theta)$ dem Q-Target $Q(s,a;\theta) \longrightarrow y_i$ entsprechen soll, darum wird die Differenz zwischen beiden bestimmt und als Fehler deklariert. Dieser wird noch quadriert, damit er stets positiv ist.
 
 \subsection{DQN - Algorithmus} \label{subsec:Grundlagen_DQN_Algorithmus}
-Zur besseren Anwendbarkeit haben Volodymyr Mnhi et al. einen Algorithmus entworfen, welcher den DQN anschaulich erklärt \citep{DBLP:journals/corr/MnihKSGAWR13}. Da jedoch in diesem Algorithmus weiterhin auf Teile der Fehlerfunktion eingegangen wird, folge eine bereinigte Version, welche sich auch für den allgemeinen Gebrauch besser anbietet. \citep[S. 149 f.]{DRL_Lapan}
+Zur besseren Anwendbarkeit haben Volodymyr Mnhi et al. einen Algorithmus entworfen, welcher den DQN anschaulich erklärt \citep{DBLP:journals/corr/MnihKSGAWR13}. Da jedoch in diesem Algorithmus weiterhin auf Teile der Fehlerfunktion eingegangen wird, folgt eine bereinigte Version, welche sich auch für den allgemeinen Gebrauch besser anbietet. \citep[S. 149 f.]{DRL_Lapan}
 \begin{enumerate} 
 	\item Initialisiere alle Hyperparameter das Q-NN mit zufallsbasierten Gewichten. Setzte Epsilon $\epsilon = 1.00$ und erzeuge einen leeren Experience Buffer $EB$.
 	\item Wähle mit der Wahrscheinlichkeit $\epsilon$ eine zufällige Aktion $a$ oder nutze $a = \arg\max_{a} Q(s,a)$.

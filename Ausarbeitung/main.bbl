@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{17}
 % this bibliography was produced with the style dinat.bst v2.5
 \makeatletter
 \newcommand{\dinatlabel}[1]%
@@ -130,6 +130,15 @@
 \newblock In: \emph{CoRR}
 \newblock abs/1707.06347 (2017). --
 \newblock URL \url{http://arxiv.org/abs/1707.06347}
+
+\bibitem[Shannon(1948)]{shannon}
+\dinatlabel{Shannon 1948} \textsc{Shannon}, Claude~E.:
+\newblock {A Mathematical Theory of Communication}.
+\newblock In: \emph{The Bell System Technical Journal}
+\newblock 27 (1948), S.~379--423. --
+\newblock URL
+  \url{http://plan9.bell-labs.com/cm/ms/what/shannonday/shannon1948.pdf}. --
+  Zugriffsdatum: 2003-04-22
 
 \bibitem[Sutton und Barto(2018)]{Sutton1998}
 \dinatlabel{Sutton und Barto 2018} \textsc{Sutton}, Richard~S.~;

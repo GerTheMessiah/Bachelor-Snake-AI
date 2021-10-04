@@ -15,24 +15,23 @@
 \contentsline {figure}{\numberline {5.6}{\ignorespaces DQN Aktionsbestimmung}}{38}{figure.5.6}%
 \contentsline {figure}{\numberline {5.7}{\ignorespaces Agenten}}{41}{figure.5.7}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces Sequenzdiagramm}}{48}{figure.6.1}%
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Darstellung der Schnittstellenmethoden in einem Sequenzdiagramm}}{48}{figure.6.1}%
 \contentsline {figure}{\numberline {6.2}{\ignorespaces Ablaufdiagramm der action Methode}}{49}{figure.6.2}%
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Ablaufdiagramm der Train Methode}}{57}{figure.6.3}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Ablaufdiagramm der train Methode}}{57}{figure.6.3}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Baseline Vergleich Performance}}{61}{figure.7.1}%
-\contentsline {figure}{\numberline {7.2}{\ignorespaces Baseline Vergleich Siegrate}}{62}{figure.7.2}%
-\contentsline {figure}{\numberline {7.3}{\ignorespaces Baseline Vergleich Robustheit}}{63}{figure.7.3}%
-\contentsline {figure}{\numberline {7.4}{\ignorespaces Baseline Vergleich der Effizienz für die Trainingsdaten}}{64}{figure.7.4}%
-\contentsline {figure}{\numberline {7.5}{\ignorespaces Baseline Vergleich der Effizienz für die Testdaten}}{65}{figure.7.5}%
-\contentsline {figure}{\numberline {7.6}{\ignorespaces Optimized Vergleich Performance}}{65}{figure.7.6}%
-\contentsline {figure}{\numberline {7.7}{\ignorespaces Optimized Vergleich Siegrate}}{67}{figure.7.7}%
-\contentsline {figure}{\numberline {7.8}{\ignorespaces Optimized Vergleich Siegrate}}{68}{figure.7.8}%
-\contentsline {figure}{\numberline {7.9}{\ignorespaces Optimized Vergleich Effizienz}}{69}{figure.7.9}%
-\contentsline {figure}{\numberline {7.10}{\ignorespaces Optimized Vergleich Effizienz}}{69}{figure.7.10}%
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Performance - Auswertung der Trainingsdaten der Baseline Vergleiche}}{60}{figure.7.1}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Siegrate- Auswertung der Trainingsdaten der Baseline Vergleiche}}{61}{figure.7.2}%
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Robustheit - Auswertung der Testdaten der Baseline Vergleiche}}{62}{figure.7.3}%
+\contentsline {figure}{\numberline {7.4}{\ignorespaces Effizienz - Auswertung der Trainingsdaten der Baseline Vergleiche}}{63}{figure.7.4}%
+\contentsline {figure}{\numberline {7.5}{\ignorespaces Effizienz - Auswertung der Testdaten der Baseline Vergleiche}}{64}{figure.7.5}%
+\contentsline {figure}{\numberline {7.6}{\ignorespaces Performance - Auswertung der Trainingsdaten der Optimized Vergleiche}}{65}{figure.7.6}%
+\contentsline {figure}{\numberline {7.7}{\ignorespaces Siegrate - Auswertung der Trainingsdaten der Optimized Vergleiche}}{66}{figure.7.7}%
+\contentsline {figure}{\numberline {7.8}{\ignorespaces Robustheit - Auswertung der Testdaten der Optimized Vergleiche}}{67}{figure.7.8}%
+\contentsline {figure}{\numberline {7.9}{\ignorespaces Effizienz - Auswertung der Trainingsdaten der Optimized Vergleiche}}{68}{figure.7.9}%
+\contentsline {figure}{\numberline {7.10}{\ignorespaces Effizienz - Auswertung der Testdaten der Optimized Vergleiche}}{69}{figure.7.10}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{80}{figure.A.1}%
-\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{81}{figure.A.2}%
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Darstellung Convolutional Computation}}{79}{figure.A.1}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Darstellung MaxPooling}}{80}{figure.A.2}%
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
