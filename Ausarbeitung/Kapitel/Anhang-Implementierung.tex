@@ -25,6 +25,6 @@ class AV_NET(nn.Module):
 		return self.AV_NET(av)
 \end{lstlisting}
 Diese besteht aus zwei Convolutional (Conv2d), einem Max-Pooling und zwei Fully Connected Layers (Linear). 
-Zwischen den Layers finden weitere Transformationen statt, welche in \autoref{subsec:Konzept_Netzstruktur} erklärt wurden.
+Zwischen den Layers finden weitere Transformationen statt, welche im \autoref{subsec:Konzept_Netzstruktur} erklärt wurden.
 Jedes NN-Element muss zwingend eine forward Methode implementieren, um die Propagierung der Input-Daten durch das Netzwerk zu steuern. Aus diesem Grund existiert eine forward Methode für diese Klasse, welche die AV (around\_view) durch die dargestellten NN-Schichten und Funktionen propagiert. Das Ergebnis wird zurückgegeben.
 
