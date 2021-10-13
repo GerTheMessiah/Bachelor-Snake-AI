@@ -21,7 +21,7 @@
 - apple (blue point) and tail compass. Indicates the relativ position according to the apple or the last part of the snake.
 - step counter. If the snake doesn't eat an apple in a descried amount of steps the game ends.
 
-## [Evaluation / Reward](src/snakeAI/gym_game/snake_env/snake_game.py)
+## [Evaluation / Reward](src/snakeAI/gym_game/snake_env/reward.py)
 ### +100 if the snake reaches the max length. | win
 ### +2.5 if snake eats an apple.
 ### -10 if the snake dies. | loss
