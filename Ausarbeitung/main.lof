@@ -30,4 +30,8 @@
 \contentsline {figure}{\numberline {7.9}{\ignorespaces Effizienz - Auswertung der Trainingsdaten der Optimized Vergleiche}}{65}{figure.7.9}%
 \contentsline {figure}{\numberline {7.10}{\ignorespaces Effizienz - Auswertung der Testdaten der Optimized Vergleiche}}{66}{figure.7.10}%
 \addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {A.1}{\ignorespaces SnakeEnv Klassendiagramm}}{74}{figure.A.1}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces DQN Klassendiagramm}}{75}{figure.A.2}%
+\contentsline {figure}{\numberline {A.3}{\ignorespaces PPO Klassendiagramm}}{76}{figure.A.3}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

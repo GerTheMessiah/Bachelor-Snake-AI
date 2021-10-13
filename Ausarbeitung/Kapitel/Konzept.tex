@@ -244,8 +244,7 @@ Dabei wird der Distanz Reward der Quelle \cite{Autonomous_Agents_in_Snake_Game_v
 	\Delta r(L_t, D_t,D_{t+1}) = \log_{L_t}\frac{L_t + D_t}{L_t + D_{t + 1}}
 \end{align}
 Wobei $t$ den vorherigen, $t+1$ den aktuellen Zeitpunkt darstellen. $L_t$ ist die Länge der Snake zum vorherigen Zeitpunkt und $D_t$ und $D_{t+1}$ stellen die Distanzen zwischen Snake und Apfel zum vorherigen und aktuellen Zeitpunkt dar.\\
-Dieser Distanz Reward wird wie in Quelle \cite{Autonomous_Agents_in_Snake_Game_via_DRL} dargestellt auf einen Initial-Wert aufaddiert. Nur setzt sich dieser nicht aus den vergangenen Rewards zusammen, sondern ist in dieser Ausarbeitung fest auf -0.01 gesetzt. Zum Schluss wird dann der Reward noch zwischen -0.02 und -0.005 geclipt, damit der Agent stetig bemüht ist den optimalen Weg zu finden.
-$r_{res} = clip((-0.01 + \Delta r), -0.02, -0.005)$
+Dieser Distanz Reward wird wie in Quelle \cite{Autonomous_Agents_in_Snake_Game_via_DRL} dargestellt auf einen Initial-Wert aufaddiert. Nur setzt sich dieser nicht aus den vergangenen Rewards zusammen, sondern ist in dieser Ausarbeitung fest auf -0.01 gesetzt. Zum Schluss wird dann der Reward noch zwischen -0.02 und -0.005 geclipt, damit der Agent stetig bemüht ist den optimalen Weg zu finden. $r_{res} = clip((-0.01 + \Delta r), -0.02, -0.005)$
 
 \subsection{Optimierung B - Anpassung der Lernrate} \label{subsec:Konzept_Optimierung02}
 Die zweite Optimierung wurde mithilfe von Anregungen aus der Literatur \cite[S. 331 f.]{DRL_Lapan} erzeugt. In dieser wurde die Steigerung der Lernrate diskutiert, um einen schnelleren Lernerfolg zu erzielen. Gegenteilig könnte jedoch die Senkung der Lernrate während des Trainings die Performance und Siegrate verstärken, da die Aktualisierung des NN nicht mehr so stark ausfällt und bestehender Fortschritt damit erhalten bleibt. Darum soll die Lernrate immer dann mit 0.95 multipliziert werden, sobald keine Performance Steigerung in den letzten 100 Epochs bzw. Trainingsspiele erzielt wurde.
@@ -254,8 +253,8 @@ Die zweite Optimierung wurde mithilfe von Anregungen aus der Literatur \cite[S. 
 In diesem Abschnitt soll die Datenerhebung näher thematisiert werden. Daher soll zuerst der Hauptablauf näher erklärt werden, welcher Agenten und Env miteinander interagieren lässt. Danach wird die Statistik-Komponente mit ihren Funktionalitäten vorgestellt.
 
 \subsection{Datenerhebung} \label{subsec:Konzept_Datenerhebung}
-Die Hauptablaufroutine implementiert die eigentlichen Test- und Trainingsabläufe.
-Um diese auszuführen, werden wichtige Hyperparameter des Ablaufs, wie z.B. die zu absolvierenden Trainingsspiele (N\_ITERATIONS), die Spielfeldgröße (BOARD\_SIZE) und weitere spezifische Hyperparameter, übergeben. Um einen angemessenen Zeitraum für das Lernen zu schaffen, sollen 30.000 Spiele bzw. Epochs für einen Trainingslauf absolviert werden. Die Spielfeldgröße soll dabei standardmäßig, für das Training, bei (8x8) liegen.\\
+Die Hauptablaufroutine wird durch die eigentlichen Test- und Trainingsabläufe implementiert, welche
+wichtige Hyperparameter des Ablaufs, wie z.B. die zu absolvierenden Trainingsspiele (N\_ITERATIONS), die Spielfeldgröße (BOARD\_SIZE) und weitere spezifische Hyperparameter, übergeben bekommen. Um einen angemessenen Zeitraum für das Lernen zu schaffen, sollen 30.000 Spiele bzw. Epochs für einen Trainingslauf absolviert werden. Die Spielfeldgröße soll dabei standardmäßig, für das Training, bei (8x8) liegen.\\
 \\Bei der Datenerhebung ist streng zwischen Test- und Trainingsdaten zu unterscheiden, wobei die Testdaten aus einfachen Spielabläufen bzw. Testläufen und die Trainingsdaten aus den Trainingsläufen stammen. Letztere werden wie folgt erhoben.\\
 Zu Beginn werden die Datenhaltungsobjekte apples, wins und steps initialisiert, welche für jedes absolvierte Trainingsspiel die entsprechenden Werte speichert \fullref{tab:Anforderungen_Datenerhebung}. 
 Nach der Erstellung des Agenten und Environments startet der Spielverlauf.\\

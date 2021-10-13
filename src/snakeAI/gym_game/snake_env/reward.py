@@ -9,6 +9,9 @@ class Reward:
         self.snake_dist_old = 0
         self.snake_len_old = 1
 
+    """
+    This method is returning the standard reward.
+    """
     @property
     def standard_reward(self):
         if len(self.snakeGame.p.tail) == self.snakeGame.max_snake_length and self.snakeGame.p.is_terminal:
@@ -19,7 +22,9 @@ class Reward:
             return 2.5
         else:
             return -0.01
-
+    """
+    This method is returning the optimized reward.
+    """
     @property
     def optimized_reward(self):
         if len(self.snakeGame.p.tail) == self.snakeGame.max_snake_length and self.snakeGame.p.is_terminal:

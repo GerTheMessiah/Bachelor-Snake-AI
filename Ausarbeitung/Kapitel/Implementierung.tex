@@ -3,9 +3,9 @@ In diesem Kapitel soll die Implementierung des Spiels Snake, der beiden Algorith
 In dieser Implementierung wird das Machine Learning Framework PyTorch (\url{https://pytorch.org/}) verwendet.
 
 \section{Snake Environment} \label{sec:Implementierung_Environment}
-Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt (siehe \url{https://gym.openai.com/}). Das Snake Environment implementiert entsprechend der Anforderung \ref{subsec:Anforderungen_Schnittstelle} drei zentrale Methoden, welche für den Informationsaustausch mit dem Agenten sorgen.\\ 
+Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt (siehe \url{https://gym.openai.com/}). Eine Darstellung der Implementierung findet sich in der \autoref{fig:Anhang_SnakeEnv}. Das Snake Environment implementiert entsprechend der Anforderung \ref{subsec:Anforderungen_Schnittstelle} drei zentrale Methoden, welche für den Informationsaustausch mit dem Agenten sorgen.\\ 
 Die step Methode \fullref{fig:Implementierung_Sequenzdiagram} wird in der Ablaufprozedur (Test- bzw. Trainingsmethode) aufgerufen. Um eine Aktion auszuführen, ruft diese die action Methode auf. Diese führt die Aktion aus und manipuliert damit das SnakeGame.
-Nach dem Aufruf von  action wird die nächste Observation mithilfe der make\_obs Methode bestimmt. Im Anschluss werden zudem noch der Reward sowie weitere Statusinformation gebildet und zurückgegeben \fullref{fig:Implementierung_Sequenzdiagram}.\\
+Nach dem Aufruf von  action wird die nächste Obs mithilfe der make\_obs Methode bestimmt. Im Anschluss werden zudem noch der Reward sowie weitere Statusinformation gebildet und zurückgegeben \fullref{fig:Implementierung_Sequenzdiagram}.\\
 Die reset Methode \fullref{fig:Implementierung_Sequenzdiagram} wird zu Beginn des Spielablaufs aufgerufen, um eine initiale Obs zu erhalten. Sie setzt dazu den momentanen Spielfortschritt zurück und generiert eine neue Obs \fullref{subsubsec:Konzept_Spielablauf}.\\
 Die render Methode \fullref{fig:Implementierung_Sequenzdiagram} aktualisiert die GUI, indem diese die updateGUI aufruft. Sie kann nur in Testläufen aufgerufen.\\
 \\Da die action Methode die eigentliche Aktionsausführung implementiert, wird diese noch näher erläutert \fullref{subsubsec:Konzept_Spielablauf}.
@@ -30,8 +30,8 @@ Zu Schluss wird Player.tail noch auf Duplikate überprüft, um auszuschließen, 
 Das AV-Network stellt die Netzstruktur dar, welche die AV (around\_view) verarbeitet. Um dies bewerkstelligen zu können, wird das Netz mithilfe des PyTorch Frameworks erstellt. Die Implementierung des NN findet dabei analog zu den Schilderungen in \autoref{subsec:Konzept_Netzstruktur} statt. Das AV-Network wird von allen Algorithmen und daher auch von den DQN Agenten genutzt, welcher als Nächstes thematisiert werden.
 
 \section{DQN} \label{sec:Implementierung_DQN}
-Die Implementierung des DQN Algorithmus wurde auf Basis der Quelle \cite{Charles2013} durchgeführt.\\
-Der DQN Algorithmus stellt einen der beiden zu implementierenden Algorithmen dar und beinhaltet die folgenden Klassen:\\
+Die Implementierung des DQN Algorithmus basiert auf \cite{Charles2013}.\\
+Der DQN Algorithmus stellt einen der beiden zu implementierenden Algorithmen dar und beinhaltet die folgenden Klassen \fullref{fig:Anhang_DQN_Klassendiagramm}:\\
 Die Agent Klasse implementiert die act \fullref{subsubsec:Konzept_Aktionsauswahlprozess_DQN} und learn \fullref{subsubsec:Konzept_Lernprozess_DQN} Methoden.
 Die Memory Klasse entspricht der Memory-Komponente. Die QNetwork Klasse beinhaltet das NN zur Aktionsbestimmung \fullref{subsec:Konzept_Netzstruktur}) und wird im Folgenden näher thematisiert.
 
@@ -78,8 +78,8 @@ Zusätzlich wird noch Epsilon verringert, um die Anzahl an Zufallsaktionen währ
 Neben dem DQN Agenten wurde jedoch noch gefordert \fullref{subsec:Anforderungen_Diversität}, dass ein PPO Agent implementiert wird. Dies geschieht im Folgenden.
 
 \section{PPO} \label{sec:Implementierung_PPO}
-Die Implementierung des PPO basiert auf den Quellen \cite{pytorch_minimal_ppo} und \cite{Charles2013}.\\
-Der PPO Algorithmus beinhaltet die folgenden Klassen:\\
+Die Implementierung des PPO basiert auf \cite{pytorch_minimal_ppo} und \cite{Charles2013}.\\
+Der PPO Algorithmus beinhaltet die folgenden Klassen \fullref{fig:Anhang_DQN_Klassendiagramm}:\\
 Die Agent Klasse definiert die learn Methode und ist als PPO-Komponente zu interpretieren \fullref{subsec:Konzept_PPO}.
 Die Memory Klasse speichert die gesammelten Erfahrungen.
 Die ActorNetwork und CriticNetwork Klassen beinhalten die Networks.

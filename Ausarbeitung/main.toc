@@ -54,7 +54,7 @@
 \contentsline {section}{\numberline {3.4}Anforderungen an die Evaluation}{21}{section.3.4}%
 \contentsline {chapter}{\numberline {4}Verwandte Arbeiten}{22}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Autonomous Agents in Snake Game via Deep Reinforcement Learning}{22}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Diskussion}{23}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.1}Diskussion}{24}{subsection.4.1.1}%
 \contentsline {section}{\numberline {4.2}UAV Autonomous Target Search Based on Deep Reinforcement Learning in Complex Disaster Scene}{25}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Diskussion}{26}{subsection.4.2.1}%
 \contentsline {section}{\numberline {4.3}Zusammenfassung}{27}{section.4.3}%
@@ -92,7 +92,7 @@
 \contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{50}{subsubsection*.68}%
 \contentsline {subsubsection}{\nonumberline Trainingsroutine}{50}{subsubsection*.70}%
 \contentsline {section}{\numberline {6.4}PPO}{51}{section.6.4}%
-\contentsline {subsection}{\numberline {6.4.1}Actor und Critic}{52}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.1}Actor und Critic}{51}{subsection.6.4.1}%
 \contentsline {subsection}{\numberline {6.4.2}ActorCritic}{52}{subsection.6.4.2}%
 \contentsline {subsubsection}{\nonumberline Aktionsbestimmung}{52}{subsubsection*.72}%
 \contentsline {subsection}{\numberline {6.4.3}Memory}{52}{subsection.6.4.3}%
@@ -123,4 +123,6 @@
 \contentsline {section}{\numberline {8.1}Beantwortung der Forschungsfrage}{69}{section.8.1}%
 \contentsline {section}{\numberline {8.2}Ausblick}{70}{section.8.2}%
 \contentsline {chapter}{Literaturverzeichnis}{71}{section*.91}%
+\contentsline {chapter}{\numberline {A}Anhang}{74}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Implementierung}{74}{section.A.1}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

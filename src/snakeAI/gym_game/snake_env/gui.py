@@ -5,24 +5,33 @@ from src.common.stop_game_exception import StopGameException
 
 class GUI:
     def __init__(self, size):
-        self.Particle = 60
+        self.particle = 60
         self.size = size
         pygame.init()
-        self.screen = pygame.display.set_mode((self.Particle * self.size[0], self.Particle * self.size[1]))
+        self.screen = pygame.display.set_mode((self.particle * self.size[0], self.particle * self.size[1]))
         self.screen.fill((0, 0, 0))
         pygame.display.set_caption('Snake')
         pygame.PYGAME_HIDE_SUPPORT_PROMPT = 1
 
+    """
+    This method is responsible for drawing the single squares of the gui.
+    @:param pos: Position of the square.
+    @:param color: RGB tuple which defines the color.
+    """
     def draw(self, pos, color):
-        Cords = [pos[0] * self.Particle, pos[1] * self.Particle]
-        pygame.draw.rect(self.screen, color, (Cords[0], Cords[1], self.Particle, self.Particle), 0)
+        Cords = [pos[0] * self.particle, pos[1] * self.particle]
+        pygame.draw.rect(self.screen, color, (Cords[0], Cords[1], self.particle, self.particle), 0)
 
+    """
+    This method is updates every single square of the gui. Hence, it is responsible for updating the gui.
+    @:param ground: Playground.
+    """
     def update_GUI(self, ground):
         self.reset_GUI()
         if self.size != ground.shape:
             self.size = ground.shape
             del self.screen
-            self.screen = pygame.display.set_mode((self.Particle * self.size[1], self.Particle * self.size[0]))
+            self.screen = pygame.display.set_mode((self.particle * self.size[1], self.particle * self.size[0]))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -48,5 +57,8 @@ class GUI:
                     continue
         pygame.display.update()
 
+    """
+    This method resets the gui.
+    """
     def reset_GUI(self):
         self.screen.fill((0, 0, 0))

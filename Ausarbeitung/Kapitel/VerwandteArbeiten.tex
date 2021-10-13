@@ -22,7 +22,7 @@ Die optimierte Reward Funktion, welche das Paper verwendet, besteht damit aus de
 	r_{res} = r_t + \Delta r
 	\label{eq:Verwandte_Arbeiten_r}
 \end{align}
-Zusätzlich wird der resultierende Reward zwischen 1 und -1 geclipt $r_{res} = clip(r_{res}, -1, 1)$.\\
+Zusätzlich wird der resultierende Reward noch zwischen eins und minus eins geclipt $r_{res} = clip (r_{res}, -1, 1)$.\\
 $\Delta r$ ist dabei wie folgt definiert \fullref{eq:Verwandte_Arbeiten_Delta_r}:
 \begin{align}
 	\Delta r(L_t, D_t,D_{t+1}) = \log_{L_t}\frac{L_t + D_t}{L_t + D_{t + 1}}

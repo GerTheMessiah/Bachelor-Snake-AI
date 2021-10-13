@@ -14,7 +14,12 @@ class CriticNetwork(nn.Module):
             nn.ReLU(),
             nn.Linear(64, 1),
         )
-
+    """
+    Method for propagating input through network.
+    @:param av: First part of observation -> shape (6x13x13).
+    @:param scalar_obs: Second part of observation -> shape (1x41)
+    @:return critic_out: Value of the critic.
+    """
     def forward(self, av, scalar_obs):
         av_out = self.AV_NET(av)
         cat = T.cat((av_out, scalar_obs), dim=-1)

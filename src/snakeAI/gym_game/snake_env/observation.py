@@ -1,10 +1,22 @@
 import numpy as np
 
-
+"""
+This function proofs whether a and b are on playground.
+@:param a: Coordinate of the x-axis.
+@:param b: Coordinate of the y-axis.
+@:param size: Playground size.
+"""
 def on_playground(a, b, size):
     return (0 <= a < size[0]) and (0 <= b < size[1])
 
-
+"""
+This function determines a inverted distance.
+@:param ground: playground.
+@:param p_pos: player position.
+@:param wanted: List of elements which should be found.
+@:param fac_0: Factor for controlling the north / south direction.
+@:param fac_1: Factor for controlling the east / west direction.
+"""
 def dist(ground, p_pos, wanted, fac_0, fac_1):
     dist_, i_0, i_1 = 0, 1, 1
     p_0 = p_pos[0] + fac_0 * i_0
@@ -19,7 +31,12 @@ def dist(ground, p_pos, wanted, fac_0, fac_1):
         return 0
     return 1 / dist_ if dist_ != 0 else 2
 
-
+"""
+This function is creating the around_view.
+@:param pos: Position of the snake head.
+@:param id: Id. Important for the detection of the snake head.
+@:param g: ground -> Playground.
+"""
 # 1x6x13x13
 def create_around_view(pos, id, g):
     width = 6
@@ -55,7 +72,11 @@ def create_around_view(pos, id, g):
 
     return np.expand_dims(tmp_arr, axis=0)
 
-
+"""
+This method is creating the distance observation.
+@:param pos: Position of the snake head.
+@:param ground: Playground.
+"""
 # a = 24
 def create_distances(pos, ground):
     obs = np.zeros(24, dtype=np.float64)
@@ -67,14 +88,21 @@ def create_distances(pos, ground):
             a += 1
     return obs
 
-
+"""
+The method is creating the direction observation.
+@:param direction: Direction of the snake.
+"""
 # a + 4
 def direction_obs(direction):
     obs = np.zeros(4, dtype=np.float64)
     obs[0 + direction] = 1
     return obs
 
-
+"""
+This method creates the two compass observations (apple, snake head) and (last element of the snake tail, snake head).
+@:param pos: Position of the snake head.
+@:param obj: Object. Snake head or last element of the snake tail.
+"""
 # a + 6
 def compass_obs(pos, obj):
     obs = np.zeros(6, dtype=np.float64)
@@ -88,14 +116,27 @@ def compass_obs(pos, obj):
     obs[5] = 1 if pos[1] == obj[1] else 0
     return obs
 
-
+"""
+This method creates the hunger observation.
+@:param inter_apple_steps: Steps since an apple was eaten.
+@:param size: Size of the playground.
+"""
 # a + 1
 def hunger_obs(inter_apple_steps, size):
     obs = np.zeros(1, dtype=np.float64)
     obs[0] = 1 / (size - inter_apple_steps) if inter_apple_steps != size else 2
     return obs
 
-
+"""
+This method is generating the whole observation.
+@:param p_id: Player id.
+@:param pos: Position of the snake head.
+@:param tail_pos: Position of the last snake tail element.
+@:param direction: Direction of the snake head.
+@:param ground: Playground.
+@:param food: Apple position.
+@:param iter_apple_counter: Steps since an apple was eaten.
+"""
 def make_obs(p_id, pos, tail_pos, direction, ground, food, iter_apple_counter):
     around_view = create_around_view(pos, p_id, ground)
     distances = create_distances(pos, ground)

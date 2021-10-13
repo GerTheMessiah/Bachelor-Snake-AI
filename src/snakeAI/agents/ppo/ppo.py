@@ -21,52 +21,62 @@ class Agent:
         self.OLD_POLICY = ActorCritic(N_ACTIONS=3, LR_ACTOR=LR_ACTOR, LR_CRITIC=LR_CRITIC, DEVICE=self.DEVICE)
         self.OLD_POLICY.load_state_dict(self.POLICY.state_dict(destination=None))
 
+    """
+    Method for learning.
+    """
     def learn(self):
+        # If memory has not enough experiences.
         if self.MEM.counter < 64:
             return
-
+        # Get data from memory.
         old_av, old_scalar, old_action, probs_old, reward_list, dones_list = self.MEM.get_data()
-
+        # Discount rewards.
         rewards = self.generate_reward(reward_list, dones_list)
-
         rewards = T.tensor(rewards, dtype=T.float64, device=self.DEVICE)
         rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-7)
-
+        # Generate batch indices.
         batch = np.random.randint(self.MEM.counter, size=(self.K_EPOCHS, self.MEM.counter))
-
+        # Repeat K_EPOCHS times.
         for j in range(self.K_EPOCHS):
             old_av_b = old_av[batch[j, ...]]
             old_scalar_b = old_scalar[batch[j, ...]]
             old_action_b = old_action[batch[j, ...]]
             probs_old_b = probs_old[batch[j, ...]]
             rewards_b = rewards[batch[j, ...]]
-
+            # Compute new logarithmic probability of action, values and entropy of policy.
             probs, state_values, dist_entropy = self.POLICY.evaluate(old_av_b, old_scalar_b, old_action_b)
-
+            # Determine ratios.
             ratios = T.exp(probs - probs_old_b)
-
+            # Determine advantages.
             advantages = rewards_b - state_values.detach()
-
+            # Calculate surrogate losses.
             surr1 = ratios * advantages
             surr2 = T.clamp(ratios, 1 - self.EPS_CLIP, 1 + self.EPS_CLIP) * advantages
-
+            # Determine actor loss.
             loss_actor = -(T.min(surr1, surr2) + dist_entropy * self.ENT_COEFFICIENT).mean()
-
+            # Determine critic loss.
             loss_critic = self.CRITIC_COEFFICIENT * self.LOSS(rewards_b, state_values)
+            # Combine losses.
             loss = loss_actor + loss_critic
-
+            # Update network.
             self.POLICY.OPTIMIZER.zero_grad()
             loss.backward()
             self.POLICY.OPTIMIZER.step()
-
+        # Update action determine policy with new updated policy.
         self.OLD_POLICY.load_state_dict(self.POLICY.state_dict())
         T.cuda.empty_cache()
+        # Clear memory.
         self.MEM.clear_memory()
 
-    def generate_reward(self, rewards_in, terminals_in):
+    """
+    This method discounts the rewards.
+    @:param rewards_in: Input rewards.
+    @:param terminals_in: Input terminals. Is the state of obtained rewards a terminal one?
+    """
+    def generate_reward(self, reward_in, terminal_in):
         rewards = []
         discounted_reward = 0
-        for reward, is_terminal in zip(reversed(rewards_in), reversed(terminals_in)):
+        for reward, is_terminal in zip(reversed(reward_in), reversed(terminal_in)):
             if is_terminal:
                 discounted_reward = 0
             discounted_reward = reward + self.GAMMA * discounted_reward

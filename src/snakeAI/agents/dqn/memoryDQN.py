@@ -16,6 +16,16 @@ class Memory:
         self.AV_ = T.zeros((self.MEM_SIZE, *AV_DIMENSION), dtype=T.float64, device=DEVICE)
         self.SCALAR_OBS_ = T.zeros((self.MEM_SIZE, SCALAR_OBS_DIMENSION), dtype=T.float64, device=DEVICE)
 
+    """
+    Method for saving data in memory.
+    @:param av: First part of observation, around_view numpy array -> shape (6x13x13).
+    @:param scalar_obs: Second part of observation, scalar_obs numpy array -> shape (1x41).
+    @:param action: Determined action by the agent.
+    @:param reward: Determine reward by environment.
+    @:param terminal: Is the state terminal?
+    @:param av_: around_view of the successor
+    @:param scalar_obs_: scalar_obs of the successor.
+    """
     def store(self, av, scalar_obs, action, reward, terminal, av_, scalar_obs_):
         index = self.counter % self.MEM_SIZE
         self.AV[index, ...] = av.clone().detach()
@@ -27,9 +37,13 @@ class Memory:
         self.SCALAR_OBS_[index, ...] = T.tensor(scalar_obs_, dtype=T.float64, device=self.DEVICE)
         self.counter += 1
 
-    def get_data(self, returned_data=None):
+    """
+    Method for getting a random shuffled data batch.
+    @:param manuel_batch_size: Manuel batch size
+    """
+    def get_data(self, manuel_batch_size=None):
         max_mem = min(self.counter, self.MEM_SIZE)
-        size = self.BATCH_SIZE if not bool(returned_data) else returned_data
+        size = self.BATCH_SIZE if not bool(manuel_batch_size) else manuel_batch_size
         batch = np.random.choice(max_mem, size, replace=False)
 
         batch_index = T.arange(size, dtype=T.long, device=self.DEVICE)

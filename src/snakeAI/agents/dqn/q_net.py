@@ -15,7 +15,7 @@ class PrintSize(nn.Module):
 
 
 class QNetwork(nn.Module):
-    def __init__(self, OUTPUT, LR, SCALAR_INPUT=41, DEVICE="cuda:0"):
+    def __init__(self, OUTPUT, LR, SCALAR_INPUT=41, DEVICE="cpu"):
         super(QNetwork, self).__init__()
         T.set_default_dtype(T.float64)
         T.manual_seed(10)
@@ -31,6 +31,12 @@ class QNetwork(nn.Module):
         self.DEVICE = DEVICE
         self.to(self.DEVICE)
 
+    """
+    Method for propagating input through network.
+    @:param av: First part of observation -> shape (6x13x13).
+    @:param scalar_obs: Second part of observation -> shape (1x41)
+    @:return q_values: Q-Values
+    """
     def forward(self, av, scalar_obs):
         av_out = self.AV_NET(av)
         cat = T.cat((av_out, scalar_obs), dim=-1)

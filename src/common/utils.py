@@ -9,11 +9,7 @@ from pandas import DataFrame
 Source of the Method:
 https://www.programcreek.com/python/
 ?code=Azure%2Fazure-diskinspect-service%2Fazure-diskinspect-service-master%2FpyServer%2FAzureDiskInspectService.py
-"""
 
-
-def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_length=50):
-    """
     Call in a loop to create terminal progress bar
     @params:
         iteration   - Required  : current iteration (Int)
@@ -22,7 +18,10 @@ def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_lengt
         suffix      - Optional  : suffix string (Str)
         decimals    - Optional  : positive number of decimals in percent complete (Int)
         bar_length  - Optional  : character length of bar (Int)
-    """
+"""
+
+def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_length=50):
+
     str_format = "{0:." + str(decimals) + "f}"
     percents = str_format.format(100 * (iteration / float(total)))
     filled_length = int(round(bar_length * iteration / float(total)))
@@ -34,29 +33,25 @@ def print_progress(iteration, total, prefix='', suffix='', decimals=1, bar_lengt
         sys.stdout.write('\r\n')
     sys.stdout.flush()
 
-
-
-
-
+"""
+@:param statistic_run_number: Defines the name of the run director
+@:param alg_type: Algorithm Type - Differentiate between DQN and PPO.
+@:param agent_number: Number of the agent. Important for saving files.
+@:param use_case: Differentiate between test or train run. Important for naming the files.
+@:param run_type: Differentiate between baseline or optimized run.
+@:param random_game_size: Was a random game size used? Important for naming files.
+@:param optimization: Which optimization was used. ("A", "B", "None").
+"""
 def save_path(statistic_run_number: int, alg_type: str, agent_number: int, use_case: str, run_type: str,
               random_game_size: bool, optimization) -> Tuple[str, str]:
-    """
-    @params:
-    statistic_run_number - defines the name of the run director \n
-    alg_type - algorithm type - differentiate between DQN and PPO \n
-    agent_number - number of the agent. Important for saving files. \n
-    use_case - differentiate between test or train run. Important for naming the files \n
-    run_type - differentiate between baseline or optimized run \n
-    random_game_size - was a random game size used. Important for naming files. \n
-    optimization - which optimization was used. "A", "B", "None"
-    """
+
     if not (run_type == "baseline" or run_type == "optimized"):
         raise ValueError("Wrong RUN_TYPE!")
     if not (alg_type == "PPO" or alg_type == "DQN"):
         raise ValueError("Wrong ALG_TYPE!")
     if not (use_case == "train" or use_case == "test"):
         raise ValueError("Wrong USE_CASE!")
-    if not (optimization is "A" or optimization is "B" or optimization is None):
+    if not (optimization is "A" or optimization is "B" or optimization is None or optimization is "AB"):
         raise ValueError("Wrong optimization! Use A, B or None")
 
     MODEL_DIR_PATH = str(Path(__file__).parent.parent) + f"\\resources\\{run_type}-run-0{statistic_run_number}"
@@ -75,7 +70,22 @@ def save_path(statistic_run_number: int, alg_type: str, agent_number: int, use_c
 
     return rgs, MODEL_DIR_PATH
 
-
+"""
+@:param alg_type: Algorithm Type - Differentiate between DQN and PPO.
+@:param agent_number: Number of the agent.
+@:param statistic_run_number: Defines the name of the run director
+@:param use_case: Differentiate between test or train run. Important for naming the files.
+@:param run_type: Differentiate between baseline or optimized run.
+@:param random_game_size: Was a random game size used? Important for naming files.
+@:param agent: agent object for invoking the save network routine.
+@:param dtime: times for saving in the csv file.
+@:param step_list: steps for saving in the csv file.
+@:param apples: apples for saving in the csv file.
+@:param scores: scores for saving in the csv file.
+@:param wins: wins for saving in the csv file.
+@:param play_ground_size: play_ground_size for saving in the csv file if random_game_size is not equal (8x8).
+@:param optimization: Which optimization was used. ("A", "B", "None").
+"""
 def save(alg_type, agent_number, statistic_run_number, use_case, run_type, random_game_size, agent, dtime, steps_list,
          apples, scores, wins, play_ground_size=None, optimization=None):
     if play_ground_size is None:
@@ -93,7 +103,12 @@ def save(alg_type, agent_number, statistic_run_number, use_case, run_type, rando
     df.to_csv(path_ + ".csv")
     print(path_)
 
-
+"""
+This method creates the random game size based on the epoch.
+@:param epoch: Number of the epoch.
+@:param div: Denominator of the epoch
+@:param offset: offset for the game size creation.
+"""
 def get_random_game_size(epoch, div=1000, offset=6):
     a = offset + (epoch // div)
     return a, a

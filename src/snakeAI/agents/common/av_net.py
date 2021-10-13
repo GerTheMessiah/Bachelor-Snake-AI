@@ -17,5 +17,10 @@ class AV_NET(nn.Module):
             nn.Linear(256, 128)
         )
 
+    """
+    This method propagates the input tensor through the AV_NET Network.
+    @:param av: input tensor
+    @:return: output tensor with shape (1x128)
+    """
     def forward(self, av):
         return self.AV_NET(av)

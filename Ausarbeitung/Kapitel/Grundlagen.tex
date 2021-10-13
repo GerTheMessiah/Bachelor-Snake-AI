@@ -94,7 +94,7 @@ Nach diesen Einordnungen sollen nun die ausgewählten Algorithmen näher erklär
 
 \section{Proximal Policy Optimization} \label{sec:Grundlagen_PPO}
 Der Proximal Policy Optimization Algorithmus (PPO) wurde von dem Open-AI-Team entwickelt. Im Jahr 2017 erschien das gleichnamige Paper, welches den Aufbau und die Umsetzung des Algorithmus genauer erläutert. \citep{PPO} \\
-Agenten, welche auf dem PPO Algorithmus basieren \fullref{subsubsec:Grundlagen_Agent}, konnten, in der Vergangenheit, bereits durch gute Leistungen überzeugen.\\
+Agenten, welche auf dem PPO Algorithmus basieren, konnten in der Vergangenheit bereits durch gute Leistungen überzeugen.\\
 Um einen groben Überblick des Algorithmus zu erhalten, werden zuerst, im nächsten Abschnitt, dessen Architektur und Vorläufer näher thematisiert.
 
 \subsection{Actor Critic Modell} \label{subsec:Grundlagen_actor_critic}
@@ -227,7 +227,7 @@ $c_1 \text{ und } c_2$ Steuerungsfaktoren zur Regulierung der Fehlerhöhe sind.\
 Um den PPO Algorithmus mit seiner Fehlerfunktion richtig anwenden zu können, wird im Weiteren noch der Algorithmus näher erklärt.
 
 \subsection{PPO - Algorithmus} \label{subsec:Grundlagen_PPO_Algorithmus}
-Um die Theorie in die Praxis zu überführen, soll nun der Algorithmus komprimiert dargestellt werden, um diesen später umsetzen zu können. 
+Um die Theorie in die Praxis zu überführen, soll der Algorithmus komprimiert dargestellt werden, damit dieser später umgesetzt werden kann. 
 Diese Darstellung basiert dabei auf der Quelle \citep{PPO} und einigen weiteren Anpassungen.
 \begin{enumerate}
 	\item Initialisiere alle Hyperparameter und die neuronalen Netzwerke für Actor und Critic mit den Gewichten $\theta$ bzw. $w$. Erstelle einen Experience Buffer $EB$.
@@ -235,15 +235,15 @@ Diese Darstellung basiert dabei auf der Quelle \citep{PPO} und einigen weiteren 
 	\item Führe Aktion $a$ aus und ermittle den Reward $r$ und den Folgezustand $s'$.
 	\item Speichere Zustand, Aktion, Policy der Aktion, Reward und is\_terminal in $EB$.
 	\item Ersetze den Zustand mit dem Folgezustand $s' \longrightarrow s$.
-	\item Wiederhole alle Schritte ab Schritt 2, bis die Spielepisode endet.
+	\item Wiederhole alle Schritte ab Schritt zwei, bis die Spielepisode endet.
 	\item Entnehme einen Batch aus dem EB.
 	\item Bestimmt die Ratios $r_t(\theta)$. \fullref{subsubsec:Grundlagen_Probability_Ratio}.
 	\item Berechne die Advantages $\hat{A}_{t}(s, a)$. \fullref{subsubsec:Grundlagen_Advantage}.
-	\item Berechne die Surrogate Fehler $surr_1$ und $surr_2$. \fullref{subsubsec:Grundlagen_Surrogate_Fehlerfunktion}.
+	\item Berechne die Surrogate Fehler \fullref{subsubsec:Grundlagen_Surrogate_Fehlerfunktion} $surr_1$ und $surr_2$.
 	\item Bestimmt den PPO Fehler. \fullref{subsubsec:Grundlagen_PPO_Fehlerfunktion}
 	\item Aktualisiere die Gewichte des Actors und Critics mit Adam Optimizer \citep{PPO}. $\theta_{\text{old}} \longleftarrow \theta$ und $w_{\text{old}} \longleftarrow w$.
-	\item Wiederhole alle Schritte ab Schritt 7 $K$-mal. $K$ stellt ein Hyperparameter dar.
-	\item Wiederhole alle Schritte ab Schritt 2 erneut, bis das Verfahren konvergiert.
+	\item Wiederhole alle Schritte ab Schritt sieben $K$-mal. $K$ stellt ein Hyperparameter dar.
+	\item Wiederhole alle Schritte ab Schritt zwei erneut, bis das Verfahren konvergiert.
 \end{enumerate}
 Neben dem PPO Algorithmus soll auch noch eine weiter behandelt werden. Der DQN Algorithmus wird im Folgenden vorgestellt.
 
@@ -252,10 +252,10 @@ Der DQN (Deep Q-Network-Algorithmus) ist ein weiterer Reinforcement Learning Alg
 Basierend auf seiner großen Beliebtheit ergibt sich die Frage, ob der DQN dieser auch gerecht wird? Diese Frage lässt sich am besten mit einem Vergleich beantworten, was diesen Algorithmus zu einem guten Kandidaten für diesen macht.\\ 
 Angestammtes Ziel aller Q-Learning-Algorithmen ist es, jedem State-Action-Pair $(s,a)$ (Zustands-Aktions-Paar), einem Aktionswert (Q-Value) $Q$ zuzuweisen \citep[S. 126]{DRL_Lapan}. 
 Dies ist beispielsweise über eine Tabelle möglich, was jedoch bei komplexen Environments schnell ineffizient wird. Ein weiterer Ansatz sind NN, welche die Q-Value Funktion nachbilden und erlernen können.\\
-\\Ein kleiner Blick in die dem Algorithmus zugrunde liegende Logik eröffnet dahingehend einen besseren Überblick. 
+\\Ein Blick in die Logik des Algorithmus eröffnet dahingehend einen besseren Überblick. 
 So ist die Idee von vielen RL Verfahren, die Aktionswert Funktion mithilfe der Bellman Gleichung iterativ zu bestimmen. Daraus ergibt sich die folgende Formel \citep{DBLP:journals/corr/MnihKSGAWR13}
 \begin{align}
-	Q_{i+1}(s,a) = \mathbb{E} \bigl\lbrack r + \gamma \max_{a'} Q(s',a')|s,a \bigr\rbrack
+	Q_{i+1}(s,a) = \mathbb{E} \bigl\lbrack r + \gamma \max_{a'} Q_i(s',a')|s,a \bigr\rbrack
 	\label{eq:Grundlagen_Bellman_Gleichung_iterativ}
 \end{align}
 wobei, $Q_{i+1}(s,a)$ den $i+1$ aktualisierten Aktionswert der Aktion $a$ im Zustand $s$ darstellt.
@@ -263,29 +263,30 @@ Die iterativ angewendete Bellman Gleichung \fullref{eq:Grundlagen_Bellman_Gleich
 In der Theorie konvergiert ein solches Iterationsverfahren $Q_i \longrightarrow Q^*$ jedoch nur, wenn i gegen unendlich läuft $i \longrightarrow \infty$, wobei $Q^*$ die optimale Aktionswert Funktion darstellt. Da dies jedoch nicht möglich ist, muss $Q^*$ approximiert werden $Q(s,a;\theta) \approx Q^*$. Dies geschieht mittels eines NN.
 Damit dieses nicht ausschließlich zufällige Q-Values ermittelt, ist eine Anpassung der Gewichte nötig. Dafür muss jedoch zuerst der Fehler des DQN Algorithmus bestimmt werden, was mithilfe der Fehlerfunktionen geschieht. Diese ist wie folgt definiert \citep[S.146 f.]{DRL_Lapan}:
 \begin{align}
-	L(\theta) = \mathbb{E} \Bigl\lbrack ((r(s,a) +\gamma \max_{a'}Q(s',a';\theta)) - Q(s,a;\theta))^2 \Bigr\rbrack
+	L(\theta) = \mathbb{E} \Bigl\lbrack ((r(s,a) +\gamma \max_{a'}Q(s',a')) - Q(s,a))^2 \Bigr\rbrack
 	\label{eq:DQN_Loss}
 \end{align}
 Die Formel \fullref{eq:DQN_Loss} besagt, dass der Fehler eines zufällig ausgesuchten State-Action Tupels (s,a) sich wie folgt zusammensetzt. 
-Der Fehler ist die Differenz aus dem Aktionswerts $Q(s,a; \theta)$, welcher Aufschluss über den, in dieser Episode, zu erwartenden Reward liefert und $y_i$. Dabei ist $y_i$ der Reward, welcher durch die Ausführung der Aktion $a$ im Zustand $s$ erzielt wurde, addiert mit dem maximalen Q-Value der Folgeaktion $a'$ im Folgezustand $s'$.\\
+Der Fehler ist die Differenz aus dem Aktionswerts $Q(s,a)$, welcher Aufschluss über den, in dieser Episode, zu erwartenden Reward liefert und $y_i$. Dabei ist $y_i$ der Reward, welcher durch die Ausführung der Aktion $a$ im Zustand $s$ erzielt wurde, addiert mit dem maximalen Q-Value der Folgeaktion $a'$ im Folgezustand $s'$.\\
 Da $Q(s,a)$ rekursiv definiert werden kann, ergibt sich in vereinfachter Form \citep[S.126 und S. 146 f.]{DRL_Lapan}:
 \begin{align}
 	Q(s,a) = r + \gamma \max_{a \in A}Q(s',a') = \mathbb{E} \bigl\lbrack r+\gamma \max_{a'}Q(s',a';\theta)|s,a \bigr\rbrack = y_i
 	\label{eq:Q-Value_rekursive_def}
 \end{align}
-Es wird erkenntlich, dass $Q(s,a;\theta)$ dem Q-Target $Q(s,a;\theta) \longrightarrow y_i$ entsprechen soll, darum wird die Differenz zwischen beiden bestimmt und als Fehler deklariert. Dieser wird noch quadriert, damit er stets positiv ist.
+Es wird erkenntlich, dass $Q(s,a)$ dem Q-Target $y_i$ entsprechen soll $Q(s,a) \longrightarrow y_i$ \fullref{eq:Q-Value_rekursive_def}. Darum wird die Differenz zwischen beiden bestimmt und als Fehler deklariert. Dieser wird noch quadriert, damit er stets positiv ist. \fullref{eq:DQN_Loss}\\
+Mit diesem berechneten Fehler werden dann die NN Parameter $\theta$ aktualisiert $\theta_{i} \longrightarrow \theta_{i+1}$.
 
 \subsection{DQN - Algorithmus} \label{subsec:Grundlagen_DQN_Algorithmus}
 Zur besseren Anwendbarkeit haben Volodymyr Mnhi et al. einen Algorithmus entworfen, welcher den DQN anschaulich erklärt \citep{DBLP:journals/corr/MnihKSGAWR13}. Da jedoch in diesem Algorithmus weiterhin auf Teile der Fehlerfunktion eingegangen wird, folgt eine bereinigte Version, welche sich auch für den allgemeinen Gebrauch besser anbietet. \citep[S. 149 f.]{DRL_Lapan}
 \begin{enumerate} 
-	\item Initialisiere alle Hyperparameter das Q-NN mit zufallsbasierten Gewichten. Setzte Epsilon $\epsilon = 1.00$ und erzeuge einen leeren Experience Buffer $EB$.
+	\item Initialisiere alle Hyperparameter das Q-Network mit zufallsbasierten Gewichten. Setzte Epsilon $\epsilon = 1.00$ und erzeuge einen leeren Experience Buffer $EB$.
 	\item Wähle mit der Wahrscheinlichkeit $\epsilon$ eine zufällige Aktion $a$ oder nutze $a = \arg\max_{a} Q(s,a)$.
-	\item Führt Aktion $a$ aus und ermittle den Reward $r$ und den Folgezustand $s'$.
-	\item Speichern von Zustand $s$, Aktion $a$, Reward $r$ und Folgezustand $s'$.
-	\item Reduziere $\epsilon$, sodass die Wahrscheinlichkeit, eine zufällige Aktion zu wählen, minimiert wird. Gewöhnlich existiert eine untere Grenze für $\epsilon$, sodass immer noch einige wenige Aktionen zufällig gewählt werden.
+	\item Führe Aktion $a$ aus und ermittle den Reward $r$ und den Folgezustand $s'$.
+	\item Speicher Zustand $s$, Aktion $a$, Reward $r$ und Folgezustand $s'$.
+	\item Reduziere $\epsilon$, sodass die Wahrscheinlichkeit eine zufällige Aktion zu wählen minimiert wird. Gewöhnlich existiert eine untere Grenze für $\epsilon$, sodass immer noch einige wenige Aktionen zufällig gewählt werden.
 	\item Entnehme zufallsbasiert einen Batch aus dem Experience Buffer $EB$.
-	\item Berechne $y = r + \gamma \max_{a \in A}\hat{Q}(s',a')$.
-	\item Berechne den Fehler $\mathbb{L} = (Q(s,a) - y)^2$
-	\item Update $Q_\theta(s,a)$ mithilfe von Gradientenabstiegsverfahren. Daher $Q_{\theta_{i}}(s,a) \longrightarrow Q_{\theta_{i+1}}(s,a)$
-	\item Wiederhole alle Schritte von Schritt 2 an, bis sich eine Konvergenz ergibt.
+	\item Berechne $y = r + \gamma \max_{a \in A}Q(s',a')$.
+	\item Berechne den Fehler $\mathbb{L} = (Q(s,a) - y)^2$.
+	\item Aktualisiere die Aktionswertfunktion $Q_{\theta_{i}}$ mithilfe von Gradientenabstiegsverfahren $Q_{\theta_{i}} \longrightarrow Q_{\theta_{i+1}}$.
+	\item Wiederhole alle Schritte von Schritt zwei an, bis sich eine Konvergenz einstellt.
 \end{enumerate}

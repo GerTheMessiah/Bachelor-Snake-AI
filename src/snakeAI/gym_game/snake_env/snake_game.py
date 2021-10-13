@@ -17,6 +17,9 @@ class Player:
     inter_apple_steps: int
     is_terminal: bool
 
+    """
+    This method resets the player.
+    """
     def player_reset(self, pos: np.ndarray):
         self.pos = pos
         self.tail.clear()
@@ -25,14 +28,23 @@ class Player:
         self.inter_apple_steps = 0
         self.is_terminal = False
 
+    """
+    @:return Number of the collected apple in a game.
+    """
     @property
     def apple_count(self):
         return len(self.tail) - 1
 
+    """
+    @:return last position of the snake tail.
+    """
     @property
     def last_tail_pos(self):
         return np.array(self.tail[-1]) if not np.equal(np.array(self.tail[-1]), self.pos).all() else None
 
+    """
+    @:return Returns the snake length.
+    """
     @property
     def snake_len(self):
         return len(self.tail)
@@ -54,6 +66,10 @@ class SnakeGame:
         if has_gui:
             self.gui = GUI(self.shape)
 
+    """
+    This method manipulates the environment by processing the action.
+    @:param action: Action to be processed.
+    """
     def action(self, action):
         if self.p.inter_apple_steps >= self.max_snake_length:
             self.p.is_terminal = True
@@ -103,21 +119,30 @@ class SnakeGame:
                 self.ground[s[0], s[1]] = self.p.c_s
             self.ground[self.p.tail[-1][0], self.p.tail[-1][1]] = -1
             self.ground[self.p.tail[0][0], self.p.tail[0][1]] = self.p.c_h
-
-    def evaluate(self, reward_function=None):
-        if reward_function is "A":
+    """
+    This method returns the reward.
+    @:param reward_function: Defines the reward function.
+    """
+    def evaluate(self, reward_function=""):
+        if "A" in reward_function:
             return self.reward.optimized_reward
         else:
             return self.reward.standard_reward
-
+    """
+    This method renders the environment.
+    """
     def view(self):
         if self.has_gui:
             self.gui.update_GUI(self.ground)
-
+    """
+    This method invokes the creation of the observation.
+    """
     def observe(self):
         return make_obs(self.p.id, self.p.pos, self.p.last_tail_pos, self.p.direction, self.ground, self.apple,
                         self.p.inter_apple_steps)
-
+    """
+    This method creates a new apple.
+    """
     def make_apple(self):
         pos = np.where(self.ground == 0)
         if pos[0].size != 0:
@@ -127,7 +152,10 @@ class SnakeGame:
         else:
             return None
         return apple
-
+    """
+    This method resets the snake game.
+    @:param new_shape: 
+    """
     def reset_snake_game(self, new_shape=None):
         if new_shape is not None:
             self.shape = new_shape
@@ -143,11 +171,16 @@ class SnakeGame:
         self.apple = self.make_apple()
         if self.has_gui:
             self.gui.reset_GUI()
-
+    """
+    @:return Maximal snake length.
+    """
     @property
     def max_snake_length(self):
         return self.ground.size
 
+    """
+    @:return If the player is in a terminal state. Hence, whether the snake is dead.
+    """
     @property
     def is_terminal(self):
         return self.p.is_terminal

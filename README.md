@@ -1,4 +1,4 @@
-# PPO (Proximal Policy Optimization) - Reinforcement Learning
+# Snake Machine Learning Implementation
 
 ## Snake-AI
 
@@ -28,13 +28,14 @@
 
 
 ## [PPO - Implementation](src/snakeAI/agents/ppo/actor_critic.py)
-The current built of my PPO was inspired by:\
+The current built was inspired by:\
 Phil Tabor: [Phil Tabor - Repository](https://github.com/philtabor/Youtube-Code-Repository/tree/master/ReinforcementLearning/PolicyGradient/PPO/torch) \
 Nikhil Barhate: [nikhilbarhate99 - Repository](https://github.com/nikhilbarhate99/PPO-PyTorch)
 
 
 ## References
 - [PPO paper](https://arxiv.org/abs/1707.06347)
+- [DQN paper](https://arxiv.org/abs/1312.5602)
 
 
 ## License
@@ -51,12 +52,11 @@ Libraries           | Functions
 -----------------------------------------------
 ...                 | ...
 python 3.7          | Python version
-gym 0.18.0          | Game setup
-pygame 2.0.0        | Game gui
-numpy 1.20.1        | Creating observations
-Pytorch 1.8.0cuda   | AI-API
-ray 1.2.0           | Multiprocessing framework
-scipy 1.5.2         | Linear regression
-matplotlib 3.3.2    | Result plots
- 
+gym 0.21.0          | Game setup
+pygame 2.0.2        | Game gui
+numpy 1.21.2        | Creating observations
+Pytorch 1.9.1 cuda  | Machine Learning API
+scipy 1.7.1         | Linear regression
+matplotlib 3.4.3    | Result plots
+pandas 1.3.3        | Hadling the generated data
 ```
