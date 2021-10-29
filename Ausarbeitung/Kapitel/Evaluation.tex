@@ -21,8 +21,7 @@ Eine vermutliche Erklärung warum die Agenten des DQN Algorithmus keine guten Le
 \end{figure}
 Im Training konnten besonders die Leistungen der PPO Agenten PPO-03 und PPO-01 überzeugen. 
 Der PPO-03 kann dabei besonders mit seinem schnellen Lernerfolg punkten, wohingegen der PPO-01 mit seiner annähernd linearen Stetigkeit überzeugen kann.
-PPO-02 konnte zwar ebenfalls eine fast lineare Steigerung seiner Performance erzielen, jedoch konvergierte dieser früher als der PPO-01.
-Dieses Verhalten der Agenten entspricht den Darstellungen im \autoref{subsec:Konzept_Vorstellung_Agenten}.
+
 \begin{longtable}[H]{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
 	\hline
 	Agent & Durchschn. Performance & Standardabweichung \\
@@ -42,7 +41,8 @@ Dieses Verhalten der Agenten entspricht den Darstellungen im \autoref{subsec:Kon
 \caption{Testdatenauswertung der Baseline Vergleiche für die Performance.}
 \label{tab:Evaluation_Testdaten_Performance} 
 \end{longtable}
-\newpage
+PPO-02 konnte zwar ebenfalls eine fast lineare Steigerung seiner Performance erzielen, jedoch konvergierte dieser früher als der PPO-01.
+Dieses Verhalten der Agenten entspricht den Darstellungen im \autoref{subsec:Konzept_Vorstellung_Agenten}.
 Auch die Auswertung der Testdaten \fullref{tab:Evaluation_Testdaten_Performance} zeigt den sich in den Trainingsdaten abzeichnenden Trend. So erbringt der PPO-03 die beste und der PPO-01 die zweitbeste Leistung. Die Standardabweichungen des PPO-03 und PPO-01 zeigen jedoch, dass die Leistungen nicht konsistent sind. Besonders PPO-01 zeigte eine schwankende Performance, welche auch in den Trainingsdaten \fullref{fig:Evaluation_Baseline_01_performance} zu beobachten ist.
 Daher bleibt der PPO-03 für das Evaluationskriterium der Performance der Sieger.\\
 Stark mit der Performance korrelierend, stellt die Siegrate das nächste zu untersuchende Evaluationskriterium dar.
@@ -57,9 +57,8 @@ Stark mit der Performance korrelierend, stellt die Siegrate das nächste zu unte
 \end{figure}
 Die DQN Agenten sind nicht in der Lage gewesen Siege zu erreichen und fallen daher aus der Betrachtung heraus.
 Der PPO-02 zeigt eine deutlich geringe Siegrate, trotz ähnlicher Performances zu den anderen PPO Agenten.
-Bemerkenswert ist des Weiteren, dass der PPO-03 zwar ähnliche Leistungen wie der PPO-01 erreicht \fullref{fig:Evaluation_Baseline_01_performance}, jedoch der PPO-01 eine deutlich bessere Siegrate erzielt. Dies ist möglicherweise auf den stetigen Lerncharakter des Agenten zurückzuführen \fullref{subsec:Konzept_Vorstellung_Agenten}.
+Bemerkenswert ist des Weiteren, dass der PPO-03 zwar ähnliche Leistungen wie der PPO-01 erreicht \linebreak[4] \fullref{fig:Evaluation_Baseline_01_performance}, jedoch der PPO-01 eine deutlich bessere Siegrate erzielt. Dies ist möglicherweise auf den stetigen Lerncharakter des Agenten zurückzuführen \fullref{subsec:Konzept_Vorstellung_Agenten}.
 Auch die Testdaten in \autoref{tab:Evaluation_Testdaten_Winrate} zeigen, dass PPO-01 der Sieger ist, wobei sich der eben beschriebene Trend aus den Trainingsdaten in den Testdaten widerspiegelt. Daher ist der PPO-01 der Sieger für das Evaluationskriterium der Siegrate.
-\newpage
 \begin{longtable}[H]{|p{4.5cm}|p{4.5cm}|p{4.5cm}|}
 	\hline
 	Agent & Durchschn. Siegrate & Standardabweichung \\
@@ -202,7 +201,6 @@ Von allen wies er die kontinuierlichsten Ergebnisse vor \fullref{fig:Evaluation_
 Einzig bei einer Spielfeldgröße von (10x10) unterlag er knapp dem PPO-03-opt-a.
 Interessant ist der Weiteren, dass der PPO-01-opt-b nicht der zweitbeste Agent ist, wie er es in den vorherigen Evaluationskriterien war. Zweitplatzierter in diesen Vergleichen ist der PPO-03-opt-a. Es lässt sich daher vermuten, dass die Robustheit nicht nur primär von der Performance sondern auch von den gewählten Hyperparametern abhängig ist. So könnte der niedrigere Gammawert der PPO-03 Agenten die Robustheit verstärken.\\
 Zudem ist zu beobachten, dass das der Trend aus \autoref{subsubsec:Evaluation_Robustheit} sich auch bei den Optimized Vergleichen zeigt. Es kann daher angenommen werden, dass dieser keinen Zufall darstellt.
-\newpage
 Weiterhin ist zu vermuten, dass die Strategie der Agenten in irgendeiner Form von der Spielfeldgröße abhängig ist, obwohl diese nicht direkt übergeben wird \fullref{subsubsec:Konzept_Observation}.
 
 \subsubsection{Effizienz}
@@ -232,7 +230,7 @@ Zu Beginn sollen die Anforderungen an das Environment evaluiert werden. Danach f
 
 \subsection{Anforderungsevaluation der Environment}
 Die Hauptanforderung an das Env besagt, dass das Spiel Snake implementiert werden soll. Im Rahmen dieser Ausarbeitung wurde das Spiel Snake nach der Beschreibung in \autoref{sec:Grundlagen_Game_of_Snake} implementiert. Diese Anforderung kann daher als erfüllt angesehen werden. Eine Darstellung der Implementierung befindet sich im Abschnitt des Konzepts \fullref{sec:Konzept_Environment} und in der Implementierung \fullref{sec:Implementierung_Environment}.\\
-\\ Ebenfalls wurde die Anforderung der standardisierten Schnittstelle \fullref{subsec:Anforderungen_Schnittstelle}, welche zu einer Normung und damit zu einer einfacheren Benutzung des Environments führen soll, erfüllt. Wie in dem \autoref{subsec:Konzept_Schnittstelle} und \autoref{sec:Implementierung_train_Methode} zu sehen ist, werden Aktionen durch die step Methoden entgegengenommen und Rewards und Observationen zurückgegeben. Neben der step Methode wird die Observation auch noch durch die Schnittstellenmethode reset geliefert. Diese beiden Methoden spannen die standardisierte Schnittstelle auf.\\
+Ebenfalls wurde die Anforderung der standardisierten Schnittstelle \fullref{subsec:Anforderungen_Schnittstelle}, welche zu einer Normung und damit zu einer einfacheren Benutzung des Environments führen soll, erfüllt. Wie in dem \autoref{subsec:Konzept_Schnittstelle} und \autoref{sec:Implementierung_train_Methode} zu sehen ist, werden Aktionen durch die step Methoden entgegengenommen und Rewards und Observationen zurückgegeben. Neben der step Methode wird die Observation auch noch durch die Schnittstellenmethode reset geliefert. Diese beiden Methoden spannen die standardisierte Schnittstelle auf.\\
 \\Auch sind die funktionalen Anforderungen, welche den geregelten Ablauf im Environment garantieren, beachtet worden.
 So wird die Aktionsausführung  \fullref{subsubsec:Anforderungen_Aktionsausführung} durch die action Methode in der SnakeGame Klasse durchgeführt, welche von der Schnittstellenmethode step aufgerufen wird. Die reset und render Anforderungen werden durch die gleichnamigen Schnittstellenmethoden abgedeckt (siehe \autoref{subsubsec:Konzept_Spielablauf} und \autoref{sec:Implementierung_Environment}).
 

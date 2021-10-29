@@ -1,9 +1,9 @@
 \chapter{Anforderungen} \label{chap:Anforderungen}
 In \autoref{chap:Grundlagen} wurden Grundlagen für die weiteren Vergleiche der Reinforcement Learning Agenten gelegt, welche auf zwei unterschiedlichen Algorithmen (DQN und PPO) basieren.\\
-Um diese Vergleiche zu realisieren, soll ein System entwickelt werden, dass diese durchführen, festhalten und auswerten kann. Dieses soll aus einem Environment, mehreren Agenten beider Algorithmen sowie aus statistischen Analysekomponenten zur Leistungsbestimmung bestehen. Zuzüglich sollen weitere Anforderungen an die Evaluation gestellt werden, um die Vergleichbarkeit sicherstellen.
+Um diese Vergleiche zu realisieren, soll ein System entwickelt werden, dass diese durchführen, festhalten und auswerten kann. Dieses soll aus einem Environment, mehreren Agenten beider Algorithmen sowie aus statistischen Analysekomponenten zur Leistungsbestimmung bestehen. Zuzüglich sollen weitere Anforderungen an die Evaluation gestellt werden, um die Vergleichbarkeit sicherzustellen.
 
 \section{Anforderungen an das Environment} \label{sec:Anforderungen_Env}
-In diesem Abschnitt werden die Anforderungen an das Env dargestellt. Neben der Hauptanforderung, dass das Spiel Snake implementieren werden soll, ergeben sich weitere zusätzliche Anforderungen.
+In diesem Abschnitt werden die Anforderungen an das Env dargestellt. Neben der Hauptanforderung, dass das Spiel Snake implementiert werden soll, ergeben sich weitere zusätzliche Anforderungen.
 
 \subsection{Standardisierte Schnittstelle} \label{subsec:Anforderungen_Schnittstelle}
 Das Env soll eine standardisierte Schnittstelle besitzen, sodass drei Kommunikationskanäle implementiert werden \fullref{subsubsec:Grundlagen_Environment}. Es soll in der Lage sein, Aktionen zu empfangen. Des Weiteren soll eine Observation und ein Reward an den Agenten übergeben werden. Diese Standardisierung erleichtert die Verwendbarkeit, auch bei anderen Algorithmen.
@@ -64,7 +64,7 @@ Das System soll folgende Daten speichern:
 
 \section{Anforderungen an die Evaluation} \label{sec:Anforderungen_an_die_Evaluation}
 Bei der Evaluation soll der optimale Agent für jedes Evaluationskriterium ermittelt und durch aussagekräftige Statistiken untermauert werden.
-Das Kriterium der Performance wurde von verwendeten Literatur \cite{Autonomous_Agents_in_Snake_Game_via_DRL} und \cite{UAV} übernommen, die anderen ergeben sich aus den zu speichernden Daten.
+Das Kriterium der Performance wurde von der verwendeten Literatur \cite{Autonomous_Agents_in_Snake_Game_via_DRL} und \cite{UAV} übernommen, die anderen ergeben sich aus den zu speichernden Daten.
 Die einzelnen Kriterien lauten:
 \begin{longtable}[h]{|p{4cm}|p{\linewidth - 5cm}|}
 	\hline
@@ -74,9 +74,9 @@ Die einzelnen Kriterien lauten:
 	\hline
 	Siegrate & Welcher Agent schafft die Spiele mit einem Sieg zu beenden? Im Gegensatz zur Performance, gibt die Siegrate Aufschluss über das Konvergenzverhalten.\\
 	\hline
-	Robustheit & Welcher Agent kann in einer modifizierten Umgebung die größte Performance erreichen? In Bezug auf Snake bedeutet dies: Welcher Agent ist in der Lage, auf einem größeren bzw. kleineren Spielfeld die meisten Äpfel zu fressen? Dies ist bei Real World Applikationen ein wichtiger Faktor, da sich unbemannte Drohne auch in unbekannten Umgebungen zurechtfinden müssen.\\
+	Robustheit & Welcher Agent kann in einer modifizierten Umgebung die größte Performance erreichen? In Bezug auf Snake bedeutet dies: Welcher Agent ist in der Lage, auf einem größeren bzw. kleineren Spielfeld die meisten Äpfel zu fressen? Dies ist bei Real World Applikationen ein wichtiger Faktor, da sich unbemannte Drohnen auch in unbekannten Umgebungen zurechtfinden müssen.\\
 	\hline
-	Effizienz & Welcher Agent löst das Spiel mit der größten Effizienz? Bezogen auf das Spiel Snake bedeutet dies: Welcher Agent ist in der Lage, die Äpfel mit möglichst wenig Schritten zu fressen? Dieser Wert ist besonders in Real World Applikationen von Interesse, da beispielsweise selbstfahrende Autos ihrer Ziele in einer möglichst geringen Strecke erreichen sollen, um Energie und Zeit zu sparen.\\
+	Effizienz & Welcher Agent löst das Spiel mit der größten Effizienz? Bezogen auf das Spiel Snake bedeutet dies: Welcher Agent ist in der Lage, die Äpfel mit möglichst wenig Schritten zu fressen? Dieser Wert ist besonders in Real World Applikationen von Interesse, da beispielsweise selbstfahrende Autos ihre Ziele in einer möglichst geringen Strecke erreichen sollen, um Energie und Zeit zu sparen.\\
 	\hline
 	\caption{Auflistung der Evaluationskriterien}
 	\label{tab:Anforderungen_Kriterien} 

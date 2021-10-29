@@ -1,22 +1,22 @@
 
 \chapter{Grundlagen}\label{chap:Grundlagen}
-Im folgenden Kapitel soll das grundlegende Wissen, welches zur Untersuchung der Forschungsfrage benötigt wird, vermittelt werden. Dazu sollen verschiedene RL Algorithmen, wie auch die grundlegende Verfahrensweise des RL selbst, thematisiert werden. Zuerst wird sich jedoch dem Spiel Snake beschäftigt. 
+Im folgenden Kapitel soll das grundlegende Wissen, welches zur Untersuchung der Forschungsfrage benötigt wird, vermittelt werden. Dazu sollen verschiedene RL Algorithmen, wie auch die grundlegende Verfahrensweise des RL selbst, thematisiert werden. Zuerst wird sich jedoch mit dem Spiel Snake beschäftigt. 
 
 \section{Game of Snake} \label{sec:Grundlagen_Game_of_Snake}
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.90]{Game_of_Snake}
-	\caption[Game of Snake]{Game of Snake - Abbildung eines Snake Spiels, in welchem der Apfel durch das rote und der Snake Kopf durch das dunkelgrüne Quadrat dargestellt wird. Die hellgrünen Quadrate stellen den Schwanz der Snake dar.}
+	\caption[Game of Snake]{Game of Snake -- Abbildung eines Snake Spiels, in welchem der Apfel durch das rote und der Snake Kopf durch das dunkelgrüne Quadrat dargestellt wird. Die hellgrünen Quadrate stellen den Schwanz der Snake dar.}
 	\label{fig:Grundlagen_Game_of_Snake}
 \end{figure}
 Snake zählt zu den bekanntesten Computerspielen unserer Zeit. Es zeichnet sich durch sein simples und einfach zu verstehendes Spielprinzip aus.
-Das komplette Spielfeld wird durch eine zweidimensionale Ebene beschreibe, in welcher sich die Snake bewegt. Häufig wird diese als einfacher grüner Punkt (Quadrat) dargestellt. Dieser stellt den Kopf der Snake dar. Neben diesem befindet sich auf dem Spielfeld auch noch der Apfel. Dieser wird häufig als roter Punkt (Quadrat) dargestellt \fullref{fig:Grundlagen_Game_of_Snake}.
-Ziel der Snake ist es Äpfel zu fressen, indem der Kopf der Snake auf das Feld des Apfels läuft. Danach verschwindet der Apfel und ein neuer erscheint in einem zufälligen freien Feld. Außerdem wächst, durch das Essen des Apfels, die Snake um ein Schwanzglied. Diese Glieder folgen dabei, in ihren Bewegungen, den vorangegangenen Schwanzglied bis hin zum Kopf. Dem Spieler ist es nur möglich den Kopf der Snake zu steuern.
-Dieser ist es nicht erlaubt die Wände oder sich selbst zu berühren. Geschieht dies jedoch im Laufe des Spiels, so wird dieses sofort beendet. Diese Einschränkung führt zu einem Anstieg der Komplexität gegen Ende des Spiels. 
+Das komplette Spielfeld wird durch eine zweidimensionale Ebene beschrieben, in welcher sich die Snake bewegt. Häufig wird diese als einfacher grüner Punkt (Quadrat) dargestellt. Dieser stellt den Kopf der Snake dar. Neben diesem befindet sich auf dem Spielfeld auch noch der Apfel. Dieser wird häufig als roter Punkt (Quadrat) dargestellt \fullref{fig:Grundlagen_Game_of_Snake}.
+Ziel der Snake ist es Äpfel zu fressen, indem der Kopf der Snake auf das Feld des Apfels läuft. Danach verschwindet der Apfel und ein neuer erscheint in einem zufälligen freien Feld. Außerdem wächst, durch das Essen des Apfels, die Snake um ein Schwanzglied. Diese Glieder folgen dabei, in ihren Bewegungen, den vorangegangenen Schwanzglieder bis hin zum Kopf. Dem Spieler ist es nur möglich den Kopf der Snake zu steuern.
+Diesem ist es nicht erlaubt die Wände oder sich selbst zu berühren. Geschieht dies jedoch im Laufe des Spiels, so wird dieses sofort beendet. Diese Einschränkung führt zu einem Anstieg der Komplexität gegen Ende des Spiels. 
 Ein Spiel gilt als gewonnen, wenn es der Snake gelungen ist das komplette Spielfeld auszufüllen.
 
 \section{Reinforcement Learning} \label{sec:Grundlagen_RL}
-Das Reinforcement Learning (RL) ist einer der drei großen Teilbereiche, des Machine Learnings.
+Das Reinforcement Learning (RL) ist einer der drei großen Teilbereiche, des Machine Learning.
 Das RL wirkt, im Vergleich zu den anderen Disziplinen des Machine Learnings, am nachvollziehbarsten.
 Dies liegt an der Lernstrategie, welche Anwendung findet. 
 Beim RL wird mithilfe eines "`trial-and-error"' Verfahrens gelernt. Ein gutes Beispiel für eine solche Art des Lernens ist die Erziehung eines Kindes. Wenn das Kind etwas Gutes tut, dann wird es belohnt. Angetrieben von der Belohnung, versucht dieses das Verhalten fortzusetzen. 
@@ -37,12 +37,12 @@ Das Environment (Env) bzw. die  Umgebung ist vollständig außerhalb des Agenten
 \subsubsection{Action} \label{subsubsec:Grundlagen_Action}
 Die Actions bzw. Aktionen sind einer der drei Datenübermittlungswege. Bei ihnen handelt es sich um Handlungen, welche im Env ausgeführt werden. Aktionen können z.B. Züge in Spielen, das Abbiegen im autonomen Fahren oder das Ausfüllen eines Antrages sein. Es wird ersichtlich, dass die Aktionen, welche ein RL Agent ausführen kann, prinzipiell nicht in der Komplexität beschränkt sind. 
 Dennoch ist es gängige Praxis geworden, dass diese möglichst einfach gestaltet werden sollen.\\
-Im Environment wird zwischen diskreten und stetigen Aktionsraum unterschieden. Der diskrete Aktionsraum umfasst eine endliche Menge an sich gegenseitig ausschließenden Aktionen. Ein Beispiel dafür wäre das Gehen an einer T-Kreuzung. Der Agent kann entweder Links, Rechts oder zurück gehen.
+Im Environment wird zwischen diskreten und stetigen Aktionsräumen unterschieden. Der diskrete Aktionsrum umfasst eine endliche Menge an sich gegenseitig ausschließenden Aktionen. Ein Beispiel dafür wäre das Gehen an einer T-Kreuzung. Der Agent kann entweder Links, Rechts oder zurück gehen.
 Anders verhält es sich bei einem stetigen Aktionsraum. Dieser zeichnet sich durch stetige Werte aus. Das Steuern eines Autos wäre hierfür beispielhaft. Es stellen sich Fragen, wie z.B. um wie viel Grad muss der Agent das Steuer drehen und um wie viel Prozent muss er bremsen, damit das Fahrzeug in der Spur bleibt? \citep[S. 31 f.]{DRL_Lapan}
 
 \subsubsection{Observation} \label{subsubsec:Grundlagen_Observation}
 Die Observation (Obs) bzw. die Beobachtung ist ein weiterer Datenübermittlungsweg, welche den Agenten mit dem Env verbindet. Bei dieser handelt es sich um einen oder mehrere Vektoren bzw. Matrizen, welche dabei den momentanen Zustand des Environments repräsentieren. \citep[S. 381]{Sutton1998}\\
-Je nach Anwendungsbereich, fällt die Obs sehr unterschiedlich aus. In der Finanzwelt könnte diese z.B. die neusten Börsenkurse beinhalten oder in der Welt der Spiele könnten die aktuelle Punktezahl wiedergeben werden. \citep[S. 32]{DRL_Lapan}
+Je nach Anwendungsbereich, fällt die Obs sehr unterschiedlich aus. In der Finanzwelt könnte diese z.B. die neusten Börsenkurse beinhalten oder in der Welt der Spiele könnte die aktuelle Punktezahl wiedergeben werden. \citep[S. 32]{DRL_Lapan}
 
 \subsubsection{Reward} \label{subsubsec:Grundlagen_Reward}
 Der Reward bzw. die Belohnung ist der letzte Datenübertragungsweg.
@@ -60,20 +60,20 @@ Sollte daher ein Agent der Policy $\pi_{t}$ zum Zeitpunkt $t$ folgen, so entspri
 \subsubsection{Value} \label{subsubsec:Grundlagen_Value}
 Die Values geben eine Einschätzung ab, wie gut oder schlecht ein State bzw. State-Action-Pair ist. Sie werden gewöhnlich mit einer Value Funktion $V$ bestimmt, sodass beispielsweise $V(s)$ dem Wert des States $s$ gleichkommt. Der Value entspricht dabei der diskontierten Summe aller noch zu erwartenden Rewards in der verbleibenden Spielepisode. Damit ist dieser ein Maß dafür, wie gut es für den Agenten ist, in diesen State zu wechseln.\\
 Der sogenannte Q-Value $Q(s,a)$ gibt Aufschluss darüber, welche Aktion $a$ im State $s$ den größten Return (Summe aller diskontierten Rewards in der noch verbleibenden Spielepisode) erzielen wird.\\
-Die Values werden ebenfalls unter einer Policy (Regelwerk des Agenten) bestimmt, daher folgt, dass für die Value Funktionen $V_\pi(s)$ und $Q_\pi(s,a)$, wobei $\pi$ die Policy ist. \citep[S. 46]{Sutton1998}
+Die Values werden ebenfalls unter einer Policy (Regelwerk des Agenten) bestimmt, daher folgt, dass für die Value Funktionen $V_\pi(s)$ und $Q_\pi(s,a)$, $\pi$ die Policy ist. \citep[S. 46]{Sutton1998}
 
 \subsection{Funktionsweise} \label{subsec:Grundlagen_Funktionsweise}
 Die folgende Beschreibung der Funktionsweise orientiert sich an der Abbildung \ref{fig:Grundlagen_Reinforcement_Learning}.
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=1.00]{Reinforcement_Learning}
-	\caption[Reinforcement Learning]{Schematische Funktionsweise des Reinforcement Learning - Der Agent erhält einen state $S_{t}$ und falls 
+	\caption[Reinforcement Learning]{Schematische Funktionsweise des Reinforcement Learning -- Der Agent erhält einen state $S_{t}$ und falls 
 		$t \neq 0$ einen reward $R_{t}$. Daraufhin wird vom Agenten eine action $A_{t}$ ermittelt, welche im Env ausgeführt wird. Das Env übermittelt den neuen state $S_{t+1}$ und reward $R_{t+1}$ an den Agenten. Diese Prozedur wird wiederholt. Bildquelle: \citep[S. 38]{Sutton1998}}
 	\label{fig:Grundlagen_Reinforcement_Learning}
 \end{figure}
-Zu Beginn wird dem Agenten vom Environment der initialer State $S_{t=0}$ übermittelt, welcher einen Entscheidungsfindungsprozess anstößt. Es wird eine Aktion $A_{t}$ ermittelt, welche an das Env weiterleitet und dort ausgeführt wird.
+Zu Beginn wird dem Agenten vom Env der initialer State $S_{t=0}$ übermittelt, welcher einen Entscheidungsfindungsprozess anstößt. Es wird eine Aktion $A_{t}$ ermittelt, welche an das Env weiterleitet und dort ausgeführt wird.
 Das manipulierte Env befindet sich nun im neuen State $S_{t+1}$, welcher an den Agenten weitergeleitet wird. Des Weiteren bestimmt und sendet das Env noch einen Reward $R_{t+1}$.
-Mit dem neuen State $S_{t+1}$, kann der Agent wieder eine Aktion $A_{t+1}$ bestimmen, welche ausgeführt wird. Daraufhin werden wieder der neue State $S_{t+2}$ und Reward $R_{t+2}$ ermittelt und übertragen usw. \citep[S. 37 ff.]{Sutton1998}
+Mit dem neuen State $S_{t+1}$, kann der Agent wieder eine Aktion $A_{t+1}$ bestimmen, welche ausgeführt wird. Daraufhin werden wieder der neue State $S_{t+2}$ und Reward $R_{t+2}$ ermittelt und übertragen. \citep[S. 37 ff.]{Sutton1998}
 
 \subsection{Arten von RL Verfahren} \label{subsec:Grundlagen_Arten_RL_Verfahren}
 Nachdem das Basisvokabular erklärt wurde, soll nun ein tieferer Blick in die verschiedenen Arten des RL geworfen werden.\\
@@ -88,7 +88,7 @@ Die value-based Verfahren bestimmen ihre Aktionen nicht mit einer Wahrscheinlich
 
 \subsubsection{On-Policy und Off-Policy Verfahren} \label{subsubsec:Grundlagen_on_off_policy}
 Eine Klassifikation in on-policy und off-policy Verfahren gibt Aufschluss über den Zustand der Daten.\\ 
-Off-Policy RL Verfahren sind in der Lage, von Daten zu lernen, welcher nicht unter der momentanen Policy \fullref{subsubsec:Grundlagen_Policy} generiert wurden. Die Aktualität der Daten spielt daher keine Rolle für dieses RL Verfahren.\\
+Off-Policy RL Verfahren sind in der Lage, von Daten zu lernen, welche nicht unter der momentanen Policy \fullref{subsubsec:Grundlagen_Policy} generiert wurden. Die Aktualität der Daten spielt daher keine Rolle für dieses RL Verfahren.\\
 On-Policy RL Verfahren sind dagegen sehr wohl abhängig von der Aktualität der Daten, da sie versuchen die Policy indirekt oder direkt zu optimieren. Sollte ein on-policy Agent mit veralteten Daten trainiert werden, so würde dies die Policy des Agenten in negativer Weise beeinflussen. \citep[S. 210 f.]{DRL_Lapan}\\
 Nach diesen Einordnungen sollen nun die ausgewählten Algorithmen näher erklärt werden. Begonnen wird mit dem Proximal Policy Optimization Algorithmus (PPO).
 
@@ -98,14 +98,14 @@ Agenten, welche auf dem PPO Algorithmus basieren, konnten in der Vergangenheit b
 Um einen groben Überblick des Algorithmus zu erhalten, werden zuerst, im nächsten Abschnitt, dessen Architektur und Vorläufer näher thematisiert.
 
 \subsection{Actor Critic Modell} \label{subsec:Grundlagen_actor_critic}
-Der PPO Algorithmus ist ein policy-based \fullref{subsubsec:Grundlagen_policy_value_based} RL Verfahren, welches, im Vergleich zu anderen Verfahren, einige Verbesserungen aufweist. So ist der PPO eine Weiterentwicklung normaler Policy Gradient Verfahrens und basiert intern auf dem sogenanntes Actor bzw. Policy Network und auf dem Critic bzw. Value Network. \citep[S. 273 f.]{Sutton1998}\\
+Der PPO Algorithmus ist ein policy-based \fullref{subsubsec:Grundlagen_policy_value_based} RL Verfahren, welches, im Vergleich zu anderen Verfahren, einige Verbesserungen aufweist. So ist der PPO eine Weiterentwicklung normaler Policy Gradient Verfahren und basiert intern auf dem sogenannten Actor bzw. Policy Network und auf dem Critic bzw. Value Network. \citep[S. 273 f.]{Sutton1998}\\
 Beide neuronalen Netzwerke können aus mehreren Schichten bestehen, jedoch sind Actor und Critic streng voneinander getrennt und besitzen mit einer Ausnahme keine gemeinsamen Parameter. Gelegentlich werden jedoch beiden Netzen (Actor bzw. Critic) noch ein weiteres Netz vorgeschoben. In diesem Ausnahmefall können Actor und Critic gemeinsame Parameter besitzen.\\
 Das Actor Network ist für die Bestimmung der Policy zuständig. Anders als bei value-based \fullref{subsubsec:Grundlagen_policy_value_based} RL Verfahren, wird diese direkt bestimmt und kann auch direkt angepasst werden. Die Policy wird als eine Wahrscheinlichkeitsverteilung über alle möglichen Aktionen vom Actor Network zurückgegeben. \fullref{subsubsec:Grundlagen_Policy}\\
 Das Critic bzw. Value Network evaluiert die Aktionen, welche vom Actor Network bestimmt worden sind. Genauer gesagt, schätzt das Value Network den sogenannten Return bzw. die Discounted Sum of Rewards \fullref{subsubsec:Grundlagen_Return} zu einem Zeitpunkt $t$, basierend auf dem momentanen State $s$. Auf dieser Architektur wird ein PPO Agent aufgebaut.\\
 Neben der Architektur, ist die Aktualisierungsprozedur ein weiterer wichtiger Bestandteil des Algorithmus. Diese wird daher im Folgenden näher betrachtet.
 
 \subsection{PPO Formelelemente}
-Das Herzstück eines jeden RL Verfahrens wird durch seine Aktualisierungsprozedur dargestellt, in welcher der Fehler (Loss) des Algorithmus bestimmt wird. Um die dem PPO zugrunde liegende Aktualisierungsprozedur besser zu verstehen, folge eine Erklärung ihrer einzelnen mathematischen Bestandteile. 
+Das Herzstück eines jeden RL Verfahrens wird durch seine Aktualisierungsprozedur dargestellt, in welcher der Fehler (Loss) des Algorithmus bestimmt wird. Um die dem PPO zugrunde liegende Aktualisierungsprozedur besser zu verstehen, folgt eine Erklärung ihrer einzelnen mathematischen Bestandteile. 
 Diese basieren auf den PPO Paper \citep{PPO}.
 \begin{longtable}[H]{|p{1.5cm}|p{\linewidth - 2.5cm}|}
 	\hline
@@ -117,13 +117,13 @@ Diese basieren auf den PPO Paper \citep{PPO}.
 	\hline
 	$\theta$ & Theta beschreibt die Parameter, aus denen sich die Policy des PPO ergibt. Sie sind die Gewichte, welche das Policy Network definiert. \\
 	\hline
-	$\pi_{\theta}$ & Die Policy bzw. Entscheidungsfindungsregeln sind eine Wahrscheinlichkeitsverteilung über alle möglichen Aktions. Eine Aktion $a$ wird auf Basis der Wahrscheinlichkeitsverteilung gewählt (siehe \citep[Summary of Notation S. xvi]{Sutton1998} und \autoref{subsubsec:Grundlagen_Policy}). \\
+	$\pi_{\theta}$ & Die Policy bzw. Entscheidungsfindungsregeln sind eine Wahrscheinlichkeitsverteilung über alle möglichen Actions. Eine Aktion $a$ wird auf Basis der Wahrscheinlichkeitsverteilung gewählt (siehe \citep[Summary of Notation S. xvi]{Sutton1998} und \autoref{subsubsec:Grundlagen_Policy}). \\
 	\hline
 	$L^\text{CLIP} (\theta)$ & $L^\text{CLIP} (\theta)$ bezeichnet den sogenannten Policy bzw. Actor Fehler, welche in Abhängigkeit zu der Policy $\pi_{\theta}$ steht. Dabei handelt es sich um einen Zahlenwert, welcher den Fehler über alle Parameter approximiert. Dieser wird für das Lernen des Actor Networks benötigt. \\
 	\hline
 	$r_{t}(\theta)$ & $r_{t}(\theta)$ stellt den Quotienten zwischen alter Policy (nicht als Abhängigkeit angegeben, da sie nicht verändert wird) und aktueller Policy zum Zeitpunkt $t$ dar. Daher auch Probability Ratio genannt. \\
 	\hline
-	$\hat{A}_{t}(s, a)$ & Erwartete Vorteil bzw. Nachteil einer Aktion $a$, welche im State $s$ ausgeführt wurde. \\
+	$\hat{A}_{t}(s, a)$ & Erwarteter Vorteil bzw. Nachteil einer Aktion $a$, welche im State $s$ ausgeführt wurde. \\
 	\hline
 	$\text{clip}$ & Mathematische Funktion zur Beschneidung eines Eingabewertes. Clip setzt eine Ober- und Untergrenze fest. Sollte ein Wert, der dieser Funktion übergeben wird, sich nicht mehr innerhalb der Grenzen befinden, so wird der jeweilige Grenzwert zurückgegeben. \\
 	\hline
@@ -169,7 +169,7 @@ Um nun den ersten Surrogate Fehler, welcher im Weiteren noch thematisiert wird \
 
 \subsubsection{Probability Ratio} \label{subsubsec:Grundlagen_Probability_Ratio}
 Die Probability Ratio $r_{t}(\theta)$ ist der nächste Funktionsbestandteil des $L^\text{CLIP}_{t} (\theta)$ \fullref{eq:Grundlagen_Actor_Loss}.
-In normalen Policy Gradient Methoden bestehe ein Problem zwischen der effizienten Datennutzung und der Aktualisierung der Policy. Dieses Problem tritt z.B. im Zusammenhang mit dem Advantage Actor Critic (A2C) Algorithmus auf und reglementiert die effiziente Nutzung von Daten. 
+In normalen Policy Gradient Methoden besteht ein Problem zwischen der effizienten Datennutzung und der Aktualisierung der Policy. Dieses Problem tritt z.B. im Zusammenhang mit dem Advantage Actor Critic (A2C) Algorithmus auf und reglementiert die effiziente Nutzung von Daten. 
 So ist es dem A2C nur möglich von Daten zu lernen, welche on-policy \fullref{subsubsec:Grundlagen_on_off_policy} erzeugt wurden.
 Der PPO umgeht diese Problematik jedoch partiell durch das Importance-Sampling (IS, deutsch: Stichprobenentnahme nach Wichtigkeit).
 Bei der Fehlerfunktion des A2C Algorithmus \fullref{eq:Grundlagen_A2C_Loss} wird deutlich,
@@ -192,13 +192,13 @@ Die Surrogate Fehlerfunktionen ergeben sich aus der Tatsache, dass die Fehlerfun
 	r_{t}(\theta) \hat{A}_{t}(s, a)
 	\label{eq:Grundlagen_surrogate_1}
 \end{align}
-stellt die normale TRPO Fehlerfunktion dar, ohne die durch den TRPO Algorithmus vorgesehene KL-Penalty. Diese sorgt dafür, dass sich die Policy des TRPO nicht zu weit von der ursprünglichen entfernt. Die erste Fehlerfunktion $surr_1$ kann sich daher weit von der ursprünglichen Policy entfernen.\citep[S. 3 f.]{PPO}
+stellt die normale TRPO \cite{TRPO} Fehlerfunktion dar, ohne die durch den TRPO Algorithmus vorgesehene KL-Penalty. Diese sorgt dafür, dass sich die Policy des TRPO nicht zu weit von der ursprünglichen entfernt. Die erste Fehlerfunktion $surr_1$ kann sich daher weit von der ursprünglichen Policy entfernen.\citep[S. 3 f.]{PPO}\\
 Die alleinige Nutzung dieser Funktion hätte jedoch destruktiv große Policy Aktualisierungen zufolge. Aus diesem Grund haben John Schulman et al. eine zweite Surrogate Fehlerfunktion $surr_2$ \fullref{eq:Grundlagen_surrogate_2}, dem PPO Algorithmus hinzugefügt. 
 \begin{align}
 	\label{eq:Grundlagen_surrogate_2}
 	\text{clip}(r_{t}(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_{t}(s, a)
 \end{align}
-Die einzige Veränderung dieser Funktion im Vergleich zur Ersten ist, dass der berechnete Fehler geclipped (abgegrenzt) wird. Sollte sich die Probability Ratio zu weit von eins entfernen, so wird $r_{t}(\theta)$ entsprechende auf $1 - \epsilon \text{ bzw. } 1 + \epsilon$ begrenzt. Es wird sich daher in einer Trust Region bewegt, da man sich nie allzu weit von der ursprünglichen Policy entfernt. \citep{TRPO, PPO}
+Die einzige Veränderung dieser Funktion im Vergleich zur Ersten ist, dass der berechnete Fehler geclipped (abgegrenzt) wird. Sollte sich die Probability Ratio zu weit von eins entfernen, so wird $r_{t}(\theta)$ entsprechend auf $1 - \epsilon \text{ bzw. } 1 + \epsilon$ begrenzt. Es wird sich daher in einer Trust Region bewegt, da man sich nie allzu weit von der ursprünglichen Policy entfernt. \citep{TRPO, PPO}
 
 \subsubsection{Zusammenfassung der Actor Fehlerfunktion} \label{subsubsec:Grundlagen_PPO_Actor_Loss}
 Der Actor Fehler lässt sich nun für jede Erfahrung, welche gesammelt wurde, bestimmen. Dabei wird das Minimum der beiden Surrogate Fehlerfunktionen ausgewählt und als Fehler zurückgegeben \fullref{eq:Grundlagen_Actor_Loss_Single}.
@@ -240,19 +240,19 @@ Diese Darstellung basiert dabei auf der Quelle \citep{PPO} und einigen weiteren 
 	\item Bestimmt die Ratios $r_t(\theta)$. \fullref{subsubsec:Grundlagen_Probability_Ratio}.
 	\item Berechne die Advantages $\hat{A}_{t}(s, a)$. \fullref{subsubsec:Grundlagen_Advantage}.
 	\item Berechne die Surrogate Fehler \fullref{subsubsec:Grundlagen_Surrogate_Fehlerfunktion} $surr_1$ und $surr_2$.
-	\item Bestimmt den PPO Fehler. \fullref{subsubsec:Grundlagen_PPO_Fehlerfunktion}
+	\item Bestimme den PPO Fehler. \fullref{subsubsec:Grundlagen_PPO_Fehlerfunktion}
 	\item Aktualisiere die Gewichte des Actors und Critics mit Adam Optimizer \citep{PPO}. $\theta_{\text{old}} \longleftarrow \theta$ und $w_{\text{old}} \longleftarrow w$.
 	\item Wiederhole alle Schritte ab Schritt sieben $K$-mal. $K$ stellt ein Hyperparameter dar.
 	\item Wiederhole alle Schritte ab Schritt zwei erneut, bis das Verfahren konvergiert.
 \end{enumerate}
-Neben dem PPO Algorithmus soll auch noch eine weiter behandelt werden. Der DQN Algorithmus wird im Folgenden vorgestellt.
+Neben dem PPO Algorithmus soll auch noch ein weiterer behandelt werden. Der DQN Algorithmus wird im Folgenden vorgestellt.
 
 \section{Deep Q-Network} \label{sec:Grundlagen_Deep_Q_Learning}
-Der DQN (Deep Q-Network-Algorithmus) ist ein weiterer Reinforcement Learning Algorithmus, welcher auf einer ihm zugrunde liegenden Formel basiert. Er hat bereits große Erfolge erzielen können, besonders im Gaming Bereich \citep{DBLP:journals/corr/MnihKSGAWR13}. Daher erscheint es auch nicht weiter verwunderlich, dass sich dieser Algorithmus einer großen Beliebtheit erfreut. Unter anderem wurden aus diesem Grund bereits viele Erweiterungen implementiert, wie der DDQN (Double Deep Q-Network) oder der DQN mit Verrauschen Netzen usw.\\
+Der DQN (Deep Q-Network-Algorithmus) ist ein weiterer Reinforcement Learning Algorithmus, welcher auf einer ihm zugrunde liegenden Formel basiert. Er hat bereits große Erfolge erzielen können, besonders im Gaming Bereich \citep{DBLP:journals/corr/MnihKSGAWR13}. Daher erscheint es auch nicht weiter verwunderlich, dass sich dieser Algorithmus einer großen Beliebtheit erfreut. Unter anderem wurden aus diesem Grund bereits viele Erweiterungen implementiert, wie der DDQN (Double Deep Q-Network) oder der DQN mit verrauschten Netzen usw.\\
 Basierend auf seiner großen Beliebtheit ergibt sich die Frage, ob der DQN dieser auch gerecht wird? Diese Frage lässt sich am besten mit einem Vergleich beantworten, was diesen Algorithmus zu einem guten Kandidaten für diesen macht.\\ 
-Angestammtes Ziel aller Q-Learning-Algorithmen ist es, jedem State-Action-Pair $(s,a)$ (Zustands-Aktions-Paar), einem Aktionswert (Q-Value) $Q$ zuzuweisen \citep[S. 126]{DRL_Lapan}. 
+Angestrebtes Ziel aller Q-Learning-Algorithmen ist es, jedem State-Action-Pair $(s,a)$ (Zustands-Aktions-Paar), einem Aktionswert (Q-Value) $Q$ zuzuweisen \citep[S. 126]{DRL_Lapan}. 
 Dies ist beispielsweise über eine Tabelle möglich, was jedoch bei komplexen Environments schnell ineffizient wird. Ein weiterer Ansatz sind NN, welche die Q-Value Funktion nachbilden und erlernen können.\\
-\\Ein Blick in die Logik des Algorithmus eröffnet dahingehend einen besseren Überblick. 
+\\Ein Einsicht in die Logik des Algorithmus eröffnet dahingehend einen besseren Überblick. 
 So ist die Idee von vielen RL Verfahren, die Aktionswert Funktion mithilfe der Bellman Gleichung iterativ zu bestimmen. Daraus ergibt sich die folgende Formel \citep{DBLP:journals/corr/MnihKSGAWR13}
 \begin{align}
 	Q_{i+1}(s,a) = \mathbb{E} \bigl\lbrack r + \gamma \max_{a'} Q_i(s',a')|s,a \bigr\rbrack
@@ -267,7 +267,7 @@ Damit dieses nicht ausschließlich zufällige Q-Values ermittelt, ist eine Anpas
 	\label{eq:DQN_Loss}
 \end{align}
 Die Formel \fullref{eq:DQN_Loss} besagt, dass der Fehler eines zufällig ausgesuchten State-Action Tupels (s,a) sich wie folgt zusammensetzt. 
-Der Fehler ist die Differenz aus dem Aktionswerts $Q(s,a)$, welcher Aufschluss über den, in dieser Episode, zu erwartenden Reward liefert und $y_i$. Dabei ist $y_i$ der Reward, welcher durch die Ausführung der Aktion $a$ im Zustand $s$ erzielt wurde, addiert mit dem maximalen Q-Value der Folgeaktion $a'$ im Folgezustand $s'$.\\
+Der Fehler ist die Differenz aus dem Aktionswert $Q(s,a)$, welcher Aufschluss über den, in dieser Episode, zu erwartenden Reward liefert und $y_i$. Dabei ist $y_i$ der Reward, welcher durch die Ausführung der Aktion $a$ im Zustand $s$ erzielt wurde, addiert mit dem maximalen Q-Value der Folgeaktion $a'$ im Folgezustand $s'$.\\
 Da $Q(s,a)$ rekursiv definiert werden kann, ergibt sich in vereinfachter Form \citep[S.126 und S. 146 f.]{DRL_Lapan}:
 \begin{align}
 	Q(s,a) = r + \gamma \max_{a \in A}Q(s',a') = \mathbb{E} \bigl\lbrack r+\gamma \max_{a'}Q(s',a';\theta)|s,a \bigr\rbrack = y_i
@@ -276,10 +276,10 @@ Da $Q(s,a)$ rekursiv definiert werden kann, ergibt sich in vereinfachter Form \c
 Es wird erkenntlich, dass $Q(s,a)$ dem Q-Target $y_i$ entsprechen soll $Q(s,a) \longrightarrow y_i$ \fullref{eq:Q-Value_rekursive_def}. Darum wird die Differenz zwischen beiden bestimmt und als Fehler deklariert. Dieser wird noch quadriert, damit er stets positiv ist. \fullref{eq:DQN_Loss}\\
 Mit diesem berechneten Fehler werden dann die NN Parameter $\theta$ aktualisiert $\theta_{i} \longrightarrow \theta_{i+1}$.
 
-\subsection{DQN - Algorithmus} \label{subsec:Grundlagen_DQN_Algorithmus}
+\subsection{DQN -- Algorithmus} \label{subsec:Grundlagen_DQN_Algorithmus}
 Zur besseren Anwendbarkeit haben Volodymyr Mnhi et al. einen Algorithmus entworfen, welcher den DQN anschaulich erklärt \citep{DBLP:journals/corr/MnihKSGAWR13}. Da jedoch in diesem Algorithmus weiterhin auf Teile der Fehlerfunktion eingegangen wird, folgt eine bereinigte Version, welche sich auch für den allgemeinen Gebrauch besser anbietet. \citep[S. 149 f.]{DRL_Lapan}
 \begin{enumerate} 
-	\item Initialisiere alle Hyperparameter das Q-Network mit zufallsbasierten Gewichten. Setzte Epsilon $\epsilon = 1.00$ und erzeuge einen leeren Experience Buffer $EB$.
+	\item Initialisiere alle Hyperparameter des Q-Network mit zufallsbasierten Gewichten. Setzte Epsilon $\epsilon = 1.00$ und erzeuge einen leeren Experience Buffer $EB$.
 	\item Wähle mit der Wahrscheinlichkeit $\epsilon$ eine zufällige Aktion $a$ oder nutze $a = \arg\max_{a} Q(s,a)$.
 	\item Führe Aktion $a$ aus und ermittle den Reward $r$ und den Folgezustand $s'$.
 	\item Speicher Zustand $s$, Aktion $a$, Reward $r$ und Folgezustand $s'$.

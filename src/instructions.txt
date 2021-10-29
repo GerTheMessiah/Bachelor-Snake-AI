@@ -1,0 +1,97 @@
+For using the application can happen in two separate ways.
+
+1.) The fist way of using is the manuell execution of the train and test methods in src/snakeAI/agents/ppo/ppo_train
+    respectively src/snakeAI/agents/dqn/dqn_train or src/snakeAI/agents/ppo/ppo_test respectively
+    src/snakeAI/agents/dqn/dqn_train. There you can set the parameters directly.
+    In the following way those parameters will be explained.
+
+2.) Ths second way of using the application are the interface methods main_make_statistics, main_train, main_test.
+    main_make_statistics:
+        FIG_PATH: Path of the statistic which will be created.
+        USE_CASE: Train or test run.
+        RUN_TYPE: Baseline or optimized.
+        STATISTIC_RUN_NUMBER: Number of the of be evaluated statistic runs.
+        AGENT_LIST: List of agents which should be processed.
+
+        An example cmd command for starting the application on Windows os represents the following:
+
+        Path\_to\_File\Bachelor-Snake-AI\src\: python main_make_statistics.py
+        "Path\of\statistic" "train" "baseline" 2 []
+
+    main_train:
+        Agent Type PPO
+            N_ITERATIONS: Iteration which should be processed for learning.
+            LR_ACTOR: Learning rate of the actor.
+            LR_CRITIC: Learning rate of the critic.
+            GAMMA: Discounting factor. Important for the time preference.
+            K_EPOCHS: Number of the epochs for learning with one data batch.
+            EPS_CLIP: Clip Value of the PPO
+            BOARD_SIZE: Size of the playground. E.g. (8, 8)
+            STATISTIC_RUN_NUMBER: Number of the Run. Important for saving the generated data.
+            AGENT_NUMBER: Number of the to be examined agent. Important for saving.
+            RUN_TYPE: Type of the statistic run. BaseLine or Optimized.
+            OPTIMIZATION: "A", "B", "AB", "None"
+            GPU: Should the GPU be used.
+
+            An example cmd command for starting the application on Windows os represents the following:
+
+            Path\_to\_File\Bachelor-Snake-AI\src\: python main_train.py
+            "PPO" 30000 0.00015 0.0003 0.95 10 0.2 "(8, 8)" 1 3 "optimized" "None" True
+
+        Agent Type DQN
+            N_ITERATIONS: Iteration which should be processed for learning.
+            LR: Learning rate of the DQN.
+            GAMMA: Discounting factor. Important for the time preference.
+            BATCH_SIZE: Size of the batches.
+            MAX_MEM_SIZE: Maximal memory size.
+            EPS_DEC: Subtrahend which reduces epsilon.
+            EPS_END": Lower limit of epsilon.
+            STATISTIC_RUN_NUMBER: Number of the Run. Important for saving the generated data.
+            AGENT_NUMBER: Number of the to be examined agent. Important for saving.
+            RUN_TYPE: Type of the statistic run. BaseLine or Optimized.
+            OPTIMIZATION: "A", "B", "AB", "None"
+            GPU: Should the GPU be used.
+
+            An example cmd command for starting the application on Windows os represents the following:
+
+            Path\_to\_File\Bachelor-Snake-AI\src\: python main_train.py
+            "DQN" 30000 0.0001 0.99 64 2048 7e-6 1e-2 "(8, 8)" 2 2 "baseline" "None" True
+
+    main_test:
+        Agent Type PPO
+            MODEL_PATH: Path of the model file
+            N_ITERATIONS: Iteration which should be processed for learning.
+            BOARD_SIZE: Size of the batches.
+            HAS_GUI: Should a gui be started?
+            STATISTIC_RUN_NUMBER: Number of the Run. Important for saving the generated data.
+            AGENT_NUMBER: Number of the to be examined agent. Important for saving.
+            RUN_TYPE: Type of the statistic run. BaseLine or Optimized.
+            RAND_GAME_SIZE: If True than the environment will change the playground size from time to time.
+            OPTIMIZATION: "A", "B", "AB", "None"
+            GPU: Should the GPU be used.
+
+            An example cmd command for starting the application on Windows os represents the following:
+
+            Path\_to\_File\Bachelor-Snake-AI\src\: python main_test.py
+            "PPO" "Path\_to\_File\Bachelor-Snake-AI\src\resources\baseline-run-01\PPO-03-train.model" 5000 "(8, 8)"
+            False 2 2 "baseline" False "None" True
+
+        Agent Type DQN
+            MODEL_PATH: Path of the model file
+            N_ITERATIONS: Iteration which should be processed for learning.
+            BOARD_SIZE: Size of the batches.
+            HAS_GUI: Should a gui be started?
+            STATISTIC_RUN_NUMBER: Number of the Run. Important for saving the generated data.
+            AGENT_NUMBER: Number of the to be examined agent. Important for saving.
+            RUN_TYPE: Type of the statistic run. BaseLine or Optimized.
+            RAND_GAME_SIZE: If True than the environment will change the playground size from time to time.
+            OPTIMIZATION: "A", "B", "AB", "None"
+            GPU: Should the GPU be used.
+
+            An example cmd command for starting the application on Windows os represents the following:
+
+            Path\_to\_File\Bachelor-Snake-AI\src\: python main_test.py
+            "DQN" "Path\_to\_File\Bachelor-Snake-AI\src\resources\baseline-run-01\DQN-03-train.model" 5000 "(8, 8)"
+            False 2 2 "baseline" False "None" True
+
+    The parameters for using the application can be determined among other things of the saved files in the resource directory.

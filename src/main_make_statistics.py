@@ -13,6 +13,10 @@ if __name__ == '__main__':
 
     for i in range(1, STATISTIC_RUN_NUMBER + 1):
         agent_dict, agent_dict_rgs, agent_color = get_data([1], RUN_TYPE, USE_CASE, [])
+        for agent in AGENT_LIST:
+            if agent in agent_dict:
+                agent_dict.pop(agent)
+                agent_dict_rgs.pop(agent)
         agent_dict_list.append(agent_dict)
         agent_dict_rgs_list.append(agent_dict_rgs)
         agent_color_list.append(agent_color)

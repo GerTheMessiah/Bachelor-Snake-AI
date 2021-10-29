@@ -2,20 +2,20 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Formelelemente des PPO Algorithmus.\relax }}{10}{table.2.1}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Formelelemente des PPO Algorithmus.\relax }}{11}{table.2.1}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Darstellung der zu erhebende Daten}}{20}{table.3.1}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Auflistung der Evaluationskriterien\relax }}{21}{table.3.2}%
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Kodierung der Aktionen im Snake Environment.\relax }}{31}{table.5.1}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Around\_View - Erklärung der Channels}}{33}{table.5.2}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Darstellung der zu erhebende Daten}}{22}{table.3.1}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Auflistung der Evaluationskriterien\relax }}{23}{table.3.2}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {7.1}{\ignorespaces Testdatenauswertung der Baseline Vergleiche für die Performance.\relax }}{57}{table.7.1}%
-\contentsline {table}{\numberline {7.2}{\ignorespaces Testdatenauswertung der Baseline Vergleiche für die Siegrate.\relax }}{59}{table.7.2}%
-\contentsline {table}{\numberline {7.3}{\ignorespaces Testdatenauswertung der Optimized Vergleiche für die Performance\relax }}{62}{table.7.3}%
-\contentsline {table}{\numberline {7.4}{\ignorespaces Testdatenauswertung der Optimized Vergleiche für die Siegrate\relax }}{64}{table.7.4}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Kodierung der Aktionen im Snake Environment\relax }}{34}{table.5.1}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Around\_View -- Erklärung der Channels}}{35}{table.5.2}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {7.1}{\ignorespaces Testdatenauswertung der Baseline Vergleiche für die Performance.\relax }}{60}{table.7.1}%
+\contentsline {table}{\numberline {7.2}{\ignorespaces Testdatenauswertung der Baseline Vergleiche für die Siegrate.\relax }}{62}{table.7.2}%
+\contentsline {table}{\numberline {7.3}{\ignorespaces Testdatenauswertung der Optimized Vergleiche für die Performance\relax }}{65}{table.7.3}%
+\contentsline {table}{\numberline {7.4}{\ignorespaces Testdatenauswertung der Optimized Vergleiche für die Siegrate\relax }}{67}{table.7.4}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

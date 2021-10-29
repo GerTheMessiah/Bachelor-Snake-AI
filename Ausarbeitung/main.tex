@@ -87,7 +87,17 @@
 \usepackage{wrapfig}
 \usepackage{float}
 \usepackage{tocbasic}
-
+\usepackage{caption}
+\usepackage{varwidth}
+\DeclareCaptionFormat{myformat}{%
+	% #1: label (e.g. "Table 1")
+	% #2: separator (e.g. ": ")
+	% #3: caption text
+	\begin{varwidth}{\linewidth}%
+		\centering
+		#1#2#3%
+	\end{varwidth}%
+}
 \usepackage[inkscape=true, inkscapelatex=true]{svg}
 \svgpath{{./Abbildungen/}{./Abbildungen/Grundlagen/}{./Abbildungen/Konzept/}{./Abbildungen/Implementierung/}{./Abbildungen/Evaluation/}{./Abbildungen/Anhang/}}
 \svgsetup{inkscapeexe="C:/Program Files/Inkscape/bin/inkscape", inkscapepath={svgpath}}
@@ -116,7 +126,7 @@
 	numbers			=none
 }
 
-
+\usepackage[parfill]{parskip}
 %-----------------------------
 %---Variablen zum ausfüllen---
 %-----------------------------

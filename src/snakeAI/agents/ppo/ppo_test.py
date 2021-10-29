@@ -97,7 +97,7 @@ def test_ppo(MODEL_PATH, N_ITERATIONS, BOARD_SIZE=(8, 8), HAS_GUI=False, STATIST
 
 
 if __name__ == '__main__':
-    MODEL_PATH = r"C:\Users\Lorenz Mumm\PycharmProjects\Bachelor-Snake-AI\src\resources\optimized-run-02\PPO-02-opt-b-train.model"
+    MODEL_PATH = r"Path\to\File\Bachelor-Snake-AI\src\resources\optimized-run-02\PPO-02-opt-b-train.model"
     print(MODEL_PATH)
     test_ppo(MODEL_PATH=MODEL_PATH, N_ITERATIONS=5_000, BOARD_SIZE=(8, 8), HAS_GUI=False, STATISTIC_RUN_NUMBER=2,
              AGENT_NUMBER=2, RUN_TYPE="optimized", RAND_GAME_SIZE=True, OPTIMIZATION="B", GPU=True)

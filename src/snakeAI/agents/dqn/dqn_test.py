@@ -98,6 +98,6 @@ def test_dqn(MODEL_PATH, N_ITERATIONS, BOARD_SIZE=(8, 8), HAS_GUI=False, STATIST
 
 
 if __name__ == '__main__':
-    MODEL_PATH = r"C:\Users\Lorenz Mumm\PycharmProjects\Bachelor-Snake-AI\src\resources\baseline-run-01\DQN-03-train.model"
+    MODEL_PATH = r"Path\to\File\Bachelor-Snake-AI\src\resources\baseline-run-01\DQN-03-train.model"
     test_dqn(MODEL_PATH=MODEL_PATH, N_ITERATIONS=5000, HAS_GUI=False, STATISTIC_RUN_NUMBER=1, AGENT_NUMBER=3,
              RUN_TYPE="baseline", RAND_GAME_SIZE=False, OPTIMIZATION="", GPU=True)

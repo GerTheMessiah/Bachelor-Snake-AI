@@ -16,7 +16,21 @@ from src.common.utils import print_progress, save
 from src.snakeAI.agents.ppo.ppo import Agent
 from src.snakeAI.gym_game.snake_env import SnakeEnv
 
-
+"""
+This method is the central training routine of the PPO agent.
+@:param N_ITERATIONS: Iteration which should be processed for learning.
+@:param LR_ACTOR: Learning rate of the actor.
+@:param LR_CRITIC: Learning rate of the critic.
+@:param GAMMA: Discounting factor. Important for the time preference.
+@:param K_EPOCHS: Number of the epochs for learning with one data batch.
+@:param EPS_CLIP: Clip Value of the PPO
+@:param BOARD_SIZE: Size of the playground. E.g. (8, 8)
+@:param STATISTIC_RUN_NUMBER: Number of the Run. Important for saving the generated data.
+@:param AGENT_NUMBER: Number of the to be examined agent. Important for saving.
+@:param RUN_TYPE: Type of the statistic run. BaseLine or Optimized.
+@:param OPTIMIZATION: "A", "B", "AB", "None"
+@:param GPU: Should the GPU be used.
+"""
 def train_ppo(N_ITERATIONS=30000, LR_ACTOR=0.4e-3, LR_CRITIC=1.0e-3, GAMMA=0.95, K_EPOCHS=10, EPS_CLIP=0.2,
               BOARD_SIZE=(8, 8), STATISTIC_RUN_NUMBER=1, AGENT_NUMBER=1, RUN_TYPE="baseline",
               OPTIMIZATION=None, GPU=True):

@@ -1,7 +1,6 @@
 import os
 import sys
 from pathlib import Path
-from random import randint
 from typing import Tuple
 from pandas import DataFrame
 

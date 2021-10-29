@@ -55,7 +55,6 @@ Die learn Methode, welche nach den Darstellungen im Konzept implementiert wurde,
 Sie überprüft als Erstes, ob das Memory genügend Daten für einen Mini-Batch besitzt. Ist dem nicht so, terminiert die Methode.
 Danach wird die get\_data aufgerufen, welche einen Mini-Batch zurückliefert.\\
 Zu Beginn werden daher die Q-Values der gespeicherten Aktion bestimmt. Im Anschluss folgen die Q-Values aller Aktionen der Nachfolgezustände \fullref{code:Bestimmung_Q-Values}.
-\newpage
 \begin{lstlisting}[caption=Bestimmung der Q-Values, label=code:Bestimmung_Q-Values, style=Python]
 av, scalar_obs, actions, rewards, is_terminal, av_, scalar_obs_, \
 	batch_index = self.MEM.get_data()
@@ -124,6 +123,8 @@ ratios = T.exp(probs - probs_old_b)
 advantages = rewards_b - state_values.detach()
 \end{lstlisting}
 Mit diesen Werten ist es nun möglich, die Surrogate Fehler und anschließend den Actor Fehler zu bestimmen.
+In dem Actor Fehler befindet sich zur einfacheren Handhabung noch der Entropy Fehler bzw. Bonus.
+\newpage
 \begin{lstlisting}[caption=Bestimmung des Surrogate und Actor Fehlers, label=code:Bestimmung_Surrogate_Losses, style=Python]
 surr1 = ratios * advantages
 surr2 = T.clamp(ratios, 1 - self.EPS_CLIP, 1 + self.EPS_CLIP) * \
@@ -131,10 +132,8 @@ advantages
 loss_actor = -(T.min(surr1, surr2) + dist_entropy * \
  self.ENT_COEFFICIENT).mean()
 \end{lstlisting}
-In dem Actor Fehler befindet sich zur einfacheren Handhabung noch der Entropy Fehler bzw. Bonus.
 Zur Bestimmung des gesamten Fehlers fehlt noch der Critic Fehler, welcher sich aus der Differenz zwischen Returns und den Values des Critics ermittelt.
 Danach werden Actor und Critic Fehler zusammenaddiert, sodass der PPO Fehler entsteht. Dieser wird dann dazu genutzt, um das Actor\_Critic NN zu aktualisieren \fullref{code:Bestimmung_Surrogate_Losses}.
-\newpage
 \begin{lstlisting}[caption=Bestimmung des PPO-Losses und Update der Netze, label=code:Bestimmung_PPO_Losses_update_NN, style=Python]
 loss_critic = self.CRITIC_COEFFICIENT * \ 
 self.LOSS(rewards_b, state_values)
@@ -147,12 +146,6 @@ Zu Schluss wird, nachdem die Prozedur $K\_Epochs$-mal durchgeführt wurde, die a
 Damit jedoch die Lernprozedur aufgerufen wird, benötigt es zentrale Ablaufroutine, welche in den train und test Methoden implementiert sind.
 
 \section{Train Methoden} \label{sec:Implementierung_train_Methode}
-\begin{figure}[H]
-	\centering
-	\includesvg[scale=0.105]{Training_PPO}
-	\caption[Ablaufdiagramm der train Methode]{Ablaufdiagramm der Train Methode.}
-	\label{fig:Implementierung_Train_Method}
-\end{figure}
 Zu Beginn werden Agent und Env zusammen mit den Datenhaltungslisten \fullref{subsec:Konzept_Datenerhebung} erstellt. Ein Scheduler wird für die Optimierung B ebenfalls erzeugt \fullref{subsec:Konzept_Optimierung02}. Danach wird die Trainingsprozedur durchgeführt, welche in \autoref{fig:Implementierung_Train_Method} dargestellt ist.\\
 Zu Beginn wird eine Obs bestehend aus AV (around\_view) und SO (scalar\_obs) durch die reset Methode \fullref{subsec:Konzept_Schnittstelle} generiert. 
 Diese Obs wird dem Agenten übergeben, welcher eine Aktion und weitere Daten zurückgibt.\\
@@ -162,6 +155,12 @@ Sollte die Spielepisode terminieren, so wird die learn Methode des Agent aufgeru
 Wird die Optimierung B verwendet, so wird alle 100 Spielepisoden die Steigung der Performance der letzten 100 Trainingsspiele bzw. Epochs ermittelt. Sollte diese nicht größer als null sein, so wird die Lernrate mit 0.95 multipliziert.\\
 Sind alle 30.000 Epochs abgeschlossen, werden das NN und die Trainingsdaten gespeichert und die Methode terminiert.\\
 Neben der train Methode wird jedoch auch eine Testmethode zur Erstellung von Testdaten benötigt.
+\begin{figure}[H]
+	\centering
+	\includesvg[scale=0.105]{Training_PPO}
+	\caption[Ablaufdiagramm der train Methode]{Ablaufdiagramm der Train Methode}
+	\label{fig:Implementierung_Train_Method}
+\end{figure}
 
 \subsection{Test Methoden} \label{sec:Implementierung_test_Methode}
 Die Testmethoden sind bis auf wenige Ausnahmen mit den train Methoden übereinstimmend. Es werden in diesem Abschnitt daher nur die Unterschiede aufgezeigt. Einer dieser besteht darin, dass das NN geladen und nicht erzeugt wird. Mit diesem wird dann der Test durchgeführt. Alle Element des Lernens sind aus der test Methode entfernt. Zu diesen gehören der Scheduler, das Aufrufen der learn Methode und das Speichern des NNs.

@@ -18,7 +18,7 @@ from src.snakeAI.agents.dqn.dqn import Agent
 from src.snakeAI.gym_game.snake_env import SnakeEnv
 
 """
-Training routine for generating the test data.
+Training routine for generating the train data.
 @:param N_ITERATIONS: Iterations to be done (Number of games to be played)
 @:param GAMMA: GAMMA Value of the dqn.
 @:param BATCH_SIZE: BATCH_SIZE of the dqn.

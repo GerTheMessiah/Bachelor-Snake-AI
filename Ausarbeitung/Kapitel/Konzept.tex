@@ -1,12 +1,15 @@
 \chapter{Konzept} \label{chap:Konzept}
-In diesem Kapitel soll das Konzept dieser Ausarbeitung vorgestellt werden. Dieses besteht aus vier Teilen. Zuerst soll das Vorgehen erklärt werden, gefolgt von der Darstellung des Environments und der Agenten. Zum Schluss soll im Weiteren auf die Datenerhebung eingegangen werden.\\
-Ziel dieses Abschnittes ist es, das Vorgehen und alle weiteren dazu benötigten Elemente unabhängig von der Implementierung darzustellen, sodass die Ergebnisse reproduzierbar sind.
+In diesem Kapitel soll das Konzept dieser Ausarbeitung vorgestellt werden.
+Dabei ist es das Ziel, eine Menge an Agenten mittels eines hier entwickelten Verfahrens zu untersuchen. Diese Agenten können selbst definiert werden oder von außerhalb stammen. Das vorzustellende Verfahren entscheidet auf Basis von Vergleichen, welcher Agent für welches Evaluationskriterium der jeweils optimale ist. Dazu werden im Laufe des Verfahrens die Agenten mit Optimierungen versehen, um die Leistungsfähigkeit noch weiter zu steigern.
+Zum Schluss wird dann der optimale Agent für das Spiel Snake bestimmt, dies geschieht mithilfe von Statistiken, welche erstellt werden.\\
+Damit dies durchgeführt werden kann, müssen sowohl die Agenten (PPO und DQN) mit ihren Optimierungen als auch das Spiel Snake, das Vorgehen und das Erstellen von Statistiken erklärt werden.
+
 
 \section{Vorgehen} \label{sec:Konzept_Vorgehen}
 Das Vorgehen lässt sich am besten mithilfe eines Aktivitätsdiagramms darstellen, in welchem die einzelnen Schritte des Vergleichs visuell dargestellt werden.\\
 Als erstes werden die Agenten erstellt \fullref{fig:Konzept_Vorgehen}, indem mehrere Instanzen der Agent Klasse von DQN und PPO mit verschiedenen Hyperparametern generiert werden.\\
 Mit diesen Agenten werden nun die weiteren Baseline Vergleiche durchgeführt, in welchen für jedes Evaluationskriterium der jeweils beste Agent bestimmt wird. Grund dafür ist, dass das Anwenden der Optimierungen viele Ressourcen bindet. Daher sollen nur die vielversprechendsten Agenten zu den Optimized Vergleichen zugelassen werden.
-Der verwendete Algorithmus besitzt dabei keinen Einfluss auf die Auswahl der Agenten, sodass auch nur DQN oder PPO Agenten Gewinner der Baseline Vergleiche seinen können. Genauere Details zur Durchführung der Baseline Vergleiche finden sich im \autoref{subsec:Konzept_Datenerhebung}.
+Der verwendete Algorithmus besitzt dabei keinen Einfluss auf die Auswahl der Agenten, sodass auch nur DQN oder PPO Agenten Gewinner der Baseline Vergleiche sein können. Genauere Details zur Durchführung der Baseline Vergleiche finden sich im \autoref{subsec:Konzept_Datenerhebung}.
 Auf die Sieger Agenten der Baseline Vergleiche werden daraufhin die Optimierungen angewendet \fullref{fig:Konzept_Vorgehen}. 
 Mit diesen optimierten Agenten werden nun die sogenannten Optimized Vergleiche bezüglich jedes einzelnen Evaluationskriteriums \fullref{tab:Anforderungen_Kriterien} erneut wiederholt. Im vorletzten Schritt soll wieder der optimale Agent für jedes Evaluationskriterium ermittelt werden. Dabei können dies auch Baseline Agenten sein.
 \begin{figure}[H]
@@ -19,7 +22,7 @@ Zum Schluss wird auf Grundlage der Sieger Agenten entsprechend der Forschungsfra
 
 \section{Environment} \label{sec:Konzept_Environment}
 Das Env besteht im Wesentlichen aus der Hauptkomponente der Spiellogik, welche von einer Schnittstellen-Komponente umschlossen wird. Diese soll mit einer standardisierten Schnittstelle \fullref{subsec:Anforderungen_Schnittstelle} implementiert werden.\\
-Die Spiellogik kapselt die Game, Player, Reward, Observation und GUI-Komponenten, welche im Folgenden näher erklärt werden.
+Die Spiellogik kapselt die Game-, Player-, Reward-, Observation- und GUI-Kom-ponenten, welche im Folgenden näher erklärt werden.
 
 \subsection{Spiellogik} \label{subsec:Konzept_Spiellogik}
 Die Spiellogik besteht aus den fünf Unterkomponenten, welche im obigen Abschnitt Environment bereits benannt wurden.\\
@@ -32,7 +35,7 @@ Zur Erzeugung der grafischen Oberfläche implementiert die GUI-Komponente die Fu
 
 \subsubsection{Spielablauf} \label{subsubsec:Konzept_Spielablauf}
 Die eigentliche Aktionsabarbeitung wird durch das Aufrufen der step Funktionalität in der Schnittstellen-Komponente \fullref{subsec:Konzept_Schnittstelle} bewirkt. Diese ruft daraufhin die Routinen zur Erstellung des Rewards (evaluate) und der Observation (observe) auf, welche in der Game-Komponente implementiert sind.
-Um die Abarbeitung einer Aktion durchzuführen, wird die action Funktionalität aufgerufen. Der Ablauf einer Aktionsabarbeitung ist in der \autoref{fig:Konzept_Spielablauf} dargestellt. Zu Beginn wird überprüft, ob die Snake, seit dem letzten Fressen, mehr Schritte als die eigentliche Spielfeldgröße gegangen ist. Diese liegt standardmäßig bei (8x8 $\longrightarrow$ 64).
+Um die Abarbeitung einer Aktion durchzuführen, wird die action Funktionalität aufgerufen. Der Ablauf einer Aktionsabarbeitung ist in der \autoref{fig:Konzept_Spielablauf} dargestellt. Zu Beginn wird überprüft, ob die Snake, seit dem letzten Fressen, mehr Schritte als die eigentliche Spielfeldgröße gegangen ist. Diese liegt standardmäßig bei 8x8 $\longrightarrow$ 64.
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.11]{Spielablauf}
@@ -41,7 +44,7 @@ Um die Abarbeitung einer Aktion durchzuführen, wird die action Funktionalität 
 \end{figure}
 Im Rahmen der Bestimmung der Robustheit wird sich diese im Testverlauf jedoch ändern \fullref{subsec:Konzept_Datenerhebung}.\\
 Sollte die Snake mehr Schritte gelaufen sein als die Größe des Spielfelds, so wird das Spiel terminiert, da die Snake eventuell in einer Schleife steckt.
-Andernfalls wird die Aktion verarbeitet, indem sie die Ausrichtung (direction) der Snake manipuliert wird. Das Spiel Snake besitzt drei Aktionen: turn left, turn right oder do nothing.
+Andernfalls wird die Aktion verarbeitet, indem die Ausrichtung (direction) der Snake manipuliert wird. Das Spiel Snake besitzt drei Aktionen: turn left, turn right oder do nothing.
 \begin{longtable}[h]{|p{3cm}|p{\linewidth - 4cm}|}
 	\hline
 	Aktion & Erklärung \\
@@ -52,7 +55,7 @@ Andernfalls wird die Aktion verarbeitet, indem sie die Ausrichtung (direction) d
 	\hline
 	do nothing & Die Richtung der Snake wird nicht verändert. \\
 	\hline
-	\caption{Kodierung der Aktionen im Snake Environment.}
+	\caption{Kodierung der Aktionen im Snake Environment}
 	\label{tab:Konzept_Aktionscodierung} 
 \end{longtable}
 Entsprechend der \autoref{tab:Konzept_Aktionscodierung} wird deutlich, dass die Ausrichtung (direction) entweder nur Norden, Osten, Süden oder Westen sein kann.
@@ -64,16 +67,17 @@ Nach der Ausführung einer dieser beiden Fälle, wird die Spieloberfläche (grou
 Damit der Agent die neue Observation und den neuen Reward erhält, werden diese in der Reward bzw. Observation-Komponente bestimmt und zurückgegeben.
 
 \subsubsection{Reward} \label{subsubsec:Konzept_Reward}
-Der Reward wird in der Reward-Komponente, basierend auf dem letzten Zug, gebildet. Dies geschieht nach folgendem Vorbild.
-Der Standard Reward ist abhängig vom Fressen eines Apfels, vom Sieg und vom Verlust einer Spielepisode. Sollte keiner dieser genannten Faktoren eintreten, wird ein Reward von -0.01 zurückgegeben. Dies hält den Agenten dazu an den kürzesten Pfad zum Apfel zu finden, da jeder Schritt geringfügig bestraft wird.
-War es der Snake möglich einen Apfel zu fressen, so wird ein Reward von +2.5 zurückgegeben, da ein Zwischenziel erreicht wurde.
+Der Reward wird in der Reward-Komponente, basierend auf dem letzten Zug, gebildet. Dies geschieht nach folgendem Vorbild.\\
+Der Standard Reward ist abhängig vom Fressen eines Apfels, vom Sieg und vom Verlust einer Spielepisode. Sollte keiner dieser genannten Faktoren eintreten, wird ein Reward von -0,01 zurückgegeben. Dies hält den Agenten dazu an den kürzesten Pfad zum Apfel zu finden, da jeder Schritt geringfügig bestraft wird.
+War es der Snake möglich einen Apfel zu fressen, so wird ein Reward von +2,5 zurückgegeben, da ein Zwischenziel erreicht wurde.
 Sollte die Snake gestorben sein, so wird ein Reward von -10 zurückgegeben, um dieses Verhalten in seiner Häufigkeit zu minimieren.
-Hat die Snake alle Äpfel gefressen, sodass das gesamte Spielfeld mit ihr ausgefüllt ist, so wird ein Reward von +10 zurückgegeben, um ein solches Verhalten in seiner Häufigkeit zu maximieren. Dies Snake hat zu diesem Zeitpunkt das Spiel gewonnen \fullref{sec:Grundlagen_Game_of_Snake}.\\
+Hat die Snake alle Äpfel gefressen, sodass das gesamte Spielfeld mit ihr ausgefüllt ist, so wird ein Reward von +10 zurückgegeben, um ein solches Verhalten in seiner Häufigkeit zu maximieren.
+Die Snake hat zu diesem Zeitpunkt das Spiel gewonnen \fullref{sec:Grundlagen_Game_of_Snake}.
 Die zweite Reward Funktion wird in \autoref{subsec:Konzept_Optimierung01} erklärt.
 
 \subsubsection{Observation} \label{subsubsec:Konzept_Observation}
 Die Observation wird in der Observation-Komponente mithilfe verschiedener Unterfunktionen erzeugt und besteht aus der around\_view (AV) und der scalar\_obs (SO).\\
-Die AV lässt sich als ein Ausschnitt des Spielfeldes (ground) beschreiben, welcher einen festen Bereich um den Kopf der Snake abdeckt.
+Die AV lässt sich als ein Ausschnitt des Spielfelds (ground) beschreiben, welcher einen festen Bereich um den Kopf der Snake abdeckt.
 Strukturen wie Wände und Teile des eigenen Schwanzes werden deutlich. Mathematisch ist die AV eine one-hot-encoded Matrix der Form (6x13x13).\\
 \\Das One-Hot-Encoding ist ein binäres Codierungsschema. Sollte ein Merkmal vorhanden sein, so wird dieses mit eins codiert anderenfalls mit null. \cite[S. 359 f.]{DRL_Lapan}
 Dies ist auch der Grund, warum die AV Matrix sechs Channel (zweidimensionale Schichten) besitzt. Diese geben Aufschluss über folgende Informationen \fullref{tab:Konzept_around_view}:
@@ -93,7 +97,7 @@ Dies ist auch der Grund, warum die AV Matrix sechs Channel (zweidimensionale Sch
 	\hline
 	A = 5 & In der letzte Feature Map wird der Apfel abgebildet. \\
 	\hline
-	\caption[Around\_View - Erklärung der Channels]{Channel-Erklärung der AV (around\_view).}
+	\caption[Around\_View -- Erklärung der Channels]{Channel-Erklärung der AV (around\_view)}
 	\label{tab:Konzept_around_view} 
 \end{longtable}
 Vorteilhaft an der AV ist, dass im Gegensatz zu den verwandten Arbeiten \citep{Autonomous_Agents_in_Snake_Game_via_DRL} und \citep{UAV}, nicht das gesamte Spielfeld übertragen wird, sondern nur der wichtigste Ausschnitt. Dies reduziert die Menge an zu verarbeitenden Daten.
@@ -107,9 +111,9 @@ In Quelle \citep{Glassner1989} wird das grundlegende Verfahren, auf welchem die 
 	\label{fig:Konzept_Observation}
 \end{figure}
 Zuzüglich werden der SO noch zwei Kompasse für die relativen Positionsinformationen zwischen Kopf und Apfel bzw. letztem Schwanzglied hinzugefügt.\\
-Letztere sind eindimensionale Vektoren, welche mithilfe des One-Hot-Encoding anzeigen, ob sich das gesuchte Objekt relativ zum Kopf oberhalb oder unterhalb oder in derselben Zeile befindet (Matrixsicht). Analog verhält es sich mit den Spalten.\\
+Letztere sind eindimensionale Vektoren, welche mithilfe des One-Hot-Encoding anzeigen, ob sich das gesuchte Objekt relativ zum Kopf oberhalb, unterhalb oder in derselben Zeile befindet (Matrixsicht). Analog verhält es sich mit den Spalten.\\
 Die Blickfeldanzeige ist ebenfalls one-hot-encoded und stellt mit ihrem Vektor die vier Ausrichtungen Norden, Osten, Süden und Westen dar.\\
-Der Hunger ist die Differenz zwischen der Anzahl der gegangenen Schritte seit dem letzten Fressen (inter\_apple\_steps) und der maximalen Schrittanzahl (max\_steps) \fullref{subsubsec:Konzept_Spielablauf}. Zur besseren Verarbeitung für die neuronalen Netzwerke, wird diese Differenz zudem mit -1 potenziert, es wird daher der Kehrwert gebildet. 
+Der Hunger ist die Differenz zwischen der Anzahl der gegangenen Schritte seit dem letzten Fressen (inter\_apple\_steps) und der maximalen Schrittanzahl (max\_steps) \fullref{subsubsec:Konzept_Spielablauf}. Zur besseren Verarbeitung für die neuronalen Netzwerke, wird diese Differenz zudem mit minus eins potenziert, es wird daher der Kehrwert gebildet. 
 Um mit der Unendlichkeit auftretende Probleme zu umgehen wird zwei zurückgegeben, wenn die Differenz null wird.
 Daraus ergibt sich die folgende Formel \fullref{eq:Konzept_Hunger}.
 \begin{align}
@@ -122,7 +126,7 @@ In ähnlicher Weise wird mit den Raytracing Distanzbestimmungen verfahren. Bei d
 Die grafische Oberfläche oder auch GUI genannt kann optional ein- oder ausgeschaltet werden. Beim Lernen der Agenten bietet es sich beispielsweise an, diese auszuschalten, da diese die Lerngeschwindigkeit senkt. Beim Start der GUI wird ein Fenster geöffnet, welches den momentanen Stand des Spielgeschehens anzeigt. Nach jeder Aktionsdurchführung wird die GUI aktualisiert.
 
 \subsection{Schnittstelle} \label{subsec:Konzept_Schnittstelle}
-Die Schnittstelle umschließt die Spiellogik-Komponente mit ihren Unterkomponenten, um eine standardisierte Schnittstelle zu erzeugen.
+Die Schnittstelle umschließt die Spiellogik-Komponente mit ihren Unterkomponenten, zum Zwecke der Standardisierung.
 Die step Funktionalität ist für das Aufrufen der Aktionsausführung zuständig. Entsprechend der Anforderung der standardisierten Schnittstelle \fullref{subsec:Konzept_Schnittstelle} gibt sie nur Reward und Observation zurück.\\
 Reset setzt den bereits vorhandenen Spielfortschritt zurück \fullref{subsubsec:Anforderungen_Reset}.\\
 Render ist für die Visualisierung der Spieloberfläche verantwortlich \fullref{subsubsec:Anforderungen_Render}.
@@ -131,25 +135,28 @@ Render ist für die Visualisierung der Spieloberfläche verantwortlich \fullref{
 In diesem Abschnitt des Konzepts sollen die Agenten inklusive ihrer Netzstruktur vorgestellt werden. Zu diesem Zweck müssen die Algorithmen (DQN und PPO) näher beleuchtet werden.
 
 \subsection{Netzstruktur} \label{subsec:Konzept_Netzstruktur}
-Zu Beginn soll die Netzstruktur erklärt werden, wobei dies unabhängig von den Algorithmen geschehen kann, da sowohl DQN als auch PPO Agenten das annähernd gleiche Netz nutzen.
-Im Rahmen dieser Ausarbeitung soll sich nur auf eine Netzstruktur konzentriert werden, um die Vergleichbarkeit der einzelnen Algorithmen zu erhöhen. Dennoch müssen aufgrund dieser kleineren Anpassungen an den Netzen vorgenommen werden.\\
-In den Ausarbeitungen von \citep{Autonomous_Agents_in_Snake_Game_via_DRL} und \citep{UAV} wurden einzig große CNNs (Convolutional Neural Network) genutzt, die viele unwesentliche Informationen verarbeiten, welche nicht für das erfolgreiche Lösen des Spiels benötigt werden. Zusätzlich können noch Probleme mit variablen Spielfeldgrößen auftreten, sodass in dieser Ausarbeitung eine zweiteilige Netzstruktur verwendet wird. 
-
-\begin{wrapfigure}{r}{5.2cm}
+\begin{wrapfigure}{r}{4.0cm}
 	\centering
+	\captionsetup{format=myformat, labelsep=newline}
 	\includesvg[width=3.0cm, height=15.5cm]{ConvNet}
-	\caption[AV-Network]{\\AV-Network}
+
+	\caption[AV-Network]{AV-Network}
+
 	\label{fig:Konzept_AV_Network}
 \end{wrapfigure}
-
+Zu Beginn soll die Netzstruktur erklärt werden, wobei dies unabhängig von den Algorithmen geschehen kann, da sowohl DQN als auch PPO Agenten das annähernd gleiche Netz nutzen.
+Im Rahmen dieser Ausarbeitung soll sich nur auf eine Netzstruktur konzentriert werden, um die Vergleichbarkeit der einzelnen Algorithmen zu erhöhen. Dennoch müssen aufgrund dieser Mehrfachnutzung kleinere Anpassungen an den Netzen vorgenommen werden.\\
+In den Ausarbeitungen von \citep{Autonomous_Agents_in_Snake_Game_via_DRL} und \citep{UAV} wurden einzig große CNNs (Convolutional Neural Network) genutzt,
+die viele unwesentliche Informationen verarbeiten, welche nicht für das erfolgreiche Lösen des Spiels benötigt werden.
+Zusätzlich können noch Probleme mit variablen Spielfeldgrößen auftreten, sodass in dieser Ausarbeitung eine zweiteilige Netzstruktur verwendet wird. 
 Die gesamte Netzstruktur besteht aus dem AV-Network und dem Actor-, Critic-, Q-Net-Tail.
 Begonnen wird mit dem AV-Network, welches die AV durch zwei Convolutional Layer mit einer ReLU Aktivierungsfunktion propagiert. Dabei erhöht sich die Channel-Anzahl auf acht, wobei eine weitere Erhöhung aufgrund der bereits sehr stark optimierten AV nicht nötig ist.\\  
 Danach werden allen Feature Maps eine Null-Zeile und Null-Spalte hinzugefügt (Padding), damit beim Max-Pooling auch die letzte Zeile und Spalte der originalen AV verarbeitet werden. Nach dem max-pooling besitzen die Feature Maps eine Größe von 7x7 (Tensor: 8x7x7).\\ 
 Dann folgt die Einebnung (Flatten) zu einem eindimensionalen Tensor, welcher daraufhin durch zwei weitere Fully Connected Layer (FC) propagiert wird. Der resultierende Tensor besitzt die Größe 1x128 und ist ein Zwischenergebnis, da dieser nun mit der SO verbunden wird (Join). Der Vorgang ist in der \autoref{fig:Konzept_AV_Network} dargestellt.
-Da das NN in beide Algorithmen verwendet wird, müssen Network-Tails für den Actor, Critic und für das Q-Network (Q-Net) definiert werden. Alle unterscheiden sich jedoch nur in ihrer Ausgabe. 
-Nachdem der Joined Tensor (1x169), welcher aus der Ausgabe des AV-Networks und der SO besteht, durch zwei weitere FC Layer propagiert wurde, benötigt der Actor des PPO Algorithmus eine Wahrscheinlichkeitsverteilung über alle Aktionen. Daher auch die Ausgabe eines Tensors der Größe drei. Um diese Wahrscheinlichkeitsverteilung zu erhalten, wird die SoftMax Funktion angewendet, \autoref{fig:Konzept_Actor_Critic_Q_Tail} links.
-Der Critic des PPO Algorithmus verwendet hingegen den Critic-Tail, siehe \autoref{fig:Konzept_Actor_Critic_Q_Tail} Mitte. Dieser leitet den Joined Tensor durch zwei weitere FC Layers. Da der Critic für jeden State die Discounted Sum of Rewards bestimmt \fullref{subsubsec:Grundlagen_Baseline_Estimate}, gibt dieser einen Tensor mit einem einzigen Wert zurück (Skalar).
-Der Q-Net-Tail ist in seinem Aufbau sehr ähnlich zum Critic-Tail, \fullref{fig:Konzept_Actor_Critic_Q_Tail} rechts. Da dieser jedoch die Q-Values für jede Aktion im Zustand bestimmten soll, muss ein Tensor der Größe drei zurückgegeben werden.
+Da das NN in beiden Algorithmen verwendet wird, müssen Network-Tails für den Actor, Critic und für das Q-Network (Q-Net) definiert werden. Alle unterscheiden sich jedoch nur in ihrer Ausgabe. 
+Nachdem der Joined Tensor (1x169), welcher aus der Ausgabe des AV-Networks und der SO besteht, durch zwei weitere FC Layer propagiert wurde, benötigt der Actor des PPO Algorithmus eine Wahrscheinlichkeitsverteilung über alle Aktionen. Daher auch die Ausgabe eines Tensors der Größe drei. Um diese Wahrscheinlichkeitsverteilung zu erhalten, wird die SoftMax Funktion angewendet (\autoref{fig:Konzept_Actor_Critic_Q_Tail}, links).
+Der Critic des PPO Algorithmus verwendet hingegen den Critic-Tail, siehe (\autoref{fig:Konzept_Actor_Critic_Q_Tail}, Mitte). Dieser leitet den Joined Tensor durch zwei weitere FC Layers. Da der Critic für jeden State die Discounted Sum of Rewards bestimmt \fullref{subsubsec:Grundlagen_Baseline_Estimate}, gibt dieser einen Tensor mit einem einzigen Wert zurück (Skalar).
+Der Q-Net-Tail ist in seinem Aufbau sehr ähnlich zum Critic-Tail (\autoref{fig:Konzept_Actor_Critic_Q_Tail}, rechts). Da dieser jedoch die Q-Values für jede Aktion im Zustand bestimmten soll, muss ein Tensor der Größe drei zurückgegeben werden.
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.08]{Tails}
@@ -159,37 +166,37 @@ Der Q-Net-Tail ist in seinem Aufbau sehr ähnlich zum Critic-Tail, \fullref{fig:
 
 \subsection{DQN} \label{subsec:Konzept_DQN}
 Der DQN Algorithmus und damit auch die Agenten, welche auf diesem basieren, bestehen aus drei Komponenten. Diese ermöglichen die Aktionsbestimmung und Lernprozedur.
-Diese Hauptfunktionalitäten sind in der DQN-Komponente eingebettet, welche die zentrale Instanz des DQN darstellt. In ihr werden wichtige Konstanten für den Algorithmus, wie z.B. Gamma, Epsilon (eps), Epsilon-Dekrementierung (eps\_dec), der minimal Wert für Epsilon (eps\_min), die Batch-Size (batch\_size), die maximale Größe des Memory (max\_mem\_size) und die Lernrate (lr), gespeichert.\\
-Die Memory-Komponente speichert Erfahrungen des DQN Agenten in einer Ring-Buffer Struktur. Sollte dieser Buffer voll sein, so werden die ältesten Erfahrungen mit den neuen überschrieben. Dies Verfahren wird in Quelle \cite[S. 5]{DBLP:journals/corr/MnihKSGAWR13} dargestellt.
+Diese Hauptfunktionalitäten sind in der DQN-Komponente eingebettet, welche die zentrale Instanz des DQN darstellt. In ihr werden wichtige Konstanten für den Algorithmus, wie z.B. Gamma, Epsilon (eps), Epsilon-Dekrementierung (eps\_dec), der Minimalwert für Epsilon (eps\_min), die Batch-Size (batch\_size), die maximale Größe des Memory (max\_mem\_size) und die Lernrate (lr), gespeichert.\\
+Diese Memory-Komponente speichert Erfahrungen des DQN Agenten in einer Ring-Buffer Struktur. Sollte dieser Buffer voll sein, so werden die ältesten Erfahrungen mit den neuen überschrieben. Dies Verfahren wird in Quelle \cite[S. 5]{DBLP:journals/corr/MnihKSGAWR13} dargestellt.
 Abzuspeichernde Werte für jeden Schritt sind die around\_view (AV), die scalar\_obs (SO) die Aktion (action), der Reward (reward), die Information, ob man sich in einem terminalen Zustand befindet (terminal) und die around\_view (AV\_) und scalar\_obs (SO\_) des Nachfolgezustandes \fullref{subsec:Grundlagen_DQN_Algorithmus}.\\
-Die Q-Network-Komponente verwaltet das NN (Q-Network). Dieses wird zur Q-Value Bestimmung und damit zur Aktionsbestimmung genutzt. Zudem wird es durch den Lernprozesse aktualisiert.\\
+Die Q-Network-Komponente verwaltet das NN (Q-Network). Dieses wird zur Q-Value Bestimmung und damit zur Aktionsbestimmung genutzt. Zudem wird es durch den Lernprozess aktualisiert.\\
 Im Weiteren folgt die Erklärung dieser Prozeduren. Begonnen wird dabei mit der Aktionsbestimmung.
 
 \subsubsection{Aktionsauswahlprozess} \label{subsubsec:Konzept_Aktionsauswahlprozess_DQN}
 Eine genaue Darstellung der Aktionsbestimmung befindet sich in \autoref{fig:Konzept_DQN-Aktionsbestimmung}. Um eine Aktion zu bestimmen, muss zuerst ein Zufallswert zwischen null und eins, was den Wahrscheinlichkeiten von 0\% bis 100\% entspricht, generiert werden.
 \begin{figure}[H]
 	\centering
-	\includesvg[scale=0.13]{DQN-Aktionsbestimmung}
+	\includesvg[scale=0.12]{DQN-Aktionsbestimmung}
 	\caption[DQN Aktionsbestimmung]{Darstellung der Aktionsbestimmung des DQN Agent.}
 	\label{fig:Konzept_DQN-Aktionsbestimmung}
 \end{figure}
-Ist der Zufallswert größer als der momentane Epsilon-Wert, so wird die Aktion durch das Q-Network bestimmt. Anderenfalls wird eine zufällige Aktion ausgewählt. Die Bestimmung der Aktion durch das Q-Network geschieht dabei wie folgt:\\
-Die around\_view (AV) und die scalar\_obs (SO) werden durch das Q-Network entsprechende der Ausführungen in \autoref{subsec:Konzept_Netzstruktur} geleitet. Dieses gibt einen Tensor der Größe drei wieder, welcher die Q-Values der Aktionen turn left (0), turn right (1) und do nothing (2) beinhaltet.
+Ist der Zufallswert größer als der momentane Epsilon-Wert, so wird die Aktion durch das Q-Network bestimmt. Andernfalls wird eine zufällige Aktion ausgewählt. Die Bestimmung der Aktion durch das Q-Network geschieht dabei wie folgt.\\
+Die around\_view (AV) und die scalar\_obs (SO) werden durch das Q-Network entsprechend der Ausführungen in \autoref{subsec:Konzept_Netzstruktur} geleitet. Dieses gibt einen Tensor der Größe drei wieder, welcher die Q-Values der Aktionen turn left (0), turn right (1) und do nothing (2) beinhaltet.
 Es wird daraufhin die Aktion gewählt, welche dem Index des größten Q-Values entspricht.\\
-Sei $q = (0.32, -0.11, 0.45)$ ein Tensor, welcher vom Q-Network zurückgegeben wurde, dann würde no nothing (2) gewählt werden, da 0.45 der größte Q-Value ist und dieser an Stelle 2 steht.\\
-Die oben beschriebene Prozedur stellt den Aktionsauswahlprozess während des Trainings dar. Während Testläufen, wird die Aktion immer durch das Q-Network bestimmt \autoref{subsubsec:Implementierung_Aktionsbestimmung_DQN}.
+Sei $q = (0.32, -0.11, 0.45)$ ein Tensor, welcher vom Q-Network zurückgegeben wurde, so würde no nothing (2) gewählt werden, da 0.45 der größte Q-Value ist und dieser an Stelle (2) steht.\\
+Die oben beschriebene Prozedur stellt den Aktionsauswahlprozess während des Trainings dar. Während Testläufen, wird die Aktion immer durch das Q-Network bestimmt \fullref{subsubsec:Implementierung_Aktionsbestimmung_DQN}.
 
 \subsubsection{Lernprozess} \label{subsubsec:Konzept_Lernprozess_DQN}
 Der Lernprozess stellt sich wie folgt dar:\\
-Zuerst wird überprüft, ob im Memory genügend Erfahrungen (Experiences - Exp) gespeichert sind, um einen Mini-Batch mit der zuvor definierten Batch-Size, zu entnehmen. Sollte dies nicht der Fall sein, wird die Methode terminiert. Anderenfalls wird ein Mini-Batch aus zufälligen Exp gebildet. Ab diesem Punkt wird das Verfahren der Übersichtlichkeit wegen nur noch für eine einzige Erfahrung beschienen.\\
+Zuerst wird überprüft, ob im Memory genügend Erfahrungen (Experiences -- Exp) gespeichert sind, um einen Mini-Batch mit der zuvor definierten Batch-Size, zu entnehmen. Sollte dies nicht der Fall sein, wird die Methode terminiert. Anderenfalls wird ein Mini-Batch aus zufälligen Exp gebildet. Ab diesem Punkt wird das Verfahren der Übersichtlichkeit wegen nur noch für eine einzige Erfahrung beschrieben.\\
 Danach wird der Q-Value $Q(s_t,a_t;\theta_t)$ der gespeicherten Aktion $a_t$ im State $s_t$ unter den Netzwerkparametern $\theta_t$ bestimmt \fullref{eq:DQN_Loss}. Dieser wird als Q-Eval definiert.\\
-Danach werden die Q-Values $Q(s'_t,A_t)$ aller Aktionen $A_t$ des Folgezustandes $s'_t$  bestimmt. Sollte der Folgezustand ein terminaler Zustand sein, so werden die Q-Values auf null gesetzt, da diese die zu erwartende Discounted Sum of Rewards angeben. In einem terminalen Zustand ist diese Summe gleich null, da keine Zustand mehr besucht werden \fullref{sec:Grundlagen_Deep_Q_Learning}.\\
-Daraufhin wird der maximale Q-Value des Folgezustands bestimmt $Q(s'_t,a'_t)$, mit Gamma multipliziert und zuletzt mit dem erhaltenen Reward addiert $r_t(s_t,a_t) + \gamma \max_{a'_t}Q(s'_t,a'_t;\theta_t)$ \autoref{eq:DQN_Loss}. Dieser Wert wird als Q-Target definiert und soll Q-Eval entsprechen.\\
+Danach werden die Q-Values $Q(s'_t,A_t)$ aller Aktionen $A_t$ des Folgezustandes $s'_t$  bestimmt. Sollte der Folgezustand ein terminaler Zustand sein, so werden die Q-Values auf null gesetzt, da diese die zu erwartende Discounted Sum of Rewards angeben. In einem terminalen Zustand ist diese Summe gleich null, da keine Zustände mehr besucht werden \fullref{sec:Grundlagen_Deep_Q_Learning}.\\
+Daraufhin wird der maximale Q-Value des Folgezustands bestimmt $Q(s'_t,a'_t)$, mit Gamma multipliziert und zuletzt mit dem erhaltenen Reward addiert ($r_t(s_t,a_t) + \gamma \max_{a'_t}Q(s'_t,a'_t;\theta_t)$) \autoref{eq:DQN_Loss}. Dieser Wert wird als Q-Target definiert und soll Q-Eval entsprechen.\\
 Am Ende wird der Mean Squared Error zwischen Q-Targets und Q-Evals aus dem Mini-Batch gebildet. Auf Basis dieses Fehlers, wird das Q-Network, mittels Backpropagation und Gradientenverfahren, angepasst.
 
 \subsection{PPO} \label{subsec:Konzept_PPO}
 Der PPO Algorithmus und seine Agenten bestehen aus vier Komponenten. Diese ermöglichen die Implementierung der Aktionsbestimmung und Lernprozedur.\\
-In der PPO-Komponente werden wichtige Konstanten für den PPO Algorithmus, wie z.B. Gamma (gamma), der Epsilon-Clip-Wert (eps\_clip) \fullref{subsubsec:Grundlagen_Surrogate_Fehlerfunktion}, die Anzahl der Trainingsläufe pro Datensatz (K\_Epochs), die Lernrate (lr) und weitere statische Konstanten, gespeichert. Auch Instanzen der Unterkomponenten, die im weiteren Verlauf erklärt werden, sind in dieser Komponente aufbewahrt.\\
+In der PPO-Komponente werden wichtige Konstanten für den PPO Algorithmus, wie z.B. Gamma (gamma), der Epsilon-Clip-Wert (eps\_clip) \fullref{subsubsec:Grundlagen_Surrogate_Fehlerfunktion}, die Anzahl der Trainingsläufe pro Datensatz (K\_Epochs), die Lernrate (lr) und weitere statische Konstanten, gespeichert. Auch Instanzen der Unterkomponenten, die im weiteren Verlauf erklärt werden, sind in dieser Komponente enthalten.\\
 Die Memory-Komponente speichert Erfahrungen eines PPO Agenten. Abzuspeichernde Werte für jeden Schritt sind dabei die around\_view (AV), die scalar\_obs (SO), die Aktion (action), der Reward (reward), die Information, ob man sich in einem terminalen Zustand befindet (is\_terminal) und die logarithmierte Wahrscheinlichkeit der ausgewählten Aktion (log\_prob).\\
 Die Actor-Komponente verwaltet das Actor-Network, welches zur Aktionsauswahl genutzt wird und die Critic-Komponente verwaltet das Critic-Network, welches einzig von der Lernprozedur verwendet wird, um die erwartete Discounted Sum of Rewards zu bestimmen \fullref{subsubsec:Grundlagen_Baseline_Estimate}. Mit dieser wird im Trainingsverlauf der Critic Fehler bestimmt \fullref{eq:Grundlagen_Critic_Loss}.
 
@@ -202,10 +209,10 @@ Für die Testläufe wird immer die Aktion ausgewählt, welche die größte Wahrs
 Beim Lernprozess des PPO wird sich auf die Ausführungen in \autoref{sec:Grundlagen_PPO} bezogen. Dabei wird beim Lernprozess wie folgt verfahren:\\
 Zu Beginn werden die Erfahrungen aus den gespielten Spielen aus dem Memory (Replay-Buffer) entnommen.
 Um den Return zu erhalten, werden die einzelnen Rewards aus dem Memory diskontiert.\\
-Danach wird die folgende Prozedur mehrmals ausgeführt, um Actor und Critic zu trainieren. Danach terminiert die Lernprozedur.
+Danach wird die folgende Prozedur mehrmals ausgeführt, um Actor und Critic zu trainieren. Als Nächstes terminiert die Lernprozedur.
 Für ein besseres Verständnis, wird der Ablauf exemplarisch an einer einzelnen Erfahrung erklärt.\\
-Zunächst wird die logarithmierte Wahrscheinlichkeit $\pi_{\theta}(a_{t}|s_{t})$ für die gespeicherte Aktion $a_t$ bestimmt. Dazu wird die, aus dem Memory entnommene, AV und SO durch das Actor- und Critic-Network propagiert. Anschließend wird die logarithmierte Wahrscheinlichkeit der Aktion bestimmt und zusammen mit dem Baseline Estimate und der Entropie der Wahrscheinlichkeitsverteilungen zurückgegeben.
-Daraufhin wird die Probability Ratio aus der soeben bestimmten logarithmierten Wahrscheinlichkeit und der alten logarithmierten Wahrscheinlichkeit bestimmt $r_{t}(\theta)$.\\
+Zunächst wird die logarithmierte Wahrscheinlichkeit $\pi_{\theta}(a_{t}|s_{t})$ für die gespeicherte Aktion $a_t$ im State $s_t$ bestimmt. Dazu wird die, aus dem Memory entnommene, AV und SO durch das Actor- und Critic-Network propagiert. Anschließend wird die logarithmierte Wahrscheinlichkeit der Aktion bestimmt und zusammen mit dem Baseline Estimate und der Entropie der Wahrscheinlichkeitsverteilungen zurückgegeben.
+Daraufhin wird die Probability Ratio aus der soeben bestimmten logarithmierten Wahrscheinlichkeit und der alten logarithmierten Wahrscheinlichkeit bestimmt ($r_{t}(\theta)$).
 Nachfolgend wird der Advantage, durch Subtraktion des Return mit dem Baseline Estimate, berechnet $\hat{A}_{t}(s, a) = R_{t} - b(s_{t})$.\\
 Als Nächstes werden die Surrogate Fehler Surr1: $r_{t}(\theta) \hat{A}_{t}(s, a)$ und 
 Surr2: $\text{clip}(r_{t}(\theta), 1 - \epsilon, 1 + \epsilon) \hat{A}_{t}(s, a)$ bestimmt, mit welchen der Actor Fehler $L^\text{CLIP} (\theta)$ berechnet wird.
@@ -215,26 +222,26 @@ Actor- und Critic-Network werden dann mit dem Fehler unter Zuhilfenahme von Back
 
 \subsection{Vorstellung der zu untersuchenden Agenten} \label{subsec:Konzept_Vorstellung_Agenten}
 Ein zentraler Aspekt eines Vergleichs von verschiedenen RL Agenten ist die genaue Definition dieser einzelnen Agenten. 
-Basierende auf den Grundlagen (siehe \autoref{sec:Grundlagen_PPO} und \autoref{sec:Grundlagen_Deep_Q_Learning}), sollen an dieser Stelle die zu vergleichenden Agenten vorgestellt werden.\\
+Basierend auf den Grundlagen (siehe \autoref{sec:Grundlagen_PPO} und \autoref{sec:Grundlagen_Deep_Q_Learning}), sollen an dieser Stelle die zu vergleichenden Agenten vorgestellt werden.\\
 Da die ausgewählten Hyperparameter einen immensen Einfluss auf das Verhalten der Agenten besitzen, ist ein Vergleich zwischen DQN und PPO Agenten mit wahllos gewählten Hyperparametern folglich wenig aussagekräftig. Darum soll im Weiteren die Auswahl der Hyperparameter begründet werden.\\
-\\Wie in der \autoref{fig:Konzept_Vorgehen} zu erkennen ist, können beliebig viele Agenten miteinander vergleichen werden. In dieser Ausarbeitung hingegen sollen sechs Agenten definiert und miteinander verglichen werden \fullref{fig:Konzept_Agenten}. Dabei sollen die Hyperparameter so gewählt werden, dass stets ein langsamer, ein schneller und ein Hybrid aus beiden zuvor erwähnten Agenten definiert wird.
+Wie in der \autoref{fig:Konzept_Vorgehen} zu erkennen ist, können beliebig viele Agenten miteinander verglichen werden. In dieser Ausarbeitung hingegen sollen sechs Agenten definiert und miteinander verglichen werden \fullref{fig:Konzept_Agenten}. Dabei sollen die Hyperparameter so gewählt werden, dass stets ein langsamer, ein schneller und ein Hybrid aus beiden zuvor erwähnten Agenten definiert wird.
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.102]{Agenten}
 	\caption[Agenten]{Darstellung der zu untersuchenden Agenten.}
 	\label{fig:Konzept_Agenten}
 \end{figure}
-Der erste Agent PPO-01 soll ein langsamer, jedoch stetiger Lerner sein. Mit einer Actor Lernrate (ACTOR\_LR) von 2e-4 und einer CRITC-Lernrate von 4e-4 (CRITIC\_LR) wurden Lernraten gewählt, welche spezifisch für diese Netzstruktur im Mittelfeld liegen. Ein hoher Wert für GAMMA von 0.99 sorgt für ein zukunftsorientiertes Lernen. Damit der PPO-01 keine zu großen Aktualisierungen der Netze unternimmt, wurde EPS\_CLIP auf 0.15 gesetzt, was verglichen mit der Literatur \cite[S. 6]{PPO} recht niedrig ist.\\
+Der erste Agent PPO-01 soll ein langsamer, jedoch stetiger Lerner sein. Mit einer Actor Lernrate (Actor) von 2e-4 und einer CRITIC-Lernrate von 4e-4 (Critic) wurden Lernraten gewählt, welche spezifisch für diese Netzstruktur im Mittelfeld liegen. Ein hoher Wert für GAMMA von 0.99 sorgt für ein zukunftsorientiertes Lernen. Damit der PPO-01 keine zu großen Aktualisierungen der Netze unternimmt, wurde EPS\_CLIP auf 0.15 gesetzt, was verglichen mit der Literatur \cite[S. 6]{PPO} recht niedrig ist.\\
 \\Der PPO-02 soll ein schnell lernendes Verhalten zeigen. Zu diesem Zweck wurden zwar niedrige Lernraten von 1e-4 (Actor) und 2.5e-4 (Critic) gewählt, jedoch sorgt der relativ große K\_EPOCHS-Wert von zwölf für ein stärkeres Aktualisieren der Netzwerkparameter von Actor und Critic. Der GAMMA-Wert von 0.95 bestärkt zudem den schnelleren Lernerfolg, aufgrund der Kurzzeitpräferenz des Agenten.\\
-\\PPO-03 soll ein Kompromiss zwischen schnellen Lernen und stetigem Fortschritt sein. Mit mittleren Lernraten von 1.5e-4 (Actor) bzw. 2.5e-4 (Critic) sollte ein schneller und zugleich stetiger Lernfortschritt erzielt werden. Der GAMMA-Wert von 0.95 soll das schnelle Lernen unterstützen. Auch die Werte von K\_EPOCHS mit zehn und EPS\_CLIP von 0.2 werden in der Literatur \cite[Anhang A]{PPO} empfohlen und stellt ein gutes Mittelmaß dar.\\
-\\Der DQN-01 ist wieder als langsamer Lerner gedacht. Mit einer großen LR von 8.0e-4 und einem großen GAMMA-Wert von 0.99, wird ein stetiges und zukunftsorientiert Lernen bestärkt. Eine Batch-Size von 128 soll zudem das Lernen beständiger machen. Ein niedriger Wert für EPS\_MIN von 0.001 sollen die Neugierde des Agenten zu Beginn stärken und die Wahl von Zufallsaktionen in späteren Trainingsphasen senken.\\
+\\PPO-03 soll ein Kompromiss zwischen schnellem Lernen und stetigem Fortschritt sein. Mit mittleren Lernraten von 1.5e-4 (Actor) bzw. 2.5e-4 (Critic) sollte ein schneller und zugleich stetiger Lernfortschritt erzielt werden. Der GAMMA-Wert von 0.95 soll das schnelle Lernen unterstützen. Auch die Werte von K\_EPOCHS mit zehn und EPS\_CLIP von 0.2 werden in der Literatur \cite[Anhang A]{PPO} empfohlen und stellen ein gutes Mittelmaß dar.\\
+\\Der DQN-01 ist wieder als langsamer Lerner gedacht. Mit einer großen LR von 8.0e-4 und einem großen GAMMA-Wert von 0.99, wird ein stetiges und zukunftsorientiert Lernen bestärkt. Eine Batch-Size von 128 soll zudem das Lernen beständiger machen. Ein niedriger Wert für EPS\_MIN von 0.001 soll die Neugierde des Agenten zu Beginn stärken und die Wahl von Zufallsaktionen in späteren Trainingsphasen senken.\\
 \\DQN-02 ist wieder als Schnelllerner konzipiert worden. Eine vergleichsweise hohe Lernrate (LR) von 2.0e-4 in Verbindung mit einem kleinen Wert für Gamma von 0.90 soll einen schnellen Lernfortschritt generieren. Dies wird durch eine normale Memory-Size (MAX\_MEM\_SIZE) von 2**11 und durch eine große Epsilon-Dekrementierung (EPS\_DEC) von 6e-5 verstärkt. Auch sorgt der verhältnismäßig große Wert für EPS\_MIN von 0.0075 für eine schnellere Exploration und damit für ein schnelles Lernen.\\
-\\Der DQN-03 ist wieder als Kompromiss gedacht. Eine kleine Lernrate (LR) von 2.5e-4 und eine große Epsilon-Dekrementierung (EPS\_DEC) von 4e-5 sind dem schnell lernenden Agenten zuzuordnen. Eine große Batch- (BATCH\_SIZE) und Memory-Size (MAX\_MEM\_SIZE) von 128 und 2**11 sind dagegen dem langsam lernenden Agenten zuzuschreiben.
+\\Der DQN-03 ist wieder als Kompromiss gedacht. Eine kleine Lernrate (LR) von \linebreak[4] 2.5e-4 und eine große Epsilon-Dekrementierung (EPS\_DEC) von 4e-5 sind dem schnell lernenden Agenten zuzuordnen. Eine große Batch- (BATCH\_SIZE) und Memory-Size (MAX\_MEM\_SIZE) von 128 und 2**11 sind dagegen dem langsam lernenden Agenten zuzuschreiben.
 
 \section{Optimierungen} \label{sec:Konzept_Optimierungen}
-In diesem Abschnitt werden die anzuwendenden Optimierungen vorgestellt, welche nach dem Baseline-Vergleich die Leistung in den einzelnen Evaluationskategorien noch weiter verstärken soll. Zu diesem Zweck sollen zwei Optimierungen auf die Baseline Agenten (Agenten ohne Optimierungen) angewendet werden. Die Erstellung von Optimierung A wurde durch die verwandten Arbeiten \cite{UAV} und \cite{Autonomous_Agents_in_Snake_Game_via_DRL} unterstützt. Die Optimierung B wurde nach \cite[S. 331 f.]{DRL_Lapan} entwickelt.\\
+In diesem Abschnitt werden die anzuwendenden Optimierungen vorgestellt, welche nach dem Baseline-Vergleich die Leistung in den einzelnen Evaluationskategorien noch weiter verstärken sollen. Zu diesem Zweck sollen zwei Optimierungen auf die Baseline Agenten (Agenten ohne Optimierungen) angewendet werden. Die Erstellung von Optimierung A wurde durch die verwandten Arbeiten \cite{UAV} und \cite{Autonomous_Agents_in_Snake_Game_via_DRL} unterstützt. Die Optimierung B wurde nach \cite[S. 331 f.]{DRL_Lapan} entwickelt.
 
-\subsection{Optimierung A - Joined Reward Function} \label{subsec:Konzept_Optimierung01}
+\subsection{Optimierung A -- Joined Reward Function} \label{subsec:Konzept_Optimierung01}
 Die Joined Reward Function wurde im Paper "`Autonomous Agents in Snake Game via Deep Reinforcement Learning"' \cite{Autonomous_Agents_in_Snake_Game_via_DRL} vorgestellt und im \autoref{sec:Verwandte_Arbeiten_Paper_1} erklärt. Sie setzt sich aus drei Teilen zusammen. Die Basis bildet ein Distanz Reward, welcher abhängig von der Distanz und Schwanzlänge ist. Um unerwünschte Lerneffekte, von beispielsweise der Neuerzeugung eines Apfels, zu verhindern, werden diese Erfahrungen nicht im Memory gespeichert. Zur Verstärkung des Pathfindings wird die Timeout Strategy angewendet, welche den Agenten für nicht zielgerichtetes Verhalten, wie z.B. das ziellose Umherlaufen, bestraft.\\
 \\Eine genaue Implementierung dieser vorgestellten Reward Funktion erscheint jedoch nicht sinnvoll, da bereits in der Diskussion \fullref{subsec:Verwandte_Arbeiten_Paper_1_Diskussion} zur Quelle \cite{Autonomous_Agents_in_Snake_Game_via_DRL} festgestellt worden ist, dass die Agenten nicht für das effiziente Lösen des Spiels konzipiert worden sind, sondern für das lange Überleben. Daher muss die Reward Funktion entsprechendes Verhalten begünstigen.\\
 Dennoch erscheint die Adaptierung einiger Elemente der Reward Funktion als sinnvoll, um eine eigene auf Performance und Effizienz optimierte Reward Funktion zu designen.\\
@@ -243,24 +250,24 @@ Dabei wird der Distanz Reward der Quelle \cite{Autonomous_Agents_in_Snake_Game_v
 \begin{align}
 	\Delta r(L_t, D_t,D_{t+1}) = \log_{L_t}\frac{L_t + D_t}{L_t + D_{t + 1}}
 \end{align}
-Wobei $t$ den vorherigen, $t+1$ den aktuellen Zeitpunkt darstellen. $L_t$ ist die Länge der Snake zum vorherigen Zeitpunkt und $D_t$ und $D_{t+1}$ stellen die Distanzen zwischen Snake und Apfel zum vorherigen und aktuellen Zeitpunkt dar.\\
-Dieser Distanz Reward wird wie in Quelle \cite{Autonomous_Agents_in_Snake_Game_via_DRL} dargestellt auf einen Initial-Wert aufaddiert. Nur setzt sich dieser nicht aus den vergangenen Rewards zusammen, sondern ist in dieser Ausarbeitung fest auf -0.01 gesetzt. Zum Schluss wird dann der Reward noch zwischen -0.02 und -0.005 geclipt, damit der Agent stetig bemüht ist den optimalen Weg zu finden. $r_{res} = clip((-0.01 + \Delta r), -0.02, -0.005)$
+Wobei $t$ den vorherigen und $t+1$ den aktuellen Zeitpunkt darstellt. $L_t$ ist die Länge der Snake zum vorherigen Zeitpunkt und $D_t$ und $D_{t+1}$ stellen die Distanzen zwischen Snake und Apfel zum vorherigen und aktuellen Zeitpunkt dar.\\
+Dieser Distanz Reward wird wie in Quelle \cite{Autonomous_Agents_in_Snake_Game_via_DRL} dargestellt auf einen Initial-Wert aufaddiert. Nur setzt sich dieser nicht aus den vergangenen Rewards zusammen, sondern ist in dieser Ausarbeitung fest auf -0.01 gesetzt. Zum Schluss wird dann der Reward noch zwischen -0.02 und -0.005 geclipt, damit der Agent stetig bemüht ist den optimalen Weg zu finden ($r_{res} = clip((-0.01 + \Delta r), -0.02, -0.005)$).
 
-\subsection{Optimierung B - Anpassung der Lernrate} \label{subsec:Konzept_Optimierung02}
-Die zweite Optimierung wurde mithilfe von Anregungen aus der Literatur \cite[S. 331 f.]{DRL_Lapan} erzeugt. In dieser wurde die Steigerung der Lernrate diskutiert, um einen schnelleren Lernerfolg zu erzielen. Gegenteilig könnte jedoch die Senkung der Lernrate während des Trainings die Performance und Siegrate verstärken, da die Aktualisierung des NN nicht mehr so stark ausfällt und bestehender Fortschritt damit erhalten bleibt. Darum soll die Lernrate immer dann mit 0.95 multipliziert werden, sobald keine Performance Steigerung in den letzten 100 Epochs bzw. Trainingsspiele erzielt wurde.
+\subsection{Optimierung B -- Anpassung der Lernrate} \label{subsec:Konzept_Optimierung02}
+Die zweite Optimierung wurde mithilfe von Anregungen aus der Literatur \cite[S. 331 f.]{DRL_Lapan} erzeugt. In dieser wurde die Steigerung der Lernrate diskutiert, um einen schnelleren Lernerfolg zu erzielen. Gegenteilig könnte jedoch die Senkung der Lernrate während des Trainings die Performance und Siegrate verstärken, da die Aktualisierung des NN nicht mehr so stark ausfällt und bestehender Fortschritt damit erhalten bleibt. Darum soll die Lernrate immer dann mit 0.95 multipliziert werden, sobald keine Performance Steigerung in den letzten 100 Epochs bzw. Trainingsspielen erzielt wurde.
 
 \section{Datenerhebung und Verarbeitung} \label{sec:Konzept_Datenerhebung_Verarbeitung}
 In diesem Abschnitt soll die Datenerhebung näher thematisiert werden. Daher soll zuerst der Hauptablauf näher erklärt werden, welcher Agenten und Env miteinander interagieren lässt. Danach wird die Statistik-Komponente mit ihren Funktionalitäten vorgestellt.
 
 \subsection{Datenerhebung} \label{subsec:Konzept_Datenerhebung}
 Die Hauptablaufroutine wird durch die eigentlichen Test- und Trainingsabläufe implementiert, welche
-wichtige Hyperparameter des Ablaufs, wie z.B. die zu absolvierenden Trainingsspiele (N\_ITERATIONS), die Spielfeldgröße (BOARD\_SIZE) und weitere spezifische Hyperparameter, übergeben bekommen. Um einen angemessenen Zeitraum für das Lernen zu schaffen, sollen 30.000 Spiele bzw. Epochs für einen Trainingslauf absolviert werden. Die Spielfeldgröße soll dabei standardmäßig, für das Training, bei (8x8) liegen.\\
+wichtige Hyperparameter des Ablaufs, wie z.B. die zu absolvierenden Trainingsspiele (N\_ITERATIONS), die Spielfeldgröße (BOARD\_SIZE) und weitere spezifische Hyperparameter, übergeben bekommen. Um einen angemessenen Zeitraum für das Lernen zu schaffen, sollen 30.000 Spiele bzw. Epochs für einen Trainingslauf absolviert werden. Die Spielfeldgröße soll dabei standardmäßig, für das Training bei (8x8) liegen.\\
 \\Bei der Datenerhebung ist streng zwischen Test- und Trainingsdaten zu unterscheiden, wobei die Testdaten aus einfachen Spielabläufen bzw. Testläufen und die Trainingsdaten aus den Trainingsläufen stammen. Letztere werden wie folgt erhoben.\\
 Zu Beginn werden die Datenhaltungsobjekte apples, wins und steps initialisiert, welche für jedes absolvierte Trainingsspiel die entsprechenden Werte speichert \fullref{tab:Anforderungen_Datenerhebung}. 
 Nach der Erstellung des Agenten und Environments startet der Spielverlauf.\\
-Dabei wird wie in \autoref{subsec:Grundlagen_Funktionsweise} vorgegangen. Der Agent erhält eine Obs, bestimmt seine Aktion und diese wird im Env ausgeführt. Danach wird die neue Obs und der neue Reward sowie weitere Statusinformationen ausgegeben. Diese Daten werden im Memory des jeweiligen Agenten für das sich anschließende Training gespeichert. Dieses wird, wie im DQN-Lernprozess \fullref{subsubsec:Konzept_Lernprozess_DQN} bzw. PPO-Lernprozess \fullref{subsubsec:Konzept_Lernprozess_PPO} dargestellt, durchgeführt. 
+Dabei wird wie in \autoref{subsec:Grundlagen_Funktionsweise} vorgegangen. Der Agent erhält eine Obs, bestimmt seine Aktion und diese wird im Env ausgeführt. Danach wird die neue Obs und der neue Reward sowie weitere Statusinformationen ausgegeben. Diese Daten werden im Memory des jeweiligen Agenten für das sich anschließende Training gespeichert, wie im DQN-Lernprozess \fullref{subsubsec:Konzept_Lernprozess_DQN} bzw. PPO-Lernprozess \fullref{subsubsec:Konzept_Lernprozess_PPO} dargestellt. 
 Danach werden die oben genannten Datenhaltungsobjekte aktualisiert und die Prozedur beginnt von Neuem. Wenn alle Epochs (N\_ITERATION) absolviert wurden, werden die erhobenen Daten weiter in der Statistik-Komponente verarbeitet \fullref{subsec:Konzept_Datenverarbeitung}.\\
-\\Die Datenerhebung für Testdaten findet annähernd auf die gleiche Weise statt, jedoch werden die Daten nicht aus Trainingsläufen entnommen, sondern aus Testläufen. Der Unterschied zwischen Test- und Trainingsläufen besteht darin, dass die Spielfeldgröße im Rahmen des Testlaufes für die Robustheit variiert wird. Sie kann dabei Größen zwischen (6x6) bis (10x10) annehmen. Bei den übrigen Evaluationskriterien bleibt das Spielfeld jedoch konstant bei einer Größe von (8x8). Anders als bei Trainingsläufen werden zudem bei keine 30.000 Epochs durchgeführt sondern nur 5.000. Dies entspricht ungefähr der Größe einer Datenmenge zur Validierung \cite[S. 134]{DL}.\\
+\\Die Datenerhebung für Testdaten findet annähernd auf die gleiche Weise statt, jedoch werden die Daten nicht aus Trainingsläufen entnommen, sondern aus Testläufen. Der Unterschied zwischen Test- und Trainingsläufen besteht darin, dass die Spielfeldgröße im Rahmen des Testlaufes für die Robustheit variiert wird. Sie kann dabei Größen zwischen (6x6) bis (10x10) annehmen. Bei den übrigen Evaluationskriterien bleibt das Spielfeld jedoch konstant bei einer Größe von (8x8). Anders als bei Trainingsläufen werden zudem keine 30.000 Epochs durchgeführt sondern nur 5.000. Dies entspricht ungefähr der Größe einer Datenmenge zur Validierung \cite[S. 134]{DL}.\\
 Diese Testdaten werden dann ebenfalls der Statistik-Komponente übergeben \fullref{subsec:Konzept_Datenverarbeitung}.
 Um die Validität der Statistiken zu garantieren, sollen alle Daten für die Statistiken zweimal erhoben werden. Damit soll der Anforderung der mehrfachen Datenerhebung entsprochen werden \fullref{subsec:Anforderungen_mehrfache_Datenerhebung}. 
 
@@ -268,8 +275,8 @@ Um die Validität der Statistiken zu garantieren, sollen alle Daten für die Sta
 Nach der Erstellung der Test- und Trainingsdaten für jeden Agenten werden diese entsprechend der Evaluationskriterien \fullref{tab:Anforderungen_Kriterien} verarbeitet. Sie werden dabei mit Statistiken und Tabellen abgebildet.
 Die Verarbeitung der Daten geschieht dabei wie folgt:\\
 Die Performance wird anhand der gefressenen Äpfel gemessen. Es entsteht daher die Äpfel pro Epoch (Spiel) Rate.\\
-Die Effizienz wird durch die durchschnittliche Schrittanzahl pro Apfelanzahl pro Epoch (Spiel) dargestellt.\\
-Die Robustheit wird durch die durchschnittliche Apfelanzahl pro Epoch (Spiel) pro Spielfeldgröße dargestellt.
+Die Effizienz wird durch die durchschnittliche Schrittanzahl pro Apfelanzahl dargestellt.\\
+Die Robustheit wird durch die durchschnittliche Apfelanzahl pro Spielfeldgröße dargestellt.
 Die Spielfeldgröße variiert dabei zwischen (6x6) und (10x10).\\
 Die Siegrate wird mithilfe der wins bestimmt. Dazu wird jedem Sieg eine eins und jedem Verlust eine null zugeordnet. Damit lässt sich dann die Siegrate bestimmen.\\
 Diese Daten werden dann mithilfe von Statistiken und Tabellen ausgewertet, welche aus den mehrfachen Erhebungen stammen. Dazu sollen diese bei der Auswertung gemittelt werden, um jeweils eine Statistik bzw. Tabelle für jedes Evaluationskriterium zu erhalten. 
