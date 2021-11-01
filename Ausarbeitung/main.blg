@@ -10,44 +10,46 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'wiz_functions' (item size: 4) to 6000 items.
 Database file #1: Bibliographie/Bibliographie.bib
+Warning--no proper publisher, using url in Autonomous_Agents_in_Snake_Game_via_DRL
 You've used 17 entries,
             3552 wiz_defined-function locations,
-            918 strings with 9986 characters,
-and the built_in function-call counts, 16727 in all, are:
-= -- 2068
+            920 strings with 10118 characters,
+and the built_in function-call counts, 16860 in all, are:
+= -- 2093
 > -- 290
 < -- 607
 + -- 764
 - -- 234
-* -- 1570
-:= -- 2968
-add.period$ -- 21
+* -- 1583
+:= -- 2982
+add.period$ -- 20
 call.type$ -- 17
-change.case$ -- 125
+change.case$ -- 128
 chr.to.int$ -- 17
-cite$ -- 17
-duplicate$ -- 344
-empty$ -- 901
+cite$ -- 18
+duplicate$ -- 350
+empty$ -- 916
 format.name$ -- 389
-if$ -- 3024
+if$ -- 3064
 int.to.chr$ -- 0
 int.to.str$ -- 1
 missing$ -- 36
-newline$ -- 123
+newline$ -- 126
 num.names$ -- 68
-pop$ -- 146
+pop$ -- 149
 preamble$ -- 1
 purify$ -- 125
 quote$ -- 0
-skip$ -- 781
+skip$ -- 782
 stack$ -- 0
-substring$ -- 1370
+substring$ -- 1373
 swap$ -- 111
 text.length$ -- 74
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 167
-warning$ -- 0
+warning$ -- 1
 while$ -- 165
 width$ -- 0
-write$ -- 203
+write$ -- 209
+(There was 1 warning)

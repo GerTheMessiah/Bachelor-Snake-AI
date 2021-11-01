@@ -12,7 +12,8 @@
 \newblock \emph{Minimal PyTorch Implementation of Proximal Policy
   Optimization}.
 \newblock \url{https://github.com/nikhilbarhate99/PPO-PyTorch}.
-\newblock 2021
+\newblock 2021. --
+\newblock Zugriffsdatum 2021-11-01
 
 \bibitem[Bowei~Ma(2016)]{Exploration_of_Reinforcement_Learning_to_SNAKE}
 \dinatlabel{Bowei~Ma 2016} \textsc{Bowei~Ma}, Jun~Z.:
@@ -108,8 +109,9 @@
 \dinatlabel{Schulman 2017} \textsc{Schulman}, John:
 \newblock \emph{Deep RL Bootcamp Lecture 5: Natural Policy Gradients, TRPO,
   PPO}.
-\newblock \url{https://www.youtube.com/watch?v=xvRrgxcpaHY}.
-\newblock Oktober 2017
+\newblock Oktober 2017. --
+\newblock URL \url{https://www.youtube.com/watch?v=xvRrgxcpaHY}. --
+\newblock Zugriffsdatum 2021-11-01
 
 \bibitem[Schulman u.\,a.(2015)Schulman, Levine, Moritz, Jordan und
   Abbeel]{TRPO}
@@ -138,7 +140,7 @@
 \newblock 27 (1948), S.~379--423. --
 \newblock URL
   \url{http://plan9.bell-labs.com/cm/ms/what/shannonday/shannon1948.pdf}. --
-  Zugriffsdatum: 2003-04-22
+  Zugriffsdatum: 2021-11-01
 
 \bibitem[Sutton und Barto(2018)]{Sutton1998}
 \dinatlabel{Sutton und Barto 2018} \textsc{Sutton}, Richard~S.~;
@@ -153,7 +155,8 @@
 \newblock \emph{{Youtube-Code-Repository}}.
 \newblock
   \url{https://github.com/philtabor/Youtube-Code-Repository/tree/master/ReinforcementLearning/PolicyGradient/PPO/torch}.
-\newblock Dezember 2020
+\newblock Dezember 2020. --
+\newblock Zugriffsdatum 2021-11-01
 
 \bibitem[Wei u.\,a.(2018)Wei, Wang, Zhang, Tan, Miao und
   Zhou]{Autonomous_Agents_in_Snake_Game_via_DRL}
@@ -161,7 +164,8 @@
   \textsc{Zhang}, Ming~; \textsc{Tan}, Ah-Hwee~; \textsc{Miao}, Chunyan~;
   \textsc{Zhou}, You:
 \newblock Autonomous Agents in Snake Game via Deep Reinforcement Learning.
-\newblock In: \emph{2018 IEEE International Conference on Agents (ICA)}, 2018,
-  S.~20--25
+\newblock In: \emph{2018 IEEE International Conference on Agents (ICA)}, URL
+  \url{https://www.researchgate.net/publication/327638529_Autonomous_Agents_in_Snake_Game_via_Deep_Reinforcement_Learning},
+  2018, S.~20--25
 
 \end{thebibliography}

@@ -249,6 +249,7 @@ Die Implementierung dieser neuen Reward Funktion findet in der Reward-Komponente
 Dabei wird der Distanz Reward der Quelle \cite{Autonomous_Agents_in_Snake_Game_via_DRL} benutzt, da dieser, im Gegensatz zur Standard Reward Funktion \fullref{subsubsec:Konzept_Reward}, viele Faktoren des Spiels berücksichtigt. Dabei wird der Reward wie folgt berechnet:
 \begin{align}
 	\Delta r(L_t, D_t,D_{t+1}) = \log_{L_t}\frac{L_t + D_t}{L_t + D_{t + 1}}
+	\label{eq:Konzept_Optimierung_a}
 \end{align}
 Wobei $t$ den vorherigen und $t+1$ den aktuellen Zeitpunkt darstellt. $L_t$ ist die Länge der Snake zum vorherigen Zeitpunkt und $D_t$ und $D_{t+1}$ stellen die Distanzen zwischen Snake und Apfel zum vorherigen und aktuellen Zeitpunkt dar.\\
 Dieser Distanz Reward wird wie in Quelle \cite{Autonomous_Agents_in_Snake_Game_via_DRL} dargestellt auf einen Initial-Wert aufaddiert. Nur setzt sich dieser nicht aus den vergangenen Rewards zusammen, sondern ist in dieser Ausarbeitung fest auf -0.01 gesetzt. Zum Schluss wird dann der Reward noch zwischen -0.02 und -0.005 geclipt, damit der Agent stetig bemüht ist den optimalen Weg zu finden ($r_{res} = clip((-0.01 + \Delta r), -0.02, -0.005)$).
