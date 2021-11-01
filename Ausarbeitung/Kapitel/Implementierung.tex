@@ -7,27 +7,27 @@ Zur Implementierung des Spiels Snake wurde das Framework gym von OpenAI genutzt 
 Die step Methode \fullref{fig:Implementierung_Sequenzdiagram} wird in der Ablaufprozedur (Test- bzw. Trainingsmethode) aufgerufen. Um eine Aktion auszuführen, ruft diese die action Methode auf. Diese führt die Aktion aus und manipuliert damit das SnakeGame.
 Nach dem Aufruf von  action wird die nächste Obs mithilfe der make\_obs Methode bestimmt. Im Anschluss werden zudem noch der Reward sowie weitere Statusinformation gebildet und zurückgegeben \fullref{fig:Implementierung_Sequenzdiagram}.\\
 Die reset Methode \fullref{fig:Implementierung_Sequenzdiagram} wird zu Beginn des Spielablaufs aufgerufen, um eine initiale Obs zu erhalten. Sie setzt dazu den momentanen Spielfortschritt zurück und generiert eine neue Obs \fullref{subsubsec:Konzept_Spielablauf}.\\
-Die render Methode \fullref{fig:Implementierung_Sequenzdiagram} aktualisiert die GUI, indem diese die updateGUI aufruft. Sie kann nur in Testläufen aufgerufen.\\
+Die render Methode \fullref{fig:Implementierung_Sequenzdiagram} aktualisiert die GUI, indem diese die updateGUI Methode aufruft. Sie kann nur in Testläufen aufgerufen.\\
 \\Da die action Methode die eigentliche Aktionsausführung implementiert, wird diese noch näher erläutert \fullref{subsubsec:Konzept_Spielablauf}.
 Die Spiellogik ist hauptsächlich in der action Methode implementiert \fullref{subsubsec:Konzept_Spielablauf}. Ein schematischer Ablauf der action Methode ist in \autoref{fig:Implementierung_action_method} dargestellt.
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.110]{Sequenzdiagramm}
-	\caption[Darstellung der Schnittstellenmethoden in einem Sequenzdiagramm]{Darstellung der Schnittstellenmethoden step, reset und render in einem Sequenzdiagramm.}
+	\caption[Darstellung der Schnittstellenmethoden in einem Sequenzdiagramm]{Darstellung der Schnittstellenmethoden step, reset und render in einem Sequenzdiagramm}
 	\label{fig:Implementierung_Sequenzdiagram}
 \end{figure}
-Zu Beginn wird geprüft, ob die maximale Anzahl an Schritten ohne einen Apfel gefressen zu haben überschritten ist. Sollte dies der Fall sein, so wird is\_terminal gesetzt und die Methode terminiert. Anderenfalls wird die Aktion umgesetzt, indem die Player.direction angepasst wird. Diese gibt die Laufrichtung für den nächsten Schritt an. Daraufhin wird überprüft, ob der neue Kopf außerhalb des Spielfelds liegt. Wenn dies zutrifft, wird das Spiel terminiert.
+Zu Beginn wird geprüft, ob die maximale Anzahl an Schritten ohne einen Apfel gefressen zu haben überschritten ist. Sollte dies der Fall sein, so wird is\_terminal gesetzt und die Methode terminiert. Andernfalls wird die Aktion umgesetzt, indem die Player.direction angepasst wird. Diese gibt die Laufrichtung für den nächsten Schritt an. Daraufhin wird überprüft, ob der neue Kopf außerhalb des Spielfelds liegt. Wenn dies zutrifft, wird das Spiel terminiert.
 Ansonsten wird der neue Kopf in die Liste aller Snake-Glieder (Player.tail), eingepflegt. Sollte die Snake zu diesem Zeitpunkt das gesamte Spielfeld ausfüllen, so hat sie gewonnen und die Methode terminiert. Ansonsten wird geprüft, ob die Snake im momentanen Schritt einen Apfel gefressen hat. Ist dem so, wird der Apfel entfernt und ein neuer generiert. Zudem wird der inter\_apple\_steps Zähler zurückgesetzt. Hat die Snake keinen Apfel gefressen, wird das letzte Schwanzstück entfernt, um die Illusion von Bewegung zu erzeugen und der inter\_apple\_steps Zäher wird inkrementiert.\\
-Zu Schluss wird Player.tail noch auf Duplikate überprüft, um auszuschließen, dass die Snake in sich selbst gelaufen ist. Sind keine vorhanden, wird das Spielfeld (playground) mit den Elementen der Snake aktualisiert, anderenfalls wird sie terminiert.
+Zum Schluss wird Player.tail noch auf Duplikate überprüft, um auszuschließen, dass die Snake in sich selbst gelaufen ist. Sind keine vorhanden, wird das Spielfeld (playground) mit den Elementen der Snake aktualisiert, andernfalls wird sie terminiert.
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.095]{action_method}
-	\caption[Ablaufdiagramm der action Methode]{Darstellung des Ablaufs der action Methode in einem Ablaufdiagramm.}
+	\caption[Ablaufdiagramm der action Methode]{Darstellung des Ablaufs der action Methode in einem Ablaufdiagramm}
 	\label{fig:Implementierung_action_method}
 \end{figure}
 
 \section{AV-Network} \label{sec:Implementierung_AV_Network}
-Das AV-Network stellt die Netzstruktur dar, welche die AV (around\_view) verarbeitet. Um dies bewerkstelligen zu können, wird das Netz mithilfe des PyTorch Frameworks erstellt. Die Implementierung des NN findet dabei analog zu den Schilderungen in \autoref{subsec:Konzept_Netzstruktur} statt. Das AV-Network wird von allen Algorithmen und daher auch von den DQN Agenten genutzt, welcher als Nächstes thematisiert werden.
+Das AV-Network stellt die Netzstruktur dar, welche die AV (around\_view) verarbeitet. Um dies bewerkstelligen zu können, wird das Netz mithilfe des PyTorch Frameworks erstellt. Die Implementierung des NN findet dabei analog zu den Schilderungen in \autoref{subsec:Konzept_Netzstruktur} statt. Das AV-Network wird von allen Algorithmen und daher auch von den DQN Agenten genutzt, welche als Nächstes thematisiert werden.
 
 \section{DQN} \label{sec:Implementierung_DQN}
 Die Implementierung des DQN Algorithmus basiert auf \cite{Charles2013}.\\
@@ -37,7 +37,7 @@ Die Memory Klasse entspricht der Memory-Komponente. Die QNetwork Klasse beinhalt
 
 \subsection{Q-Network} \label{subsec:Implementierung_Q-Network}
 Das Q-Network stellt das Instrument zur Bestimmung der Q-Values dar und besteht aus dem AV-Network (AV\_NET) und dem Q-Network-Tail (Q-net) \fullref{subsec:Konzept_Netzstruktur}. Es verfügt über eine
-forward Methode, welche die AV (around\_view) durch das AV\_NET leitet. Danach wird der Output des AV\_Net mit der SO (scalar\_obs) verbunden und durch das Q\_net propagiert. Das Ergebnis wird zurückgeliefert und im Memory gespeichert. 
+forward Methode, welche die AV (around\_view) durch das AV\_NET leitet. Danach wird der Output des AV\_NET mit der SO (scalar\_obs) verbunden und durch das Q\_net propagiert. Das Ergebnis wird zurückgeliefert und im Memory gespeichert. 
 
 \subsection{Memory} \label{subsec:Implementierung_Memory_DQN}
 Die Klasse Memory besteht aus einer Reihe von Tensoren, welche Daten mittels einer zusätzlichen Dimension speichern.
@@ -51,7 +51,7 @@ In der Agent Klasse werden die zwei Methoden act und act\_test definiert. Die ac
 Die act\_test Methode ist für die Aktionsbestimmung während der Testläufe zuständig und ermittelt Aktionen ausschließlich mittels des Q-Networks.
 
 \subsubsection{Trainingsroutine} \label{subsubsec:Implementierung_Trainingsroutine_DQN}
-Die learn Methode, welche nach den Darstellungen im Konzept implementiert wurde, stellt die Trainingsroutine dar. \fullref{subsubsec:Konzept_Lernprozess_DQN}\\
+Die learn Methode, welche nach den Darstellungen im Konzept implementiert wurde, stellt die Trainingsroutine dar \fullref{subsubsec:Konzept_Lernprozess_DQN}.\\
 Sie überprüft als Erstes, ob das Memory genügend Daten für einen Mini-Batch besitzt. Ist dem nicht so, terminiert die Methode.
 Danach wird die get\_data aufgerufen, welche einen Mini-Batch zurückliefert.\\
 Zu Beginn werden daher die Q-Values der gespeicherten Aktion bestimmt. Im Anschluss folgen die Q-Values aller Aktionen der Nachfolgezustände \fullref{code:Bestimmung_Q-Values}.
@@ -93,7 +93,7 @@ Sowohl ActorNetwork als auch CriticNetwork findet man jedoch nur gekapselt in de
 
 \subsection{ActorCritic} \label{subsec:Implementierung_ActorCritic}
 Die ActorCritic Klasse verbindet Actor und Critic miteinander. Sie dient daher als Schnittstelle und definiert die drei Methoden act, act\_test und evaluate.\\
-Die ActorCritic Klasse ist in der Lage, aus ActorNetwork und CriticNetwork ein gesamt Network aufspannen, welches alle Parameter der beiden Networks hält. Eine der wichtigsten Aufgaben dieser Klasse ist das Bestimmen von Aktionen.
+Diese ist in der Lage, aus ActorNetwork und CriticNetwork ein Gesamtnetzwerk aufzuspannen, welches alle Parameter der beiden Networks enthält. Eine der wichtigsten Aufgaben dieser Klasse ist das Bestimmen von Aktionen.
 
 \subsubsection{Aktionsbestimmung} \label{subsubsec:Implementierung_Aktionsbestimmung_PPO}
 Die PPO Agenten verfügen, wie die DQN Agenten, über die zwei Methoden act und act\_test. Die act Methode bestimmt mithilfe des Actors eine Wahrscheinlichkeitsverteilung über alle Aktionen.
@@ -106,7 +106,7 @@ Das Memory oder auch Replay Buffer genannt, besteht aus einer Reihe von Tensoren
 Mit der get\_data Methode werden die gesamten Erfahrungen der letzten Spielepisoden zurückgegeben. 
 
 \subsection{Agent} \label{subsec:Implementierung_PPO_Agent}
-Die Agent Klasse implementiert die learn Methode und verwaltet das Memory und zwei ActorCritic Networks. Diese stellen die alte und neue Policy dar. Während mit der alten Policy immer die Trainingsdaten generiert werden, wird mit der neuen Policy trainieren. Nach dem Lernen wird die alte Policy mit der neuen aktualisieren.
+Die Agent Klasse implementiert die learn Methode und verwaltet das Memory und zwei ActorCritic Networks. Diese stellen die alte und neue Policy dar. Während mit der alten Policy immer die Trainingsdaten generiert werden, wird mit der neuen Policy trainiert. Nach dem Lernen wird die alte Policy mit der neuen aktualisiert.
 
 \subsubsection{Trainingsroutine} \label{subsubsec:Implementierung_Trainingsroutine_PPO}
 Die hier dargestellte Implementierung basiert auf den Grundlagen des PPO Algorithmus \fullref{sec:Grundlagen_PPO} und auf dem Konzept \fullref{subsec:Konzept_PPO}.
@@ -142,8 +142,8 @@ self.POLICY.OPTIMIZER.zero_grad()
 loss.backward()
 self.POLICY.OPTIMIZER.step()
 \end{lstlisting}
-Zu Schluss wird, nachdem die Prozedur $K\_Epochs$-mal durchgeführt wurde, die alte Policy mit der neuen aktualisiert. Zuzüglich wird das Memory geleert.\\
-Damit jedoch die Lernprozedur aufgerufen wird, benötigt es zentrale Ablaufroutine, welche in den train und test Methoden implementiert sind.
+Zum Schluss wird, nachdem die Prozedur $K\_Epochs$-mal durchgeführt wurde, die alte Policy mit der neuen aktualisiert. Zuzüglich wird das Memory geleert.\\
+Damit jedoch die Lernprozedur aufgerufen wird, benötigt es zentrale Ablaufroutinen, welche in den train und test Methoden implementiert sind.
 
 \section{Train Methoden} \label{sec:Implementierung_train_Methode}
 Zu Beginn werden Agent und Env zusammen mit den Datenhaltungslisten \fullref{subsec:Konzept_Datenerhebung} erstellt. Ein Scheduler wird für die Optimierung B ebenfalls erzeugt \fullref{subsec:Konzept_Optimierung02}. Danach wird die Trainingsprozedur durchgeführt, welche in \autoref{fig:Implementierung_Train_Method} dargestellt ist.\\
@@ -154,18 +154,18 @@ Anschließend wird das Memory mit den entstandenen Erfahrungen aktualisiert und 
 Sollte die Spielepisode terminieren, so wird die learn Methode des Agent aufgerufen und die generierten Episodendaten werden in die Datenhaltungslisten eingefügt.\\
 Wird die Optimierung B verwendet, so wird alle 100 Spielepisoden die Steigung der Performance der letzten 100 Trainingsspiele bzw. Epochs ermittelt. Sollte diese nicht größer als null sein, so wird die Lernrate mit 0.95 multipliziert.\\
 Sind alle 30.000 Epochs abgeschlossen, werden das NN und die Trainingsdaten gespeichert und die Methode terminiert.\\
-Neben der train Methode wird jedoch auch eine Testmethode zur Erstellung von Testdaten benötigt.
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.105]{Training_PPO}
 	\caption[Ablaufdiagramm der train Methode]{Ablaufdiagramm der Train Methode}
 	\label{fig:Implementierung_Train_Method}
 \end{figure}
+Neben der train Methode wird jedoch auch eine Testmethode zur Erstellung von Testdaten benötigt.
 
 \subsection{Test Methoden} \label{sec:Implementierung_test_Methode}
-Die Testmethoden sind bis auf wenige Ausnahmen mit den train Methoden übereinstimmend. Es werden in diesem Abschnitt daher nur die Unterschiede aufgezeigt. Einer dieser besteht darin, dass das NN geladen und nicht erzeugt wird. Mit diesem wird dann der Test durchgeführt. Alle Element des Lernens sind aus der test Methode entfernt. Zu diesen gehören der Scheduler, das Aufrufen der learn Methode und das Speichern des NNs.
+Die Testmethoden sind bis auf wenige Ausnahmen mit den train Methoden übereinstimmend. Es werden in diesem Abschnitt daher nur die Unterschiede aufgezeigt. Einer dieser Unterschiede ist, dass das NN geladen und nicht erzeugt wird. Mit diesem wird dann der Test durchgeführt. Alle Elemente des Lernens sind aus der test Methode entfernt worden. Zu diesen gehören der Scheduler, das Aufrufen der learn Methode und das Speichern des NNs.
 Hinzukommt die Prozedur, um die Spielfeldgröße zu ändern, für die Bestimmung der Robustheit \fullref{subsec:Konzept_Datenverarbeitung}.
-Des Weiteren wird für die Aktionsbestimmungen nur die act\_test Methoden verwendet und es kommt die Funktionalität der grafischen Umsetzung hinzu.
+Des Weiteren wird für die Aktionsbestimmungen nur die act\_test Methode verwendet und es kommt die Funktionalität der grafischen Umsetzung hinzu.
 Ansonsten treten keine Unterschiede zwischen den train und test Methoden auf.
 
 \section{Statistik} \label{sec:Implementierung_Statistiken}

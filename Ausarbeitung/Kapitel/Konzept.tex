@@ -15,7 +15,7 @@ Mit diesen optimierten Agenten werden nun die sogenannten Optimized Vergleiche b
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.11]{Vorgehen}
-	\caption[Aktivitätsdiagramm des Vorgehens]{Darstellung des Vorgehens.}
+	\caption[Aktivitätsdiagramm des Vorgehens]{Darstellung des Vorgehens}
 	\label{fig:Konzept_Vorgehen}
 \end{figure}
 Zum Schluss wird auf Grundlage der Sieger Agenten entsprechend der Forschungsfrage der optimale Agent ermittelt. Dafür ist eine Priorisierung der Evaluationskriterien nötig, um zu bestimmen, welche Eigenschaften des Agenten am wichtigsten für den Benutzer sind. In dieser Ausarbeitung wird die Performance priorisiert, gefolgt von der Sieg-Rate, der Robustheit und zum Schluss der Effizienz. Diese Priorisierung bedeutet jedoch nicht, dass der Agent mit der besten Performance automatisch gewonnen hat. Sie liefert lediglich ein Verhältnis zwischen den Evaluationskriterien, auf dessen Basis der Benutzer den nach seinen Maßstäben besten Agenten auswählen kann.
@@ -39,7 +39,7 @@ Um die Abarbeitung einer Aktion durchzuführen, wird die action Funktionalität 
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.11]{Spielablauf}
-	\caption[Spielablauf]{Darstellung eines Schritts in der Spielepisode.}
+	\caption[Spielablauf]{Darstellung eines Schritts in der Spielepisode}
 	\label{fig:Konzept_Spielablauf}
 \end{figure}
 Im Rahmen der Bestimmung der Robustheit wird sich diese im Testverlauf jedoch ändern \fullref{subsec:Konzept_Datenerhebung}.\\
@@ -68,8 +68,8 @@ Damit der Agent die neue Observation und den neuen Reward erhält, werden diese 
 
 \subsubsection{Reward} \label{subsubsec:Konzept_Reward}
 Der Reward wird in der Reward-Komponente, basierend auf dem letzten Zug, gebildet. Dies geschieht nach folgendem Vorbild.\\
-Der Standard Reward ist abhängig vom Fressen eines Apfels, vom Sieg und vom Verlust einer Spielepisode. Sollte keiner dieser genannten Faktoren eintreten, wird ein Reward von -0,01 zurückgegeben. Dies hält den Agenten dazu an den kürzesten Pfad zum Apfel zu finden, da jeder Schritt geringfügig bestraft wird.
-War es der Snake möglich einen Apfel zu fressen, so wird ein Reward von +2,5 zurückgegeben, da ein Zwischenziel erreicht wurde.
+Der Standard Reward ist abhängig vom Fressen eines Apfels, vom Sieg und vom Verlust einer Spielepisode. Sollte keiner dieser genannten Faktoren eintreten, wird ein Reward von -0.01 zurückgegeben. Dies hält den Agenten dazu an den kürzesten Pfad zum Apfel zu finden, da jeder Schritt geringfügig bestraft wird.
+War es der Snake möglich einen Apfel zu fressen, so wird ein Reward von +2.5 zurückgegeben, da ein Zwischenziel erreicht wurde.
 Sollte die Snake gestorben sein, so wird ein Reward von -10 zurückgegeben, um dieses Verhalten in seiner Häufigkeit zu minimieren.
 Hat die Snake alle Äpfel gefressen, sodass das gesamte Spielfeld mit ihr ausgefüllt ist, so wird ein Reward von +10 zurückgegeben, um ein solches Verhalten in seiner Häufigkeit zu maximieren.
 Die Snake hat zu diesem Zeitpunkt das Spiel gewonnen \fullref{sec:Grundlagen_Game_of_Snake}.
@@ -160,7 +160,7 @@ Der Q-Net-Tail ist in seinem Aufbau sehr ähnlich zum Critic-Tail (\autoref{fig:
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.08]{Tails}
-	\caption[Actor-, Critic- und Q-Net-Tail]{Darstellung des Actor-Tail (links), Critic-Tail (Mitte) und des Q-Net-Tail (rechts).}
+	\caption[Actor-, Critic- und Q-Net-Tail]{Darstellung des Actor-Tail (links), Critic-Tail (Mitte) und des Q-Net-Tail (rechts)}
 	\label{fig:Konzept_Actor_Critic_Q_Tail}
 \end{figure}
 
@@ -177,7 +177,7 @@ Eine genaue Darstellung der Aktionsbestimmung befindet sich in \autoref{fig:Konz
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.12]{DQN-Aktionsbestimmung}
-	\caption[DQN Aktionsbestimmung]{Darstellung der Aktionsbestimmung des DQN Agent.}
+	\caption[DQN Aktionsbestimmung]{Darstellung der Aktionsbestimmung des DQN Agent}
 	\label{fig:Konzept_DQN-Aktionsbestimmung}
 \end{figure}
 Ist der Zufallswert größer als der momentane Epsilon-Wert, so wird die Aktion durch das Q-Network bestimmt. Andernfalls wird eine zufällige Aktion ausgewählt. Die Bestimmung der Aktion durch das Q-Network geschieht dabei wie folgt.\\
@@ -228,7 +228,7 @@ Wie in der \autoref{fig:Konzept_Vorgehen} zu erkennen ist, können beliebig viel
 \begin{figure}[H]
 	\centering
 	\includesvg[scale=0.102]{Agenten}
-	\caption[Agenten]{Darstellung der zu untersuchenden Agenten.}
+	\caption[Agenten]{Darstellung der zu untersuchenden Agenten}
 	\label{fig:Konzept_Agenten}
 \end{figure}
 Der erste Agent PPO-01 soll ein langsamer, jedoch stetiger Lerner sein. Mit einer Actor Lernrate (Actor) von 2e-4 und einer CRITIC-Lernrate von 4e-4 (Critic) wurden Lernraten gewählt, welche spezifisch für diese Netzstruktur im Mittelfeld liegen. Ein hoher Wert für GAMMA von 0.99 sorgt für ein zukunftsorientiertes Lernen. Damit der PPO-01 keine zu großen Aktualisierungen der Netze unternimmt, wurde EPS\_CLIP auf 0.15 gesetzt, was verglichen mit der Literatur \cite[S. 6]{PPO} recht niedrig ist.\\

@@ -4,14 +4,13 @@ Anschließend wird ein Ausblick auf weitere Schritte in diesem Forschungsgebiet 
 
 \section{Beantwortung der Forschungsfrage}
 In diesem Abschnitt soll die Beantwortung der eingangs gestellten Forschungsfrage erfolgen. Diese lautet:\\
-"`Wie kann am Beispiel des Spiels Snake für eine nicht triviale gering dimensionale Umgebung ein möglichst optimaler RL Agent ermittelt werden?"'\\
+\textbf{"`Wie kann am Beispiel des Spiels Snake für eine nicht triviale gering dimensionale Umgebung ein möglichst optimaler RL Agent ermittelt werden?"'}\\
 Da das Wort "`optimal"' einen großen Interpretationsspielraum zulässt, wurde sich auf vier Evaluationskriterien konzentriert. Zu diesen zählen die Performance, Siegrate, Robustheit und Effizienz. Für jedes dieser Kriterien wurde der optimale Agent bestimmt \fullref{sec:Evaluation_Ergebnisevaluation}.
-Die Forschungsfrage wurde dabei mithilfe einer im Rahmen dieser Ausarbeitung erarbeiteten Methodik beantwortet \fullref{sec:Konzept_Vorgehen}.
+Die Forschungsfrage wurde dabei mithilfe einer, im Rahmen dieser Ausarbeitung erarbeiteten, Methodik beantwortet \fullref{sec:Konzept_Vorgehen}.
 Bei der Erstellung der Agenten besitzt der Anwender prinzipiell eine große Freiheit, nach welchen Gesichtspunkten er die Agenten definiert. In dieser Ausarbeitung wurden die Hyperparameter so ausgewählt das stets ein langsamer, ein schneller und ein Hybrid aus den vorher erwähnten Agenten erstellt wurde. Dies sollte eine große Bandbreite an Möglichkeiten abdecken.\\
-Danach wurden die vordefinierte Agenten im Rahmen der Baseline Vergleichen miteinander verglichen. Diese Baseline Agenten verfügen außer den initialen Hyperparametern keine weiteren.
-Diese Vergleiche ließen sich mithilfe eines erarbeiteten Konzepts \fullref{chap:Konzept}, welches als Basis zur Beantwortung der Forschungsfrage dient, durchführen. Auf Grundlage dieses Konzepts wurde eine Implementierung \fullref{chap:Implementierung} angefertigt.\\
-Die Baseline Agenten wurden auf Basis der Evaluationskriterien verglichen und der beste (Baseline Winner Agenten) wurden für die Optimized Vergleiche ausgewählt. Für die Baseline Vergleiche waren dies der PPO-03 für die Performance und Robustheit, der PPO-01 für die Siegrate und der PPO-02 für die Effizienz.\\
-In den folgenden Optimized Vergleichen traten die Agenten gegen ihrer optimierten Varianten an, entsprechend des Vorgehens \fullref{sec:Konzept_Vorgehen}.
+Danach wurden die vordefinierte Agenten im Rahmen der Baseline Vergleiche miteinander verglichen. Diese Baseline Agenten verfügen außer den initialen Hyperparametern keine weiteren und ließen sich mithilfe eines erarbeiteten Konzepts \fullref{chap:Konzept}, welches als Basis zur Beantwortung der Forschungsfrage dient, durchführen. Auf Grundlage dieses Konzepts wurde eine Implementierung \fullref{chap:Implementierung} angefertigt.\\
+Die Baseline Agenten wurde auf Basis der Evaluationskriterien verglichen und der beste (Baseline Winner Agenten) wurde für die Optimized Vergleiche ausgewählt. Für die Baseline Vergleiche waren dies der PPO-03 für die Performance und Robustheit, der PPO-01 für die Siegrate und der PPO-02 für die Effizienz.\\
+In den folgenden Optimized Vergleichen traten die Agenten gegen ihre optimierten Varianten an, entsprechend des Vorgehens \fullref{sec:Konzept_Vorgehen}.
 Daraus ergab sich, dass der PPO-03-opt-b der optimale Agent für die Kriterien der Performance, Siegrate und Robustheit ist. Einzig bei der Effizienz unterlag dieser dem PPO-03-opt-a, welcher der optimale Agent für die Effizienz ist. Basierend auf diesen Ergebnissen wurde der PPO-03-opt-b zum optimalen Agenten erklärt \fullref{subsec:Evaluation_Bestimmung_optimaler_Agent}.
 Aufgrund dieser Ergebnisse kann die Forschungsfrage als beantwortet angesehen werden.
 
@@ -19,9 +18,9 @@ Aufgrund dieser Ergebnisse kann die Forschungsfrage als beantwortet angesehen we
 Nach der Durchführung der Vergleiche, welche zur Bestimmung des optimalen Agenten geführt haben, ergeben sich weiterführende Fragestellungen.\\
 Die DQN Agenten konnten, wie in der Evaluation dargestellt, keine guten Ergebnisse erzielen. Die Vermutung, dass die Wahl von Zufallsaktionen dazu führt, könnte in einer anschließenden Ausarbeitung weiter untersucht werden.\\
 Aber auch bezüglich der Methodik lassen sich noch weitere Untersuchungen durchführen. 
-So würde zusätzliche Vergleich von weiteren Agenten, die eventuell auch auf anderen Algorithmen basieren, eine gute Erweiterung darstellen.\\
-Möglicherweise könnte auch eine Änderung der Untersuchungsparameter zu veränderten Resultaten führen. Zu diesen Veränderungen könnten beispielsweise die Spielregeln des Spiels Snake, die Evaluationskriterien, die Optimierungen gehören.\\
-Denkbar wäre auch ein praktischer Einsatz der Methodik in RL Anwendungen. Eingangs wurde die Quelle \cite{UAV} erwähnt, da diese die Steuerung unbemannte Drohnen mit RL Agenten thematisiert wird. Die erhobenen Ergebnisse legen nahe, dass die Wahl eines PPO Agenten zu besseren Resultaten führen würde als die Wahl des im Paper verwendete DQN Agent.\\
+So würden zusätzliche Vergleiche von weiteren Agenten, die eventuell auch auf anderen Algorithmen basieren, eine gute Erweiterung darstellen.\\
+Möglicherweise könnte auch eine Änderung der Untersuchungsparameter zu veränderten Resultaten führen. Zu diesen Veränderungen könnten beispielsweise die Spielregeln des Spiels Snake, die Evaluationskriterien und die Optimierungen gehören.\\
+Denkbar wäre auch ein praktischer Einsatz der Methodik in RL Anwendungen. Eingangs wurde die Quelle \cite{UAV} erwähnt, da diese die Steuerung von unbemannte Drohnen mit RL Agenten thematisiert. Die erhobenen Ergebnisse legen nahe, dass die Wahl eines PPO Agenten zu besseren Resultaten führen würde als die Wahl des im Paper verwendeten DQN Agent.\\
 Denkbar wäre auch die Anwendung des Verfahrens auf Probleme, welche nicht im thematischen Zusammenhang mit dem Spiel Snake stehen, wie z.B. Finanzapplikationen oder Steuerungsprogramme für Roboter.\\
-Aufgrund der Vorgehensweise ist dies einfach möglich, dass das Verfahren nicht von der zu lösenden Aufgabe abhängig ist. Zu jedem Problem, welches durch RL Verfahren gelöst werden soll, können mehrere Agenten definiert mit mit der Methodik verglichen werden.\\
+Aufgrund der Vorgehensweise ist dies einfach möglich, da das Verfahren nicht von der zu lösenden Aufgabe abhängig ist. Zu jedem Problem, welches durch RL Verfahren gelöst werden soll, können mehrere Agenten definiert und mit der Methodik verglichen werden.\\
 Die Möglichkeiten für weiterführende Forschungen auf dem Gebiet der Auswahl von RL Agenten sind zahlreich und diese Arbeit soll einen kleinen Beitrag zu diesem Forschungszweig leisten.
